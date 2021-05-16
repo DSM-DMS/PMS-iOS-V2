@@ -1,0 +1,47 @@
+name: PMS-iOS-V2
+options:
+  postGenCommand: fastlane pull # 생성 이후 명령 실행
+settingGroups:
+  app:
+    DEVELOPMENT_TEAM: C2JSJLJ4FN
+targets:
+  PMS-iOS-V2:
+    scheme:
+      testTargets:
+        - PMS-iOS-V2Tests
+        - PMS-iOS-V2UITests
+    sources:
+      excludes:
+          - "SceneDelegate.swift"
+          - "Main.storyboard"
+    settings:
+      groups: [app]
+      base:
+        INFOPLIST_FILE: PMS-iOS-V2/Resource/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.jeonggo.PMS-iOS-V2
+    type: application
+    platform: iOS
+    deploymentTarget: 11.0
+    sources: [PMS-iOS-V2]
+    
+  PMS-iOS-V2Tests:
+    type: bundle.unit-test # 테스트 타입
+    platform: iOS # 플랫폼
+    sources: [PMS-iOS-V2, PMS-iOS-V2Tests]
+    settings:
+      groups: [app]
+      INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
+      commandLineArguments: [run: true, test: true]
+    dependencies:
+      - target: PMS-iOS-V2
+      
+  PMS-iOS-V2UITests:
+    type: bundle.ui-testing # 테스트 타입
+    platform: iOS # 플랫폼
+    sources: [PMS-iOS-V2, PMS-iOS-V2UITests]
+    settings:
+      groups: [app]
+      INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
+      commandLineArguments: [run: true, test: true]
+    dependencies:
+      - target: PMS-iOS-V2
