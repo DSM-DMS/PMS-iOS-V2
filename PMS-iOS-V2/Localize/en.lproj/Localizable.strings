@@ -1,0 +1,107 @@
+/* 
+  Localizable.strings
+  PMS-iOS-V2
+
+  Created by GoEun Jeong on 2021/05/19.
+  
+*/
+
+"CFBundleDisplayName" = "PMS";
+
+// Basic Error
+"notFoundErrorMsg" = "Can't find student";
+"unknownErrorMsg" = "Unknown error";
+"noInternectErrorMsg" = "Not conneted to Internet";
+"serverErrorMsg" = "Server Error";
+
+// Ttitle
+"loginTitle" = "Login";
+"registerTitle" = "Register";
+"calendarTitle" = "Calendar";
+"mealTitle" = "Meal";
+"noticeTitle" = "Notice";
+"introduceTitle" = "Introduce";
+"introduceSubtitle" = "Introduce DSM's boast";
+"mypageTitle" = "Nickname";
+
+// Common
+"cancel" = "Cancel";
+"confirm" = "Confirm";
+
+// Tab bar
+"calendar" = "Calendar";
+"meal" = "Meal";
+"notice" = "Notice";
+"introduce" = "Introduce";
+"mypage" = "Mypage";
+
+// Placeholder
+"nicknamePlaceholder" = "Enter Nickname.";
+"newNicknamePlaceholder" = "Enter New Nickname.";
+"emailPlaceholder" = "Enter Email.";
+"passwordPlaceholder" = "Enter Password.";
+"rePasswordPlaceholder" = "Enter Password Again.";
+"currentPasswordPlaceholder" = "Enter Current Password.";
+"newPasswordPlaceholder" = "Enter Password to be Changed.";
+"reNewPasswordPlaceholder" = "Check Password to be Changed.";
+"commentPlaceholder" = "Enter Comment.";
+"calendarPlaceholder" = "Click on the date to see the schedule.";
+"searchNoticePlaceholder" = "Enter Notice title.";
+"searchLetterPlaceholder" = "Enter Letter title.";
+"noStudentPlaceholder" = "Add Student";
+"noAuthPlaceholder" = "Login is required.";
+
+// Auth
+"loginButton" = "Login";
+"registerButton" = "Register";
+"notFoundUserErrorMsg" = "Email or password\ndoes not match.";
+"existUserErrorMsg" = "Duplicate email!\nPlease try again with another email.";
+"notMatchPasswordErrorMsg" = "Passwords don't match.";
+
+// Calendar
+
+// Meal
+"breakfast" = "Breakfast";
+"lunch" = "Lunch";
+"dinner" = "Dinner";
+
+// Notice
+"preview" = "Preview";
+
+// Introduce
+"clubTitle" = "Introduce Club";
+"clubSubtitle" = "Intrudce DSM's clubs";
+"clubMember" = "Club Members";
+"companyTitle" = "Introduce Employment";
+"companySubtitle" = "Introduce DSM's employments";
+"companySite" = "Go to company site";
+"companyAddress" = "Company address";
+"developerTitle" = "Introduce Developer";
+"developerSubtitle" = "Introduce PMS's developers";
+"childClub" = "Children's club";
+
+// Mypage
+"plusScore" = "bonus point";
+"minusScore" = "minus point";
+"toAddStudent" = "Add Student";
+"weekStatus" = "Staying this week";
+"weekendMealStatus" = "Weekend meals";
+"toOutingList" = "Go to Outing list";
+"toChangePassword" = "Change Password";
+"toLogout" = "Logout";
+"logoutConfirmMsg" = "Do you want to log out?";
+"enterStudentCodeMsg" = "Please enter your child verification code";
+"addStudentButton" = "Add Student";
+"deleteStudentMsg" = "Delete it from the list?";
+"scoreListTitle" = "List of bonus/minus";
+"outingListTitle" = "List of Outing";
+"outinfReason" = "Reason";
+"outinfPlace" = "Place";
+
+// Mypage - changePassword
+"changePasswordTitle" = "Change Password";
+"currentPassword" = "Current Password";
+"newPassword" = "New Password";
+"reNewPassword" = "Confirm Password";
+"changePasswordConfirmMsg" = "Change your password?";
+"notMatchCurrentPasswordErrorMsg" = "Current passwords do not match.";
