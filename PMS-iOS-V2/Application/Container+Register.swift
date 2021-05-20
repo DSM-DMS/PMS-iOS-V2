@@ -7,6 +7,7 @@
 
 import Swinject
 import SwinjectAutoregistration
+import Moya
 
 extension Container {
     func registerDependencies() {
@@ -89,7 +90,6 @@ extension Container {
     // MARK: - PMS
     
     func registerPMSRepositories() {
-        autoregister(PMSRepository.self, initializer: DefaultPMSRepository.init)
         autoregister(LoginRepository.self, initializer: DefaultLoginRepository.init)
         autoregister(RegisterRepository.self, initializer: DefaultRegisterRepository.init)
     }

@@ -7,12 +7,7 @@
 
 import Foundation
 import RxSwift
-import Moya
 
-class ChangePasswordRepository {
-    let provider: MoyaProvider<AuthApi>
+protocol ChangePasswordRepository {
     
-    init(provider: MoyaProvider<AuthApi> = MoyaProvider<AuthApi>()) {
-        self.provider = provider
-    }
 }

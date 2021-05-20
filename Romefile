@@ -26,3 +26,5 @@ repositoryMap: # optional
     - name: Reachability
   - ios-snapshot-test-case:
     - name: FBSnapshotTestCase
+  - Then-Carthage:
+    - name: Then

@@ -6,7 +6,13 @@
 //
 
 import Foundation
+import Moya
+import RxSwift
 
-class DefaultNoticeRepository: NoticeRepository {
+final class DefaultNoticeRepository: NoticeRepository {
+    let provider: MoyaProvider<PMSApi>
     
+    init(provider: MoyaProvider<PMSApi>?) {
+        self.provider = provider ?? MoyaProvider<PMSApi>()
+    }
 }

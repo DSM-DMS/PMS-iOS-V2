@@ -7,13 +7,7 @@
 
 import Foundation
 import RxSwift
-import Moya
 
-class RegisterRepository {
-    let provider: MoyaProvider<AuthApi>
-    
-    init(provider: MoyaProvider<AuthApi> = MoyaProvider<AuthApi>()) {
-        self.provider = provider
-    }
+protocol RegisterRepository {
     
 }

@@ -37,7 +37,7 @@ class PMSFlow: Flow {
     }
 
     private func navigateToPMSScreen() -> FlowContributors {
-        let vc = AppDelegate.container.resolve(NoticeViewController.self)!
+        let vc = AppDelegate.container.resolve(PMSViewController.self)!
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }

@@ -7,12 +7,7 @@
 
 import Foundation
 import RxSwift
-import Moya
 
-class MealRepository {
-    let provider: MoyaProvider<PMSApi>
+protocol MealRepository {
     
-    init(provider: MoyaProvider<PMSApi> = MoyaProvider<PMSApi>()) {
-        self.provider = provider
-    }
 }

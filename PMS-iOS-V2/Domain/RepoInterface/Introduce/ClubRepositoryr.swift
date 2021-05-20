@@ -7,13 +7,7 @@
 
 import Foundation
 import RxSwift
-import Moya
 
-class ClubRepository {
-    let provider: MoyaProvider<PMSApi>
-    
-    init(provider: MoyaProvider<PMSApi> = MoyaProvider<PMSApi>()) {
-        self.provider = provider
-    }
+protocol ClubRepository {
     
 }

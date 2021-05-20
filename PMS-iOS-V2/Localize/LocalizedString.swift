@@ -15,6 +15,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case serverErrorMsg
     
     // Title
+    case PMSTitle
     case loginTitle
     case registerTitle
     case calendarTitle
@@ -54,6 +55,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     // Auth
     case loginButton
     case registerButton
+    case noLoginButton
     case notFoundUserErrorMsg
     case existUserErrorMsg
     case notMatchPasswordErrorMsg
@@ -111,5 +113,4 @@ extension LocalizedString {
     var localized: String {
         return NSLocalizedString(self.rawValue, comment: "")
     }
-    
 }

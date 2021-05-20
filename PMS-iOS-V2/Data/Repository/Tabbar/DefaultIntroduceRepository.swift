@@ -6,7 +6,13 @@
 //
 
 import Foundation
+import RxSwift
+import Moya
 
-class DefaultIntroduceRepository: IntroduceRepository {
+final class DefaultIntroduceRepository: IntroduceRepository {
+    let provider: MoyaProvider<PMSApi>
     
+    init(provider: MoyaProvider<PMSApi>?) {
+        self.provider = provider ?? MoyaProvider<PMSApi>()
+    }
 }

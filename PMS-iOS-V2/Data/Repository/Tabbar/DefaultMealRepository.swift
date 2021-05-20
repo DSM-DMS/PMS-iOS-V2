@@ -6,7 +6,13 @@
 //
 
 import Foundation
+import Moya
+import RxSwift
 
-class DefaultMealRepository: MealRepository {
+final class DefaultMealRepository: MealRepository {
+    let provider: MoyaProvider<PMSApi>
     
+    init(provider: MoyaProvider<PMSApi>?) {
+        self.provider = provider ?? MoyaProvider<PMSApi>()
+    }
 }

@@ -6,7 +6,13 @@
 //
 
 import Foundation
+import Moya
+import RxSwift
 
-class DefaultMypageRepository: MypageRepository {
+final class DefaultMypageRepository: MypageRepository {
+    let provider: MoyaProvider<AuthApi>
     
+    init(provider: MoyaProvider<AuthApi>?) {
+        self.provider = provider ?? MoyaProvider<AuthApi>()
+    }
 }

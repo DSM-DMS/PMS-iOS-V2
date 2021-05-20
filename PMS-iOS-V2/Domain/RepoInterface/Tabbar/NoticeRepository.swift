@@ -9,10 +9,6 @@ import Foundation
 import RxSwift
 import Moya
 
-class NoticeRepository {
-    let provider: MoyaProvider<PMSApi>
+protocol NoticeRepository {
     
-    init(provider: MoyaProvider<PMSApi> = MoyaProvider<PMSApi>()) {
-        self.provider = provider
-    }
 }

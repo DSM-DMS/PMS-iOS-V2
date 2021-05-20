@@ -9,11 +9,6 @@ import Foundation
 import RxSwift
 import Moya
 
-class LoginRepository {
-    let provider: MoyaProvider<AuthApi>
-    
-    init(provider: MoyaProvider<AuthApi> = MoyaProvider<AuthApi>()) {
-        self.provider = provider
-    }
-    
+protocol LoginRepository {
+    func login(email: String, password: String) -> Single<Void>
 }

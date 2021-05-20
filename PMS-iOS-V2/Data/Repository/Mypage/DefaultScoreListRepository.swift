@@ -6,7 +6,13 @@
 //
 
 import Foundation
+import Moya
+import RxSwift
 
-class DefaultScoreListRepository: ScoreListRepository {
+final class DefaultScoreListRepository: ScoreListRepository {
+    let provider: MoyaProvider<AuthApi>
     
+    init(provider: MoyaProvider<AuthApi>?) {
+        self.provider = provider ?? MoyaProvider<AuthApi>()
+    }
 }

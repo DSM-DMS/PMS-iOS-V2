@@ -7,22 +7,38 @@
 
 import UIKit
 import Swinject
+import RxFlow
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    let disposeBag = DisposeBag()
+    var coordinator = FlowCoordinator()
     var window: UIWindow?
     static let container = Container()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.container.registerDependencies()
         
-//        window = UIWindow()
-//        window?.rootViewController = ViewController()
-//        window?.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.main.bounds)
         
+        self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
+            print("will navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: self.disposeBag)
+        
+        self.coordinator.rx.didNavigate.subscribe(onNext: { (flow, step) in
+            print("did navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: self.disposeBag)
+        
+        let appFlow = AppFlow()
+        
+        self.coordinator.coordinate(flow: appFlow, with: AppStepper())
+        
+        Flows.use(appFlow, when: .created) { root in
+            self.window?.rootViewController = root
+            self.window?.makeKeyAndVisible()
+        }
         return true
     }
 
-
 }
-

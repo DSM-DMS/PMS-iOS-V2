@@ -43,4 +43,3 @@ class NoticeFlow: Flow {
         return .none
     }
 }
-

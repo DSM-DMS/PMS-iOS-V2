@@ -6,6 +6,8 @@
   
 */
 
+// MARK: - LocalizedString
+
 "CFBundleDisplayName" = "PMS";
 
 // Basic Error
@@ -15,6 +17,7 @@
 "serverErrorMsg" = "서버 오류가 발생했습니다.";
 
 // Title
+"PMSTitle" = "PMS";
 "loginTitle" = "로그인";
 "registerTitle" = "회원가입";
 "calendarTitle" = "학사일정";
@@ -54,6 +57,7 @@
 // Auth
 "loginButton" = "로그인";
 "registerButton" = "회원가입";
+"noLoginButton" = "로그인 없이 시작하기 >";
 "notFoundUserErrorMsg" = "이메일 또는 비밀번호가\n일치하지 않습니다.";
 "existUserErrorMsg" = "이메일 중복!\n다른 이메일로 다시 시도해주세요.";
 "notMatchPasswordErrorMsg" = "비밀번호가 일치하지 않습니다.";
@@ -105,3 +109,23 @@
 "reNewPassword" = "비밀번호 확인";
 "changePasswordConfirmMsg" = "비밀번호를 변경하시겠습니까?";
 "notMatchCurrentPasswordErrorMsg" = "현재 비밀번호가 일치하지 않습니다.";
+
+
+// MARK: - Accessibility
+
+// Navigation Title
+"PMSView" = "PMS 메인 화면";
+"LoginView" = "로그인 화면";
+"RegisterView" = "회원가입 화면";
+
+// Login
+"facebookLogin" = "페이스북으로 로그인";
+"naverLogin" = "네이버로 로그인";
+"kakaotalkLogin" = "카카오톡으로 로그인";
+"appleLogin" = "애플로 로그인";
+
+// Register
+"facebookRegister" = "페이스북으로 회원가입";
+"naverRegister" = "네이버로 회원가입";
+"kakaotalkRegister" = "카카오톡으로 회원가입";
+"appleRegister" = "애플로 회원가입";

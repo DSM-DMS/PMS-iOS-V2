@@ -6,6 +6,8 @@
   
 */
 
+// MARK: - LocalizedString
+
 "CFBundleDisplayName" = "PMS";
 
 // Basic Error
@@ -15,8 +17,9 @@
 "serverErrorMsg" = "Server Error";
 
 // Ttitle
-"loginTitle" = "Login";
-"registerTitle" = "Register";
+"PMSTitle" = "PMS";
+"loginTitle" = "Sign in";
+"registerTitle" = "Sign up";
 "calendarTitle" = "Calendar";
 "mealTitle" = "Meal";
 "noticeTitle" = "Notice";
@@ -52,8 +55,9 @@
 "noAuthPlaceholder" = "Login is required.";
 
 // Auth
-"loginButton" = "Login";
-"registerButton" = "Register";
+"loginButton" = "Sign in";
+"registerButton" = "Sign up";
+"noLoginButton" = "Start without Login >";
 "notFoundUserErrorMsg" = "Email or password\ndoes not match.";
 "existUserErrorMsg" = "Duplicate email!\nPlease try again with another email.";
 "notMatchPasswordErrorMsg" = "Passwords don't match.";
@@ -105,3 +109,22 @@
 "reNewPassword" = "Confirm Password";
 "changePasswordConfirmMsg" = "Change your password?";
 "notMatchCurrentPasswordErrorMsg" = "Current passwords do not match.";
+
+// MARK: - Accessibility
+
+// Navigation Title
+"PMSView" = "PMS Main Screen";
+"LoginView" = "Sign in Screen";
+"RegisterView" = "Sign up Screen";
+
+// Login
+"facebookLogin" = "Sign in with facebook";
+"naverLogin" = "Sign in with naver";
+"kakaotalkLogin" = "Sign in with kakaotalk";
+"appleLogin" = "Sign in with apple";
+
+// Register
+"facebookRegister" = "Sign up with facebook";
+"naverRegister" = "Sign up with naver";
+"kakaotalkRegister" = "Signup with kakaotalk";
+"appleRegister" = "Sign up with apple";

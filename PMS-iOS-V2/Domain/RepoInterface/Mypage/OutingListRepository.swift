@@ -7,12 +7,7 @@
 
 import Foundation
 import RxSwift
-import Moya
 
-class OutingListRepository {
-    let provider: MoyaProvider<AuthApi>
+protocol OutingListRepository {
     
-    init(provider: MoyaProvider<AuthApi> = MoyaProvider<AuthApi>()) {
-        self.provider = provider
-    }
 }

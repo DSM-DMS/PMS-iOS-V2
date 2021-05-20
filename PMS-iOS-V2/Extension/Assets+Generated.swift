@@ -24,6 +24,7 @@ internal enum Asset {
   internal static let blueRightArrow = ImageAsset(name: "BlueRightArrow")
   internal static let bottomArrow = ImageAsset(name: "BottomArrow")
   internal static let check = ImageAsset(name: "Check")
+  internal static let circleCheck = ImageAsset(name: "CircleCheck")
   internal static let circlePlus = ImageAsset(name: "CirclePlus")
   internal static let clip = ImageAsset(name: "Clip")
   internal static let dms = ImageAsset(name: "DMS")
