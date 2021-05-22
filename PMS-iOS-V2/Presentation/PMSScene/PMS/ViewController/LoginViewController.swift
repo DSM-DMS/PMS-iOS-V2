@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
     
     let loginViewStack = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 30.0
+        $0.spacing = 40.0
     }
     
     let emailView = UIStackView().then {
@@ -70,7 +70,6 @@ class LoginViewController: UIViewController {
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.bindInput()
         self.setupDelegate()
     }
     
@@ -89,6 +88,7 @@ class LoginViewController: UIViewController {
         self.setupSubview()
         self.addKeyboardNotification()
         self.setNavigationTitle(title: .loginTitle, accessibilityLabel: .loginView, isLarge: true)
+        self.bindInput()
         self.bindOutput()
     }
     
@@ -117,11 +117,6 @@ class LoginViewController: UIViewController {
         }
         
         loginViewStack.addArrangeSubviews([emailStackView, passwordStackView, oAuthStackView, loginButton])
-//        loginButton.snp.makeConstraints {
-//            $0.top.equalTo(oAuthStackView.snp_bottomMargin).offset(30)
-//            $0.leading.equalTo(loginViewStack.snp_leadingMargin)
-//            $0.trailing.equalTo(loginViewStack.snp_trailingMargin)
-//        }
         emailView.addArrangeSubviews([emailSpacing, personImage, emailTextField])
         emailStackView.addArrangeSubviews([emailView, emailLine])
         emailLine.snp.makeConstraints {

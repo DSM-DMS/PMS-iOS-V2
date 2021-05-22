@@ -35,6 +35,7 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case noInternetErrorMsg
     case notFoundUserErrorMsg
     case unknownErrorMsg
+    case existUserErrorMsg
 }
 
 extension AccessibilityString {

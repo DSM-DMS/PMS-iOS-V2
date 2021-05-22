@@ -25,19 +25,24 @@ PMSStepsUITests
 
 #### 2. Login
 
-LoginViewModelTests
+Unit Test
+
+- LoginViewModelTests
 
 - [x] 이메일 형식이 지켜지지 않았을 시 로그인 버튼이 비활성화
 - [x] 이메일 혹은 비밀번호가 입력되지 않았을 시 로그인 버튼이 비활성화
+- [x] 비밀번호 입력 시 EyeImage 등장
 - [x] 존재하지 않는 계정으로 로그인 시 Alert가 잘 띄워지는지.
 - [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 - [x] 테스트 계정으로 로그인 시 SuccessLottieView가 잘 띄워지는지.
 
-LoginViewTests
+- LoginViewTests
 
 - [x] 이메일이 입력중일 시 emailLine 색상 변경
 - [x] 패스워드 입력중일 시 passwordLine 색상 변경
+- [x] 비밀번호에 한글자 이상 입력 시 eyeImage isHidden 변경
 - [x] 로그인 버튼이 비활성화일 시 버튼 alpha 변경
+- [x] 로딩중일 시 activityIndicator isAnimating
 
 UI Test
 
@@ -50,16 +55,24 @@ UI Test
 
 Unit Test
 
-- 이메일 형식이 지켜지지 않았을 시 회원가입 버튼 비활성화
-- 비밀번호 두 개가 서로 맞지 않을 때 회원가입 버튼 비활성화, ErrorMessage 활성화
-- 이메일 혹은 비밀번호가 입력되지 않았을 시 회원가입 버튼이 비활성화
-- 이미 존재하는 이메일로 회원가입 시 Alert가 잘 띄워지는지.
-- 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- RegisterViewModelTests
 
-UI Test
+- [x] 이메일 형식이 지켜지지 않았을 시 회원가입 버튼이 비활성화
+- [x] 비밀번호 두 개가 서로 맞지 않을 때 회원가입 버튼 비활성화, ErrorMessage 활성화
+- [x] 이메일 혹은 비밀번호가 입력되지 않았을 시 회원가입 버튼이 비활성화
+- [x] 비밀번호 입력 시 EyeImage 등장
+- [x] 이미 존재하는 이메일로 회원가입 시 Alert가 잘 띄워지는지.
+- [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- [x] 테스트 계정으로 회원가입 시 SuccessLottieView가 잘 띄워지는지.
 
-- SecureTextField가 TextField로 잘 변환되는지.
-- 텍스트 입력 시 하단 색상이 바뀌는지.
+- RegisterViewTests
+
+- [x] 닉네임이 입력중일 시 nameLine 색상 변경
+- [x] 이메일이 입력중일 시 emailLine 색상 변경
+- [x] 패스워드 입력중일 시 passwordLine 색상 변경
+- [x] 패스워드 재입력중일 시 repasswordLine 색상 변경
+- [x] 회원가입 버튼이 비활성화일 시 버튼 alpha 변경
+- [x] 로딩중일 시 activityIndicator isAnimating
 
 
 

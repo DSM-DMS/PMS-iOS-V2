@@ -58,14 +58,14 @@ final class StorageManager {
         return user
     }
     
-    func updateUser(user: Auth) -> Bool {
+    func updateUser(user: Auth) {
         guard let query = self.query,
               let data = try? JSONEncoder().encode(user) else { return false }
         
         let attributes: [CFString: Any] = [kSecAttrAccount: account,
                                            kSecAttrGeneric: data]
         
-        return SecItemUpdate(query as CFDictionary, attributes as CFDictionary) == errSecSuccess
+        SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
     }
     
     func deleteUser() {

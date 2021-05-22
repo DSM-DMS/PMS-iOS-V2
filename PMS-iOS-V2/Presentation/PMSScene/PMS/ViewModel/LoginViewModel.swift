@@ -35,7 +35,6 @@ class LoginViewModel: Stepper {
         let isPasswordEyed = BehaviorRelay<Bool>(value: false)
         let passwordEyeVisiable = BehaviorRelay<Bool>(value: false)
         let loginButtonIsEnable = BehaviorRelay<Bool>(value: false)
-        let loginSucceed = BehaviorRelay<Bool>(value: false)
     }
     
     let input = Input()

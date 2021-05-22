@@ -145,9 +145,9 @@ class LoginViewModelTests: XCTestCase {
                        PMSStep.success(.loginSuccessMsg))
     }
     
-    func test_login_notMatch_alert() {
+    func test_login_existUser_alert() {
         // MARK: - WHEN
-        viewModel = LoginViewModel(loginRepository: MockFailLoginRepository(test: .notMatch))
+        viewModel = LoginViewModel(loginRepository: MockFailLoginRepository(test: .existUser))
         
         scheduler.createHotObservable([.next(100, "login@.")])
             .bind(to: viewModel.input.emailText)
@@ -173,7 +173,7 @@ class LoginViewModelTests: XCTestCase {
         
         XCTAssertEqual(observer.events.count, 1)
         XCTAssertEqual(observer.events[0].value.element as! PMSStep,
-                       PMSStep.alert(LocalizedString.notFoundUserErrorMsg.localized))
+                       PMSStep.alert(LocalizedString.notFoundUserErrorMsg.localized, .notFoundUserErrorMsg))
     }
     
     func test_login_noInternet_alert() {
@@ -204,7 +204,7 @@ class LoginViewModelTests: XCTestCase {
         
         XCTAssertEqual(observer.events.count, 1)
         XCTAssertEqual(observer.events[0].value.element as! PMSStep,
-                       PMSStep.alert(LocalizedString.noInternetErrorMsg.localized))
+                       PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
     }
     
 }

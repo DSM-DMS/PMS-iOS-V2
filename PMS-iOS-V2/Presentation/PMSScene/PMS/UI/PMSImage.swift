@@ -91,10 +91,15 @@ class BlackPencilImage: UIImageView {
     override init(image: UIImage? = Asset.blackPencil.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
+        self.tintColor = Colors.black.color
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
 }
 
@@ -107,16 +112,25 @@ class CircleCheckImage: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
+    }
 }
 
 class CheckImage: UIImageView {
     override init(image: UIImage? = Asset.check.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
+        self.tintColor = Colors.red.color
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
 }
 
