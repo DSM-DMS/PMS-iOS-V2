@@ -9,9 +9,10 @@ import Foundation
 
 public enum LocalizedString: String, Equatable, Hashable {
     // Basic Error
+    case unauthorizedErrorMsg
     case notFoundErrorMsg
     case unknownErrorMsg
-    case noInternectErrorMsg
+    case noInternetErrorMsg
     case serverErrorMsg
     
     // Title
@@ -59,6 +60,8 @@ public enum LocalizedString: String, Equatable, Hashable {
     case notFoundUserErrorMsg
     case existUserErrorMsg
     case notMatchPasswordErrorMsg
+    case loginSuccessMsg
+    case registerSuccessMsg
     
     // Calendar
     

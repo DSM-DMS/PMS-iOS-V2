@@ -7,13 +7,16 @@
 
 import RxFlow
 import UIKit
+import Then
 
 class IntroduceFlow: Flow {
     var root: Presentable {
         return self.rootViewController
     }
 
-    private let rootViewController = UINavigationController()
+    private let rootViewController = UINavigationController().then {
+        $0.isNavigationBarHidden = true
+    }
 
     deinit {
         print("\(type(of: self)): \(#function)")
@@ -35,8 +38,8 @@ class IntroduceFlow: Flow {
             return navigateToDetailCompanyScreen(name: name)
         case .developerIsRequired:
             return navigateToDeveloperScreen()
-        case .alert(let string):
-            return alert(string: string)
+        case .alert(let string, let access):
+            return alert(string: string, access: access)
         default:
             return .none
         }
@@ -78,8 +81,8 @@ class IntroduceFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func alert(string: String) -> FlowContributors {
-        self.rootViewController.showErrorAlert(with: string)
+    private func alert(string: String, access: AccessibilityString) -> FlowContributors {
+        self.rootViewController.showErrorAlert(with: string, access: access)
         return .none
     }
 }

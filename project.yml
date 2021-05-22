@@ -18,7 +18,7 @@ targets:
       groups: [app]
       base:
         INFOPLIST_FILE: PMS-iOS-V2/Resource/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.jeonggo.PMS-iOS-V2
+        PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2
     type: application
     platform: iOS
     deploymentTarget: 11.0

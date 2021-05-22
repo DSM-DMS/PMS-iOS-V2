@@ -16,13 +16,18 @@ final class DefaultLoginRepository: LoginRepository {
         self.provider = provider ??  MoyaProvider<AuthApi>()
     }
     
-    func login(email: String, password: String) -> Single<Void> {
+    func login(email: String, password: String) -> Single<Bool> {
         provider.rx.request(.login(email: email, password: password))
             .filterSuccessfulStatusCodes()
-            .map { _ in }
+            .map(AccessToken.self)
+            .map {
+                StorageManager.shared.createUser(
+                    user: Auth(token: $0.accessToken, email: email, password: password))
+                return true
+            }
             .catchError { error in
                 if let moyaError = error as? MoyaError {
-                    return Single.error(NetworkError(moyaError)!)
+                    return Single.error(NetworkError(moyaError))
                 } else {
                     Log.error("Unkown Error!")
                     return Single.error(NetworkError.unknown)

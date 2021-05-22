@@ -29,6 +29,12 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case loginButton
     case registerButton
     case noLoginButton
+    case showPasswordButton
+    
+    // ERROR
+    case noInternetErrorMsg
+    case notFoundUserErrorMsg
+    case unknownErrorMsg
 }
 
 extension AccessibilityString {

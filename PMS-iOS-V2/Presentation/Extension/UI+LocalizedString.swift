@@ -36,3 +36,9 @@ extension UIViewController {
         self.navigationItem.accessibilityLabel = accessibilityLabel.localized
     }
 }
+
+extension UITabBarItem {
+    convenience init(title: LocalizedString, image: UIImage, tag: Int) {
+        self.init(title: title.localized, image: image, tag: tag)
+    }
+}

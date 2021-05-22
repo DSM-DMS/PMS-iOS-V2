@@ -11,9 +11,10 @@
 "CFBundleDisplayName" = "PMS";
 
 // Basic Error
+"unauthorizedErrorMsg" = "The login information does not match.";
 "notFoundErrorMsg" = "Can't find student";
 "unknownErrorMsg" = "Unknown error";
-"noInternectErrorMsg" = "Not conneted to Internet";
+"noInternetErrorMsg" = "Not conneted to Internet";
 "serverErrorMsg" = "Server Error";
 
 // Ttitle
@@ -61,6 +62,8 @@
 "notFoundUserErrorMsg" = "Email or password\ndoes not match.";
 "existUserErrorMsg" = "Duplicate email!\nPlease try again with another email.";
 "notMatchPasswordErrorMsg" = "Passwords don't match.";
+"loginSuccessMsg" = "Sign in was successful.";
+"registerSuccessMsg" = "Sign up was successful.";
 
 // Calendar
 
@@ -128,3 +131,6 @@
 "naverRegister" = "Sign up with naver";
 "kakaotalkRegister" = "Signup with kakaotalk";
 "appleRegister" = "Sign up with apple";
+
+// Button
+"showPasswordButton" = "Show password";
