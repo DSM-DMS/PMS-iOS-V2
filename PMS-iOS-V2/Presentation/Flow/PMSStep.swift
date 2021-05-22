@@ -7,9 +7,10 @@
 
 import RxFlow
 
-enum PMSStep: Step {
+enum PMSStep: Step, Equatable {
     // Global
-    case alert(String)
+    case alert(String, AccessibilityString)
+    case success(LocalizedString)
     
     // TabBar or PMSView
     case tabBarIsRequired

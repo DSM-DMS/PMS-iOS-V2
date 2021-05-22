@@ -70,10 +70,6 @@ extension AuthApi: TargetType {
         }
     }
     
-    public var sampleData: Data {
-        return Data()
-    }
-    
     // 기본요청(plain request), 데이터 요청(data request), 파라미터 요청(parameter request), 업로드 요청(upload request) 등
     public var task: Task {
         switch self {
@@ -99,13 +95,23 @@ extension AuthApi: TargetType {
         case .login, .register:
             return ["Content-type": "application/json"]
         default:
-            return nil
-//            return ["Authorization": "Bearer " + UDManager.shared.token!]
+            return ["Authorization": "Bearer " + StorageManager.shared.readUser()!.token]
         }
     }
     
-    // HTTP code가 200에서 299사이인 경우 요청이 성공한 것으로 간주된다.
-    public var validationType: ValidationType {
-        return .successCodes
+    public var sampleData: Data {
+        switch self {
+        case .login:
+            return stub("loginSuccess")
+        default:
+            return Data()
+        }
+    }
+    
+    func stub(_ filename: String) -> Data! {
+        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+        let bundle = Bundle(path: bundlePath!)
+        let path = bundle?.path(forResource: filename, ofType: "json")
+        return (try? Data(contentsOf: URL(fileURLWithPath: path!)))
     }
 }

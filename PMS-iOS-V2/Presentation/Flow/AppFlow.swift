@@ -55,6 +55,7 @@ class AppFlow: Flow {
         let dashboardFlow = TabbarFlow()
 
         Flows.use(dashboardFlow, when: .created) { [unowned self] root in
+//            self.rootViewController.isNavigationBarHidden = true
             self.rootViewController.pushViewController(root, animated: false)
         }
 
@@ -66,8 +67,20 @@ class AppFlow: Flow {
 
 class AppStepper: Stepper {
     let steps = PublishRelay<Step>()
+    private let disposeBag = DisposeBag()
 
     var initialStep: Step {
         return PMSStep.PMSIsRequired
+    }
+    
+    var userIsSignedIn: Observable<Bool> {
+        return .just(StorageManager.shared.readUser() != nil)
+    }
+    
+    func readyToEmitSteps() {
+        userIsSignedIn
+            .map { $0 ? PMSStep.tabBarIsRequired : PMSStep.PMSIsRequired }
+            .bind(to: steps)
+            .disposed(by: self.disposeBag)
     }
 }

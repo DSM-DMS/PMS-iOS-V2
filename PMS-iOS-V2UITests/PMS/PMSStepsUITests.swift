@@ -18,8 +18,27 @@ class PMSStepsUITests: XCTestCase {
     }
     
     func test_app_lunched_PMS() {
-        let app = XCUIApplication()
-        app.launch()
-        XCTAssertTrue(app.buttons["로그인"].exists)
+        login()
+        XCTAssertTrue(app.navigationBars["PMS"].exists)
+    }
+    
+    func test_go_LoginView() {
+        login()
+        app.buttons["로그인"].tap()
+        XCTAssertTrue(app.navigationBars["로그인"].exists)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+    }
+    
+    func test_go_RegisterView() {
+        login()
+        app.buttons["회원가입"].tap()
+        XCTAssertTrue(app.navigationBars["회원가입"].exists)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+    }
+    
+    func login() {
+        if app.buttons["공지"].exists {
+            app.navigationBars.buttons.element(boundBy: 0).tap()
+        }
     }
 }

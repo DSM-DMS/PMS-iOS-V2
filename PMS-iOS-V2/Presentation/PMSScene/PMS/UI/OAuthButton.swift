@@ -16,10 +16,17 @@ class FacebookButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.facebook.image, for: .normal)
+        self.contentHorizontalAlignment = .fill
+        self.contentVerticalAlignment = .fill
+        self.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 70, height: 70)
     }
 }
 
@@ -32,10 +39,17 @@ class NaverButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.naver.image, for: .normal)
+        self.contentHorizontalAlignment = .fill
+        self.contentVerticalAlignment = .fill
+        self.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 70, height: 70)
     }
 }
 
@@ -48,10 +62,17 @@ class KakaotalkButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.kakaoTalk.image, for: .normal)
+        self.contentHorizontalAlignment = .fill
+        self.contentVerticalAlignment = .fill
+        self.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 70, height: 70)
     }
 }
 
@@ -64,10 +85,17 @@ class AppleButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.apple.image, for: .normal)
+        self.contentHorizontalAlignment = .fill
+        self.contentVerticalAlignment = .fill
+        self.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 70, height: 70)
     }
 }
 

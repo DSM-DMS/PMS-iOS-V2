@@ -7,8 +7,7 @@
 
 import Foundation
 import RxSwift
-import Moya
 
 protocol LoginRepository {
-    func login(email: String, password: String) -> Single<Void>
+    func login(email: String, password: String) -> Single<Bool>
 }

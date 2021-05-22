@@ -20,8 +20,6 @@ repositoryMap: # optional
   - CocoaLumberjack:
     - name: CocoaLumberjack
     - name: CocoaLumberjackSwift
-  - keychain-swift:
-    - name: KeychainSwift
   - Reachability.swift:
     - name: Reachability
   - ios-snapshot-test-case:
