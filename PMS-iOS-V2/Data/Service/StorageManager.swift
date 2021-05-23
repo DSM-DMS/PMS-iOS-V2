@@ -60,7 +60,7 @@ final class StorageManager {
     
     func updateUser(user: Auth) {
         guard let query = self.query,
-              let data = try? JSONEncoder().encode(user) else { return false }
+              let data = try? JSONEncoder().encode(user) else { return }
         
         let attributes: [CFString: Any] = [kSecAttrAccount: account,
                                            kSecAttrGeneric: data]

@@ -12,6 +12,7 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case PMSView
     case loginView
     case registerView
+    case calendarTitle
     
     // Login
     case facebookLogin

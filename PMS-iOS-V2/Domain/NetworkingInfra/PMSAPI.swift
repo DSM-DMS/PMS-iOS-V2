@@ -87,10 +87,6 @@ extension PMSApi: TargetType {
         }
     }
     
-    public var sampleData: Data {
-        return Data()
-    }
-    
     public var task: Task {
         switch self {
 //        case let .changeNickname(name):
@@ -103,9 +99,24 @@ extension PMSApi: TargetType {
     public var headers: [String: String]? {
         switch self {
         default:
-            return nil
-//            return ["Authorization": "Bearer " + UDManager.shared.token!]
+            return ["Authorization": "Bearer " + StorageManager.shared.readUser()!.token]
         }
+    }
+    
+    public var sampleData: Data {
+        switch self {
+        case .calendar:
+            return stub("Calendar")
+        default:
+            return Data()
+        }
+    }
+    
+    func stub(_ filename: String) -> Data! {
+        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+        let bundle = Bundle(path: bundlePath!)
+        let path = bundle?.path(forResource: filename, ofType: "json")
+        return (try? Data(contentsOf: URL(fileURLWithPath: path!)))
     }
     
     // HTTP code가 200에서 299사이인 경우 요청이 성공한 것으로 간주된다.

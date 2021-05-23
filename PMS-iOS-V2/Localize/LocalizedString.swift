@@ -48,6 +48,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case reNewPasswordPlaceholder
     case commentPlaceholder
     case calendarPlaceholder
+    case noEventPlaceholder
     case searchNoticePlaceholder
     case searchLetterPlaceholder
     case noStudentPlaceholder
@@ -64,6 +65,8 @@ public enum LocalizedString: String, Equatable, Hashable {
     case registerSuccessMsg
     
     // Calendar
+    case calendarHeaderDateFormat
+    case dateFormat
     
     // Meal
     case breakfast
@@ -115,5 +118,12 @@ public enum LocalizedString: String, Equatable, Hashable {
 extension LocalizedString {
     var localized: String {
         return NSLocalizedString(self.rawValue, comment: "")
+    }
+    
+    func localizedDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = self.localized
+        
+        return dateFormatter.string(from: date)
     }
 }

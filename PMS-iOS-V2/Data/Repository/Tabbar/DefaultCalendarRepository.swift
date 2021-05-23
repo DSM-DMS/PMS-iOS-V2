@@ -15,4 +15,23 @@ final class DefaultCalendarRepository: CalendarRepository {
     init(provider: MoyaProvider<PMSApi>?) {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
+    
+    func getCalendar() -> Single<PMSCalendar> {
+        provider.rx.request(.calendar)
+            .filterSuccessfulStatusCodes()
+            .map(PMSCalendar.self)
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    if moyaError.response?.statusCode == 401 {
+                        AuthService.shared.refreshToken()
+                        Log.info("Refreshed Token~")
+                    }
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+            .retry(2)
+    }
 }

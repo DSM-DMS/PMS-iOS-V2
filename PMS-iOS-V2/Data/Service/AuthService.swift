@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import RxSwift
 
 class AuthService {
     static let shared = AuthService()
@@ -17,14 +18,11 @@ class AuthService {
     
     func refreshToken() {
         user = StorageManager.shared.readUser()!
-        self.requestToken()
-    }
-    
-    func requestToken() {
         provider.rx.request(.login(email: user!.email, password: user!.password))
+            .filterSuccessfulStatusCodes()
             .map(AccessToken.self)
-            .map { _ in
-                StorageManager.shared.updateUser(user: self.user!)
+            .map { token in
+                StorageManager.shared.updateUser(user: Auth(token: token.accessToken, email: self.user!.email, password: self.user!.password))
                 return
             }.subscribe(onError: {
                 Log.error($0.localizedDescription)
