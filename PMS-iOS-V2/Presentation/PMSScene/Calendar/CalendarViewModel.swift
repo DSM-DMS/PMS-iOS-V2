@@ -140,7 +140,7 @@ class CalendarViewModel: Stepper {
         
     }
     
-    func mapError(error: Int) -> String {
+    private func mapError(error: Int) -> String {
         if error == 1 {
             return LocalizedString.noInternetErrorMsg.localized
         } else if error == 401 {
@@ -151,7 +151,7 @@ class CalendarViewModel: Stepper {
         }
     }
     
-    func mapError(error: Int) -> AccessibilityString {
+    private func mapError(error: Int) -> AccessibilityString {
         if error == 1 {
             return .noInternetErrorMsg
         } else if error == 401 {

@@ -30,3 +30,8 @@ public struct MealPicture: Codable, Hashable {
         self.dinner = dinner
     }
 }
+
+public struct MealCell {
+    public var time: LocalizedString
+    public var meal: [String]
+}

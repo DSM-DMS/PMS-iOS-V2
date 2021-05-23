@@ -145,7 +145,7 @@ class LoginViewModel: Stepper {
             .disposed(by: disposeBag)
     }
     
-    func mapError(error: Int) -> String {
+    private func mapError(error: Int) -> String {
         if error == 400 || error == 401 {
             return LocalizedString.notFoundUserErrorMsg.localized
         } else if error == 1 {
@@ -155,7 +155,7 @@ class LoginViewModel: Stepper {
         }
     }
     
-    func mapError(error: Int) -> AccessibilityString {
+    private func mapError(error: Int) -> AccessibilityString {
         if error == 400 || error == 401 {
             return .notFoundUserErrorMsg
         } else if error == 1 {
