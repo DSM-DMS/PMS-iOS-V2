@@ -137,3 +137,5 @@
 
 // Button
 "showPasswordButton" = "Show password";
+"leftArrowButton" = "Go to the previous month";
+"rightArrowButton" = "Go to the next month";

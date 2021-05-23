@@ -22,7 +22,9 @@ class AuthService {
             .filterSuccessfulStatusCodes()
             .map(AccessToken.self)
             .map { token in
+                print("Token: \(token)")
                 StorageManager.shared.updateUser(user: Auth(token: token.accessToken, email: self.user!.email, password: self.user!.password))
+                print(StorageManager.shared.readUser()!.token)
                 return
             }.subscribe(onError: {
                 Log.error($0.localizedDescription)

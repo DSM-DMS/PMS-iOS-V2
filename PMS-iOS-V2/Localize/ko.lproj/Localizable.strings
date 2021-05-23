@@ -137,3 +137,5 @@
 
 // Button
 "showPasswordButton" = "비밀번호 보여죽기";
+"leftArrowButton" = "이전 달로 이동";
+"rightArrowButton" = "다음 달로 이동";

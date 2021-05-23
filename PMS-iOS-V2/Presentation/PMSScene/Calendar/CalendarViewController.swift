@@ -19,6 +19,8 @@ class CalendarViewController: UIViewController {
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
         $0.rowHeight = 60.0
+        $0.isScrollEnabled = false
+        $0.allowsSelection = false
     }
     let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
@@ -31,12 +33,13 @@ class CalendarViewController: UIViewController {
         $0.appearance.headerDateFormat = LocalizedString.calendarHeaderDateFormat.localized
         $0.appearance.headerTitleColor = Colors.black.color
         $0.appearance.weekdayTextColor = Colors.black.color
-//        $0.appearance.caseOptions = .weekdayUsesSingleUpperCase
-//        $0.appearance.titleDefaultColor = .white
-//        $0.appearance.titlePlaceholderColor = UIColor(hex: 0xC4C4C4)
-//        $0.appearance.todayColor = .white
-//        $0.appearance.selectionColor = .white
-//        $0.allowsMultipleSelection = false
+    }
+    
+    private let leftButton = LeftArrowButton().then {
+        $0.addTarget(self, action: #selector(PreviousBtnPressed(_:)), for: .touchUpInside)
+    }
+    private let rightButton = RightArrowButton().then {
+        $0.addTarget(self, action: #selector(NextBtnPressed(_:)), for: .touchUpInside)
     }
     
     private let dataSource = RxTableViewSectionedReloadDataSource<ListSection<CalendarCell>>(configureCell: {  (_, tableView, _, calendar) -> UITableViewCell in
@@ -50,22 +53,15 @@ class CalendarViewController: UIViewController {
         $0.spacing = 20.0
     }
     
-//    @IBAction func PreviousBtnPressed(_ sender: Any) {
-//        self.moveCurrentPage(moveUp: false)
-//    }
-//
-//    @IBAction func NextBtnPressed(_ sender: Any) {
-//        self.moveCurrentPage(moveUp: true)
-//    }
-//
-//    private func moveCurrentPage(moveUp: Bool) {
-//        let calendar = Calendar.current
-//        var dateComponents = DateComponents()
-//        dateComponents.month = moveUp ? 1 : -1
-//        self.currentPage = calendar.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
-//        self.calendar.setCurrentPage(self.currentPage!, animated: true)
-//        changeMonth()
-//    }
+    private var currentPage: Date?
+    
+    @objc func PreviousBtnPressed(_ sender: Any) {
+        self.moveCurrentPage(moveUp: false)
+    }
+
+    @objc func NextBtnPressed(_ sender: Any) {
+        self.moveCurrentPage(moveUp: true)
+    }
     
     private let dateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy-MM-dd"
@@ -102,6 +98,7 @@ class CalendarViewController: UIViewController {
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubview(calendarStackView)
+        view.addSubViews([leftButton, rightButton])
         view.addSubview(activityIndicator)
         
         calendarStackView.addArrangeSubviews([calendar, tableView])
@@ -110,6 +107,16 @@ class CalendarViewController: UIViewController {
             $0.top.equalTo(view.snp_topMargin).offset(10)
             $0.center.equalToSuperview()
             $0.width.equalTo(UIFrame.width - 70)
+        }
+        
+        leftButton.snp.makeConstraints {
+            $0.leading.equalTo(calendar.snp_leadingMargin)
+            $0.top.equalTo(calendar.snp_topMargin).offset(10)
+        }
+        
+        rightButton.snp.makeConstraints {
+            $0.trailing.equalTo(calendar.snp_trailingMargin)
+            $0.top.equalTo(calendar.snp_topMargin).offset(10)
         }
         
         tableView.snp.makeConstraints {
@@ -183,5 +190,14 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         let currentPageDate = calendar.currentPage
         let month = Calendar.current.component(.month, from: currentPageDate)
         self.viewModel.input.month.accept(String(month))
+    }
+    
+    private func moveCurrentPage(moveUp: Bool) {
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.month = moveUp ? 1 : -1
+        self.currentPage = calendar.date(byAdding: dateComponents, to: self.currentPage ?? Date())
+        self.calendar.setCurrentPage(self.currentPage!, animated: true)
+        changeMonth()
     }
 }

@@ -31,6 +31,8 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case registerButton
     case noLoginButton
     case showPasswordButton
+    case leftArrowButton
+    case rightArrowButton
     
     // ERROR
     case noInternetErrorMsg
