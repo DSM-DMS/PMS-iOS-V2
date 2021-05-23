@@ -14,19 +14,22 @@ class CalendarViewModel: Stepper {
     let calendarRepository: CalendarRepository
     private var disposeBag = DisposeBag()
     let dateFormatter = DateFormatter().then {
-      $0.dateFormat = "yyyy-MM-dd"
+        $0.dateFormat = "yyyy-MM-dd"
     }
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
-        let date = PublishRelay<Date>()
+        let date = BehaviorRelay<Date>(value: Date())
+        let selectedDate = BehaviorRelay<Date>(value: Date())
         let month = BehaviorRelay<String>(value: "")
+        let noInternet = PublishRelay<Void>()
     }
     
     struct Output {
         let reloadData = PublishRelay<Void>()
         let date = BehaviorRelay<String>(value: "")
+        let selectedDate = BehaviorRelay<String>(value: "")
         let calendar = BehaviorRelay<PMSCalendar>(value: PMSCalendar())
         let dateInHome = BehaviorRelay<[String]>(value: .init())
         let dateInSchool = BehaviorRelay<[String]>(value: .init())
@@ -41,6 +44,14 @@ class CalendarViewModel: Stepper {
         self.calendarRepository = calendarRepository
         let activityIndicator = ActivityIndicator()
         
+        input.noInternet
+            .subscribe(onNext: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                }
+            })
+            .disposed(by: disposeBag)
+        
         input.viewDidLoad
             .flatMap {
                 calendarRepository.getCalendar()
@@ -49,9 +60,18 @@ class CalendarViewModel: Stepper {
                     .do(onError: { error in
                         let error = error as! NetworkError
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                        
                     })
                     .catchErrorJustReturn(PMSCalendar())
             }.bind(to: output.calendar)
+            .disposed(by: disposeBag)
+        
+        output.calendar
+            .map { _ in
+                var month = Date().month
+                return String(month.removeFirst())
+            }
+            .bind(to: input.month)
             .disposed(by: disposeBag)
         
         input.date
@@ -59,7 +79,12 @@ class CalendarViewModel: Stepper {
             .bind(to: output.date)
             .disposed(by: disposeBag)
         
-        output.date
+        input.selectedDate
+            .map { self.dateFormatter.string(from: $0 )}
+            .bind(to: output.selectedDate)
+            .disposed(by: disposeBag)
+        
+        output.selectedDate
             .subscribe(onNext: { date in
                 for (key, value) in self.output.calendar.value {
                     if key == String(self.input.month.value) {
@@ -97,14 +122,14 @@ class CalendarViewModel: Stepper {
                         for (key, value) in value {
                             if value.contains("의무귀가") {
                                 dateInHome.append(key)
-                            } else if !value.contains("빙학") || !value.contains("토요휴업일") {
+                            } else if !value.contains("빙학") && !value.contains("토요휴업일") {
                                 dateInSchool.append(key)
                             }
                         }
                     }
                 }
-                self.output.dateInHome.accept(dateInHome)
-                self.output.dateInSchool.accept(dateInSchool)
+                self.output.dateInHome.accept(dateInHome.sorted())
+                self.output.dateInSchool.accept(dateInSchool.sorted())
                 self.output.reloadData.accept(())
             }).disposed(by: disposeBag)
         

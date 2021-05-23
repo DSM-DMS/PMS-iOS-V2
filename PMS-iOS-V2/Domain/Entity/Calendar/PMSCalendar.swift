@@ -9,7 +9,7 @@ import Foundation
 
 public typealias PMSCalendar = [String: [String: [String]]]
 
-public struct CalendarCell {
+public struct CalendarCell: Equatable {
     public var date: String?
     public var event: String
     public var isHome: Bool?
