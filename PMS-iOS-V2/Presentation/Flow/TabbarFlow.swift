@@ -8,13 +8,16 @@
 import Foundation
 import UIKit
 import RxFlow
+import Then
 
 class TabbarFlow: Flow {
     var root: Presentable {
         return self.rootViewController
     }
 
-    let rootViewController = UITabBarController()
+    let rootViewController = UITabBarController().then {
+        $0.tabBar.barTintColor = Colors.white.color
+    }
 
     deinit {
         print("\(type(of: self)): \(#function)")

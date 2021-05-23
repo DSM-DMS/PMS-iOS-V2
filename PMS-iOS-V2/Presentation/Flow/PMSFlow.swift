@@ -64,6 +64,7 @@ class PMSFlow: Flow {
         Flows.use(tabbarFlow, when: .ready) { [unowned self] root in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.rootViewController.viewControllers.removeAll()
+                self.rootViewController.isNavigationBarHidden = true
                 self.rootViewController.pushViewController(root, animated: false)
             }
         }

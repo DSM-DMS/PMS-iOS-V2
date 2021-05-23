@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol CalendarRepository {
-    
+    func getCalendar() -> Single<PMSCalendar>
 }

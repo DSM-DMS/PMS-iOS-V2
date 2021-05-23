@@ -46,7 +46,9 @@ class LoginViewModel: Stepper {
         
         input.noInternet
             .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                }
             })
             .disposed(by: disposeBag)
         

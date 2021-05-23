@@ -12,7 +12,7 @@ import Reachability
 class LoginViewController: UIViewController {
     let viewModel: LoginViewModel
     private let disposeBag = DisposeBag()
-    var reachability: Reachability?
+    private let reachability = try! Reachability()
     let activityIndicator = UIActivityIndicatorView()
     
     let loginViewStack = UIStackView().then {
@@ -84,7 +84,6 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        try! reachability = Reachability()
         self.setupSubview()
         self.addKeyboardNotification()
         self.setNavigationTitle(title: .loginTitle, accessibilityLabel: .loginView, isLarge: true)
@@ -94,12 +93,12 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        try! reachability!.startNotifier()
+        try! reachability.startNotifier()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        reachability!.stopNotifier()
+        reachability.stopNotifier()
     }
     
     private func setupSubview() {
@@ -156,8 +155,7 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.input.passwordText)
             .disposed(by: disposeBag)
         
-        reachability?.rx.isDisconnected
-            .map { print("NOINTERNET") }
+        reachability.rx.isDisconnected
             .bind(to: viewModel.input.noInternet)
             .disposed(by: disposeBag)
         

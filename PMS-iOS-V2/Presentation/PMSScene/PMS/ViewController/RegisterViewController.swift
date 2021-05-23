@@ -12,7 +12,7 @@ import Reachability
 class RegisterViewController: UIViewController {
     let viewModel: RegisterViewModel
     let activityIndicator = UIActivityIndicatorView()
-    var reachability: Reachability?
+    private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
     let registerViewStack = UIStackView().then {
@@ -122,7 +122,6 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         setupSubview()
-        try! reachability = Reachability()
         setNavigationTitle(title: .registerTitle, accessibilityLabel: .registerView, isLarge: true)
         bindInput()
         bindOutput()
@@ -130,12 +129,12 @@ class RegisterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        try! reachability!.startNotifier()
+        try! reachability.startNotifier()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        reachability!.stopNotifier()
+        reachability.stopNotifier()
     }
     
     deinit {
@@ -213,6 +212,10 @@ class RegisterViewController: UIViewController {
     }
     
     private func bindInput() {
+        reachability.rx.isDisconnected
+            .bind(to: viewModel.input.noInternet)
+            .disposed(by: disposeBag)
+        
         nicknameTextField.rx.text
             .orEmpty
             .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
@@ -241,7 +244,7 @@ class RegisterViewController: UIViewController {
             .bind(to: viewModel.input.rePasswordText)
             .disposed(by: disposeBag)
         
-        reachability?.rx.isDisconnected
+        reachability.rx.isDisconnected
             .map { print("NOINTERNET") }
             .bind(to: viewModel.input.noInternet)
             .disposed(by: disposeBag)

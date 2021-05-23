@@ -12,6 +12,7 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case PMSView
     case loginView
     case registerView
+    case calendarTitle
     
     // Login
     case facebookLogin
@@ -30,6 +31,8 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case registerButton
     case noLoginButton
     case showPasswordButton
+    case leftArrowButton
+    case rightArrowButton
     
     // ERROR
     case noInternetErrorMsg

@@ -50,6 +50,7 @@
 "reNewPasswordPlaceholder" = "Check Password to be Changed.";
 "commentPlaceholder" = "Enter Comment.";
 "calendarPlaceholder" = "Click on the date to see the schedule.";
+"noEventPlaceholder" = "There is no schedule.";
 "searchNoticePlaceholder" = "Enter Notice title.";
 "searchLetterPlaceholder" = "Enter Letter title.";
 "noStudentPlaceholder" = "Add Student";
@@ -66,6 +67,8 @@
 "registerSuccessMsg" = "Sign up was successful.";
 
 // Calendar
+"calendarHeaderDateFormat" = "MMMM yyyy";
+"dateFormat" = "MMMM d, yyyy";
 
 // Meal
 "breakfast" = "Breakfast";
@@ -134,3 +137,5 @@
 
 // Button
 "showPasswordButton" = "Show password";
+"leftArrowButton" = "Go to the previous month";
+"rightArrowButton" = "Go to the next month";

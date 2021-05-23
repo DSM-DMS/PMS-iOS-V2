@@ -19,7 +19,6 @@ final class BlueButton: UIButton {
         self.backgroundColor = Colors.blue.color
         self.layer.cornerRadius = 5
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize.zero
         self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -48,7 +47,6 @@ final class RedButton: UIButton {
         self.backgroundColor = Colors.red.color
         self.layer.cornerRadius = 5
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize.zero
         self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)

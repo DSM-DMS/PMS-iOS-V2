@@ -55,7 +55,7 @@ class AppFlow: Flow {
         let dashboardFlow = TabbarFlow()
 
         Flows.use(dashboardFlow, when: .created) { [unowned self] root in
-//            self.rootViewController.isNavigationBarHidden = true
+            self.rootViewController.isNavigationBarHidden = true
             self.rootViewController.pushViewController(root, animated: false)
         }
 
