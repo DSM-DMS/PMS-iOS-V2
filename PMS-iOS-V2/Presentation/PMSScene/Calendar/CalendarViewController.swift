@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import SnapKit
+import Reachability
 
 class CalendarViewController: UIViewController {
     let viewModel: CalendarViewModel
@@ -20,6 +21,7 @@ class CalendarViewController: UIViewController {
         $0.rowHeight = 60.0
     }
     let activityIndicator = UIActivityIndicatorView()
+    private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
     private let calendar = FSCalendar().then {
@@ -85,7 +87,16 @@ class CalendarViewController: UIViewController {
         self.setNavigationTitle(title: .calendarTitle, accessibilityLabel: .calendarTitle, isLarge: true)
         setupSubview()
         bindOutput()
-        changeMonth()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        try! reachability.startNotifier()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        reachability.stopNotifier()
     }
     
     private func setupSubview() {
@@ -113,6 +124,10 @@ class CalendarViewController: UIViewController {
     private func bindInput() {
         self.rx.viewDidLoad
             .bind(to: viewModel.input.viewDidLoad)
+            .disposed(by: disposeBag)
+        
+        reachability.rx.isDisconnected
+            .bind(to: viewModel.input.noInternet)
             .disposed(by: disposeBag)
     }
     
@@ -146,7 +161,6 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         self.viewModel.input.date.accept(date)
-        
         if viewModel.output.dateInHome.value.contains(viewModel.output.date.value) {
             return Colors.red.color
         }
@@ -158,7 +172,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        self.viewModel.input.date.accept(date)
+        self.viewModel.input.selectedDate.accept(date)
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
@@ -168,8 +182,6 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     private func changeMonth() {
         let currentPageDate = calendar.currentPage
         let month = Calendar.current.component(.month, from: currentPageDate)
-        Log.info("\(month)")
         self.viewModel.input.month.accept(String(month))
-        calendar.reloadData()
     }
 }

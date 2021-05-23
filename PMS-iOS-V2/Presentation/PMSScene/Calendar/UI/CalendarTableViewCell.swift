@@ -31,7 +31,6 @@ class CalendarTableViewCell: UITableViewCell {
         $0.backgroundColor = Colors.gray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowOffset = CGSize.zero
         $0.layer.shadowColor = UIColor.lightGray.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
