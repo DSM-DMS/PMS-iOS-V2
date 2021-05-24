@@ -12,3 +12,4 @@ github "uber/ios-snapshot-test-case" ~> 6.1.0
 github "RxSwiftCommunity/RxFlow" ~> 2.11.0
 github "SnapKit/SnapKit" ~> 5.0.0
 gitHub "Goeun1001/Then-Carthage" ~> 1.0.0
+github "Juanpe/SkeletonView"

@@ -107,6 +107,10 @@ extension PMSApi: TargetType {
         switch self {
         case .calendar:
             return stub("Calendar")
+        case .meal:
+            return stub("Meal")
+        case .mealPicture:
+            return stub("MealPicture")
         default:
             return Data()
         }

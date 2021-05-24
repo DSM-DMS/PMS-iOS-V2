@@ -55,6 +55,8 @@
 "searchLetterPlaceholder" = "검색할 가정통신문 제목을 입력하세요.";
 "noStudentPlaceholder" = "학생을 추가해주세요.";
 "noAuthPlaceholder" = "로그인이 필요합니다.";
+"noMealPlaceholder" = "급식이 없습니다.";
+"noMealPicturePlaceholder" = "급식 사진이 없습니다.";
 
 // Auth
 "loginButton" = "로그인";

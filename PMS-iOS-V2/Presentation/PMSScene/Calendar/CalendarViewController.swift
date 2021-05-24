@@ -35,12 +35,8 @@ class CalendarViewController: UIViewController {
         $0.appearance.weekdayTextColor = Colors.black.color
     }
     
-    private let leftButton = LeftArrowButton().then {
-        $0.addTarget(self, action: #selector(PreviousBtnPressed(_:)), for: .touchUpInside)
-    }
-    private let rightButton = RightArrowButton().then {
-        $0.addTarget(self, action: #selector(NextBtnPressed(_:)), for: .touchUpInside)
-    }
+    private let leftButton = LeftArrowButton()
+    private let rightButton = RightArrowButton()
     
     private let dataSource = RxTableViewSectionedReloadDataSource<ListSection<CalendarCell>>(configureCell: {  (_, tableView, _, calendar) -> UITableViewCell in
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell") as? CalendarTableViewCell ?? CalendarTableViewCell(style: .default, reuseIdentifier: "CalendarTableViewCell")
@@ -54,14 +50,6 @@ class CalendarViewController: UIViewController {
     }
     
     private var currentPage: Date?
-    
-    @objc func PreviousBtnPressed(_ sender: Any) {
-        self.moveCurrentPage(moveUp: false)
-    }
-
-    @objc func NextBtnPressed(_ sender: Any) {
-        self.moveCurrentPage(moveUp: true)
-    }
     
     private let dateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy-MM-dd"
@@ -136,6 +124,16 @@ class CalendarViewController: UIViewController {
         reachability.rx.isDisconnected
             .bind(to: viewModel.input.noInternet)
             .disposed(by: disposeBag)
+        
+        leftButton.rx.tap
+            .subscribe { _ in
+                self.moveCurrentPage(moveUp: false)
+            }.disposed(by: disposeBag)
+        
+        rightButton.rx.tap
+            .subscribe { _ in
+                self.moveCurrentPage(moveUp: true)
+            }.disposed(by: disposeBag)
     }
     
     private func bindOutput() {

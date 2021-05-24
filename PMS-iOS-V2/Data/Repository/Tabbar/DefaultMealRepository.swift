@@ -19,36 +19,21 @@ final class DefaultMealRepository: MealRepository {
     func getMeal(date: Int) -> Single<Meal> {
         provider.rx.request(.meal(date))
             .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
             .map(Meal.self)
             .catchError { error in
                 if let moyaError = error as? MoyaError {
-                    if moyaError.response?.statusCode == 401 {
-                        AuthService.shared.refreshToken()
-                        Log.info("Refreshed Token~")
-                    }
                     return Single.error(NetworkError(moyaError))
                 } else {
                     Log.error("Unkown Error!")
                     return Single.error(NetworkError.unknown)
                 }
-            }.retry(2)
+            }
     }
     
     func getMealPicutre(date: Int) -> Single<MealPicture> {
         provider.rx.request(.mealPicture(date))
-            .filterSuccessfulStatusCodes()
             .map(MealPicture.self)
-            .catchError { error in
-                if let moyaError = error as? MoyaError {
-                    if moyaError.response?.statusCode == 401 {
-                        AuthService.shared.refreshToken()
-                        Log.info("Refreshed Token~")
-                    }
-                    return Single.error(NetworkError(moyaError))
-                } else {
-                    Log.error("Unkown Error!")
-                    return Single.error(NetworkError.unknown)
-                }
-            }.retry(2)
+            .catchErrorJustReturn(MealPicture(breakfast: "", lunch: "", dinner: ""))
     }
 }

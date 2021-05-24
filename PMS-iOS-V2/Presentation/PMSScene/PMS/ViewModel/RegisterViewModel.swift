@@ -178,7 +178,7 @@ class RegisterViewModel: Stepper {
             .disposed(by: disposeBag)
     }
     
-    func mapError(error: Int) -> String {
+    private func mapError(error: Int) -> String {
         if error == 1 {
             return LocalizedString.noInternetErrorMsg.localized
         } else if error == 409 {
@@ -188,7 +188,7 @@ class RegisterViewModel: Stepper {
         }
     }
     
-    func mapError(error: Int) -> AccessibilityString {
+    private  func mapError(error: Int) -> AccessibilityString {
         if error == 1 {
             return .noInternetErrorMsg
         } else if error == 409 {

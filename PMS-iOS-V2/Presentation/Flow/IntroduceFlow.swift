@@ -14,9 +14,7 @@ class IntroduceFlow: Flow {
         return self.rootViewController
     }
 
-    private let rootViewController = UINavigationController().then {
-        $0.isNavigationBarHidden = true
-    }
+    private let rootViewController = UINavigationController()
 
     deinit {
         print("\(type(of: self)): \(#function)")
