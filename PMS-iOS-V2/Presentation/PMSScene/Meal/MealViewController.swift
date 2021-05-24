@@ -43,11 +43,11 @@ class MealViewController: UIViewController {
         $0.alignment = .center
     }
     
-    private let leftButton = LeftArrowButton()
-    private let dateLabel = UILabel().then {
+    let leftButton = LeftArrowButton()
+    let dateLabel = UILabel().then {
         $0.tintColor = Colors.black.color
     }
-    private let rightButton = RightArrowButton()
+    let rightButton = RightArrowButton()
     
     init(viewModel: MealViewModel) {
         self.viewModel = viewModel

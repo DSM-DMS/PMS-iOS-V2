@@ -14,7 +14,7 @@ class MealViewModel: Stepper {
     private let mealRepository: MealRepository
     private let disposeBag = DisposeBag()
     private var changeDate = 0
-
+    
     let viewDateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy-MM-dd"
     }
@@ -79,25 +79,23 @@ class MealViewModel: Stepper {
             .bind(to: output.mealPictureList)
             .disposed(by: disposeBag)
         
-        output.mealList
-            .flatMap { _ in
-                Observable.combineLatest(
-                    self.output.mealList.asObservable(),
-                    self.output.mealPictureList.distinctUntilChanged().asObservable()
-                ) { (meal, picture) -> [MealCell] in
-                    var mealList = [MealCell]()
-                    mealList.append(MealCell(time: .breakfast, meal: meal.breakfast, imageURL: picture.breakfast))
-                    mealList.append(MealCell(time: .lunch, meal: meal.lunch, imageURL: picture.lunch))
-                    mealList.append(MealCell(time: .dinner, meal: meal.dinner, imageURL: picture.dinner))
-                    return mealList
-                }
-                .catchErrorJustReturn([])
-                .do(onError: { error in
-                    let error = error as! NetworkError
-                    self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
-                })
-            }.bind(to: output.mealCellList)
-            .disposed(by: disposeBag)
+        Observable.combineLatest(
+            self.output.mealList.asObservable(),
+            self.output.mealPictureList.distinctUntilChanged().asObservable()
+        ) { (meal, picture) -> [MealCell] in
+            var mealList = [MealCell]()
+            mealList.append(MealCell(time: .breakfast, meal: meal.breakfast, imageURL: picture.breakfast))
+            mealList.append(MealCell(time: .lunch, meal: meal.lunch, imageURL: picture.lunch))
+            mealList.append(MealCell(time: .dinner, meal: meal.dinner, imageURL: picture.dinner))
+            return mealList
+        }
+        .catchErrorJustReturn([])
+        .do(onError: { error in
+            let error = error as! NetworkError
+            self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+        })
+        .bind(to: output.mealCellList)
+        .disposed(by: disposeBag)
         
         input.previousButtonTapped
             .asObservable()

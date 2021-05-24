@@ -31,7 +31,7 @@ public struct MealPicture: Codable, Hashable {
     }
 }
 
-public struct MealCell {
+public struct MealCell: Equatable {
     public var time: LocalizedString
     public var meal: [String]
     public var imageURL: String
