@@ -55,6 +55,8 @@
 "searchLetterPlaceholder" = "Enter Letter title.";
 "noStudentPlaceholder" = "Add Student";
 "noAuthPlaceholder" = "Login is required.";
+"noMealPlaceholder" = "There is no meal.";
+"noMealPicturePlaceholder" = "There is no meal's picture.";
 
 // Auth
 "loginButton" = "Sign in";

@@ -33,16 +33,7 @@ final class DefaultMealRepository: MealRepository {
     
     func getMealPicutre(date: Int) -> Single<MealPicture> {
         provider.rx.request(.mealPicture(date))
-            .filterSuccessfulStatusCodes()
-            .retryWithAuthIfNeeded()
             .map(MealPicture.self)
-            .catchError { error in
-                if let moyaError = error as? MoyaError {
-                    return Single.error(NetworkError(moyaError))
-                } else {
-                    Log.error("Unkown Error!")
-                    return Single.error(NetworkError.unknown)
-                }
-            }
+            .catchErrorJustReturn(MealPicture(breakfast: "", lunch: "", dinner: ""))
     }
 }
