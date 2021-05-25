@@ -76,6 +76,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case dinner
     
     // Notice
+    case letter
     case preview
     
     // Introduce

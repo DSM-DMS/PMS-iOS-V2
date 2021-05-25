@@ -111,6 +111,10 @@ extension PMSApi: TargetType {
             return stub("Meal")
         case .mealPicture:
             return stub("MealPicture")
+        case .notice:
+            return stub("Notice")
+        case .noticeDetail:
+            return stub("NoticeDetail")
         default:
             return Data()
         }

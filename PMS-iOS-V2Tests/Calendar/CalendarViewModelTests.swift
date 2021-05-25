@@ -28,6 +28,32 @@ class CalenddarViewModelTests: XCTestCase {
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
     
+    func test_viewDidLoad_activityIndicator() {
+        // MARK: - WHEN
+        
+        scheduler.createHotObservable([.next(100, ())])
+            .bind(to: viewModel.input.viewDidLoad)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Bool.self)
+        
+        viewModel.output.isLoading
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        let exceptEvents: [Recorded<Event<Bool>>] = [
+            .next(0, false),
+            .next(100, true),
+            .next(100, false)
+        ]
+        
+        // MARK: - THEN
+        
+        XCTAssertEqual(observer.events, exceptEvents)
+    }
+    
     func test_viewDidLoad_calendar() {
         // MARK: - WHEN
         

@@ -18,4 +18,13 @@ class IntroduceViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        self.setNavigationTitle(title: .introduceTitle, accessibilityLabel: .introduceTitle, isLarge: true)
+        setupSubview()
+    }
+    
+    private func setupSubview() {
+        view.backgroundColor = Colors.white.color
+    }
 }

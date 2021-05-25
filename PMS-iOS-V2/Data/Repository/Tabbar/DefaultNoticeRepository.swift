@@ -15,4 +15,19 @@ final class DefaultNoticeRepository: NoticeRepository {
     init(provider: MoyaProvider<PMSApi>?) {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
+    
+    func getNoticeList() -> Single<[Notice]> {
+        provider.rx.request(.notice)
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map([Notice].self)
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
 }

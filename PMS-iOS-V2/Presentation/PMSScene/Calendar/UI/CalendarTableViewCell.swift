@@ -28,7 +28,7 @@ class CalendarTableViewCell: UITableViewCell {
     }
     
     private let calendarCellBackground = UIView().then {
-        $0.backgroundColor = Colors.gray.color
+        $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
         $0.layer.shadowColor = UIColor.lightGray.cgColor

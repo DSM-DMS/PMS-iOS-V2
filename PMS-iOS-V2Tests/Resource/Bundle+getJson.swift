@@ -15,6 +15,13 @@ extension Bundle {
 
         return bundle!.decode(PMSCalendar.self, from: "Calendar.json")
     }
+    
+    static func getNoticeListJson() -> [NoticeCell] {
+        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+        let bundle = Bundle(path: bundlePath!)
+
+        return bundle!.decode([Notice].self, from: "Notice.json").map { NoticeCell(notice: $0) }
+    }
 }
 
 // MARK: - TO TEST

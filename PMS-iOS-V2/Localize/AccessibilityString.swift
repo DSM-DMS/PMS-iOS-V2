@@ -14,6 +14,8 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case registerView
     case calendarTitle
     case mealTitle
+    case noticeTitle
+    case introduceTitle
     
     // Login
     case facebookLogin
