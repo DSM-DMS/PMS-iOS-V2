@@ -142,3 +142,5 @@
 "showPasswordButton" = "Show password";
 "leftArrowButton" = "Go to the previous month";
 "rightArrowButton" = "Go to the next month";
+"previousPageButton" = "Go to previous page";
+"nextPageButton" = "Go to next page";

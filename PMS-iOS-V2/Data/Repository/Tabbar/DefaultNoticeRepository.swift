@@ -30,4 +30,19 @@ final class DefaultNoticeRepository: NoticeRepository {
                 }
             }
     }
+    
+    func getDetailNotice(id: Int) -> Single<DetailNotice> {
+        provider.rx.request(.noticeDetail(id))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map(DetailNotice.self)
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
 }

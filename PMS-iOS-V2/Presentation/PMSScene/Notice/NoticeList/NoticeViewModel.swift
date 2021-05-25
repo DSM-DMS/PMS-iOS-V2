@@ -16,10 +16,6 @@ class NoticeViewModel: Stepper {
     private var changeDate = 0
     private var page = 1
     
-    let viewDateFormatter = DateFormatter().then {
-        $0.dateFormat = "yyyy-MM-dd"
-    }
-    
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
@@ -27,6 +23,7 @@ class NoticeViewModel: Stepper {
         let previousPageTapped = PublishRelay<Void>()
         let nextPageTapped = PublishRelay<Void>()
         let isLetter = BehaviorRelay<Bool>(value: false)
+        let goNoticeDetail = PublishRelay<NoticeCell>()
     }
     
     struct Output {
@@ -91,6 +88,11 @@ class NoticeViewModel: Stepper {
                 self.page += 1 // 나중에 최대 페이지 설정하기
                 self.output.page.accept(self.page)
             }).disposed(by: disposeBag)
+        
+        input.goNoticeDetail
+            .subscribe {
+                self.steps.accept(PMSStep.detailNoticeIsRequired(id: $0.notice.id, title: $0.notice.title))
+            }.disposed(by: disposeBag)
         
         activityIndicator
             .asObservable()

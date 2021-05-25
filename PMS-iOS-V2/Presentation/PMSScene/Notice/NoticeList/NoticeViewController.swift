@@ -28,11 +28,9 @@ class NoticeViewController: UIViewController {
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
         $0.rowHeight = 70
-        $0.isScrollEnabled = false
-        $0.allowsSelection = false
     }
-    let previousButton = PreviousPageButton()
-    let nextButton = NextPageButton()
+    let previousButton = PreviousPageButton(label: .previousPageButton)
+    let nextButton = NextPageButton(label: .nextPageButton)
     let pageLabel = UILabel()
     let pageStackView = UIStackView().then {
         $0.spacing = 5
@@ -67,6 +65,7 @@ class NoticeViewController: UIViewController {
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubViews([segmentedControl, tableView, pageStackView])
+        view.addSubview(activityIndicator)
         pageStackView.addArrangeSubviews([previousButton, pageLabel, nextButton])
         
         segmentedControl.snp.makeConstraints {
@@ -88,6 +87,10 @@ class NoticeViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.layoutMarginsGuide).offset(-20)
         }
+        
+        activityIndicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     private func bindInput() {
@@ -100,6 +103,7 @@ class NoticeViewController: UIViewController {
             .filter { $0 != "" }
             .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .map { self.pageStackView.isHidden = true; return $0 }
             .bind(to: viewModel.input.searchText)
             .disposed(by: disposeBag)
         
@@ -108,13 +112,17 @@ class NoticeViewController: UIViewController {
             .filter { $0 == "" }
             .subscribe { _ in
                 self.viewModel.input.viewDidLoad.accept(())
-                self.changePageVisiable()
+                self.pageStackView.isHidden = false
             }
             .disposed(by: disposeBag)
         
         segmentedControl.rx.selectedSegmentIndex
             .map { Bool(truncating: NSNumber(value: $0)) }
             .bind(to: viewModel.input.isLetter)
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(NoticeCell.self)
+            .bind(to: viewModel.input.goNoticeDetail)
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
@@ -144,9 +152,5 @@ class NoticeViewController: UIViewController {
             .map { [ListSection(header: "", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-    }
-    
-    private func changePageVisiable() {
-        
     }
 }
