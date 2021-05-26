@@ -22,6 +22,13 @@ extension Bundle {
 
         return bundle!.decode([Notice].self, from: "Notice.json").map { NoticeCell(notice: $0) }
     }
+    
+    static func getDetialNoticeJson() -> DetailNotice {
+        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+        let bundle = Bundle(path: bundlePath!)
+
+        return bundle!.decode(DetailNotice.self, from: "DetailNotice.json")
+    }
 }
 
 // MARK: - TO TEST

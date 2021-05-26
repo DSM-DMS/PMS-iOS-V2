@@ -31,7 +31,7 @@ targets:
     settings:
       groups: [app]
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
-      commandLineArguments: [run: true, test: true]
+      commandLineArguments: [test: true]
     dependencies:
       - target: PMS-iOS-V2
       
@@ -42,6 +42,6 @@ targets:
     settings:
       groups: [app]
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
-      commandLineArguments: [run: true, test: true]
+      commandLineArguments: [test: true]
     dependencies:
       - target: PMS-iOS-V2

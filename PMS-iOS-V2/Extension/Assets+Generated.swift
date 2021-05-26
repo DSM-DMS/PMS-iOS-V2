@@ -41,6 +41,7 @@ internal enum Asset {
   internal static let leftArrow = ImageAsset(name: "LeftArrow")
   internal static let lock = ImageAsset(name: "Lock")
   internal static let mealFlip = ImageAsset(name: "MealFlip")
+  internal static let mention = ImageAsset(name: "Mention")
   internal static let minus = ImageAsset(name: "Minus")
   internal static let navigationArrow = ImageAsset(name: "NavigationArrow")
   internal static let o = ImageAsset(name: "O")

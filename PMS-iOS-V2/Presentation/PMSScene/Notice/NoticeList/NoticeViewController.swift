@@ -42,6 +42,7 @@ class NoticeViewController: UIViewController {
     private let dataSource = RxTableViewSectionedReloadDataSource<ListSection<NoticeCell>>(configureCell: {  (_, tableView, _, notice) -> UITableViewCell in
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoticeTableViewCell") as! NoticeTableViewCell
         cell.setupView(model: notice)
+        cell.selectionStyle = .none
         return cell
     })
     

@@ -18,9 +18,11 @@ class NoticeDetailViewModel: Stepper {
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
+        let noInternet = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
         let commentText = PublishRelay<String>()
         let previewButtonTapped = PublishRelay<Void>()
+        let enterButtonTapped = PublishRelay<Void>()
     }
     
     struct Output {
@@ -50,6 +52,19 @@ class NoticeDetailViewModel: Stepper {
             }
             .bind(to: output.detailNotice)
             .disposed(by: disposeBag)
+        
+        input.noInternet
+            .subscribe(onNext: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        input.enterButtonTapped
+            .subscribe { _ in
+                
+            }.disposed(by: disposeBag)
         
         activityIndicator
             .asObservable()

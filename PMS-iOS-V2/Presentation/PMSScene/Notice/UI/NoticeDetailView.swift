@@ -86,6 +86,8 @@ class NoticeDetailView: UIView {
         
         noticeStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints {
@@ -108,18 +110,14 @@ class NoticeDetailView: UIView {
             $0.height.equalTo(self.frame.height - 70)
         }
         
-//        dateLabel.snp.makeConstraints {
-//            $0.height.equalTo(self.frame.height - 90)
-//        }
-        
         titleLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.width.equalTo(UIFrame.width - 70)
+            $0.width.equalToSuperview()
         }
         
         descLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.width.equalTo(UIFrame.width - 70)
+            $0.width.equalToSuperview()
         }
     }
 }

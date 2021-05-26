@@ -114,6 +114,12 @@ Unit Test
 - [x] 페이지가 1일 때 이전 버튼 눌러도 변화사항이 없는지.
 - [x] 다음 버튼을 누르면 페이지가 잘 + 되는지
 
+- NoticeDetailViewModelTests
+
+- [x] ViewDidLoad 시 Activity Indicator is Animating
+- [x] ViewDidLoad 시 세부 공지사항 잘 가지고 오는지
+- [ ] 댓글 작성 // 백엔드가 나오면
+
 
 
 ## Introduce
