@@ -26,6 +26,8 @@ class NoticeFlow: Flow {
         switch step {
         case .noticeIsRequired:
             return navigateToNoticeScreen()
+        case .detailNoticeIsRequired(let id, let title):
+            return navigateToDetailNoticeScreen(id: id, title: title)
         case .alert(let string, let access):
             return alert(string: string, access: access)
         default:
@@ -35,6 +37,14 @@ class NoticeFlow: Flow {
 
     private func navigateToNoticeScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(NoticeViewController.self)!
+        self.rootViewController.pushViewController(vc, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
+    }
+    
+    private func navigateToDetailNoticeScreen(id: Int, title: String) -> FlowContributors {
+        let repository = AppDelegate.container.resolve(NoticeRepository.self)!
+        let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, noticeRepository: repository))
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }

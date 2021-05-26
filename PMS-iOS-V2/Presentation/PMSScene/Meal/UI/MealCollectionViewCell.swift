@@ -36,7 +36,7 @@ class MealCollectionViewCell: UICollectionViewCell {
         $0.layer.cornerRadius = 10
         $0.isHidden = true
         $0.isSkeletonable = true
-        $0.backgroundColor = Colors.gray.color
+        $0.backgroundColor = Colors.lightGray.color
     }
     
     private let noMealLabel = UILabel().then {

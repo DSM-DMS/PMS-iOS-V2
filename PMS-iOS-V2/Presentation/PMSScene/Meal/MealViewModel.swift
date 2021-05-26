@@ -21,7 +21,6 @@ class MealViewModel: Stepper {
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
-        let isLoading = BehaviorRelay<Bool>(value: false)
         let previousButtonTapped = PublishRelay<Void>()
         let nextButtonTapped = PublishRelay<Void>()
         let date = BehaviorRelay<Date>(value: Date())

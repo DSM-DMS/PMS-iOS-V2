@@ -81,8 +81,8 @@ Unit Test
 Unit Test
 
 - CalendarViewModelTests
-
 - [x] ViewDidLoad 시 캘린더를 잘 가지고 오는지
+- [x] ViewDidLoad 시 Activity Indicator is Animating
 - [x] 날짜를 클릭하면 그 날짜에 맞는 일정을 갖고 오는지
 - [x] 선택된 날짜에 일정이 없다면 일정이 없다고 표시하는지
 - [x] Month를 바꾸면 그 달에 맞는 일정을 가지고 오는지.
@@ -98,8 +98,9 @@ UI Test
 
 Unit Test
 
-- [x] 다음 날로 넘기면 오늘 날짜 + 1 day로 뜨는지.
+- [x] ViewDidLoad 시 Activity Indicator is Animating
 - [x] ViewDidLoad 시 급식을 잘 가지고 오는지
+- [x] 다음 날로 넘기면 오늘 날짜 + 1 day로 뜨는지.
 
 
 
@@ -107,9 +108,17 @@ Unit Test
 
 Unit Test
 
-- [ ] 공지사항 잘 가지고 오는지
-- [ ] 페이지 넘기면 다음 공지사항 잘 가지고 오는지
-- [ ] 페이지가 1일 때 이전 버튼 눌러도 변화사항이 없는지.
+- [x] ViewDidLoad 시 Activity Indicator is Animating
+- [x] ViewDidLoad 시 공지사항 잘 가지고 오는지
+- [ ] 페이지 넘기면 다음 공지사항 잘 가지고 오는지 // 백엔드가 아직 page 기능이 안나옴
+- [x] 페이지가 1일 때 이전 버튼 눌러도 변화사항이 없는지.
+- [x] 다음 버튼을 누르면 페이지가 잘 + 되는지
+
+- NoticeDetailViewModelTests
+
+- [x] ViewDidLoad 시 Activity Indicator is Animating
+- [x] ViewDidLoad 시 세부 공지사항 잘 가지고 오는지
+- [ ] 댓글 작성 // 백엔드가 나오면
 
 
 

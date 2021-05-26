@@ -30,6 +30,7 @@ enum PMSStep: Step, Equatable {
 
     // Notice
     case noticeIsRequired
+    case detailNoticeIsRequired(id: Int, title: String)
     
     // Introduce
     case introduceIsRequired

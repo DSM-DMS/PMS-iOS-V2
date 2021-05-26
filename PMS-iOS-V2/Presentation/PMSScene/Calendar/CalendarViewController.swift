@@ -21,6 +21,7 @@ class CalendarViewController: UIViewController {
         $0.rowHeight = 60.0
         $0.isScrollEnabled = false
         $0.allowsSelection = false
+        $0.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarTableViewCell")
     }
     let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
@@ -39,7 +40,7 @@ class CalendarViewController: UIViewController {
     private let rightButton = RightArrowButton()
     
     private let dataSource = RxTableViewSectionedReloadDataSource<ListSection<CalendarCell>>(configureCell: {  (_, tableView, _, calendar) -> UITableViewCell in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell") as? CalendarTableViewCell ?? CalendarTableViewCell(style: .default, reuseIdentifier: "CalendarTableViewCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell") as! CalendarTableViewCell
         cell.setupView(model: calendar)
         return cell
     })

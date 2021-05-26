@@ -78,6 +78,7 @@
 "dinner" = "저녁";
 
 // Notice
+"letter" = "가정통신문";
 "preview" = "미리보기";
 
 // Introduce
@@ -141,3 +142,5 @@
 "showPasswordButton" = "비밀번호 보여죽기";
 "leftArrowButton" = "이전 달로 이동";
 "rightArrowButton" = "다음 달로 이동";
+"previousPageButton" = "이전 페이지로 이동";
+"nextPageButton" = "다음 페이지로 이동";
