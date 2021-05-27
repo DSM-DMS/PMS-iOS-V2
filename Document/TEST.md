@@ -137,6 +137,12 @@ Unit Test
 - [ ] ViewDidLoad 시 Activity Indicator is Animating
 - [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 
+- DetailClubViewModelTests
+
+- [ ] ViewDidLoad 시 동아리 잘 가지고 오는지
+- [ ] ViewDidLoad 시 Activity Indicator is Animating
+- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+
 
 
 - CompanyViewModelTests

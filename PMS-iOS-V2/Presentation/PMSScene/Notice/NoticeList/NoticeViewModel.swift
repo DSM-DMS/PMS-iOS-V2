@@ -11,7 +11,7 @@ import RxFlow
 
 class NoticeViewModel: Stepper {
     let steps = PublishRelay<Step>()
-    private let noticeRepository: NoticeRepository
+    private let repository: NoticeRepository
     private let disposeBag = DisposeBag()
     private var changeDate = 0
     private var page = 1
@@ -35,8 +35,8 @@ class NoticeViewModel: Stepper {
     let input = Input()
     let output = Output()
     
-    init(noticeRepository: NoticeRepository) {
-        self.noticeRepository = noticeRepository
+    init(repository: NoticeRepository) {
+        self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
@@ -47,7 +47,7 @@ class NoticeViewModel: Stepper {
         input.isLetter
             .asObservable()
             .flatMapLatest { _ in
-                noticeRepository.getNoticeList()
+                repository.getNoticeList()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in

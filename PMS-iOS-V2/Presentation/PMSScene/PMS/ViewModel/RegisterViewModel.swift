@@ -11,7 +11,7 @@ import RxFlow
 
 class RegisterViewModel: Stepper {
     let steps = PublishRelay<Step>()
-    let registerRepository: RegisterRepository
+    let repository: RegisterRepository
     private var disposeBag = DisposeBag()
     
     struct Input {
@@ -47,8 +47,8 @@ class RegisterViewModel: Stepper {
     let input = Input()
     let output = Output()
     
-    init(registerRepository: RegisterRepository) {
-        self.registerRepository = registerRepository
+    init(repository: RegisterRepository) {
+        self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
@@ -128,7 +128,7 @@ class RegisterViewModel: Stepper {
         input.registerButtonTapped
             .asObservable()
             .flatMap {
-                registerRepository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
+                repository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError

@@ -11,7 +11,7 @@ import RxFlow
 
 class ClubViewModel: Stepper {
     let steps = PublishRelay<Step>()
-    private let clubRepository: IntroduceRepository
+    private let repository: IntroduceRepository
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -31,14 +31,14 @@ class ClubViewModel: Stepper {
     let input = Input()
     let output = Output()
     
-    init(clubRepository: IntroduceRepository) {
-        self.clubRepository = clubRepository
+    init(repository: IntroduceRepository) {
+        self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
             .flatMapLatest { _ in
-                clubRepository.getClubList()
+                repository.getClubList()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -58,9 +58,16 @@ class ClubViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.goDetailClub
+            .subscribe(onNext: { 
+                self.steps.accept(PMSStep.detailClubIsRequired(name: $0))
+                
+            })
+            .disposed(by: disposeBag)
+        
+        input.getDetailClub
             .asObservable()
             .flatMapLatest {
-                clubRepository.getDetailClub(name: $0)
+                repository.getDetailClub(name: $0)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in

@@ -5,10 +5,11 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 
 protocol IntroduceRepository {
     func getClubList() -> Single<ClubList>
     func getDetailClub(name: String) -> Single<DetailClub>
+    func getDeveloper() -> Single<[Developer]>
 }

@@ -13,13 +13,16 @@ import RxCocoa
 class ClubDetailViewController: UIViewController {
     let viewModel: ClubViewModel
     let name: String
+    let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
+    private let detailView = ClubDetailView()
     
     init(viewModel: ClubViewModel, name: String) {
         self.viewModel = viewModel
         self.name = name
         super.init(nibName: nil, bundle: nil)
+        self.bindInput()
     }
     
     required init?(coder: NSCoder) {
@@ -28,13 +31,18 @@ class ClubDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.title = LocalizedString.clubTitle.localized
+        self.navigationItem.title = name
         self.setupSubview()
         self.bindOutput()
     }
     
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
+        view.addSubview(detailView)
+        
+        detailView.snp.makeConstraints {
+            $0.edges.equalTo(view.layoutMarginsGuide)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,9 +67,13 @@ class ClubDetailViewController: UIViewController {
     }
     
     private func bindOutput() {
-//        viewModel.output.clubList
-//            .map { [ListSection<ClubDetail>(header: "", items: $0)] }
-//            .bind(to: collectionView.rx.items(dataSource: dataSource))
-//            .disposed(by: disposeBag)
+        viewModel.output.detailClub
+            .subscribe {
+                self.detailView.setupView(model: $0)
+            }.disposed(by: disposeBag)
+        
+        viewModel.output.isLoading
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
     }
 }

@@ -11,7 +11,7 @@ import RxFlow
 
 class LoginViewModel: Stepper {
     let steps = PublishRelay<Step>()
-    let loginRepository: LoginRepository
+    let repository: LoginRepository
     private var disposeBag = DisposeBag()
     
     struct Input {
@@ -40,8 +40,8 @@ class LoginViewModel: Stepper {
     let input = Input()
     let output = Output()
     
-    init(loginRepository: LoginRepository) {
-        self.loginRepository = loginRepository
+    init(repository: LoginRepository) {
+        self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
@@ -94,7 +94,7 @@ class LoginViewModel: Stepper {
         input.loginButtonTapped
             .asObservable()
             .flatMap {
-                loginRepository.login(email: self.input.emailText.value,
+                repository.login(email: self.input.emailText.value,
                                       password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in

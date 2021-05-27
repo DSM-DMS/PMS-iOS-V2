@@ -84,7 +84,7 @@ class IntroduceViewController: UIViewController {
         
         companyTapped.rx.event
             .map { _ in }
-            .bind(to: viewModel.input.developerButtonTapped)
+            .bind(to: viewModel.input.companyButtonTapped)
             .disposed(by: disposeBag)
         
         developerTapped.rx.event

@@ -11,52 +11,55 @@ import Then
 import Kingfisher
 
 class ClubDetailView: UIView {
-    private let noticeStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 15.0
+    private let upLine = UIView().then { $0.backgroundColor = .lightGray }
+    
+    private let clubImage = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
     }
     
-    private let titleStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.distribution = .equalSpacing
+    private let downLine = UIView().then { $0.backgroundColor = .darkGray }
+    
+    private let nameLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 25)
     }
     
-    private let titleLabel = UILabel()
+    private let descColorView = UIView().then { $0.backgroundColor = Colors.blue.color }
     
-    private let titleLine = UIView().then { $0.backgroundColor = .lightGray }
-
-    private let dateLabel = UILabel().then {
+    private let descTitle = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.text = LocalizedString.clubTitle.localized
+    }
+    
+    private let descLabel = UILabel().then { $0.textColor = .gray }
+    
+    private let descBackground = UIView().then {
+        $0.backgroundColor = Colors.lightGray.color
+        $0.layer.cornerRadius = 15
+        $0.layer.shadowOpacity = 1.0
+        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowRadius = 3
+        $0.layer.shadowOffset = CGSize(width: 0, height: 3)
+    }
+    
+    private let memberColorView = UIView().then { $0.backgroundColor = Colors.blue.color }
+    
+    private let memberTitle = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.text = LocalizedString.clubMember.localized
+    }
+    
+    private let memberLabel = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-    }
-    
-    private let viewTextLabel = UILabel().then {
-        $0.text = "| 조회수"
-        $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-    }
-
-    private let viewLabel = UILabel().then {
-        $0.text = "0"
-        $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-    }
-    
-    private let dateStackView = UIStackView().then {
-//        $0.spacing = 10.0
-        $0.distribution = .equalSpacing
-        $0.alignment = .leading
-    }
-    
-    private let descLabel = UILabel().then {
         $0.numberOfLines = 0
     }
     
-    private let descLine = UIView().then { $0.backgroundColor = .darkGray }
-    
-    private let descStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.distribution = .equalSpacing
+    private let memberBackground = UIView().then {
+        $0.backgroundColor = Colors.lightGray.color
+        $0.layer.cornerRadius = 15
+        $0.layer.shadowOpacity = 1.0
+        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowRadius = 3
+        $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
 
     // MARK: - Initialization
@@ -67,56 +70,94 @@ class ClubDetailView: UIView {
 
     // MARK: - Public Methods
     
-    func setupView(model: DetailNotice) {
+    func setupView(model: DetailClub) {
         DispatchQueue.main.async {
-            self.titleLabel.text = model.title
-            self.descLabel.text = model.body
-            self.dateLabel.text = model.date
+            self.nameLabel.text = model.title
+            self.descLabel.text = model.description
+            self.memberLabel.text = model.member.joined(separator: ", ")
+            
+            self.clubImage.kf.setImage(with: (URL(string: model.imageUrl.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!.replacingOccurrences(of: "%3A", with: ":"))))
         }
     }
 
     // MARK: Private Methods
     
     private func setupSubview() {
-        addSubview(noticeStackView)
-        noticeStackView.addArrangeSubviews([titleStackView, descStackView])
-        titleStackView.addArrangeSubviews([titleLabel, dateStackView, titleLine])
-        dateStackView.addArrangeSubviews([dateLabel, viewTextLabel, viewLabel])
-        descStackView.addArrangeSubviews([descLabel, descLine])
-        
-        noticeStackView.snp.makeConstraints {
+        addSubViews([upLine, clubImage, downLine, nameLabel, descBackground, memberBackground])
+        descBackground.addSubViews([descColorView, descTitle, descLabel])
+        memberBackground.addSubViews([memberColorView, memberTitle, memberLabel])
+        upLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.width.equalToSuperview()
             $0.top.equalToSuperview().offset(10)
+        }
+        
+        clubImage.snp.makeConstraints {
+            $0.width.equalToSuperview().offset(-10)
+            $0.height.equalTo(UIFrame.height / 3.5)
+            $0.top.equalTo(upLine.snp_bottomMargin).offset(20)
+        }
+        
+        downLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.width.equalToSuperview()
+            $0.top.equalTo(clubImage.snp_bottomMargin).offset(20)
+        }
+        
+        nameLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.top.equalTo(downLine.snp_bottomMargin).offset(20)
+        }
+        
+        descColorView.snp.makeConstraints {
+            $0.width.equalTo(3)
+            $0.height.equalTo(15)
+            $0.top.equalTo(descBackground.snp_topMargin).offset(15)
+            $0.leading.equalTo(descBackground.snp_leadingMargin).offset(10)
+        }
+        
+        descTitle.snp.makeConstraints {
+            $0.height.equalTo(20)
+            $0.top.equalTo(descBackground.snp_topMargin).offset(15)
+            $0.leading.equalTo(descColorView.snp_trailingMargin).offset(20)
+            $0.trailing.equalTo(descBackground.snp_trailingMargin).offset(-10)
+        }
+        
+        descLabel.snp.makeConstraints {
+            $0.bottom.equalTo(descBackground.snp_bottomMargin).offset(-15)
+            $0.leading.equalTo(descBackground.snp_leadingMargin).offset(10)
+            $0.trailing.equalTo(descBackground.snp_trailingMargin).offset(-10)
+        }
+        
+        descBackground.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp_bottomMargin).offset(20)
+            $0.height.equalTo(100)
             $0.width.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints {
+        memberColorView.snp.makeConstraints {
+            $0.width.equalTo(3)
             $0.height.equalTo(15)
+            $0.top.equalTo(memberBackground.snp_topMargin).offset(15)
+            $0.leading.equalTo(memberBackground.snp_leadingMargin).offset(10)
         }
         
-        dateStackView.snp.makeConstraints {
-            $0.height.equalTo(15)
+        memberTitle.snp.makeConstraints {
+            $0.height.equalTo(20)
+            $0.top.equalTo(memberBackground.snp_topMargin).offset(15)
+            $0.leading.equalTo(memberColorView.snp_trailingMargin).offset(20)
+            $0.trailing.equalTo(memberBackground.snp_trailingMargin).offset(-10)
         }
         
-        titleStackView.snp.makeConstraints {
-            $0.height.equalTo(50)
+        memberLabel.snp.makeConstraints {
+            $0.bottom.equalTo(memberBackground.snp_bottomMargin).offset(-15)
+            $0.leading.equalTo(memberBackground.snp_leadingMargin).offset(10)
+            $0.trailing.equalTo(memberBackground.snp_trailingMargin).offset(-10)
         }
         
-        viewLabel.snp.makeConstraints {
-            $0.width.equalTo(UIFrame.width / 2)
-        }
-        
-        descStackView.snp.makeConstraints {
-            $0.height.equalTo(self.frame.height - 70)
-        }
-        
-        titleLine.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.width.equalToSuperview()
-        }
-        
-        descLine.snp.makeConstraints {
-            $0.height.equalTo(1)
+        memberBackground.snp.makeConstraints {
+            $0.top.equalTo(descBackground.snp_bottomMargin).offset(30)
+            $0.height.equalTo(130)
             $0.width.equalToSuperview()
         }
     }

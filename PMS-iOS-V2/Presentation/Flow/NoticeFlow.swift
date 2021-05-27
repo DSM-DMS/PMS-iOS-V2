@@ -43,7 +43,7 @@ class NoticeFlow: Flow {
     
     private func navigateToDetailNoticeScreen(id: Int, title: String) -> FlowContributors {
         let repository = AppDelegate.container.resolve(NoticeRepository.self)!
-        let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, noticeRepository: repository))
+        let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, repository: repository))
         vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))

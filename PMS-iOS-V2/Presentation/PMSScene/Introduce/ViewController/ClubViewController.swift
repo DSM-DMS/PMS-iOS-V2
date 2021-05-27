@@ -13,6 +13,7 @@ import RxDataSources
 
 class ClubViewController: UIViewController {
     let viewModel: ClubViewModel
+    let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
@@ -93,6 +94,10 @@ class ClubViewController: UIViewController {
         viewModel.output.clubList
             .map { [ListSection<Club>(header: "", items: $0)] }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isLoading
+            .bind(to: activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
     }
 }

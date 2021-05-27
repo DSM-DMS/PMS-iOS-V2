@@ -11,7 +11,7 @@ import RxFlow
 
 class CalendarViewModel: Stepper {
     let steps = PublishRelay<Step>()
-    let calendarRepository: CalendarRepository
+    let repository: CalendarRepository
     private var disposeBag = DisposeBag()
     let dateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy-MM-dd"
@@ -40,8 +40,8 @@ class CalendarViewModel: Stepper {
     let input = Input()
     let output = Output()
     
-    init(calendarRepository: CalendarRepository) {
-        self.calendarRepository = calendarRepository
+    init(repository: CalendarRepository) {
+        self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
@@ -54,7 +54,7 @@ class CalendarViewModel: Stepper {
         
         input.viewDidLoad
             .flatMap {
-                calendarRepository.getCalendar()
+                repository.getCalendar()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in

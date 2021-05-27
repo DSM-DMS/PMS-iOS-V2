@@ -13,7 +13,7 @@ class NoticeDetailViewModel: Stepper {
     let steps = PublishRelay<Step>()
     private let id: Int
     let title: String
-    private let noticeRepository: NoticeRepository
+    private let repository: NoticeRepository
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -33,16 +33,16 @@ class NoticeDetailViewModel: Stepper {
     let input = Input()
     let output = Output()
     
-    init(id: Int, title: String, noticeRepository: NoticeRepository) {
+    init(id: Int, title: String, repository: NoticeRepository) {
         self.id = id
         self.title = title
-        self.noticeRepository = noticeRepository
+        self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
             .flatMapLatest { _ in
-                noticeRepository.getDetailNotice(id: self.id)
+                repository.getDetailNotice(id: self.id)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
