@@ -19,6 +19,10 @@ TDD를 위한 테스트 스펙입니다. 기능별로 테스트해야 할 목록
 
 #### 1. PMSView
 
+PMSViewModelTests
+
+- [x] 로그인 & 회원가입 버튼 클릭 시 steps에 잘 들어가는지.
+
 PMSStepsUITests 
 
 - [x] 로그인 & 회원가입 버튼 클릭 시 네비게이션이 잘 되는지.
@@ -108,23 +112,49 @@ Unit Test
 
 Unit Test
 
+- NoticeViewModelTests
+
 - [x] ViewDidLoad 시 Activity Indicator is Animating
 - [x] ViewDidLoad 시 공지사항 잘 가지고 오는지
 - [ ] 페이지 넘기면 다음 공지사항 잘 가지고 오는지 // 백엔드가 아직 page 기능이 안나옴
 - [x] 페이지가 1일 때 이전 버튼 눌러도 변화사항이 없는지.
 - [x] 다음 버튼을 누르면 페이지가 잘 + 되는지
-
 - NoticeDetailViewModelTests
-
 - [x] ViewDidLoad 시 Activity Indicator is Animating
 - [x] ViewDidLoad 시 세부 공지사항 잘 가지고 오는지
+- [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 - [ ] 댓글 작성 // 백엔드가 나오면
 
 
 
 ## Introduce
 
+Unit Test
 
+- ClubViewModelTests
+
+- [ ] ViewDidLoad 시 동아리 리스트 잘 가지고 오는지
+- [ ] ViewDidLoad 시 Activity Indicator is Animating
+- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+
+
+
+- CompanyViewModelTests
+
+  // 백엔드 개발 아직 안됨
+
+- [ ] ViewDidLoad 시 회사 리스트 잘 가지고 오는지
+
+- [ ] ViewDidLoad 시 Activity Indicator is Animating
+
+- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+
+
+
+- DeveloperViewModelTests
+- [ ] ViewDidLoad 시 개발자 리스트 잘 가지고 오는지
+- [ ] ViewDidLoad 시 Activity Indicator is Animating
+- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 
 ## Mypage
 

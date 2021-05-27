@@ -21,7 +21,7 @@ class MealViewController: UIViewController {
             $0.minimumLineSpacing = 20
             $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         }
-        let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: flowLayout).then {
+        let collectionView = UICollectionView(frame: .init(), collectionViewLayout: flowLayout).then {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.register(MealCollectionViewCell.self, forCellWithReuseIdentifier: "MealCollectionViewCell")
             $0.backgroundColor = .clear
@@ -78,6 +78,7 @@ class MealViewController: UIViewController {
             $0.width.equalTo(UIFrame.width - 70)
             $0.centerX.equalToSuperview()
         }
+        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(dateStatView.snp_bottomMargin).offset(20)
             $0.centerX.equalToSuperview()

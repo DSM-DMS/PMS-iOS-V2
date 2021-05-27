@@ -55,9 +55,8 @@ class NoticeDetailViewModel: Stepper {
         
         input.noInternet
             .subscribe(onNext: { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
-                }
+                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                
             })
             .disposed(by: disposeBag)
         
@@ -70,7 +69,7 @@ class NoticeDetailViewModel: Stepper {
             .asObservable()
             .bind(to: output.isLoading)
             .disposed(by: disposeBag)
-
+        
     }
     
     private func mapError(error: Int) -> String {

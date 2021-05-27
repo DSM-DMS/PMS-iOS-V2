@@ -84,12 +84,22 @@ class NoticeDetailViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = viewModel.title
         self.setupSubview()
         self.bindOutput()
         self.setDelegate()
         self.addKeyboardNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        try! reachability.startNotifier()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        reachability.stopNotifier()
     }
     
     override func viewDidLayoutSubviews() {

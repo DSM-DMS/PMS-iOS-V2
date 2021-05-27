@@ -36,7 +36,6 @@ extension Container {
     }
     
     func registerIntroduce() {
-        registerIntroduceRepositories()
         registerIntroduceViewModels()
         registerIntroduceViewControllers()
     }
@@ -107,11 +106,6 @@ extension Container {
     }
     
     // MARK: - Introduce
-    
-    func registerIntroduceRepositories() {
-        autoregister(ClubRepository.self, initializer: DefaultClubRepository.init)
-        autoregister(CompanyRepository.self, initializer: DefaultCompanyRepository.init)
-    }
     
     func registerIntroduceViewModels() {
         autoregister(ClubViewModel.self, initializer: ClubViewModel.init)

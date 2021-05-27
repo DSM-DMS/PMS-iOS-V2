@@ -9,5 +9,6 @@ import Foundation
 import RxSwift
 
 protocol IntroduceRepository {
-    
+    func getClubList() -> Single<ClubList>
+    func getDetailClub(name: String) -> Single<DetailClub>
 }
