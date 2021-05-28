@@ -51,6 +51,7 @@ class IntroduceFlow: Flow {
     
     private func navigateToClubScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(ClubViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
@@ -63,6 +64,7 @@ class IntroduceFlow: Flow {
     
     private func navigateToCompanyScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(CompanyViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
@@ -75,6 +77,7 @@ class IntroduceFlow: Flow {
     
     private func navigateToDeveloperScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(DeveloperViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }

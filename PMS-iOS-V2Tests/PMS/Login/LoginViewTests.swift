@@ -21,7 +21,7 @@ class LoginViewTests: XCTestCase {
     
     override func setUp() {
         let repository = DefaultLoginRepository(provider: MoyaProvider<AuthApi>(stubClosure: { _ in .immediate }))
-        viewModel = LoginViewModel(loginRepository: repository)
+        viewModel = LoginViewModel(repository: repository)
         view = LoginViewController(viewModel: viewModel)
     }
     

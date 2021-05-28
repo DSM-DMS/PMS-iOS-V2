@@ -29,7 +29,7 @@ class MealViewModelTests: XCTestCase {
     
     override func setUp() {
         let repository = DefaultMealRepository(provider: MoyaProvider<PMSApi>(stubClosure: { _ in .immediate }))
-        viewModel = MealViewModel(mealRepository: repository)
+        viewModel = MealViewModel(repository: repository)
         view = MealViewController(viewModel: viewModel)
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
