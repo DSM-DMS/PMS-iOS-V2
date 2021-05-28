@@ -115,6 +115,10 @@ extension PMSApi: TargetType {
             return stub("Notice")
         case .noticeDetail:
             return stub("NoticeDetail")
+        case .clubs:
+            return stub("ClubList")
+        case .clubDetail:
+            return stub("ClubDetail")
         default:
             return Data()
         }

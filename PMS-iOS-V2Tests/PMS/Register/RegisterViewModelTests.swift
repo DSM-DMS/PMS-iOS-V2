@@ -24,7 +24,7 @@ class RegisterViewModelTests: XCTestCase {
 
     override func setUp() {
         let repository = DefaultRegisterRepository(provider: MoyaProvider<AuthApi>(stubClosure: { _ in .immediate }))
-        viewModel = RegisterViewModel(registerRepository: repository)
+        viewModel = RegisterViewModel(repository: repository)
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
 
@@ -199,7 +199,7 @@ class RegisterViewModelTests: XCTestCase {
     
     func test_login_notMatch_alert() {
         // MARK: - WHEN
-        viewModel = RegisterViewModel(registerRepository: MockFailRegisterRepository(test: .existUser))
+        viewModel = RegisterViewModel(repository: MockFailRegisterRepository(test: .existUser))
         
         scheduler.createHotObservable([.next(100, ".")])
             .bind(to: viewModel.input.nicknameText)
@@ -238,7 +238,7 @@ class RegisterViewModelTests: XCTestCase {
     
     func test_login_noInternet_alert() {
         // MARK: - WHEN
-        viewModel = RegisterViewModel(registerRepository: MockFailRegisterRepository(test: .noInternet))
+        viewModel = RegisterViewModel(repository: MockFailRegisterRepository(test: .noInternet))
         
         scheduler.createHotObservable([.next(100, ".")])
             .bind(to: viewModel.input.nicknameText)

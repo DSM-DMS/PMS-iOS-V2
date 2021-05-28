@@ -77,6 +77,11 @@ class CompanyViewModel: Stepper {
             }
             .bind(to: output.detailClub)
             .disposed(by: disposeBag)
+        
+        activityIndicator
+            .asObservable()
+            .bind(to: output.isLoading)
+            .disposed(by: disposeBag)
     }
     
     private func mapError(error: Int) -> String {

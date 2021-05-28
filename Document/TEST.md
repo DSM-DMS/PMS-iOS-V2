@@ -131,17 +131,25 @@ Unit Test
 
 Unit Test
 
+- IntroduceViewModelTests
+- [x] 동아리 소개 버튼 클릭 시 steps에 잘 들어가는지
+- [x] 취업처 소개 버튼 클릭 시 steps에 잘 들어가는지
+- [x] 개발자 소개 버튼 클릭 시 steps에 잘 들어가는지
+
 - ClubViewModelTests
 
-- [ ] ViewDidLoad 시 동아리 리스트 잘 가지고 오는지
-- [ ] ViewDidLoad 시 Activity Indicator is Animating
-- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- [x] ViewDidLoad 시 동아리 리스트 잘 가지고 오는지
+- [x] ViewDidLoad 시 Activity Indicator is Animating
+- [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- [x] 사진 url을 한글로 인코딩을 잘 하는지
+- [ ] 동아리 클릭시 steps에 잘 들어가는지
 
 - DetailClubViewModelTests
 
-- [ ] ViewDidLoad 시 동아리 잘 가지고 오는지
-- [ ] ViewDidLoad 시 Activity Indicator is Animating
-- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- [x] ViewDidLoad 시 동아리 잘 가지고 오는지
+- [x] ViewDidLoad 시 Activity Indicator is Animating
+- [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- [x] 사진 url을 한글로 인코딩을 잘 하는지
 
 
 
@@ -155,12 +163,39 @@ Unit Test
 
 - [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 
+- [ ] 사진 url을 한글로 인코딩을 잘 하는지
+
 
 
 - DeveloperViewModelTests
-- [ ] ViewDidLoad 시 개발자 리스트 잘 가지고 오는지
+- [x] ViewDidLoad 시 개발자 리스트 잘 가지고 오는지
+
+## Mypage
+
+- MypageViewModelTests
+- [ ] ViewDidLoad 시 유저 정보 잘 가지고 오는지
+- [ ] ViewDidLoad 시 학생 리스트 잘 가지고 오는지
+- [ ] ViewDidLoad 시 학생 정보 잘 가지고 오는지
+- [ ] ViewDidLoad 시 Activity Indicator is Animating
+- [ ] 학생 바꿨을 때 그 학생 정보 잘 가져오는지
+- [ ] 로그아웃 버튼 클릭 시 alert가 steps에 잘 들어가는지
+- [ ] 비밀번호 변경 버튼 클릭 시 steps에 잘 들어가는지
+- [ ] 외출 내역 보기 버튼 클릭 시 steps에 잘 들어가는지
+- [ ] 상벌점 클릭 시 steps에 잘 들어가는지
+- [ ] 닉네임 클릭 시 steps에 잘 들어가는지
+- [ ] 학생 클릭 시 학생 리스트가 steps에 잘 들어가는지?
+- [ ] 학생 리스트가 비었을 시 학생 추가 문구가 뜨는지 등등
+- [ ] 로그인하지 않았을 때 로그인이 필요합니다 문구가 뜨는지
+
+- ScoreListViewModelTests
+
+- [ ] ViewDidLoad 시 상벌점 내역 잘 가지고 오는지
 - [ ] ViewDidLoad 시 Activity Indicator is Animating
 - [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 
-## Mypage
+- OutingListViewModelTests
+
+- [ ] ViewDidLoad 시 외출 내역 잘 가지고 오는지
+- [ ] ViewDidLoad 시 Activity Indicator is Animating
+- [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 

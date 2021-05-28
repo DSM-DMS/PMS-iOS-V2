@@ -24,7 +24,7 @@ class LoginViewModelTests: XCTestCase {
 
     override func setUp() {
         let repository = DefaultLoginRepository(provider: MoyaProvider<AuthApi>(stubClosure: { _ in .immediate }))
-        viewModel = LoginViewModel(loginRepository: repository)
+        viewModel = LoginViewModel(repository: repository)
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
 
@@ -147,7 +147,7 @@ class LoginViewModelTests: XCTestCase {
     
     func test_login_existUser_alert() {
         // MARK: - WHEN
-        viewModel = LoginViewModel(loginRepository: MockFailLoginRepository(test: .existUser))
+        viewModel = LoginViewModel(repository: MockFailLoginRepository(test: .existUser))
         
         scheduler.createHotObservable([.next(100, "login@.")])
             .bind(to: viewModel.input.emailText)
@@ -178,7 +178,7 @@ class LoginViewModelTests: XCTestCase {
     
     func test_login_noInternet_alert() {
         // MARK: - WHEN
-        viewModel = LoginViewModel(loginRepository: MockFailLoginRepository(test: .noInternet))
+        viewModel = LoginViewModel(repository: MockFailLoginRepository(test: .noInternet))
         
         scheduler.createHotObservable([.next(100, "login@.")])
             .bind(to: viewModel.input.emailText)

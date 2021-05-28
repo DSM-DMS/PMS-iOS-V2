@@ -27,7 +27,35 @@ extension Bundle {
         let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
         let bundle = Bundle(path: bundlePath!)
 
-        return bundle!.decode(DetailNotice.self, from: "DetailNotice.json")
+        return bundle!.decode(DetailNotice.self, from: "NoticeDetail.json")
+    }
+    
+    static func getClubListJson() -> [Club] {
+        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+        let bundle = Bundle(path: bundlePath!)
+        
+        let clubList = bundle!.decode(ClubList.self, from: "ClubList.json")
+        
+        return clubList.clubs.map { return Club(name: $0.name, imageUrl: $0.imageUrl.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!.replacingOccurrences(of: "%3A", with: ":")) }
+
+    }
+    
+    static func getDetialClubJson() -> DetailClub {
+        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+        let bundle = Bundle(path: bundlePath!)
+
+        return bundle!.decode(DetailClub.self, from: "ClubDetail.json")
+    }
+    
+    static func getDevelopers() -> [Developer] {
+        return [
+            Developer(name: "정고은", field: "iOS", image: Asset.ios1.image),
+            Developer(name: "강은빈", field: "웹", image: Asset.front1.image),
+            Developer(name: "이진우", field: "웹", image: Asset.front2.image),
+            Developer(name: "정지우", field: "서버", image: Asset.back1.image),
+            Developer(name: "김정빈", field: "서버", image: Asset.back2.image),
+            Developer(name: "이은별", field: "안드로이드", image: Asset.android1.image),
+            Developer(name: "김재원", field: "안드로이드", image: Asset.android2.image)]
     }
 }
 

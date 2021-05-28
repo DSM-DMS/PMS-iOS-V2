@@ -51,7 +51,7 @@ class ClubCollectionCell: UICollectionViewCell {
     func setupView(model: Club) {
         self.clubLabel.text = model.name
         
-        self.clubImage.kf.setImage(with: (URL(string: model.imageUrl.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!.replacingOccurrences(of: "%3A", with: ":"))))
+        self.clubImage.kf.setImage(with: (URL(string: model.imageUrl)))
     }
     
     // MARK: Private Methods

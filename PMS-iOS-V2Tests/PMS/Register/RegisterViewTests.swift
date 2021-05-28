@@ -21,7 +21,7 @@ class RegisterViewTests: XCTestCase {
 
     override func setUp() {
         let repository = DefaultRegisterRepository(provider: MoyaProvider<AuthApi>(stubClosure: { _ in .immediate }))
-        viewModel = RegisterViewModel(registerRepository: repository)
+        viewModel = RegisterViewModel(repository: repository)
         view = RegisterViewController(viewModel: viewModel)
     }
     

@@ -24,7 +24,7 @@ class NoticeViewModelTests: XCTestCase {
     
     override func setUp() {
         let repository = DefaultNoticeRepository(provider: MoyaProvider<PMSApi>(stubClosure: { _ in .immediate }))
-        viewModel = NoticeViewModel(noticeRepository: repository)
+        viewModel = NoticeViewModel(repository: repository)
         view = NoticeViewController(viewModel: viewModel)
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }

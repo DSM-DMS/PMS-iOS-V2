@@ -24,8 +24,8 @@ class ClubViewModel: Stepper {
     
     struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
-        let clubList = PublishRelay<[Club]>()
-        let detailClub = PublishRelay<DetailClub>()
+        let clubList = BehaviorRelay<[Club]>(value: .init())
+        let detailClub = BehaviorRelay<DetailClub>(value: DetailClub(title: "", description: "", imageUrl: "", member: [String]()))
     }
     
     let input = Input()
@@ -47,6 +47,7 @@ class ClubViewModel: Stepper {
                     })
             }
             .map { $0.clubs }
+            .map { $0.map { return Club(name: $0.name, imageUrl: $0.imageUrl.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!.replacingOccurrences(of: "%3A", with: ":")) } }
             .bind(to: output.clubList)
             .disposed(by: disposeBag)
         
@@ -76,6 +77,11 @@ class ClubViewModel: Stepper {
                     })
             }
             .bind(to: output.detailClub)
+            .disposed(by: disposeBag)
+        
+        activityIndicator
+            .asObservable()
+            .bind(to: output.isLoading)
             .disposed(by: disposeBag)
     }
     

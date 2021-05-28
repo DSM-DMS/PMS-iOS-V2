@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 public struct ClubList: Codable, Hashable {
     public var clubs: [Club]
     

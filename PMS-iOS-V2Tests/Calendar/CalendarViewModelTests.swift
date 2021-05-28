@@ -24,7 +24,7 @@ class CalenddarViewModelTests: XCTestCase {
 
     override func setUp() {
         let repository = DefaultCalendarRepository(provider: MoyaProvider<PMSApi>(stubClosure: { _ in .immediate }))
-        viewModel = CalendarViewModel(calendarRepository: repository)
+        viewModel = CalendarViewModel(repository: repository)
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
     
@@ -159,7 +159,7 @@ class CalenddarViewModelTests: XCTestCase {
     
     func test_login_noInternet_alert() {
         // MARK: - WHEN
-        viewModel = CalendarViewModel(calendarRepository: MockFailCalendarRepository(test: .noInternet))
+        viewModel = CalendarViewModel(repository: MockFailCalendarRepository(test: .noInternet))
         
         viewModel.input.viewDidLoad.accept(())
         
