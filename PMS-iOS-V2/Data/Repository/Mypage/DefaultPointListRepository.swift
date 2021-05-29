@@ -9,7 +9,7 @@ import Foundation
 import Moya
 import RxSwift
 
-final class DefaultScoreListRepository: ScoreListRepository {
+final class DefaultPointListRepository: PointListRepository {
     let provider: MoyaProvider<AuthApi>
     
     init(provider: MoyaProvider<AuthApi>?) {

@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ScoreListViewController: UIViewController {
-    let viewModel: ScoreListViewModel
+class PointListViewController: UIViewController {
+    let viewModel: PointListViewModel
     
-    init(viewModel: ScoreListViewModel) {
+    init(viewModel: PointListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

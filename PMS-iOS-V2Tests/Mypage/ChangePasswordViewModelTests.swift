@@ -1,8 +1,8 @@
 //
-//  RegisterViewModelTests.swift
+//  ChangePasswordViewModelTests.swift
 //  PMS-iOS-V2Tests
 //
-//  Created by GoEun Jeong on 2021/05/21.
+//  Created by GoEun Jeong on 2021/05/29.
 //
 
 import XCTest
@@ -14,58 +14,30 @@ import RxFlow
 
 @testable import PMS_iOS_V2
 
-class RegisterViewModelTests: XCTestCase {
+class ChangePasswordViewModelTests: XCTestCase {
     let disposeBag = DisposeBag()
     
-    var viewModel: RegisterViewModel!
+    var viewModel: ChangePasswordViewModel!
     var scheduler: TestScheduler!
     
     // MARK: - GIVEN
 
     override func setUp() {
-        let repository = DefaultRegisterRepository(provider: MoyaProvider<AuthApi>(stubClosure: { _ in .immediate }))
-        viewModel = RegisterViewModel(repository: repository)
+        let repository = DefaultChangePasswordRepository(provider: MoyaProvider<AuthApi>(stubClosure: { _ in .immediate }))
+        viewModel = ChangePasswordViewModel(repository: repository)
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
-
-    func test_email_inValid() {
-        
-        // MARK: - WHEN
-        
-        scheduler.createHotObservable([.next(50, "asdf"), .next(100, "asdf@asdf.com")])
-            .bind(to: viewModel.input.emailText)
-            .disposed(by: disposeBag)
-        
-        let observer = scheduler.createObserver(Bool.self)
-        
-        viewModel.output.isEmailValid
-            .bind(to: observer)
-            .disposed(by: disposeBag)
-        
-        scheduler.start()
-        
-        let exceptEvents: [Recorded<Event<Bool>>] = [
-            .next(0, false),
-            .next(50, false),
-            .next(100, true)
-        ]
-        
-        // MARK: - THEN
-        
-        XCTAssertEqual(observer.events, exceptEvents)
-        XCTAssertEqual(viewModel.output.registerButtonIsEnable.value, false)
-    }
     
-    func test_password_eye_appear() {
+    func test_now_password_eye_appear() {
         // MARK: - WHEN
         
         scheduler.createHotObservable([.next(50, "asdf"), .next(100, "")])
-            .bind(to: viewModel.input.passwordText)
+            .bind(to: viewModel.input.nowPasswordText)
             .disposed(by: disposeBag)
         
         let observer = scheduler.createObserver(Bool.self)
         
-        viewModel.output.passwordEyeVisiable
+        viewModel.output.nowPasswordEyeVisiable
             .bind(to: observer)
             .disposed(by: disposeBag)
         
@@ -82,20 +54,46 @@ class RegisterViewModelTests: XCTestCase {
         XCTAssertEqual(observer.events, exceptEvents)
     }
     
-    func test_password_rePassword_notMatch() {
+    func test_new_password_eye_appear() {
+        // MARK: - WHEN
+        
+        scheduler.createHotObservable([.next(50, "asdf"), .next(100, "")])
+            .bind(to: viewModel.input.newPasswordText)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Bool.self)
+        
+        viewModel.output.newPasswordEyeVisiable
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        let exceptEvents: [Recorded<Event<Bool>>] = [
+            .next(0, false),
+            .next(50, true),
+            .next(100, false)
+        ]
+        
+        // MARK: - THEN
+        
+        XCTAssertEqual(observer.events, exceptEvents)
+    }
+    
+    func test_newPassword_reNewPassword_notMatch() {
         // MARK: - WHEN
         
         scheduler.createHotObservable([.next(50, "asdf"), .next(100, "a")])
-            .bind(to: viewModel.input.passwordText)
+            .bind(to: viewModel.input.newPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(50, "asdf"), .next(100, "asdf")])
-            .bind(to: viewModel.input.rePasswordText)
+            .bind(to: viewModel.input.reNewPasswordText)
             .disposed(by: disposeBag)
         
         let observer = scheduler.createObserver(String.self)
         
-        viewModel.output.isRePasswordValidMsg
+        viewModel.output.isReNewPasswordValidMsg
             .bind(to: observer)
             .disposed(by: disposeBag)
         
@@ -113,28 +111,24 @@ class RegisterViewModelTests: XCTestCase {
         XCTAssertEqual(observer.events, exceptEvents)
     }
     
-    func test_registerButton_inValid() {
+    func test_changePasswordButton_inValid() {
         // MARK: - WHEN
         
-        scheduler.createHotObservable([.next(50, ""), .next(100, "nickname")])
-            .bind(to: viewModel.input.nicknameText)
-            .disposed(by: disposeBag)
-        
-        scheduler.createHotObservable([.next(50, "asdf"), .next(100, "asdf@asdf.com")])
-            .bind(to: viewModel.input.emailText)
+        scheduler.createHotObservable([.next(50, "asdfasdf")])
+            .bind(to: viewModel.input.nowPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(50, ""), .next(100, "asdf"), .next(150, "asdfasdf")])
-            .bind(to: viewModel.input.passwordText)
+            .bind(to: viewModel.input.newPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(50, ""), .next(100, "asdfasdf"), .next(150, "asdfasdf")])
-            .bind(to: viewModel.input.rePasswordText)
+            .bind(to: viewModel.input.reNewPasswordText)
             .disposed(by: disposeBag)
         
         let observer = scheduler.createObserver(Bool.self)
         
-        viewModel.output.registerButtonIsEnable
+        viewModel.output.changePasswordButtonIsEnable
             .bind(to: observer)
             .disposed(by: disposeBag)
         
@@ -145,11 +139,6 @@ class RegisterViewModelTests: XCTestCase {
             .next(50, false),
             .next(50, false),
             .next(100, false),
-            .next(100, false),
-            .next(100, false),
-            .next(100, false),
-            .next(100, false),
-            .next(150, false),
             .next(150, true),
             .next(150, true)
         ]
@@ -159,66 +148,58 @@ class RegisterViewModelTests: XCTestCase {
         XCTAssertEqual(observer.events, exceptEvents)
     }
     
-    func test_register_success_view() {
+    func test_change_success_view() {
         // MARK: - WHEN
-        
-        scheduler.createHotObservable([.next(100, ".")])
-            .bind(to: viewModel.input.nicknameText)
-            .disposed(by: disposeBag)
-        
-        scheduler.createHotObservable([.next(100, "login@.")])
-            .bind(to: viewModel.input.emailText)
+
+        scheduler.createHotObservable([.next(100, "success")])
+            .bind(to: viewModel.input.nowPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, "success")])
-            .bind(to: viewModel.input.passwordText)
+            .bind(to: viewModel.input.newPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, "success")])
-            .bind(to: viewModel.input.rePasswordText)
+            .bind(to: viewModel.input.reNewPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, ())])
-            .bind(to: viewModel.input.registerButtonTapped)
+            .bind(to: viewModel.input.changePasswordButtonTapped)
             .disposed(by: disposeBag)
-        
+
         let observer = scheduler.createObserver(Step.self)
-        
+
         viewModel.steps
             .bind(to: observer)
             .disposed(by: disposeBag)
-        
+
         scheduler.start()
-        
+
         // MARK: - THEN
-        
-        XCTAssertEqual(observer.events.count, 2)
+
+        XCTAssertEqual(observer.events.count, 1)
         XCTAssertEqual(observer.events[0].value.element as! PMSStep,
-                       PMSStep.success(.registerSuccessMsg))
+                       PMSStep.success(.changePasswordSuccessMsg))
     }
     
-    func test_register_notMatch_alert() {
+    func test_now_password_notMatch_alert() {
         // MARK: - WHEN
-        viewModel = RegisterViewModel(repository: MockFailRegisterRepository(test: .existUser))
+        viewModel = ChangePasswordViewModel(repository: MockFailChangePasswordRepository(test: .notMatchPassword))
         
-        scheduler.createHotObservable([.next(100, ".")])
-            .bind(to: viewModel.input.nicknameText)
-            .disposed(by: disposeBag)
-        
-        scheduler.createHotObservable([.next(100, "login@.")])
-            .bind(to: viewModel.input.emailText)
+        scheduler.createHotObservable([.next(100, "failed")])
+            .bind(to: viewModel.input.nowPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, "failed")])
-            .bind(to: viewModel.input.passwordText)
+            .bind(to: viewModel.input.newPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, "failed")])
-            .bind(to: viewModel.input.rePasswordText)
+            .bind(to: viewModel.input.reNewPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, ())])
-            .bind(to: viewModel.input.registerButtonTapped)
+            .bind(to: viewModel.input.changePasswordButtonTapped)
             .disposed(by: disposeBag)
         
         let observer = scheduler.createObserver(Step.self)
@@ -233,31 +214,27 @@ class RegisterViewModelTests: XCTestCase {
         
         XCTAssertEqual(observer.events.count, 1)
         XCTAssertEqual(observer.events[0].value.element as! PMSStep,
-                       PMSStep.alert(LocalizedString.existUserErrorMsg.localized, .existUserErrorMsg))
+                       PMSStep.alert(LocalizedString.notMatchCurrentPasswordErrorMsg.localized, .notMatchCurrentPasswordErrorMsg))
     }
     
-    func test_registers_noInternet_alert() {
+    func test_noInternet_alert() {
         // MARK: - WHEN
-        viewModel = RegisterViewModel(repository: MockFailRegisterRepository(test: .noInternet))
+        viewModel = ChangePasswordViewModel(repository: MockFailChangePasswordRepository(test: .noInternet))
         
-        scheduler.createHotObservable([.next(100, ".")])
-            .bind(to: viewModel.input.nicknameText)
-            .disposed(by: disposeBag)
-        
-        scheduler.createHotObservable([.next(100, "login@.")])
-            .bind(to: viewModel.input.emailText)
+        scheduler.createHotObservable([.next(100, "failed")])
+            .bind(to: viewModel.input.nowPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, "failed")])
-            .bind(to: viewModel.input.passwordText)
+            .bind(to: viewModel.input.newPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, "failed")])
-            .bind(to: viewModel.input.rePasswordText)
+            .bind(to: viewModel.input.reNewPasswordText)
             .disposed(by: disposeBag)
         
         scheduler.createHotObservable([.next(100, ())])
-            .bind(to: viewModel.input.registerButtonTapped)
+            .bind(to: viewModel.input.changePasswordButtonTapped)
             .disposed(by: disposeBag)
         
         let observer = scheduler.createObserver(Step.self)

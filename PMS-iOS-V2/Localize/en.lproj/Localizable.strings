@@ -106,7 +106,7 @@
 "enterStudentCodeMsg" = "Please enter your child verification code";
 "addStudentButton" = "Add Student";
 "deleteStudentMsg" = "Delete it from the list?";
-"scoreListTitle" = "List of bonus/minus";
+"pointListTitle" = "List of bonus/minus";
 "outingListTitle" = "List of Outing";
 "outinfReason" = "Reason";
 "outinfPlace" = "Place";
@@ -144,3 +144,6 @@
 "rightArrowButton" = "Go to the next month";
 "previousPageButton" = "Go to previous page";
 "nextPageButton" = "Go to next page";
+"toOutingListButton" = "Go to Outing list button";
+"toChangePasswordButton" = "Go to Change Password Button";
+"toLogoutButton" = "Go to Logout";

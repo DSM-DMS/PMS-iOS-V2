@@ -15,7 +15,6 @@ enum PMSStep: Step, Equatable {
     // TabBar or PMSView
     case tabBarIsRequired
     case PMSIsRequired
-    case modalPMSIsRequired
     
     // PMSView
     case loginIsRequired
@@ -42,7 +41,7 @@ enum PMSStep: Step, Equatable {
     
     // Mypage
     case mypageIsRequired
-    case scoreListIsRequired
+    case pointListIsRequired
     case outingListIsRequired
     case changePasswordIsRequired
 }

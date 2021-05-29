@@ -15,7 +15,7 @@ extension UIViewController {
                                           message: message,
                                           preferredStyle: .alert)
             alert.accessibilityLabel = access.localized
-            alert.addAction(UIAlertAction(title: "Ok",
+            alert.addAction(UIAlertAction(title: LocalizedString.confirm.localized,
                                           style: .default))
             self.present(alert, animated: true)
         }

@@ -106,7 +106,7 @@
 "enterStudentCodeMsg" = "자녀확인 코드를 입력해주세요";
 "addStudentButton" = "학생 추가하기";
 "deleteStudentMsg" = "목록에서 삭제하시겠습니까?";
-"scoreListTitle" = "상/벌점 내역";
+"pointListTitle" = "상/벌점 내역";
 "outingListTitle" = "외출 내역";
 "outingReason" = "사유";
 "outingPlace" = "장소";
@@ -144,3 +144,6 @@
 "rightArrowButton" = "다음 달로 이동";
 "previousPageButton" = "이전 페이지로 이동";
 "nextPageButton" = "다음 페이지로 이동";
+"toOutingListButton" = "외출 내역으로 이동";
+"toChangePasswordButton" = "비밀번호 변경으로 이동";
+"toLogoutButton" = "로그아웃으로 이동";

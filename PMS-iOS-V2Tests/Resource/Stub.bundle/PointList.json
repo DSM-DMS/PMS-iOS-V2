@@ -1,0 +1,82 @@
+{
+    "points": [
+        {
+            "date": "2021-05-23",
+            "reason": "외출외박 후 귀사 지각",
+            "point": 1,
+            "type": false
+        },
+        {
+            "date": "2021-05-10",
+            "reason": "지정시간 외 기숙사 출입",
+            "point": 1,
+            "type": false
+        },
+        {
+            "date": "2021-05-09",
+            "reason": "반입금지 음식물 반입",
+            "point": 2,
+            "type": false
+        },
+        {
+            "date": "2021-04-29",
+            "reason": "기숙사 점호시간 준수",
+            "point": 2,
+            "type": true
+        },
+        {
+            "date": "2021-04-29",
+            "reason": "호실 정리정돈 우수",
+            "point": 2,
+            "type": true
+        },
+        {
+            "date": "2021-04-29",
+            "reason": "기숙사 봉사활동",
+            "point": 3,
+            "type": true
+        },
+        {
+            "date": "2021-04-29",
+            "reason": "우정관 캠페인 벌점 차감",
+            "point": -3,
+            "type": false
+        },
+        {
+            "date": "2021-04-20",
+            "reason": "화재대피훈련 참여 우수",
+            "point": 5,
+            "type": true
+        },
+        {
+            "date": "2021-04-04",
+            "reason": "타 호실 출입",
+            "point": 1,
+            "type": false
+        },
+        {
+            "date": "2021-03-31",
+            "reason": "호실 정리정돈 우수",
+            "point": 2,
+            "type": true
+        },
+        {
+            "date": "2021-03-31",
+            "reason": "기숙사 봉사활동",
+            "point": 2,
+            "type": true
+        },
+        {
+            "date": "2021-03-21",
+            "reason": "외출외박 후 귀사 지각",
+            "point": 1,
+            "type": false
+        },
+        {
+            "date": "2021-03-08",
+            "reason": "아침점호 지각",
+            "point": 1,
+            "type": false
+        }
+    ]
+}

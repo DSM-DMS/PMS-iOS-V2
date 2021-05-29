@@ -186,16 +186,30 @@ Unit Test
 - [ ] 학생 클릭 시 학생 리스트가 steps에 잘 들어가는지?
 - [ ] 학생 리스트가 비었을 시 학생 추가 문구가 뜨는지 등등
 - [ ] 로그인하지 않았을 때 로그인이 필요합니다 문구가 뜨는지
-
 - ScoreListViewModelTests
-
 - [ ] ViewDidLoad 시 상벌점 내역 잘 가지고 오는지
 - [ ] ViewDidLoad 시 Activity Indicator is Animating
 - [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
-
 - OutingListViewModelTests
-
 - [ ] ViewDidLoad 시 외출 내역 잘 가지고 오는지
 - [ ] ViewDidLoad 시 Activity Indicator is Animating
 - [ ] 네트워크가 없을 시 Alert가 잘 띄워지는지.
 
+
+
+- ChangePasswordViewModelTests
+
+- [x] 비밀번호 두 개가 서로 맞지 않을 때 회원가입 버튼 비활성화, ErrorMessage 활성화
+- [x] 현재 비밀번호 입력x 또는 비밀번호가 맞지 않았을 시 변경 버튼이 비활성화
+- [x] 비밀번호 입력 시 EyeImage 등장
+- [x] 현재 비밀번호가 맞지 않을 시 시 Alert가 잘 띄워지는지.
+- [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
+- [x] 테스트 계정으로 회원가입 시 SuccessLottieView가 잘 띄워지는지.
+
+- ChangePasswordViewTests
+
+- [x] 현재 비밀번호 입력중일 시 nowPasswordLine 색상 변경
+- [x] 바꿀 비밀번호 입력중일 시 newPasswordLine 색상 변경
+- [x] 바꿀 비밀번호 재입력중일 시 reNewPasswordLine 색상 변경
+- [x] 변경 버튼이 비활성화일 시 버튼 alpha 변경
+- [x] 로딩중일 시 activityIndicator isAnimating

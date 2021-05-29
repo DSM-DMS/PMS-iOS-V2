@@ -65,6 +65,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case notMatchPasswordErrorMsg
     case loginSuccessMsg
     case registerSuccessMsg
+    case changePasswordSuccessMsg
     
     // Calendar
     case calendarHeaderDateFormat
@@ -104,7 +105,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case enterStudentCodeMsg
     case addStudentButton
     case deleteStudentMsg
-    case scoreListTitle
+    case pointListTitle
     case outingListTitle
     case outingReason
     case outingPlace

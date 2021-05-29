@@ -30,14 +30,14 @@ class MypageFlow: Flow {
             return navigateToMypageScreen()
         case .changePasswordIsRequired:
             return navigateToChangePasswordScreen()
-        case .scoreListIsRequired:
-            return navigateToScoreListScreen()
+        case .pointListIsRequired:
+            return navigateToPointListScreen()
         case .outingListIsRequired:
             return navigateToOutingListScreen()
-        case .modalPMSIsRequired:
-            return modalPMSScreen()
         case .alert(let string, let access):
             return alert(string: string, access: access)
+        case .success(let string):
+            return successLottie(string: string)
         default:
             return .none
         }
@@ -55,26 +55,27 @@ class MypageFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func navigateToScoreListScreen() -> FlowContributors {
-        let vc = AppDelegate.container.resolve(ScoreListViewController.self)!
+    private func navigateToPointListScreen() -> FlowContributors {
+        let vc = AppDelegate.container.resolve(PointListViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
     private func navigateToOutingListScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(OutingListViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
-    }
-    
-    private func modalPMSScreen() -> FlowContributors {
-        let vc = AppDelegate.container.resolve(PMSViewController.self)!
-        self.rootViewController.present(vc, animated: true, completion: nil)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
     private func alert(string: String, access: AccessibilityString) -> FlowContributors {
         self.rootViewController.showErrorAlert(with: string, access: access)
+        return .none
+    }
+    
+    private func successLottie(string: LocalizedString) -> FlowContributors {
+        self.rootViewController.showSuccessLottie(label: string)
         return .none
     }
 }

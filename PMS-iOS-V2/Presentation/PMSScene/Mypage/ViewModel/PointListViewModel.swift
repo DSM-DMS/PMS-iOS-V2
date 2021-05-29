@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class ScoreListViewModel: Stepper {
+class PointListViewModel: Stepper {
     let steps = PublishRelay<Step>()
     
 }

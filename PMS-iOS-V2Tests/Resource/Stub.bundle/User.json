@@ -1,0 +1,13 @@
+{
+    "name": "Asdf",
+    "students": [
+        {
+            "student-number": 2304,
+            "student-name": "김정빈"
+        },
+        {
+            "student-number": 2315,
+            "student-name": "전규현"
+        }
+    ]
+}

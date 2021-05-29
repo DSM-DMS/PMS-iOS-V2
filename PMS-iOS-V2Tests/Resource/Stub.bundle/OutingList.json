@@ -1,0 +1,40 @@
+{
+    "outings": [
+        {
+            "date": "2021-05-19",
+            "reason": "asdf",
+            "place": "asdf",
+            "type": "NORMAL"
+        },
+        {
+            "date": "2021-05-19",
+            "reason": "asdf",
+            "place": "asdf",
+            "type": "NORMAL"
+        },
+        {
+            "date": "2021-05-19",
+            "reason": "asdf",
+            "place": "asdf",
+            "type": "NORMAL"
+        },
+        {
+            "date": "2021-05-19",
+            "reason": "asdf",
+            "place": "asdf",
+            "type": "NORMAL"
+        },
+        {
+            "date": "2021-05-19",
+            "reason": "asdf",
+            "place": "asdf",
+            "type": "NORMAL"
+        },
+        {
+            "date": "2021-05-20",
+            "reason": "asdf",
+            "place": "asdf",
+            "type": "NORMAL"
+        }
+    ]
+}
