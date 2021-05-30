@@ -88,7 +88,7 @@ class MypageFlow: Flow {
     private func logoutAlert() -> FlowContributors {
         self.rootViewController.showLogoutAlert(handler: { _ in
             StorageManager.shared.deleteUser()
-            AppDelegate.stepper.steps.accept(PMSStep.PMSIsRequired)
+            (UIApplication.shared.delegate as? AppDelegate)?.PMSIsRequired()
         })
         return .none
         

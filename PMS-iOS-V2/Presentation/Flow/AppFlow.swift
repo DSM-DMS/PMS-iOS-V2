@@ -13,14 +13,14 @@ import RxSwift
 
 class AppFlow: Flow {
     var root: Presentable {
-        return self.rootViewController
+        return self.rootWindow
     }
-
-    private lazy var rootViewController: UINavigationController = {
-        let viewController = UINavigationController()
-        viewController.setNavigationBarHidden(true, animated: false)
-        return viewController
-    }()
+    
+    private let rootWindow: UIWindow
+    
+    init(window: UIWindow) {
+        self.rootWindow = window
+    }
 
     deinit {
         print("\(type(of: self)): \(#function)")
@@ -43,7 +43,8 @@ class AppFlow: Flow {
         let pmsFlow = PMSFlow()
 
         Flows.use(pmsFlow, when: .created) { [unowned self] root in
-            self.rootViewController = root as! UINavigationController
+            self.rootWindow.rootViewController = root as! UINavigationController
+            self.rootWindow.makeKeyAndVisible()
         }
         
         return .one(flowContributor: .contribute(withNextPresentable: pmsFlow,
@@ -54,8 +55,8 @@ class AppFlow: Flow {
         let dashboardFlow = TabbarFlow()
 
         Flows.use(dashboardFlow, when: .created) { [unowned self] root in
-            self.rootViewController.isNavigationBarHidden = true
-            self.rootViewController.pushViewController(root, animated: false)
+            self.rootWindow.rootViewController = root as! UINavigationController
+            self.rootWindow.makeKeyAndVisible()
         }
 
         return .one(flowContributor: .contribute(withNextPresentable: dashboardFlow,

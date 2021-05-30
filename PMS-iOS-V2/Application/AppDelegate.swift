@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var coordinator = FlowCoordinator()
     var window: UIWindow?
     static let container = Container()
-    static let stepper = AppStepper()
+    let stepper = AppStepper()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.container.registerDependencies()
@@ -31,20 +31,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("did navigate to flow=\(flow) and step=\(step)")
         }).disposed(by: self.disposeBag)
         
-        let appFlow = AppFlow()
+        let appFlow = AppFlow(window: window!)
         
-        self.coordinator.coordinate(flow: appFlow, with: AppDelegate.stepper)
+        self.coordinator.coordinate(flow: appFlow, with: stepper)
         
-        Flows.use(appFlow, when: .created) { root in
-            self.window?.rootViewController = root
-            self.window?.makeKeyAndVisible()
-        }
-        
-        Flows.use(appFlow, when: .ready) { root in
-            self.window?.rootViewController = root
-            self.window?.makeKeyAndVisible()
-        }
         return true
     }
 
+}
+
+extension AppDelegate {
+    func PMSIsRequired() {
+        stepper.steps.accept(PMSStep.PMSIsRequired)
+    }
 }
