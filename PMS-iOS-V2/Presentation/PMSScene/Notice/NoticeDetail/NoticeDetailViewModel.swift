@@ -56,7 +56,6 @@ class NoticeDetailViewModel: Stepper {
         input.noInternet
             .subscribe(onNext: { _ in
                 self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
-                
             })
             .disposed(by: disposeBag)
         

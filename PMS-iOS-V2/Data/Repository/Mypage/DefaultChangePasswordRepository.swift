@@ -19,6 +19,7 @@ final class DefaultChangePasswordRepository: ChangePasswordRepository {
     func changePassword(nowPassword: String, newPassword: String) -> Single<Bool> {
         provider.rx.request(.changePassword(password: newPassword, prePassword: nowPassword))
             .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
             .map { _ in
                 var preUser = StorageManager.shared.readUser()!
                 preUser.password = newPassword

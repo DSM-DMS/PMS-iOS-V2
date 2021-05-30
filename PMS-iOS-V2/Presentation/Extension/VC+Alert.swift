@@ -36,4 +36,18 @@ extension UIViewController {
             }
         }
     }
+    
+    func showLogoutAlert(handler: @escaping (UIAlertAction) -> Void) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: nil,
+                                          message: LocalizedString.logoutConfirmMsg.localized,
+                                          preferredStyle: .alert)
+            alert.accessibilityLabel = LocalizedString.logoutConfirmMsg.localized
+            let cancel = UIAlertAction(title: LocalizedString.cancel.localized, style: .destructive, handler: nil)
+            let logoutAction = UIAlertAction(title: LocalizedString.confirm.localized, style: .default, handler: handler)
+            alert.addAction(cancel)
+            alert.addAction(logoutAction)
+            self.present(alert, animated: true)
+        }
+    }
 }

@@ -67,6 +67,7 @@
 "notMatchPasswordErrorMsg" = "비밀번호가 일치하지 않습니다.";
 "loginSuccessMsg" = "로그인에 성공하셨습니다.";
 "registerSuccessMsg" = "회원가입에 성공하셨습니다.";
+"changePasswordSuccessMsg" = "비밀번호 변경에 성공하였습니다.";
 
 // Calendar
 "calendarHeaderDateFormat" = "yyyy년 M월";

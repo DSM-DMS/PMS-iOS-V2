@@ -107,6 +107,10 @@ extension AuthApi: TargetType {
             return stub("User")
         case .mypage:
             return stub("Student")
+        case .pointList:
+            return stub("PointList")
+        case .outing:
+            return stub("OutingList")
         default:
             return Data()
         }

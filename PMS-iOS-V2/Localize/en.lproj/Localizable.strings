@@ -67,6 +67,7 @@
 "notMatchPasswordErrorMsg" = "Passwords don't match.";
 "loginSuccessMsg" = "Sign in was successful.";
 "registerSuccessMsg" = "Sign up was successful.";
+"changePasswordSuccessMsg" = "Success to change password.";
 
 // Calendar
 "calendarHeaderDateFormat" = "MMMM yyyy";

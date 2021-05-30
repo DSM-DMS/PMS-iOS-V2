@@ -6,8 +6,9 @@
 //
 
 import RxFlow
+import UIKit
 
-enum PMSStep: Step, Equatable {
+enum PMSStep: Step, Equatable {    
     // Global
     case alert(String, AccessibilityString)
     case success(LocalizedString)
@@ -41,7 +42,8 @@ enum PMSStep: Step, Equatable {
     
     // Mypage
     case mypageIsRequired
-    case pointListIsRequired
-    case outingListIsRequired
+    case pointListIsRequired(number: Int)
+    case outingListIsRequired(number: Int)
     case changePasswordIsRequired
+    case logout
 }

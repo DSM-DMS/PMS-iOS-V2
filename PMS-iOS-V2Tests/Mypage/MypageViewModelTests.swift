@@ -28,7 +28,7 @@ class MypageViewModelTests: XCTestCase {
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
     }
 
-    func test_go_login_screen() {
+    func test_go_outingList_screen() {
         // MARK: - WHEN
         
         scheduler.createHotObservable([.next(100, ())])
@@ -47,10 +47,10 @@ class MypageViewModelTests: XCTestCase {
         
         XCTAssertEqual(observer.events.count, 1)
         XCTAssertEqual(observer.events[0].value.element as! PMSStep,
-                       PMSStep.outingListIsRequired)
+                       PMSStep.outingListIsRequired(number: 0))
     }
     
-    func test_go_register_screen() {
+    func test_go_changePassword_screen() {
         // MARK: - WHEN
         
         scheduler.createHotObservable([.next(100, ())])

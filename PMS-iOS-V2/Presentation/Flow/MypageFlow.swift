@@ -30,14 +30,16 @@ class MypageFlow: Flow {
             return navigateToMypageScreen()
         case .changePasswordIsRequired:
             return navigateToChangePasswordScreen()
-        case .pointListIsRequired:
-            return navigateToPointListScreen()
-        case .outingListIsRequired:
-            return navigateToOutingListScreen()
+        case .pointListIsRequired(let number):
+            return navigateToPointListScreen(number: number)
+        case .outingListIsRequired(let number):
+            return navigateToOutingListScreen(number: number)
         case .alert(let string, let access):
             return alert(string: string, access: access)
         case .success(let string):
             return successLottie(string: string)
+        case .logout:
+            return logoutAlert()
         default:
             return .none
         }
@@ -55,15 +57,19 @@ class MypageFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func navigateToPointListScreen() -> FlowContributors {
-        let vc = AppDelegate.container.resolve(PointListViewController.self)!
+    private func navigateToPointListScreen(number: Int) -> FlowContributors {
+        let repository = AppDelegate.container.resolve(PointListRepository.self)!
+        let viewModel = PointListViewModel(repository: repository, number: number)
+        let vc = PointListViewController(viewModel: viewModel)
         vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func navigateToOutingListScreen() -> FlowContributors {
-        let vc = AppDelegate.container.resolve(OutingListViewController.self)!
+    private func navigateToOutingListScreen(number: Int) -> FlowContributors {
+        let repository = AppDelegate.container.resolve(OutingListRepository.self)!
+        let viewModel = OutingListViewModel(repository: repository, number: number)
+        let vc = OutingListViewController(viewModel: viewModel)
         vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
@@ -77,5 +83,14 @@ class MypageFlow: Flow {
     private func successLottie(string: LocalizedString) -> FlowContributors {
         self.rootViewController.showSuccessLottie(label: string)
         return .none
+    }
+    
+    private func logoutAlert() -> FlowContributors {
+        self.rootViewController.showLogoutAlert(handler: { _ in
+            StorageManager.shared.deleteUser()
+            AppDelegate.stepper.steps.accept(PMSStep.PMSIsRequired)
+        })
+        return .none
+        
     }
 }

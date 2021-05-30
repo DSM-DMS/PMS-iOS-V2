@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var coordinator = FlowCoordinator()
     var window: UIWindow?
     static let container = Container()
+    static let stepper = AppStepper()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.container.registerDependencies()
@@ -32,9 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let appFlow = AppFlow()
         
-        self.coordinator.coordinate(flow: appFlow, with: AppStepper())
+        self.coordinator.coordinate(flow: appFlow, with: AppDelegate.stepper)
         
         Flows.use(appFlow, when: .created) { root in
+            self.window?.rootViewController = root
+            self.window?.makeKeyAndVisible()
+        }
+        
+        Flows.use(appFlow, when: .ready) { root in
             self.window?.rootViewController = root
             self.window?.makeKeyAndVisible()
         }

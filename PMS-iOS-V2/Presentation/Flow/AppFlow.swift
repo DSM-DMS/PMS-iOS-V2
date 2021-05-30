@@ -12,7 +12,6 @@ import RxCocoa
 import RxSwift
 
 class AppFlow: Flow {
-
     var root: Presentable {
         return self.rootViewController
     }
@@ -46,7 +45,7 @@ class AppFlow: Flow {
         Flows.use(pmsFlow, when: .created) { [unowned self] root in
             self.rootViewController = root as! UINavigationController
         }
-
+        
         return .one(flowContributor: .contribute(withNextPresentable: pmsFlow,
                                                  withNextStepper: OneStepper(withSingleStep: PMSStep.PMSIsRequired)))
     }

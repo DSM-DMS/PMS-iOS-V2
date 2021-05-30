@@ -11,7 +11,9 @@ extension UIButton {
     func setTitle(_ title: LocalizedString) {
         self.setTitle(title.localized, for: .normal)
     }
-    
+}
+
+extension UIView {
     func setAccessibility(_ label: AccessibilityString) {
         self.accessibilityLabel = label.localized
     }

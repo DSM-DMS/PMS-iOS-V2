@@ -15,4 +15,19 @@ final class DefaultPointListRepository: PointListRepository {
     init(provider: MoyaProvider<AuthApi>?) {
         self.provider = provider ?? MoyaProvider<AuthApi>()
     }
+    
+    func getPointList(number: Int) -> Single<PointList> {
+        provider.rx.request(.pointList(number: number))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map(PointList.self)
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
 }

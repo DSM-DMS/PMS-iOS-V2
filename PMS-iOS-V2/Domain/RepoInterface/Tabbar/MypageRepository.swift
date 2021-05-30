@@ -9,5 +9,6 @@ import Foundation
 import RxSwift
 
 protocol MypageRepository {
-    
+    func getUser() -> Single<User>
+    func getStudent(number: Int) -> Single<Student>
 }

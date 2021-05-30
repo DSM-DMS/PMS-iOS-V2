@@ -49,6 +49,10 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case existUserErrorMsg
     case notMatchPasswordErrorMsg
     case notMatchCurrentPasswordErrorMsg
+    
+    // Placeholder
+    case noStudentPlaceholder
+    case noAuthPlaceholder
 }
 
 extension AccessibilityString {

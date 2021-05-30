@@ -11,6 +11,7 @@ import RxCocoa
 
 class MypageViewController: UIViewController {
     let viewModel: MypageViewModel
+    let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     
     private let blueBackground = UIView().then {
@@ -48,6 +49,13 @@ class MypageViewController: UIViewController {
     private let mypageStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 25.0
+    }
+    
+    private let noStudentView = MypageMessageView(title: .noStudentPlaceholder, label: .noStudentPlaceholder).then {
+        $0.isHidden = true
+    }
+    private let noLoginView = MypageMessageView(title: .noAuthPlaceholder, label: .noAuthPlaceholder).then {
+        $0.isHidden = true
     }
     
     private let pointStackView = UIStackView().then {
@@ -89,8 +97,9 @@ class MypageViewController: UIViewController {
         view.backgroundColor = Colors.white.color
         view.addSubview(blueBackground)
         view.addSubViews([nickNameStackView, studentStackView])
+        view.addSubViews([noStudentView, noLoginView])
         view.addSubview(mypageStackView)
-        mypageStackView.addArrangeSubviews([pointStackView, statusView, outingListButton, changePasswordButton, logoutButton])
+        mypageStackView.addArrangeSubviews([pointStackView, noStudentView, noLoginView, statusView, outingListButton, changePasswordButton, logoutButton])
         
         blueBackground.snp.makeConstraints {
             $0.width.equalToSuperview()
@@ -119,6 +128,14 @@ class MypageViewController: UIViewController {
         downArrowImage.snp.makeConstraints {
             $0.width.height.equalTo(15)
         }
+        
+//        noStudentView.snp.makeConstraints {
+//            $0.center.equalToSuperview()
+//        }
+//
+//        noLoginView.snp.makeConstraints {
+//            $0.center.equalToSuperview()
+//        }
         
         mypageStackView.snp.makeConstraints {
             $0.top.equalTo(nickNameStackView.snp_bottomMargin).offset(40)
@@ -164,6 +181,33 @@ class MypageViewController: UIViewController {
     }
     
     private func bindOutput() {
+        viewModel.output.isLoading
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
         
+        viewModel.output.nickName
+            .subscribe {
+                self.nickNameLabel.text = $0
+            }.disposed(by: disposeBag)
+        
+        viewModel.output.isStudent
+            .subscribe(onNext: {
+                if $0 {
+                    self.statusView.isHidden = false
+                    self.noStudentView.isHidden = true
+                    self.outingListButton.isHidden = false
+                } else {
+                    self.statusView.isHidden = true
+                    self.noStudentView.isHidden = false
+                    self.outingListButton.isHidden = true
+                }
+            }).disposed(by: disposeBag)
+        
+        viewModel.output.studentStatus
+            .subscribe(onNext: {
+                self.statusView.setupView(model: $0)
+                self.plusPointRow.setupView(plus: $0.plus)
+                self.minusPointRow.setupView(minus: $0.minus)
+            }).disposed(by: disposeBag)
     }
 }

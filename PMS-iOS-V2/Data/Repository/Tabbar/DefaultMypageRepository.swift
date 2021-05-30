@@ -15,4 +15,40 @@ final class DefaultMypageRepository: MypageRepository {
     init(provider: MoyaProvider<AuthApi>?) {
         self.provider = provider ?? MoyaProvider<AuthApi>()
     }
+    
+    func getUser() -> Single<User> {
+        provider.rx.request(.userInform)
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map(User.self)
+            .map {
+                if UDManager.shared.student == nil && !$0.students.isEmpty {
+                    UDManager.shared.student = String($0.students.first!.number) + " " + $0.students.first!.name
+                }
+                return $0
+            }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
+    
+    func getStudent(number: Int) -> Single<Student> {
+        provider.rx.request(.mypage(number: number))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map(Student.self)
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
 }

@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol PointListRepository {
-    
+    func getPointList(number: Int) -> Single<PointList>
 }
