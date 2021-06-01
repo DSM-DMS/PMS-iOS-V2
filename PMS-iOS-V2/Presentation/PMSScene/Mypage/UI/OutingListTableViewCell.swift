@@ -11,19 +11,28 @@ import Then
 import Kingfisher
 
 class OutingListTableViewCell: UITableViewCell {
-    private let noticeStack = UIStackView().then {
+    private let outingStack = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 10.0
+        $0.distribution = .equalSpacing
         $0.alignment = .leading
+    }
+    
+    private let dateStack = UIStackView().then {
+        $0.spacing = 10.0
     }
     
     private let colorView = UIView()
     
-    private let titleLabel = UILabel().then {
+    private let dateLabel = UILabel().then {
         $0.textColor = Colors.black.color
     }
     
-    private let dateLabel = UILabel().then {
+    private let reasonLabel = UILabel().then {
+        $0.textColor = .gray
+        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+    }
+    
+    private let placeLabel = UILabel().then {
         $0.textColor = .gray
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
     }
@@ -55,42 +64,43 @@ class OutingListTableViewCell: UITableViewCell {
     // MARK: - Public Methods
     
     func setupView(model: Outing) {
-//        DispatchQueue.main.async {
-//            if !model.type {
-//                self.colorView.backgroundColor = Colors.red.color
-//            } else {
-//                self.colorView.backgroundColor = Colors.blue.color
-//            }
-//            self.titleLabel.text = model.notice.title
-//            self.dateLabel.text = model.notice.date
-//        }
+        DispatchQueue.main.async {
+            if model.type == "DISEASE" {
+                self.colorView.backgroundColor = Colors.red.color
+            } else {
+                self.colorView.backgroundColor = Colors.blue.color
+            }
+            self.dateLabel.text = model.date
+            self.reasonLabel.text = model.reason
+            self.placeLabel.text = model.place
+        }
     }
     
     // MARK: Private Methods
     
     private func setupSubview() {
-        addSubViews([cellBackground, colorView, noticeStack])
-        noticeStack.addArrangeSubviews([titleLabel, dateLabel])
+        addSubViews([cellBackground, colorView, outingStack])
+        outingStack.addArrangeSubviews([dateLabel, reasonLabel, placeLabel])
         colorView.snp.makeConstraints {
             $0.height.equalTo(15)
             $0.width.equalTo(3)
             $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
             $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
         }
-        noticeStack.snp.makeConstraints {
-            $0.width.equalToSuperview().offset(-20)
-            $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
-            $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(20)
+        outingStack.snp.makeConstraints {
+            $0.width.equalToSuperview().offset(-10)
+            $0.height.equalToSuperview().offset(-10)
+            $0.center.equalToSuperview()
         }
-        titleLabel.snp.makeConstraints {
-            $0.height.equalTo(15)
-        }
-        dateLabel.snp.makeConstraints {
-            $0.height.equalTo(10)
-        }
+//        dateLabel.snp.makeConstraints {
+//            $0.height.equalTo(15)
+//        }
+//        reasonLabel.snp.makeConstraints {
+//            $0.height.equalTo(10)
+//        }
         cellBackground.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(100)
             $0.width.equalTo(UIFrame.width - 70)
         }
     }

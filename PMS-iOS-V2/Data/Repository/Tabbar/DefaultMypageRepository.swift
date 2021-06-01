@@ -51,4 +51,49 @@ final class DefaultMypageRepository: MypageRepository {
                 }
             }
     }
+    
+    func changeNickname(name: String) -> Single<Bool> {
+        provider.rx.request(.changeNickname(name: name))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
+    
+    func addStudent(number: Int) -> Single<Bool> {
+        provider.rx.request(.addStudent(number: number))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
+    
+    func deleteStudent(number: Int) -> Single<Bool> {
+        provider.rx.request(.deleteStudent(number: number))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
 }

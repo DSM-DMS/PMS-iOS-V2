@@ -10,41 +10,87 @@ import RxSwift
 import RxCocoa
 
 class MypageViewController: UIViewController {
-    let viewModel: MypageViewModel
+    let viewModel: MypageViewModel!
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
+    private let pointTapped = UITapGestureRecognizer()
+    let nicknameTapped = UITapGestureRecognizer()
+    let studentTapped = UITapGestureRecognizer()
+    let backgroundTapped = UITapGestureRecognizer()
+    lazy var changeNicknameView = ChangeNicknameViewController(
+        viewModel: ChangeNicknameViewModel(
+            repository: AppDelegate.container.resolve(MypageRepository.self)!),
+        dismiss: {
+            self.dismissChangeView()
+        },
+        success: {
+            self.changeNickname()
+        }).then {
+            $0.view.isHidden = true
+        }
+    
+    lazy var studentListView = StudentListViewController(
+        viewModel: StudentListViewModel(
+            repository: AppDelegate.container.resolve(MypageRepository.self)!),
+        delete: {
+            self.delete(student: $0)
+        }, changeStudent: {
+            self.changeStudent()
+        }).then {
+        $0.view.isHidden = true
+    }
+    
+    func dismissChangeView() {
+        self.blackBackground.isHidden = true
+        self.changeNicknameView.view.isHidden = true
+        self.viewModel.steps.accept(PMSStep.presentTabbar)
+    }
+    
+    func changeNickname() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.viewModel.input.viewDidLoad.accept(())
+        }
+    }
+    
+    func changeStudent() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.viewModel.input.viewDidLoad.accept(())
+        }
+    }
+    
+    func delete(student: UsersStudent) {
+        self.viewModel.steps.accept(PMSStep.deleteStudent(name: String(student.number) + " " + student.name, handler: { _ in
+            self.viewModel.input.deleteStudent.accept(student.number)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.viewModel.input.viewDidLoad.accept(())
+            }
+        }))
+    }
+    
+    lazy var blackBackground = UIView().then {
+        $0.backgroundColor = .black
+        $0.alpha = 0.2
+        $0.isHidden = true
+    }
     
     private let blueBackground = UIView().then {
         $0.backgroundColor = Colors.blue.color
     }
     
-    private let nickNameStackView = UIStackView().then {
-        $0.spacing = 10.0
-    }
-    
-    private let nickNameLabel = UILabel().then {
+    let nickNameLabel = UILabel().then {
         $0.textColor = .white
         $0.font = UIFont.systemFont(ofSize: 30)
         $0.text = "닉네임"
     }
     
-    private let pencilImage = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.image = Asset.whitePencil.image
-    }
+    let pencilImage = WhitePencilButton()
     
-    private let studentStackView = UIStackView().then {
-        $0.spacing = 10.0
-    }
     private let studentLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 17)
+        $0.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         $0.text = "학생 추가"
     }
-    private let downArrowImage = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.image = Asset.bottomArrow.image
-    }
+    private let downArrowImage = BottomArrowButton()
     
     private let mypageStackView = UIStackView().then {
         $0.axis = .vertical
@@ -81,13 +127,16 @@ class MypageViewController: UIViewController {
     override func viewDidLoad() {
         self.setupSubview()
         self.bindOutput()
+        pointStackView.addGestureRecognizer(pointTapped)
+        studentLabel.addGestureRecognizer(nicknameTapped)
+        blackBackground.addGestureRecognizer(backgroundTapped)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -96,10 +145,12 @@ class MypageViewController: UIViewController {
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubview(blueBackground)
-        view.addSubViews([nickNameStackView, studentStackView])
+        view.addSubViews([nickNameLabel, pencilImage, studentLabel, downArrowImage])
         view.addSubViews([noStudentView, noLoginView])
         view.addSubview(mypageStackView)
         mypageStackView.addArrangeSubviews([pointStackView, noStudentView, noLoginView, statusView, outingListButton, changePasswordButton, logoutButton])
+        view.addSubview(activityIndicator)
+        view.addSubViews([blackBackground, changeNicknameView.view, studentListView.view])
         
         blueBackground.snp.makeConstraints {
             $0.width.equalToSuperview()
@@ -107,38 +158,30 @@ class MypageViewController: UIViewController {
             $0.bottom.equalTo(pointStackView.snp_bottomMargin).offset(-15)
         }
         
-        nickNameStackView.addArrangeSubviews([nickNameLabel, pencilImage])
-        
-        nickNameStackView.snp.makeConstraints {
+        nickNameLabel.snp.makeConstraints {
             $0.top.equalTo(view.layoutMarginsGuide).offset(UIFrame.height / 17)
             $0.leading.equalToSuperview().offset(40)
         }
         
         pencilImage.snp.makeConstraints {
-            $0.width.height.equalTo(25)
+            $0.centerY.equalTo(nickNameLabel)
+            $0.leading.equalTo(nickNameLabel.snp_trailingMargin).offset(20)
+            $0.width.height.equalTo(20)
         }
         
-        studentStackView.addArrangeSubviews([studentLabel, downArrowImage])
-        
-        studentStackView.snp.makeConstraints {
-            $0.centerY.equalTo(nickNameStackView)
-            $0.trailing.equalToSuperview().offset(-40)
+        studentLabel.snp.makeConstraints {
+            $0.centerY.equalTo(nickNameLabel)
+            $0.trailing.equalTo(downArrowImage.snp_leadingMargin).offset(-20)
         }
         
         downArrowImage.snp.makeConstraints {
+            $0.centerY.equalTo(nickNameLabel)
+            $0.trailing.equalToSuperview().offset(-40)
             $0.width.height.equalTo(15)
         }
         
-//        noStudentView.snp.makeConstraints {
-//            $0.center.equalToSuperview()
-//        }
-//
-//        noLoginView.snp.makeConstraints {
-//            $0.center.equalToSuperview()
-//        }
-        
         mypageStackView.snp.makeConstraints {
-            $0.top.equalTo(nickNameStackView.snp_bottomMargin).offset(40)
+            $0.top.equalTo(nickNameLabel.snp_bottomMargin).offset(40)
             $0.width.equalTo(UIFrame.width - 70)
             $0.centerX.equalToSuperview()
         }
@@ -160,11 +203,76 @@ class MypageViewController: UIViewController {
         statusView.snp.makeConstraints {
             $0.height.equalTo(140)
         }
+        
+        activityIndicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        blackBackground.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        changeNicknameView.view.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        studentListView.view.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(UIFrame.height / 3)
+        }
     }
     
     private func bindInput() {
         self.rx.viewDidLoad
             .bind(to: viewModel.input.viewDidLoad)
+            .disposed(by: disposeBag)
+        
+        backgroundTapped.rx.event
+            .subscribe(onNext: { _ in
+                self.blackBackground.isHidden = true
+                self.changeNicknameView.view.isHidden = true
+                self.studentListView.view.isHidden = true
+                self.viewModel.input.backgroundTapped.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        pencilImage.rx.tap
+            .subscribe(onNext: { _ in
+                self.blackBackground.isHidden = false
+                self.changeNicknameView.view.isHidden = false
+                self.viewModel.input.changeNicknameButtonTapped.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        nicknameTapped.rx.event
+            .subscribe(onNext: { _ in
+                self.blackBackground.isHidden = false
+                self.changeNicknameView.view.isHidden = false
+                self.viewModel.input.changeNicknameButtonTapped.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        downArrowImage.rx.tap
+            .subscribe(onNext: { _ in
+                self.blackBackground.isHidden = false
+                self.studentListView.view.isHidden = false
+                self.viewModel.input.studentListButtonTapped.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        studentTapped.rx.event
+            .subscribe(onNext: { _ in
+                self.blackBackground.isHidden = false
+                self.studentListView.view.isHidden = false
+                self.viewModel.input.studentListButtonTapped.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        pointTapped.rx.event
+            .map { _ in }
+            .bind(to: viewModel.input.pointListButtonTapped)
             .disposed(by: disposeBag)
         
         outingListButton.rx.tap
@@ -186,13 +294,39 @@ class MypageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.nickName
-            .subscribe {
+            .subscribe(onNext: {
                 self.nickNameLabel.text = $0
+            }).disposed(by: disposeBag)
+        
+        viewModel.output.studentName
+            .subscribe {
+                self.studentLabel.text = $0
             }.disposed(by: disposeBag)
+        
+        viewModel.output.isNoLogin
+            .subscribe(onNext: {
+                if $0 {
+                    self.statusView.isHidden = true
+                    self.noLoginView.isHidden = false
+                    self.studentLabel.alpha = 0.5
+                    self.downArrowImage.alpha = 0.5
+                    self.pencilImage.alpha = 0.5
+                    self.outingListButton.isHidden = true
+                } else {
+                    self.statusView.isHidden = false
+                    self.noLoginView.isHidden = true
+                    self.studentLabel.alpha = 1
+                    self.downArrowImage.alpha = 1
+                    self.pencilImage.alpha = 1
+                    self.outingListButton.isHidden = false
+                }
+            }).disposed(by: disposeBag)
         
         viewModel.output.isStudent
             .subscribe(onNext: {
-                if $0 {
+                if self.viewModel.output.isNoLogin.value {
+                    self.noStudentView.isHidden = true
+                } else if $0 {
                     self.statusView.isHidden = false
                     self.noStudentView.isHidden = true
                     self.outingListButton.isHidden = false

@@ -1,42 +1,42 @@
 //
-//  OutingListViewModel.swift
+//  StudentListViewModel.swift
 //  PMS-iOS-V2
 //
-//  Created by GoEun Jeong on 2021/05/19.
+//  Created by GoEun Jeong on 2021/05/31.
 //
 
 import RxSwift
 import RxCocoa
 import RxFlow
 
-class OutingListViewModel: Stepper {
+class StudentListViewModel: Stepper {
     let steps = PublishRelay<Step>()
-    private let repository: OutingListRepository
-    private let number: Int
+    private let repository: MypageRepository
     private let disposeBag = DisposeBag()
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
+        let deleteButtonTapped = PublishRelay<UsersStudent>()
     }
     
     struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
-        let outingList = PublishRelay<[Outing]>()
+        let studentList = PublishRelay<[UsersStudent]>()
+        let change = PublishRelay<Void>()
     }
     
     let input = Input()
     let output = Output()
     
-    init(repository: OutingListRepository, number: Int) {
+    init(repository: MypageRepository) {
         self.repository = repository
-        self.number = number
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
             .flatMapLatest { _ in
-                repository.getOutingList(number: self.number)
+                repository.getUser()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -44,14 +44,20 @@ class OutingListViewModel: Stepper {
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
-            .map { print($0.outings); return $0.outings }
-            .bind(to: output.outingList)
+            .map { $0.students }
+            .bind(to: output.studentList)
             .disposed(by: disposeBag)
         
         input.noInternet
             .subscribe(onNext: { _ in
                 self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
+            .disposed(by: disposeBag)
+        
+        input.deleteButtonTapped
+            .filter { $0.number == UDManager.shared.studentNumber! }
+            .map { _ in }
+            .bind(to: output.change)
             .disposed(by: disposeBag)
         
         activityIndicator

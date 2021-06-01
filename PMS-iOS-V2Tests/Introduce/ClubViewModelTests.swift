@@ -102,6 +102,31 @@ class ClubViewModelTests: XCTestCase {
         }
     }
     
+    func test_go_detail_club() {
+        // MARK: - WHEN
+        viewModel.input.viewDidLoad.accept(())
+        
+        scheduler.createHotObservable([.next(100, "a")])
+            .bind(to: viewModel.input.goDetailClub)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Step.self)
+        
+        viewModel.steps
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        // MARK: - THEN
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            XCTAssertEqual(observer.events.count, 1)
+            XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+                           PMSStep.detailClubIsRequired(name: "a"))
+        }
+    }
+    
     func test_imageURL_encoding() {
         // MARK: - WHEN
         

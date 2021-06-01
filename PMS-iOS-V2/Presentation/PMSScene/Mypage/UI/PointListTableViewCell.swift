@@ -29,7 +29,7 @@ class PointListTableViewCell: UITableViewCell {
     }
     
     private let scoreLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
     }
     
     private let cellBackground = UIView().then {
@@ -84,11 +84,9 @@ class PointListTableViewCell: UITableViewCell {
             $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
             $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(20)
         }
-        titleLabel.snp.makeConstraints {
-            $0.height.equalTo(20)
-        }
-        dateLabel.snp.makeConstraints {
-            $0.height.equalTo(10)
+        scoreLabel.snp.makeConstraints {
+            $0.trailing.equalTo(cellBackground.snp_trailingMargin).offset(-20)
+            $0.centerY.equalToSuperview()
         }
         cellBackground.snp.makeConstraints {
             $0.center.equalToSuperview()

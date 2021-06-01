@@ -12,7 +12,7 @@ class StatusView: UIView {
     private let pointStatus = UIButton().then {
         $0.backgroundColor = Colors.blue.color
         $0.isUserInteractionEnabled = false
-        $0.titleLabel?.text = "-"
+        $0.setTitle("-", for: .normal)
         $0.layer.cornerRadius = 15
         $0.layer.masksToBounds = true
     }
@@ -50,14 +50,13 @@ class StatusView: UIView {
     
     func setupView(model: Student) {
         DispatchQueue.main.async {
-            self.pointStatus.titleLabel?.text = self.minusStatus(num: model.minus)
+            self.pointStatus.setTitle( self.minusStatus(num: model.minus), for: .normal)
             self.statuslabel.text = self.convertStatus(num: model.status)
             if model.isMeal {
                 self.mealImage.image = Asset.o.image
             } else {
                 self.mealImage.image = Asset.x.image
             }
-//            self.descLabel.text = model.body
         }
     }
     
@@ -76,10 +75,9 @@ class StatusView: UIView {
     }
     
     func minusStatus(num: Int) -> String {
-//        if !UDManager.shared.isLogin {
-//            self.status = "-"
-//        } else
-        if num < 5 {
+        if UDManager.shared.student == nil {
+            return "-"
+        } else if num < 5 {
             return "아직 3월달인가요?"
         } else if num >= 5 && num < 10 {
             return "꽤 모범적이네요!"
@@ -137,7 +135,7 @@ class StatusView: UIView {
         
         mealImage.snp.makeConstraints {
             $0.centerY.equalTo(mealTitle)
-            $0.width.height.equalTo(15)
+            $0.width.height.equalTo(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
     }

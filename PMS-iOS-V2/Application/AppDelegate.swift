@@ -14,14 +14,14 @@ import RxSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let disposeBag = DisposeBag()
     var coordinator = FlowCoordinator()
-    var window: UIWindow?
+    static var window: UIWindow?
     static let container = Container()
     let stepper = AppStepper()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.container.registerDependencies()
         
-        window = UIWindow(frame: UIScreen.main.bounds)
+        AppDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         
         self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
             print("will navigate to flow=\(flow) and step=\(step)")
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("did navigate to flow=\(flow) and step=\(step)")
         }).disposed(by: self.disposeBag)
         
-        let appFlow = AppFlow(window: window!)
+        let appFlow = AppFlow(window: AppDelegate.window!)
         
         self.coordinator.coordinate(flow: appFlow, with: stepper)
         

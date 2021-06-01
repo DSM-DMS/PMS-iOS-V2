@@ -50,4 +50,20 @@ extension UIViewController {
             self.present(alert, animated: true)
         }
     }
+    
+    func showDeleteAlert(name: String, handler: @escaping (UIAlertAction) -> Void) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: nil,
+                                          message:
+                                            name + "\n" +
+                                            LocalizedString.deleteStudentMsg.localized,
+                                          preferredStyle: .alert)
+            alert.accessibilityLabel = LocalizedString.deleteStudentMsg.localized
+            let cancel = UIAlertAction(title: LocalizedString.cancel.localized, style: .destructive, handler: nil)
+            let logoutAction = UIAlertAction(title: LocalizedString.confirm.localized, style: .default, handler: handler)
+            alert.addAction(cancel)
+            alert.addAction(logoutAction)
+            self.present(alert, animated: true)
+        }
+    }
 }

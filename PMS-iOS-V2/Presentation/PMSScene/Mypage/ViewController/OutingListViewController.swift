@@ -21,7 +21,11 @@ class OutingListViewController: UIViewController {
         $0.register(OutingListTableViewCell.self, forCellReuseIdentifier: "OutingListTableViewCell")
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
-        $0.rowHeight = 70
+        $0.rowHeight = 110
+    }
+    
+    private let noOutingView = MypageMessageView(title: .noOutingPlaceholder, label: .noOutingPlaceholder).then {
+        $0.isHidden = true
     }
     
     private let disposeBag = DisposeBag()
@@ -45,7 +49,7 @@ class OutingListViewController: UIViewController {
     
     override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.title = LocalizedString.pointListTitle.localized
+        self.navigationItem.title = LocalizedString.outingListTitle.localized
         self.setupSubview()
         self.bindOutput()
     }
@@ -62,10 +66,14 @@ class OutingListViewController: UIViewController {
     
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
-        view.addSubViews([tableView, activityIndicator])
+        view.addSubViews([tableView, noOutingView, activityIndicator])
         
         tableView.snp.makeConstraints {
             $0.edges.equalTo(view.layoutMarginsGuide)
+        }
+        
+        noOutingView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
         
         activityIndicator.snp.makeConstraints {
@@ -96,5 +104,11 @@ class OutingListViewController: UIViewController {
             .map { [ListSection(header: "", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        viewModel.output.outingList
+            .filter { $0.isEmpty == true }
+            .subscribe(onNext: { _ in
+                self.noOutingView.isHidden = false
+            }).disposed(by: disposeBag)
     }
 }

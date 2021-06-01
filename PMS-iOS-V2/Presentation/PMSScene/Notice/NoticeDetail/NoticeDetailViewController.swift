@@ -119,6 +119,7 @@ class NoticeDetailViewController: UIViewController {
         view.addSubview(mentionTableView)
         view.addSubViews([inputBackground])
         view.addSubViews([mentionButton, commentBackground, commentTextField, enterButton])
+        view.addSubview(activityIndicator)
         
         noticeView.snp.makeConstraints {
             $0.height.equalTo(UIFrame.height / 3)
@@ -173,6 +174,10 @@ class NoticeDetailViewController: UIViewController {
             $0.bottom.equalTo(inputBackground.snp_topMargin)
             $0.width.equalToSuperview()
             $0.height.equalTo(UIFrame.height / 4.5)
+        }
+        
+        activityIndicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     

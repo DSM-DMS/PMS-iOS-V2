@@ -21,7 +21,7 @@ class PointListViewController: UIViewController {
         $0.register(PointListTableViewCell.self, forCellReuseIdentifier: "PointListTableViewCell")
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
-        $0.rowHeight = 70
+        $0.rowHeight = 85
     }
     
     private let disposeBag = DisposeBag()

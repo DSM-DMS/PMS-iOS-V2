@@ -40,6 +40,12 @@ class MypageFlow: Flow {
             return successLottie(string: string)
         case .logout:
             return logoutAlert()
+        case .deleteStudent(let name, let handler):
+            return deleteStudentAlert(name: name, handler: handler)
+        case .dismissTabbar:
+            return dismissTabbar()
+        case .presentTabbar:
+            return presentTabbar()
         default:
             return .none
         }
@@ -53,6 +59,7 @@ class MypageFlow: Flow {
     
     private func navigateToChangePasswordScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(ChangePasswordViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
@@ -80,6 +87,11 @@ class MypageFlow: Flow {
         return .none
     }
     
+    private func deleteStudentAlert(name: String, handler: @escaping (UIAlertAction) -> Void) -> FlowContributors {
+        self.rootViewController.showDeleteAlert(name: name, handler: handler)
+        return .none
+    }
+    
     private func successLottie(string: LocalizedString) -> FlowContributors {
         self.rootViewController.showSuccessLottie(label: string)
         return .none
@@ -93,4 +105,15 @@ class MypageFlow: Flow {
         return .none
         
     }
+    
+    private func presentTabbar() -> FlowContributors {
+        self.rootViewController.tabBarController?.tabBar.isHidden = false
+        return .none
+    }
+    
+    private func dismissTabbar() -> FlowContributors {
+        self.rootViewController.tabBarController?.tabBar.isHidden = true
+        return .none
+    }
+    
 }

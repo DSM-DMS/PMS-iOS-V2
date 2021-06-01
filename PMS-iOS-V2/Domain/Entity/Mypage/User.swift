@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct User: Codable {
+public struct User: Codable, Equatable {
+    public static func == (lhs: User, rhs: User) -> Bool {
+        lhs.name == rhs.name
+    }
+    
     public var name: String
     public var students: [UsersStudent]
     

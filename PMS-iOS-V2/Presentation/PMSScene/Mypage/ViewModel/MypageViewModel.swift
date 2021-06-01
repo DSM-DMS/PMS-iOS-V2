@@ -16,17 +16,23 @@ class MypageViewModel: Stepper {
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
-        let getStudent = PublishRelay<Void>()
+        let backgroundTapped = PublishRelay<Void>()
+        let studentListButtonTapped = PublishRelay<Void>()
+        let changeNicknameButtonTapped = PublishRelay<Void>()
+        let pointListButtonTapped = PublishRelay<Void>()
         let outingListButtonTapped = PublishRelay<Void>()
         let chanegePasswordButtonTapped = PublishRelay<Void>()
         let logoutButtonTapped = PublishRelay<Void>()
+        let deleteStudent = PublishRelay<Int>()
     }
     
     struct Output {
-        let isLoading = PublishRelay<Bool>()
+        let isLoading = BehaviorRelay<Bool>(value: false)
+        let isNoLogin = BehaviorRelay<Bool>(value: false)
         let user = PublishRelay<User>()
         let nickName = PublishRelay<String>()
         let isStudent = PublishRelay<Bool>()
+        let studentName = PublishRelay<String>()
         let studentStatus = PublishRelay<Student>()
     }
     
@@ -51,6 +57,18 @@ class MypageViewModel: Stepper {
             .bind(to: output.user)
             .disposed(by: disposeBag)
         
+        input.viewDidLoad
+            .map { _ in
+                let user = StorageManager.shared.readUser()!
+                if user.email == Bundle.main.infoDictionary!["Auth Email"] as! String {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .bind(to: output.isNoLogin)
+            .disposed(by: disposeBag)
+        
         output.user
             .map { $0.name }
             .bind(to: output.nickName)
@@ -59,6 +77,12 @@ class MypageViewModel: Stepper {
         output.user
             .map { !$0.students.isEmpty }
             .bind(to: output.isStudent)
+            .disposed(by: disposeBag)
+        
+        output.isStudent
+            .filter { $0 == true }
+            .map { _ in UDManager.shared.student! }
+            .bind(to: output.studentName)
             .disposed(by: disposeBag)
         
         output.isStudent
@@ -75,6 +99,26 @@ class MypageViewModel: Stepper {
             .bind(to: output.studentStatus)
             .disposed(by: disposeBag)
         
+        input.backgroundTapped
+            .subscribe { _ in
+                self.steps.accept(PMSStep.presentTabbar)
+            }.disposed(by: disposeBag)
+        
+        input.studentListButtonTapped
+            .subscribe { _ in
+                self.steps.accept(PMSStep.dismissTabbar)
+            }.disposed(by: disposeBag)
+        
+        input.changeNicknameButtonTapped
+            .subscribe { _ in
+                self.steps.accept(PMSStep.dismissTabbar)
+            }.disposed(by: disposeBag)
+        
+        input.pointListButtonTapped
+            .subscribe { _ in
+                self.steps.accept(PMSStep.pointListIsRequired(number: UDManager.shared.studentNumber!))
+            }.disposed(by: disposeBag)
+        
         input.outingListButtonTapped
             .subscribe { _ in
                 self.steps.accept(PMSStep.outingListIsRequired(number: UDManager.shared.studentNumber!))
@@ -90,10 +134,23 @@ class MypageViewModel: Stepper {
                 self.steps.accept(PMSStep.logout)
             }.disposed(by: disposeBag)
         
+        input.deleteStudent
+            .flatMapLatest {
+                repository.deleteStudent(number: $0)
+                    .asObservable()
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+            }.subscribe { _ in }
+            .disposed(by: disposeBag)
+        
         activityIndicator
             .asObservable()
             .bind(to: output.isLoading)
             .disposed(by: disposeBag)
+        
     }
     
     private func mapError(error: Int) -> String {

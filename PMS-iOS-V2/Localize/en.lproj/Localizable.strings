@@ -57,6 +57,7 @@
 "noAuthPlaceholder" = "Login is required.";
 "noMealPlaceholder" = "There is no meal.";
 "noMealPicturePlaceholder" = "There is no meal's picture.";
+"noOutingPlaceholder" = "There are no outings";
 
 // Auth
 "loginButton" = "Sign in";

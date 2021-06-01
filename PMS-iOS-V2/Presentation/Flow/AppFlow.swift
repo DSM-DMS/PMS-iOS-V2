@@ -55,7 +55,10 @@ class AppFlow: Flow {
         let dashboardFlow = TabbarFlow()
 
         Flows.use(dashboardFlow, when: .created) { [unowned self] root in
-            self.rootWindow.rootViewController = root as! UINavigationController
+            let navigationController = UINavigationController(rootViewController: root).then {
+                $0.isNavigationBarHidden = true
+            }
+            self.rootWindow.rootViewController = navigationController
             self.rootWindow.makeKeyAndVisible()
         }
 
