@@ -36,8 +36,24 @@ class MypageViewController: UIViewController {
             self.delete(student: $0)
         }, changeStudent: {
             self.changeStudent()
+        }, addStudentTap: {
+            self.addStudentViewAppear()
         }).then {
         $0.view.isHidden = true
+    }
+    
+    lazy var addStudentView = AddStudentViewController(
+        viewModel: AddStudentViewModel(
+            repository: AppDelegate.container.resolve(MypageRepository.self)!),
+        dismiss: {
+            self.dismissAddStudent()
+        }).then {
+            $0.view.isHidden = true
+        }
+    
+    func addStudentViewAppear() {
+        self.blackBackground.isHidden = false
+        self.addStudentView.view.isHidden = false
     }
     
     func dismissChangeView() {
@@ -60,11 +76,24 @@ class MypageViewController: UIViewController {
     
     func delete(student: UsersStudent) {
         self.viewModel.steps.accept(PMSStep.deleteStudent(name: String(student.number) + " " + student.name, handler: { _ in
+            let lastUser = UDManager.shared.student
             self.viewModel.input.deleteStudent.accept(student.number)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.viewModel.input.viewDidLoad.accept(())
+                self.studentListView.viewModel.input.viewDidLoad.accept(())
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    if lastUser != UDManager.shared.student {
+                        self.viewModel.input.viewDidLoad.accept(())
+                    }
+                }
             }
         }))
+    }
+    
+    func dismissAddStudent() {
+        self.addStudentView.view.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.studentListView.viewModel.input.viewDidLoad.accept(())
+        }
     }
     
     lazy var blackBackground = UIView().then {
@@ -150,7 +179,7 @@ class MypageViewController: UIViewController {
         view.addSubview(mypageStackView)
         mypageStackView.addArrangeSubviews([pointStackView, noStudentView, noLoginView, statusView, outingListButton, changePasswordButton, logoutButton])
         view.addSubview(activityIndicator)
-        view.addSubViews([blackBackground, changeNicknameView.view, studentListView.view])
+        view.addSubViews([blackBackground, changeNicknameView.view, studentListView.view, addStudentView.view])
         
         blueBackground.snp.makeConstraints {
             $0.width.equalToSuperview()
@@ -222,6 +251,10 @@ class MypageViewController: UIViewController {
             $0.width.equalToSuperview()
             $0.height.equalTo(UIFrame.height / 3)
         }
+        
+        addStudentView.view.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     private func bindInput() {
@@ -231,10 +264,14 @@ class MypageViewController: UIViewController {
         
         backgroundTapped.rx.event
             .subscribe(onNext: { _ in
-                self.blackBackground.isHidden = true
                 self.changeNicknameView.view.isHidden = true
-                self.studentListView.view.isHidden = true
-                self.viewModel.input.backgroundTapped.accept(())
+                if self.addStudentView.view.isHidden {
+                    self.studentListView.view.isHidden = true
+                    self.blackBackground.isHidden = true
+                    self.viewModel.input.backgroundTapped.accept(())
+                } else {
+                    self.addStudentView.view.isHidden = true
+                }
             })
             .disposed(by: disposeBag)
         

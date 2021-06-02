@@ -49,6 +49,7 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case existUserErrorMsg
     case notMatchPasswordErrorMsg
     case notMatchCurrentPasswordErrorMsg
+    case notMatchStudentErrorMsg
     
     // Placeholder
     case noStudentPlaceholder

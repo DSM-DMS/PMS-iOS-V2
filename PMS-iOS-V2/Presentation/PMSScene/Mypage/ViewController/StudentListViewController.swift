@@ -16,9 +16,12 @@ import Reachability
 class StudentListViewController: UIViewController {
     let viewModel: StudentListViewModel
     let changeStudent: () -> Void
+    let addStudentTap: () -> Void
     let delete: (_ student: UsersStudent) -> Void
     let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
+    
+    let addButtonTapped = UITapGestureRecognizer()
     
     private let addStudentButton = CirclePlusButton()
     
@@ -46,10 +49,14 @@ class StudentListViewController: UIViewController {
         return cell
     })
     
-    init(viewModel: StudentListViewModel, delete: @escaping (_ student: UsersStudent) -> Void, changeStudent: @escaping () -> Void) {
+    init(viewModel: StudentListViewModel,
+         delete: @escaping (_ student: UsersStudent) -> Void,
+         changeStudent: @escaping () -> Void,
+         addStudentTap: @escaping () -> Void) {
         self.viewModel = viewModel
         self.delete = delete
         self.changeStudent = changeStudent
+        self.addStudentTap = addStudentTap
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }
@@ -59,6 +66,7 @@ class StudentListViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        addStudentLabel.addGestureRecognizer(addButtonTapped)
         self.setupSubview()
         self.bindOutput()
     }
@@ -130,6 +138,18 @@ class StudentListViewController: UIViewController {
         tableView.rx.modelSelected(UsersStudent.self)
             .subscribe(onNext: {
                 self.delete($0)
+            })
+            .disposed(by: disposeBag)
+        
+        addButtonTapped.rx.event
+            .subscribe(onNext: { _ in
+                self.addStudentTap()
+            })
+            .disposed(by: disposeBag)
+        
+        addStudentButton.rx.tap
+            .subscribe(onNext: { _ in
+                self.addStudentTap()
             })
             .disposed(by: disposeBag)
     }

@@ -21,7 +21,7 @@ class OutingListViewController: UIViewController {
         $0.register(OutingListTableViewCell.self, forCellReuseIdentifier: "OutingListTableViewCell")
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
-        $0.rowHeight = 110
+        $0.rowHeight = 130
     }
     
     private let noOutingView = MypageMessageView(title: .noOutingPlaceholder, label: .noOutingPlaceholder).then {

@@ -29,12 +29,10 @@ class OutingListTableViewCell: UITableViewCell {
     
     private let reasonLabel = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
     }
     
     private let placeLabel = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
     }
     
     private let cellBackground = UIView().then {
@@ -71,8 +69,8 @@ class OutingListTableViewCell: UITableViewCell {
                 self.colorView.backgroundColor = Colors.blue.color
             }
             self.dateLabel.text = model.date
-            self.reasonLabel.text = model.reason
-            self.placeLabel.text = model.place
+            self.reasonLabel.text = LocalizedString.outingReason.localized + " : " + model.reason
+            self.placeLabel.text = LocalizedString.outingPlace.localized + " : " + model.place
         }
     }
     
@@ -80,27 +78,24 @@ class OutingListTableViewCell: UITableViewCell {
     
     private func setupSubview() {
         addSubViews([cellBackground, colorView, outingStack])
-        outingStack.addArrangeSubviews([dateLabel, reasonLabel, placeLabel])
+        outingStack.addArrangeSubviews([dateStack, reasonLabel, placeLabel])
+        dateStack.addArrangeSubviews([colorView, dateLabel])
         colorView.snp.makeConstraints {
             $0.height.equalTo(15)
             $0.width.equalTo(3)
             $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
-            $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
+          
         }
         outingStack.snp.makeConstraints {
-            $0.width.equalToSuperview().offset(-10)
-            $0.height.equalToSuperview().offset(-10)
-            $0.center.equalToSuperview()
+            $0.width.equalTo(cellBackground).offset(-10)
+            $0.top.equalTo(cellBackground.snp_topMargin).offset(10)
+            $0.bottom.equalTo(cellBackground.snp_bottomMargin).offset(-10)
+            $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
+            $0.centerY.equalToSuperview()
         }
-//        dateLabel.snp.makeConstraints {
-//            $0.height.equalTo(15)
-//        }
-//        reasonLabel.snp.makeConstraints {
-//            $0.height.equalTo(10)
-//        }
         cellBackground.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(110)
             $0.width.equalTo(UIFrame.width - 70)
         }
     }

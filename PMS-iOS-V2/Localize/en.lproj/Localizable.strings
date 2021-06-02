@@ -120,6 +120,7 @@
 "reNewPassword" = "Confirm Password";
 "changePasswordConfirmMsg" = "Change your password?";
 "notMatchCurrentPasswordErrorMsg" = "Current passwords do not match.";
+"notMatchStudentErrorMsg" = "There is no student with the code.";
 
 // MARK: - Accessibility
 

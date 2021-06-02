@@ -118,6 +118,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case reNewPassword
     case changePasswordConfirmMsg
     case notMatchCurrentPasswordErrorMsg
+    case notMatchStudentErrorMsg
 }
 
 extension LocalizedString {

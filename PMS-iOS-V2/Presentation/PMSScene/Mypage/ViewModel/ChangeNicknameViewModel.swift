@@ -66,18 +66,24 @@ class ChangeNicknameViewModel: Stepper {
     private func mapError(error: Int) -> String {
         if error == 1 {
             return LocalizedString.noInternetErrorMsg.localized
+        } else if error == 401 {
+            Log.info("Token Refresh wasn't complete")
+            return "내부 로직 오류"
         } else if error == 403 {
-            return LocalizedString.notMatchCurrentPasswordErrorMsg.localized
+            return LocalizedString.notMatchStudentErrorMsg.localized
         } else {
             return LocalizedString.unknownErrorMsg.localized
         }
     }
     
-    private  func mapError(error: Int) -> AccessibilityString {
+    private func mapError(error: Int) -> AccessibilityString {
         if error == 1 {
             return .noInternetErrorMsg
+        } else if error == 401 {
+            Log.info("Token Refresh wasn't complete")
+            return .unknownErrorMsg
         } else if error == 403 {
-            return .notMatchCurrentPasswordErrorMsg
+            return .notMatchStudentErrorMsg
         } else {
             return .unknownErrorMsg
         }

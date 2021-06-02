@@ -25,6 +25,9 @@ final class DefaultMypageRepository: MypageRepository {
                 if UDManager.shared.student == nil && !$0.students.isEmpty {
                     UDManager.shared.student = String($0.students.first!.number) + " " + $0.students.first!.name
                 }
+                if $0.students.isEmpty {
+                    UDManager.shared.student = nil
+                }
                 return $0
             }
             .catchError { error in

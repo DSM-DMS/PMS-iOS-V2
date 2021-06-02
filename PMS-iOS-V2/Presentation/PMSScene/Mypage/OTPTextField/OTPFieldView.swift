@@ -71,7 +71,7 @@ import UIKit
     public var defaultBorderColor: UIColor = UIColor.gray
     public var filledBorderColor: UIColor = UIColor.clear
     public var errorBorderColor: UIColor?
-    public var fieldColor: UIColor = .blue
+    public var fieldColor: UIColor = .black
     public var isValidOtp = true
     public weak var delegate: OTPFieldViewDelegate?
     fileprivate var secureEntryData = [String]()
@@ -96,6 +96,7 @@ import UIKit
             let otpField = getOTPField(forIndex: index)
             addSubview(otpField)
             secureEntryData.append("")
+            otpField.addDoneCancelToolbar()
         }
     }
 
@@ -131,7 +132,7 @@ import UIKit
         }
         // Set the border values if needed
         if isValidOtp {
-            defaultBorderColor = .blue
+            defaultBorderColor = UIColor.gray
         }
         otpField.otpBorderColor = defaultBorderColor
         otpField.otpBorderWidth = fieldBorderWidth
@@ -282,7 +283,7 @@ extension OTPFieldView: UITextFieldDelegate {
                 }
             }
             if displayType == .diamond || displayType == .underlinedBottom {
-                var color = UIColor.clear.cgColor
+                var color = UIColor.blue.cgColor
                 if !isValidOtp {
                     color = UIColor.red.cgColor
                 }
@@ -339,14 +340,15 @@ extension OTPFieldView: UITextFieldDelegate {
 extension OTPFieldView {
     func baseStyle() {
         fieldBorderWidth = 2
-        defaultBorderColor = .blue
-        filledBorderColor = .blue
+        defaultBorderColor = Colors.gray.color
+        filledBorderColor = Colors.blue.color
         displayType = .underlinedBottom
         fieldSize = 24
         fieldsCount = 6
         separatorSpace = 12
         shouldAllowIntermediateEditing = false
-        requireCursor = false
+        requireCursor = true
+        cursorColor = UIColor.gray
         initializeUI()
     }
 
@@ -389,9 +391,9 @@ public extension OTPFieldView {
     func setUpTextAndShapeLayerColor(isValidStatus: Bool, hasUnderline: Bool) {
         isValidOtp = isValidStatus
 
-        let shapeLayerValidStatusColor = hasUnderline ? UIColor.blue.cgColor : UIColor.clear.cgColor
+        let shapeLayerValidStatusColor = hasUnderline ? Colors.gray.color.cgColor : UIColor.clear.cgColor
 
-        let textColor: UIColor = isValidStatus ? .blue : .red
+        let textColor: UIColor = isValidStatus ? .black : .red
         let shapeLayerColor: CGColor = isValidStatus ? shapeLayerValidStatusColor : UIColor.red.cgColor
         defaultBorderColor = textColor
 

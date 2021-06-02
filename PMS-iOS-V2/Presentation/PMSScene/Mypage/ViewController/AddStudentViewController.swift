@@ -10,9 +10,8 @@ import RxSwift
 import RxCocoa
 
 class AddStudentViewController: UIViewController {
-    let viewModel: ChangeNicknameViewModel
+    let viewModel: AddStudentViewModel
     let dismiss: () -> Void
-    let success: () -> Void
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     
@@ -30,33 +29,25 @@ class AddStudentViewController: UIViewController {
     }
     
     let cancelButton = UIButton().then {
-        $0.setTitleColor(Colors.red.color, for: .normal)
+        $0.setTitleColor(.red, for: .normal)
         $0.setTitle(.cancel)
     }
     
-    let changeButton = UIButton().then {
-        $0.setTitleColor(Colors.blue.color, for: .normal)
+    let addButton = UIButton().then {
+        $0.setTitleColor(.blue, for: .normal)
         $0.setTitle(.confirm)
     }
     
-    let nicknameStackView = UIStackView().then {
-        $0.spacing = 5.0
-        $0.axis = .vertical
-        $0.alignment = .leading
+    let otpFieldView = OTPFieldView()
+    
+    let textLabel = UILabel().then {
+        $0.text = LocalizedString.enterStudentCodeMsg.localized
     }
     
-    let nicknameLine = UIView().then {
-        $0.backgroundColor = .gray
-    }
-    
-    let nicknameTextField = PMSTextField(title: .newNicknamePlaceholder)
-    
-    init(viewModel: ChangeNicknameViewModel,
-         dismiss: @escaping () -> Void,
-         success: @escaping () -> Void) {
+    init(viewModel: AddStudentViewModel,
+         dismiss: @escaping () -> Void) {
         self.viewModel = viewModel
         self.dismiss = dismiss
-        self.success = success
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }
@@ -68,13 +59,16 @@ class AddStudentViewController: UIViewController {
     override func viewDidLoad() {
         self.setupSubview()
         self.bindOutput()
-        self.setDelegate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.otpFieldView.baseStyle()
+        }
+        otpFieldView.delegate = self
     }
     
     private func setupSubview() {
         view.backgroundColor = .clear
         view.addSubview(whiteBackground)
-        whiteBackground.addSubViews([nicknameStackView, confirmLine, cancelButton, changeButton])
+        whiteBackground.addSubViews([textLabel, otpFieldView, confirmLine, cancelButton, addButton])
         view.addSubview(activityIndicator)
         
         self.view.snp.makeConstraints {
@@ -88,23 +82,23 @@ class AddStudentViewController: UIViewController {
             $0.center.equalToSuperview()
         }
         
-        nicknameStackView.addArrangeSubviews([nicknameTextField, nicknameLine])
-        
-        nicknameStackView.snp.makeConstraints {
-            $0.top.equalTo(whiteBackground.snp_topMargin).offset(30)
+        textLabel.snp.makeConstraints {
+            $0.top.equalTo(whiteBackground.snp_topMargin).offset(15)
             $0.centerX.equalToSuperview()
         }
         
-        nicknameLine.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.width.equalTo(UIFrame.width - 120)
+        otpFieldView.snp.makeConstraints {
+            $0.top.equalTo(textLabel.snp_bottomMargin).offset(10)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(36)
+            $0.leading.equalToSuperview()
         }
         
         confirmLine.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.width.equalTo(UIFrame.width - 80)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(nicknameLine.snp_topMargin).offset(30)
+            $0.top.equalTo(otpFieldView.snp_bottomMargin).offset(30)
         }
         
         cancelButton.snp.makeConstraints {
@@ -112,7 +106,7 @@ class AddStudentViewController: UIViewController {
             $0.leading.equalToSuperview().offset(UIFrame.width / 6)
         }
         
-        changeButton.snp.makeConstraints {
+        addButton.snp.makeConstraints {
             $0.centerY.equalTo(cancelButton)
             $0.trailing.equalToSuperview().offset(-UIFrame.width / 6)
         }
@@ -123,55 +117,59 @@ class AddStudentViewController: UIViewController {
     }
     
     private func bindInput() {
-        nicknameTextField.rx.text
-            .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .bind(to: viewModel.input.nicknameText)
-            .disposed(by: disposeBag)
-        
         cancelButton.rx.tap
             .subscribe(onNext: {
                 self.dismiss()
             }).disposed(by: disposeBag)
         
-        changeButton.rx.tap
-            .subscribe(onNext: {
-                self.dismiss()
-                self.viewModel.input.changeButtonTapped.accept(())
-                self.success()
-            }).disposed(by: disposeBag)
-        
+        addButton.rx.tap
+            .bind(to: viewModel.input.addButtonTapped)
+            .disposed(by: disposeBag)
     }
     
     private func bindOutput() {
-        viewModel.output.isNicknameTyping
+        
+        viewModel.output.addButtonIsEnable
             .subscribe(onNext: {
                 if $0 {
-                    self.nicknameLine.backgroundColor = Colors.blue.color
+                    self.addButton.isEnabled = $0
+                    self.addButton.alpha = 1.0
                 } else {
-                    self.nicknameLine.backgroundColor = .gray
+                    self.addButton.isEnabled = $0
+                    self.addButton.alpha = 0.5
                 }
             })
             .disposed(by: disposeBag)
         
-        viewModel.output.changeButtonIsEnable
+        viewModel.output.isSucceed
             .subscribe(onNext: {
                 if $0 {
-                    self.changeButton.isEnabled = $0
-                    self.changeButton.alpha = 1.0
+                    self.otpFieldView.isValidOtp = true
+                    self.deletedOTP()
+                    self.dismiss()
                 } else {
-                    self.changeButton.isEnabled = $0
-                    self.changeButton.alpha = 0.5
+                    self.otpFieldView.isValidOtp = false
                 }
-            })
-            .disposed(by: disposeBag)
+            }) .disposed(by: disposeBag)
         
+    }
+}
+
+extension AddStudentViewController: OTPFieldViewDelegate {
+    func shouldBecomeFirstResponderForOTP(otpTextFieldIndex index: Int) -> Bool {
+        return true
     }
     
-    private func setDelegate() {
-        nicknameTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.nicknameTextField.resignFirstResponder() })
-            .disposed(by: disposeBag)
+    func enteredOTP(otp: String) {
+        self.viewModel.input.otpString.accept(otp)
     }
+    
+    func hasEnteredAllOTP(hasEnteredAll: Bool) -> Bool {
+        return true
+    }
+    
+    func deletedOTP() {
+        self.otpFieldView.deleteAllInput()
+    }
+    
 }

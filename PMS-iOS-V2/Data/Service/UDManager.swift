@@ -17,8 +17,14 @@ class UDManager {
             return UD.string(forKey: "student")
         } set(value) {
             UD.set(value, forKey: "student")
+            var number: Int?
             
-            let number = Int(value!.components(separatedBy: " ").first!)
+            if value != nil {
+                number = Int(value!.components(separatedBy: " ").first!)
+            } else {
+                number = nil
+            }
+           
             UD.set(number, forKey: "studentNumber")
         }
     }

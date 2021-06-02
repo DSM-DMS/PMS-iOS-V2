@@ -44,7 +44,7 @@ class OutingListViewModel: Stepper {
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
-            .map { print($0.outings); return $0.outings }
+            .map { return $0.outings }
             .bind(to: output.outingList)
             .disposed(by: disposeBag)
         

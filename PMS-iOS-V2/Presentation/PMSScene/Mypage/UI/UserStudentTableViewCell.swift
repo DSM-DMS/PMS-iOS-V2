@@ -12,7 +12,7 @@ import Kingfisher
 
 class UserStudentTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
-        $0.textColor = Colors.black.color
+        $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: 20)
     }
     
@@ -39,6 +39,8 @@ class UserStudentTableViewCell: UITableViewCell {
         DispatchQueue.main.async {
             if model.number == UDManager.shared.studentNumber! {
                 self.titleLabel.textColor = Colors.blue.color
+            } else {
+                self.titleLabel.textColor = .black
             }
             self.titleLabel.text = String(model.number) + " " + model.name
         }
