@@ -11,6 +11,7 @@ import RxFlow
 
 class PMSViewModel: Stepper {
     let steps = PublishRelay<Step>()
+    let repository: LoginRepository
     private var disposeBag = DisposeBag()
     
     struct Input {
@@ -19,9 +20,16 @@ class PMSViewModel: Stepper {
         let noLoginButtonTapped = PublishRelay<Void>()
     }
     
-    let input = Input()
+    struct Output {
+        let isLoading = BehaviorRelay<Bool>(value: false)
+    }
     
-    init() {
+    let input = Input()
+    let output = Output()
+    
+    init(repository: LoginRepository) {
+        self.repository = repository
+        let activityIndicator = ActivityIndicator()
         
         input.loginButtonTapped
             .asObservable()
@@ -37,11 +45,47 @@ class PMSViewModel: Stepper {
             })
             .disposed(by: disposeBag)
         
+        //        input.noLoginButtonTapped
+        //            .asObservable()
+        //            .subscribe(onNext: { _ in
+        //                self.steps.accept(PMSStep.tabBarIsRequired)
+        //            })
+        //            .disposed(by: disposeBag)
+        
         input.noLoginButtonTapped
             .asObservable()
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.tabBarIsRequired)
+            .flatMap {
+                repository.login(email: Bundle.main.infoDictionary!["Auth Email"] as! String,
+                                 password: Bundle.main.infoDictionary!["Auth Password"] as! String)
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+                    .catchErrorJustReturn(false)
+            }
+            .subscribe(onNext: {
+                if $0 {
+                    self.steps.accept(PMSStep.success(.loginSuccessMsg))
+                    self.steps.accept(PMSStep.tabBarIsRequired)
+                }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func mapError(error: Int) -> String {
+        if error == 1 {
+            return LocalizedString.noInternetErrorMsg.localized
+        } else {
+            return LocalizedString.unknownErrorMsg.localized
+        }
+    }
+    
+    private func mapError(error: Int) -> AccessibilityString {
+        if error == 1 {
+            return .noInternetErrorMsg
+        } else {
+            return .unknownErrorMsg
+        }
     }
 }

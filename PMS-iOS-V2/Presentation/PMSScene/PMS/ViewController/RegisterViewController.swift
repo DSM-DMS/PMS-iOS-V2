@@ -140,7 +140,6 @@ class RegisterViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
     }
     
     private func setupSubview() {
@@ -242,11 +241,6 @@ class RegisterViewController: UIViewController {
             .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .bind(to: viewModel.input.rePasswordText)
-            .disposed(by: disposeBag)
-        
-        reachability.rx.isDisconnected
-            .map { print("NOINTERNET") }
-            .bind(to: viewModel.input.noInternet)
             .disposed(by: disposeBag)
         
         registerButton.rx.tap

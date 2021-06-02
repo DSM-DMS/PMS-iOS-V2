@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol OutingListRepository {
-    
+    func getOutingList(number: Int) -> Single<OutingList>
 }

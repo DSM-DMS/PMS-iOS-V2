@@ -57,6 +57,7 @@
 "noAuthPlaceholder" = "Login is required.";
 "noMealPlaceholder" = "There is no meal.";
 "noMealPicturePlaceholder" = "There is no meal's picture.";
+"noOutingPlaceholder" = "There are no outings";
 
 // Auth
 "loginButton" = "Sign in";
@@ -67,6 +68,7 @@
 "notMatchPasswordErrorMsg" = "Passwords don't match.";
 "loginSuccessMsg" = "Sign in was successful.";
 "registerSuccessMsg" = "Sign up was successful.";
+"changePasswordSuccessMsg" = "Success to change password.";
 
 // Calendar
 "calendarHeaderDateFormat" = "MMMM yyyy";
@@ -106,7 +108,7 @@
 "enterStudentCodeMsg" = "Please enter your child verification code";
 "addStudentButton" = "Add Student";
 "deleteStudentMsg" = "Delete it from the list?";
-"scoreListTitle" = "List of bonus/minus";
+"pointListTitle" = "List of bonus/minus";
 "outingListTitle" = "List of Outing";
 "outinfReason" = "Reason";
 "outinfPlace" = "Place";
@@ -118,6 +120,7 @@
 "reNewPassword" = "Confirm Password";
 "changePasswordConfirmMsg" = "Change your password?";
 "notMatchCurrentPasswordErrorMsg" = "Current passwords do not match.";
+"notMatchStudentErrorMsg" = "There is no student with the code.";
 
 // MARK: - Accessibility
 
@@ -144,3 +147,6 @@
 "rightArrowButton" = "Go to the next month";
 "previousPageButton" = "Go to previous page";
 "nextPageButton" = "Go to next page";
+"toOutingListButton" = "Go to Outing list button";
+"toChangePasswordButton" = "Go to Change Password Button";
+"toLogoutButton" = "Go to Logout";

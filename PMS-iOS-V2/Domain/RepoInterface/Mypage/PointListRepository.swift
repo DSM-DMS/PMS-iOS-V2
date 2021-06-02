@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol ScoreListRepository {
-    
+protocol PointListRepository {
+    func getPointList(number: Int) -> Single<PointList>
 }

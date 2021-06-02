@@ -9,31 +9,22 @@ import Foundation
 @testable import PMS_iOS_V2
 
 extension Bundle {
+    static let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
+    static let bundle = Bundle(path: bundlePath!)
+    
     static func getCalendarJson() -> PMSCalendar {
-        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
-        let bundle = Bundle(path: bundlePath!)
-
         return bundle!.decode(PMSCalendar.self, from: "Calendar.json")
     }
     
     static func getNoticeListJson() -> [NoticeCell] {
-        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
-        let bundle = Bundle(path: bundlePath!)
-
         return bundle!.decode([Notice].self, from: "Notice.json").map { NoticeCell(notice: $0) }
     }
     
     static func getDetialNoticeJson() -> DetailNotice {
-        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
-        let bundle = Bundle(path: bundlePath!)
-
         return bundle!.decode(DetailNotice.self, from: "NoticeDetail.json")
     }
     
     static func getClubListJson() -> [Club] {
-        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
-        let bundle = Bundle(path: bundlePath!)
-        
         let clubList = bundle!.decode(ClubList.self, from: "ClubList.json")
         
         return clubList.clubs.map { return Club(name: $0.name, imageUrl: $0.imageUrl.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!.replacingOccurrences(of: "%3A", with: ":")) }
@@ -41,10 +32,23 @@ extension Bundle {
     }
     
     static func getDetialClubJson() -> DetailClub {
-        let bundlePath = Bundle.main.path(forResource: "Stub", ofType: "bundle")
-        let bundle = Bundle(path: bundlePath!)
-
         return bundle!.decode(DetailClub.self, from: "ClubDetail.json")
+    }
+    
+    static func getPointListJson() -> [Point] {
+        return bundle!.decode(PointList.self, from: "PointList.json").points
+    }
+    
+    static func getOutingListJson() -> [Outing] {
+        return bundle!.decode(OutingList.self, from: "OutingList.json").outings
+    }
+    
+    static func getUserJson() -> User {
+        return bundle!.decode(User.self, from: "User.json")
+    }
+    
+    static func getStudentStatusJson() -> Student {
+        return bundle!.decode(Student.self, from: "Student.json")
     }
     
     static func getDevelopers() -> [Developer] {

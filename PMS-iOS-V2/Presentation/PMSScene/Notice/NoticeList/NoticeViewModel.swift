@@ -18,7 +18,6 @@ class NoticeViewModel: Stepper {
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
-        let isLoading = BehaviorRelay<Bool>(value: false)
         let searchText = PublishRelay<String>()
         let previousPageTapped = PublishRelay<Void>()
         let nextPageTapped = PublishRelay<Void>()

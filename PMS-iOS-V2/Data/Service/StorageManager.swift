@@ -74,10 +74,4 @@ final class StorageManager {
             Log.info("Success to delete User \(String(describing: self.query))")
         }
     }
-    
-    // MARK: Common
-    
-    func deleteAll() {
-        self.deleteUser()
-    }
 }

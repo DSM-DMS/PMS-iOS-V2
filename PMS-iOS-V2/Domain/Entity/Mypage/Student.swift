@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Student: Codable {
+public struct Student: Codable, Equatable {
     public var plus: Int
     public var minus: Int
     public var status: Int

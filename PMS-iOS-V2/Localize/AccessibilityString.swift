@@ -38,12 +38,23 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case rightArrowButton
     case previousPageButton
     case nextPageButton
+    case toOutingListButton
+    case toChangePasswordButton
+    case toLogoutButton
     
     // ERROR
     case noInternetErrorMsg
     case notFoundUserErrorMsg
     case unknownErrorMsg
     case existUserErrorMsg
+    case notMatchPasswordErrorMsg
+    case notMatchCurrentPasswordErrorMsg
+    case notMatchStudentErrorMsg
+    
+    // Placeholder
+    case noStudentPlaceholder
+    case noAuthPlaceholder
+    case noOutingPlaceholder
 }
 
 extension AccessibilityString {

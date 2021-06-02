@@ -159,7 +159,7 @@ class RegisterViewModelTests: XCTestCase {
         XCTAssertEqual(observer.events, exceptEvents)
     }
     
-    func test_login_success_view() {
+    func test_register_success_view() {
         // MARK: - WHEN
         
         scheduler.createHotObservable([.next(100, ".")])
@@ -197,7 +197,7 @@ class RegisterViewModelTests: XCTestCase {
                        PMSStep.success(.registerSuccessMsg))
     }
     
-    func test_login_notMatch_alert() {
+    func test_register_notMatch_alert() {
         // MARK: - WHEN
         viewModel = RegisterViewModel(repository: MockFailRegisterRepository(test: .existUser))
         
@@ -236,7 +236,7 @@ class RegisterViewModelTests: XCTestCase {
                        PMSStep.alert(LocalizedString.existUserErrorMsg.localized, .existUserErrorMsg))
     }
     
-    func test_login_noInternet_alert() {
+    func test_registers_noInternet_alert() {
         // MARK: - WHEN
         viewModel = RegisterViewModel(repository: MockFailRegisterRepository(test: .noInternet))
         

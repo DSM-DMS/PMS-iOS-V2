@@ -6,16 +6,21 @@
 //
 
 import RxFlow
+import UIKit
 
 enum PMSStep: Step, Equatable {
+    static func == (lhs: PMSStep, rhs: PMSStep) -> Bool {
+        lhs.self == rhs.self
+    }
+    
     // Global
     case alert(String, AccessibilityString)
     case success(LocalizedString)
+    case dismiss
     
     // TabBar or PMSView
     case tabBarIsRequired
     case PMSIsRequired
-    case modalPMSIsRequired
     
     // PMSView
     case loginIsRequired
@@ -42,7 +47,11 @@ enum PMSStep: Step, Equatable {
     
     // Mypage
     case mypageIsRequired
-    case scoreListIsRequired
-    case outingListIsRequired
+    case pointListIsRequired(number: Int)
+    case outingListIsRequired(number: Int)
     case changePasswordIsRequired
+    case logout
+    case deleteStudent(name: String, handler: (UIAlertAction) -> Void)
+    case dismissTabbar
+    case presentTabbar
 }

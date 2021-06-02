@@ -16,7 +16,6 @@ class ClubViewModel: Stepper {
     
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
-        let isLoading = BehaviorRelay<Bool>(value: false)
         let noInternet = PublishRelay<Void>()
         let goDetailClub = PublishRelay<String>()
         let getDetailClub = PublishRelay<String>()

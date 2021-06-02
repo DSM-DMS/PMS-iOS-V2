@@ -57,6 +57,7 @@
 "noAuthPlaceholder" = "로그인이 필요합니다.";
 "noMealPlaceholder" = "급식이 없습니다.";
 "noMealPicturePlaceholder" = "급식 사진이 없습니다.";
+"noOutingPlaceholder" = "외출 목록이 없습니다.";
 
 // Auth
 "loginButton" = "로그인";
@@ -67,6 +68,7 @@
 "notMatchPasswordErrorMsg" = "비밀번호가 일치하지 않습니다.";
 "loginSuccessMsg" = "로그인에 성공하셨습니다.";
 "registerSuccessMsg" = "회원가입에 성공하셨습니다.";
+"changePasswordSuccessMsg" = "비밀번호 변경에 성공하였습니다.";
 
 // Calendar
 "calendarHeaderDateFormat" = "yyyy년 M월";
@@ -106,7 +108,7 @@
 "enterStudentCodeMsg" = "자녀확인 코드를 입력해주세요";
 "addStudentButton" = "학생 추가하기";
 "deleteStudentMsg" = "목록에서 삭제하시겠습니까?";
-"scoreListTitle" = "상/벌점 내역";
+"pointListTitle" = "상/벌점 내역";
 "outingListTitle" = "외출 내역";
 "outingReason" = "사유";
 "outingPlace" = "장소";
@@ -118,6 +120,7 @@
 "reNewPassword" = "비밀번호 확인";
 "changePasswordConfirmMsg" = "비밀번호를 변경하시겠습니까?";
 "notMatchCurrentPasswordErrorMsg" = "현재 비밀번호가 일치하지 않습니다.";
+"notMatchStudentErrorMsg" = "인증코드와 일치하는 학생이 없습니다.";
 
 // MARK: - Accessibility
 
@@ -144,3 +147,6 @@
 "rightArrowButton" = "다음 달로 이동";
 "previousPageButton" = "이전 페이지로 이동";
 "nextPageButton" = "다음 페이지로 이동";
+"toOutingListButton" = "외출 내역으로 이동";
+"toChangePasswordButton" = "비밀번호 변경으로 이동";
+"toLogoutButton" = "로그아웃으로 이동";

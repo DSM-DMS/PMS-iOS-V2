@@ -17,7 +17,7 @@ public enum AuthApi {
     case mypage(number: Int)
     case changeNickname(name: String)
     case addStudent(number: Int)
-    case getStudents
+    case userInform
     case deleteStudent(number: Int)
     case outing(number: Int)
     case changePassword(password: String, prePassword: String)
@@ -44,7 +44,7 @@ extension AuthApi: TargetType {
             return "/user/name"
         case .addStudent:
             return "/user/student"
-        case .getStudents:
+        case .userInform:
             return "/user"
         case .outing(let number):
             return "/user/student/outing/\(number)"
@@ -103,6 +103,14 @@ extension AuthApi: TargetType {
         switch self {
         case .login:
             return stub("loginSuccess")
+        case .userInform:
+            return stub("User")
+        case .mypage:
+            return stub("Student")
+        case .pointList:
+            return stub("PointList")
+        case .outing:
+            return stub("OutingList")
         default:
             return Data()
         }

@@ -14,6 +14,7 @@ public enum NetworkError: Int, Error {
     case ok = 200
     case error = 400
     case unauthorized = 401
+    case notMatch = 403
     case notFound = 404
     case conflict = 409
     case serverError = 500
@@ -35,6 +36,7 @@ public enum NetworkError: Int, Error {
         case .noInternet: return LocalizedString.noInternetErrorMsg.localized
         case .error: return LocalizedString.notFoundUserErrorMsg.localized
         case .unauthorized: return LocalizedString.unauthorizedErrorMsg.localized
+        case .notMatch: return LocalizedString.notMatchPasswordErrorMsg.localized
         case .notFound: return LocalizedString.notFoundErrorMsg.localized
         case .conflict: return LocalizedString.existUserErrorMsg.localized
         case .serverError: return LocalizedString.serverErrorMsg.localized
