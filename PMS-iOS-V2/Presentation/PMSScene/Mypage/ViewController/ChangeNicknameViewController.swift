@@ -11,8 +11,7 @@ import RxCocoa
 
 class ChangeNicknameViewController: UIViewController {
     let viewModel: ChangeNicknameViewModel
-    let dismiss: () -> Void
-    let success: () -> Void
+    private let delegate: ChangeNicknameDelegate
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     
@@ -52,11 +51,9 @@ class ChangeNicknameViewController: UIViewController {
     let nicknameTextField = PMSTextField(title: .newNicknamePlaceholder)
     
     init(viewModel: ChangeNicknameViewModel,
-         dismiss: @escaping () -> Void,
-         success: @escaping () -> Void) {
+         delegate: ChangeNicknameDelegate) {
         self.viewModel = viewModel
-        self.dismiss = dismiss
-        self.success = success
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }
@@ -132,14 +129,14 @@ class ChangeNicknameViewController: UIViewController {
         
         cancelButton.rx.tap
             .subscribe(onNext: {
-                self.dismiss()
+                self.delegate.dismissChangeNickname()
             }).disposed(by: disposeBag)
         
         changeButton.rx.tap
             .subscribe(onNext: {
-                self.dismiss()
+                self.delegate.dismissChangeNickname()
                 self.viewModel.input.changeButtonTapped.accept(())
-                self.success()
+                self.delegate.success()
             }).disposed(by: disposeBag)
         
     }

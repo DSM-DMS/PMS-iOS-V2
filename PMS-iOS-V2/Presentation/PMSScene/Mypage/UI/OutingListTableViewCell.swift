@@ -80,19 +80,19 @@ class OutingListTableViewCell: UITableViewCell {
         addSubViews([cellBackground, colorView, outingStack])
         outingStack.addArrangeSubviews([dateStack, reasonLabel, placeLabel])
         dateStack.addArrangeSubviews([colorView, dateLabel])
+        
         colorView.snp.makeConstraints {
             $0.height.equalTo(15)
             $0.width.equalTo(3)
-            $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
-          
         }
+        
         outingStack.snp.makeConstraints {
-            $0.width.equalTo(cellBackground).offset(-10)
             $0.top.equalTo(cellBackground.snp_topMargin).offset(10)
             $0.bottom.equalTo(cellBackground.snp_bottomMargin).offset(-10)
             $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
-            $0.centerY.equalToSuperview()
+            $0.trailing.equalTo(cellBackground.snp_trailingMargin).offset(-10)
         }
+        
         cellBackground.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.height.equalTo(110)

@@ -14,33 +14,22 @@ class MypageViewController: UIViewController {
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     private let pointTapped = UITapGestureRecognizer()
-    let nicknameTapped = UITapGestureRecognizer()
-    let studentTapped = UITapGestureRecognizer()
-    let backgroundTapped = UITapGestureRecognizer()
+    private let nicknameTapped = UITapGestureRecognizer()
+    private let studentTapped = UITapGestureRecognizer()
+    private let backgroundTapped = UITapGestureRecognizer()
     lazy var changeNicknameView = ChangeNicknameViewController(
         viewModel: ChangeNicknameViewModel(
             repository: AppDelegate.container.resolve(MypageRepository.self)!),
-        dismiss: {
-            self.dismissChangeView()
-        },
-        success: {
-            self.changeNickname()
-        }).then {
+        delegate: self).then {
             $0.view.isHidden = true
         }
     
     lazy var studentListView = StudentListViewController(
         viewModel: StudentListViewModel(
             repository: AppDelegate.container.resolve(MypageRepository.self)!),
-        delete: {
-            self.delete(student: $0)
-        }, changeStudent: {
-            self.changeStudent()
-        }, addStudentTap: {
-            self.addStudentViewAppear()
-        }).then {
-        $0.view.isHidden = true
-    }
+        delegate: self).then {
+            $0.view.isHidden = true
+        }
     
     lazy var addStudentView = AddStudentViewController(
         viewModel: AddStudentViewModel(
@@ -50,51 +39,6 @@ class MypageViewController: UIViewController {
         }).then {
             $0.view.isHidden = true
         }
-    
-    func addStudentViewAppear() {
-        self.blackBackground.isHidden = false
-        self.addStudentView.view.isHidden = false
-    }
-    
-    func dismissChangeView() {
-        self.blackBackground.isHidden = true
-        self.changeNicknameView.view.isHidden = true
-        self.viewModel.steps.accept(PMSStep.presentTabbar)
-    }
-    
-    func changeNickname() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.viewModel.input.viewDidLoad.accept(())
-        }
-    }
-    
-    func changeStudent() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.viewModel.input.viewDidLoad.accept(())
-        }
-    }
-    
-    func delete(student: UsersStudent) {
-        self.viewModel.steps.accept(PMSStep.deleteStudent(name: String(student.number) + " " + student.name, handler: { _ in
-            let lastUser = UDManager.shared.student
-            self.viewModel.input.deleteStudent.accept(student.number)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.studentListView.viewModel.input.viewDidLoad.accept(())
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if lastUser != UDManager.shared.student {
-                        self.viewModel.input.viewDidLoad.accept(())
-                    }
-                }
-            }
-        }))
-    }
-    
-    func dismissAddStudent() {
-        self.addStudentView.view.isHidden = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.studentListView.viewModel.input.viewDidLoad.accept(())
-        }
-    }
     
     lazy var blackBackground = UIView().then {
         $0.backgroundColor = .black
@@ -110,6 +54,7 @@ class MypageViewController: UIViewController {
         $0.textColor = .white
         $0.font = UIFont.systemFont(ofSize: 30)
         $0.text = "닉네임"
+        $0.isUserInteractionEnabled = true
     }
     
     let pencilImage = WhitePencilButton()
@@ -117,6 +62,7 @@ class MypageViewController: UIViewController {
     private let studentLabel = UILabel().then {
         $0.textColor = .white
         $0.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        $0.isUserInteractionEnabled = true
         $0.text = "학생 추가"
     }
     private let downArrowImage = BottomArrowButton()
@@ -157,7 +103,8 @@ class MypageViewController: UIViewController {
         self.setupSubview()
         self.bindOutput()
         pointStackView.addGestureRecognizer(pointTapped)
-        studentLabel.addGestureRecognizer(nicknameTapped)
+        nickNameLabel.addGestureRecognizer(nicknameTapped)
+        studentLabel.addGestureRecognizer(studentTapped)
         blackBackground.addGestureRecognizer(backgroundTapped)
     }
     
@@ -380,5 +327,63 @@ class MypageViewController: UIViewController {
                 self.plusPointRow.setupView(plus: $0.plus)
                 self.minusPointRow.setupView(minus: $0.minus)
             }).disposed(by: disposeBag)
+    }
+}
+
+extension MypageViewController: ChangeNicknameDelegate {
+    func dismissChangeNickname() {
+        self.blackBackground.isHidden = true
+        self.changeNicknameView.view.isHidden = true
+        self.viewModel.steps.accept(PMSStep.presentTabbar)
+    }
+    
+    func success() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.viewModel.input.viewDidLoad.accept(())
+        }
+    }
+}
+
+extension MypageViewController: StudentListDelegate {
+    func changeStudent(student: UsersStudent) {
+        let lastUser = UDManager.shared.student
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if lastUser != UDManager.shared.student {
+                self.studentListView.viewModel.input.viewDidLoad.accept(())
+                self.viewModel.input.viewDidLoad.accept(())
+            }
+        }
+    }
+    
+    func addStudentTapped() {
+        self.blackBackground.isHidden = false
+        self.addStudentView.view.isHidden = false
+    }
+    
+    func delete(student: UsersStudent) {
+        let lastUser = UDManager.shared.student
+        self.viewModel.steps.accept(PMSStep.deleteStudent(name: String(student.number) + " " + student.name, handler: { _ in
+            if student.number == UDManager.shared.studentNumber {
+                UDManager.shared.student = nil
+            }
+            self.viewModel.input.deleteStudent.accept(student.number)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.studentListView.viewModel.input.viewDidLoad.accept(())
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    if lastUser != UDManager.shared.student {
+                        self.viewModel.input.viewDidLoad.accept(())
+                    }
+                }
+            }
+        }))
+    }
+}
+
+extension MypageViewController: AddStudentDelegate {
+    func dismissAddStudent() {
+        self.addStudentView.view.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.studentListView.viewModel.input.viewDidLoad.accept(())
+        }
     }
 }

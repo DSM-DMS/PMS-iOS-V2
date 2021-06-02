@@ -15,13 +15,11 @@ import Reachability
 
 class StudentListViewController: UIViewController {
     let viewModel: StudentListViewModel
-    let changeStudent: () -> Void
-    let addStudentTap: () -> Void
-    let delete: (_ student: UsersStudent) -> Void
+    private let delegate: StudentListDelegate
     let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     
-    let addButtonTapped = UITapGestureRecognizer()
+    private let addButtonTapped = UITapGestureRecognizer()
     
     private let addStudentButton = CirclePlusButton()
     
@@ -43,20 +41,17 @@ class StudentListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let dataSource = RxTableViewSectionedReloadDataSource<ListSection<UsersStudent>>(configureCell: {  (_, tableView, _, student) -> UITableViewCell in
+    private lazy var dataSource = RxTableViewSectionedReloadDataSource<ListSection<UsersStudent>>(configureCell: {  (_, tableView, _, student) -> UITableViewCell in
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserStudentTableViewCell") as! UserStudentTableViewCell
         cell.setupView(model: student)
+        cell.delegate = self.delegate
         return cell
-    })
+    }, canEditRowAtIndexPath: { _, _ in return true })
     
     init(viewModel: StudentListViewModel,
-         delete: @escaping (_ student: UsersStudent) -> Void,
-         changeStudent: @escaping () -> Void,
-         addStudentTap: @escaping () -> Void) {
+         delegate: StudentListDelegate) {
         self.viewModel = viewModel
-        self.delete = delete
-        self.changeStudent = changeStudent
-        self.addStudentTap = addStudentTap
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }
@@ -137,19 +132,42 @@ class StudentListViewController: UIViewController {
         
         tableView.rx.modelSelected(UsersStudent.self)
             .subscribe(onNext: {
-                self.delete($0)
+                self.delegate.changeStudent(student: $0)
+                UDManager.shared.student = String($0.number) + " " + $0.name
             })
             .disposed(by: disposeBag)
         
+        tableView.rx.itemDeleted
+            .subscribe(onNext: {
+                self.delegate.delete(
+                    student: self.viewModel.output.studentList.value[$0[1]])
+            })
+            .disposed(by: disposeBag)
+        
+        // Delete Swipe
+//        self.deleteImage.rx.tap
+//            .subscribe { _ in
+//                print("TAPPED")
+//
+//            }.disposed(by: disposeBag)
+        
+//        changeButtonTapped.rx.event
+//            .subscribe(onNext: { _ in
+//                print("EVENT")
+//                self.delegate?.changeStudent(student: model)
+//                UDManager.shared.student = self.titleLabel.text
+//            }).disposed(by: disposeBag)
+        
         addButtonTapped.rx.event
             .subscribe(onNext: { _ in
-                self.addStudentTap()
+                print("EVENT")
+                self.delegate.addStudentTapped()
             })
             .disposed(by: disposeBag)
         
         addStudentButton.rx.tap
             .subscribe(onNext: { _ in
-                self.addStudentTap()
+                self.delegate.addStudentTapped()
             })
             .disposed(by: disposeBag)
     }
@@ -163,10 +181,5 @@ class StudentListViewController: UIViewController {
             .map { [ListSection(header: "", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        viewModel.output.change
-            .subscribe(onNext: {
-                self.changeStudent()
-            }).disposed(by: disposeBag)
     }
 }

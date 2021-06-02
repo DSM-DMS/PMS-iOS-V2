@@ -18,11 +18,12 @@ class StudentListViewModel: Stepper {
         let viewDidLoad = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
         let deleteButtonTapped = PublishRelay<UsersStudent>()
+        let changeStudent = PublishRelay<Void>()
     }
     
     struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
-        let studentList = PublishRelay<[UsersStudent]>()
+        let studentList = BehaviorRelay<[UsersStudent]>(value: [])
         let change = PublishRelay<Void>()
     }
     
@@ -58,6 +59,21 @@ class StudentListViewModel: Stepper {
             .filter { $0.number == UDManager.shared.studentNumber! }
             .map { _ in }
             .bind(to: output.change)
+            .disposed(by: disposeBag)
+        
+        input.changeStudent
+            .asObservable()
+            .flatMapLatest { _ in
+                repository.getNewStudent()
+                    .asObservable()
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+            }
+            .map { $0.students }
+            .bind(to: output.studentList)
             .disposed(by: disposeBag)
         
         activityIndicator

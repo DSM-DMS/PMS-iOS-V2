@@ -9,14 +9,19 @@ import UIKit
 import SnapKit
 import Then
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 class UserStudentTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: 20)
+        $0.isUserInteractionEnabled = true
     }
+
+    private let disposeBag = DisposeBag()
     
-    private let deleteImage = DeleteButton()
+    var delegate: StudentListDelegate?
     
     // MARK: - Initialization
     
@@ -49,15 +54,10 @@ class UserStudentTableViewCell: UITableViewCell {
     // MARK: Private Methods
     
     private func setupSubview() {
-        addSubViews([titleLabel, deleteImage])
+        addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
-        }
-        
-        deleteImage.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
         }
     }

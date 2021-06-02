@@ -145,7 +145,6 @@ class AddStudentViewController: UIViewController {
             .subscribe(onNext: {
                 if $0 {
                     self.otpFieldView.isValidOtp = true
-                    self.deletedOTP()
                     self.dismiss()
                 } else {
                     self.otpFieldView.isValidOtp = false
@@ -169,7 +168,7 @@ extension AddStudentViewController: OTPFieldViewDelegate {
     }
     
     func deletedOTP() {
-        self.otpFieldView.deleteAllInput()
+        
     }
     
 }

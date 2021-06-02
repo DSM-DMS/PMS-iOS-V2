@@ -28,7 +28,9 @@ final class DefaultMypageRepository: MypageRepository {
                 if $0.students.isEmpty {
                     UDManager.shared.student = nil
                 }
-                return $0
+                var user = $0
+                user.students.sort(by: <)
+                return user
             }
             .catchError { error in
                 if let moyaError = error as? MoyaError {
@@ -37,7 +39,32 @@ final class DefaultMypageRepository: MypageRepository {
                     Log.error("Unkown Error!")
                     return Single.error(NetworkError.unknown)
                 }
+        }
+    }
+    
+    func getNewStudent() -> Single<User> {
+        provider.rx.request(.userInform)
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map(User.self)
+            .map {
+                if !$0.students.isEmpty {
+                    UDManager.shared.student = String($0.students.first!.number) + " " + $0.students.first!.name
+                } else if $0.students.isEmpty {
+                    UDManager.shared.student = nil
+                }
+                var user = $0
+                user.students.sort(by: <)
+                return user
             }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+        }
     }
     
     func getStudent(number: Int) -> Single<Student> {

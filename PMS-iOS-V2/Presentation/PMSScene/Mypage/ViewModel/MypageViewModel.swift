@@ -31,8 +31,9 @@ class MypageViewModel: Stepper {
         let isNoLogin = BehaviorRelay<Bool>(value: false)
         let user = PublishRelay<User>()
         let nickName = PublishRelay<String>()
-        let isStudent = PublishRelay<Bool>()
+        let isStudent = BehaviorRelay<Bool>(value: false)
         let studentName = PublishRelay<String>()
+        let studentList = BehaviorRelay<[UsersStudent]>(value: .init())
         let studentStatus = PublishRelay<Student>()
     }
     
@@ -72,6 +73,11 @@ class MypageViewModel: Stepper {
         output.user
             .map { $0.name }
             .bind(to: output.nickName)
+            .disposed(by: disposeBag)
+        
+        output.user
+            .map { $0.students }
+            .bind(to: output.studentList)
             .disposed(by: disposeBag)
         
         output.user

@@ -21,7 +21,11 @@ public struct User: Codable, Equatable {
     }
 }
 
-public struct UsersStudent: Codable {
+public struct UsersStudent: Codable, Comparable {
+    public static func < (lhs: UsersStudent, rhs: UsersStudent) -> Bool {
+        return lhs.number < rhs.number
+    }
+    
     public var name: String
     public var number: Int
     
