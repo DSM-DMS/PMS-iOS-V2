@@ -14,8 +14,8 @@ import RxCocoa
 
 class UserStudentTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
-        $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = Colors.black.color
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.isUserInteractionEnabled = true
     }
 
@@ -27,6 +27,7 @@ class UserStudentTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = Colors.whiteGray.color
         setupSubview()
     }
     
@@ -45,7 +46,7 @@ class UserStudentTableViewCell: UITableViewCell {
             if model.number == UDManager.shared.studentNumber! {
                 self.titleLabel.textColor = Colors.blue.color
             } else {
-                self.titleLabel.textColor = .black
+                self.titleLabel.textColor = Colors.black.color
             }
             self.titleLabel.text = String(model.number) + " " + model.name
         }

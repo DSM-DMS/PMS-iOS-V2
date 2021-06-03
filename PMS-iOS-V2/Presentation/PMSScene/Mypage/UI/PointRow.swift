@@ -11,18 +11,20 @@ class PlusPointRow: UIView {
     private let pointlabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25)
         $0.text = "00"
+        $0.textColor = UIColor.black
     }
     
     private let pointTitle = UILabel().then {
         $0.text = LocalizedString.plusScore.localized
         $0.textColor = Colors.blue.color
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let background = UIView().then {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -73,18 +75,20 @@ class MinusPointRow: UIView {
     private let pointlabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25)
         $0.text = "00"
+        $0.textColor = UIColor.black
     }
     
     private let pointTitle = UILabel().then {
         $0.text = LocalizedString.minusScore.localized
         $0.textColor = Colors.red.color
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let background = UIView().then {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }

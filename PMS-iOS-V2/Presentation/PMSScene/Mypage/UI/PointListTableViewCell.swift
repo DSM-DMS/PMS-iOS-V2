@@ -19,24 +19,24 @@ class PointListTableViewCell: UITableViewCell {
     }
     
     private let titleLabel = UILabel().then {
-        $0.textColor = Colors.black.color
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = UIColor.black
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let dateLabel = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1)
     }
     
     private let scoreLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let cellBackground = UIView().then {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }

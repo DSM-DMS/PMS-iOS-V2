@@ -55,6 +55,8 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case noStudentPlaceholder
     case noAuthPlaceholder
     case noOutingPlaceholder
+    case noPointListPlaceholder
+    case noNoticeListPlaceholder
 }
 
 extension AccessibilityString {

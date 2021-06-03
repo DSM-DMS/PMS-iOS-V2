@@ -89,8 +89,6 @@ extension PMSApi: TargetType {
     
     public var task: Task {
         switch self {
-//        case let .changeNickname(name):
-//            return .requestParameters(parameters: ["name": name], encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }

@@ -17,13 +17,13 @@ class MealCollectionViewCell: UICollectionViewCell {
     private let disposeBag = DisposeBag()
     
     private let timeLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.font = UIFont.preferredFont(forTextStyle: .title2)
         $0.textColor = .white
     }
     
     private let mealLabel = UILabel().then {
-        $0.textColor = Colors.black.color
-        $0.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        $0.textColor = UIColor.black
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.fitTextToBounds()
         $0.textAlignment = .center
         $0.sizeToFit()
@@ -41,6 +41,8 @@ class MealCollectionViewCell: UICollectionViewCell {
     
     private let noMealLabel = UILabel().then {
         $0.isHidden = true
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
+        $0.textColor = UIColor.black
         $0.text = LocalizedString.noMealPicturePlaceholder.localized
     }
     
@@ -55,7 +57,7 @@ class MealCollectionViewCell: UICollectionViewCell {
     private let whiteBackground = UIView().then {
         $0.layer.cornerRadius = 10
         $0.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner)
-        $0.backgroundColor = Colors.white.color
+        $0.backgroundColor = Colors.lightGray.color
     }
     
     // MARK: - Initialization
@@ -96,7 +98,7 @@ class MealCollectionViewCell: UICollectionViewCell {
                 self.noMealLabel.isHidden = true
                 self.mealImage.kf.setImage(with: URL(string: model.imageURL), placeholder: nil, options: nil, progressBlock: { _, _ in
                     self.mealImage.showAnimatedGradientSkeleton()
-                }, completionHandler: { _ in self.mealImage.stopSkeletonAnimation() })
+                }, completionHandler: { _ in self.mealImage.hideSkeleton() })
             }
         }
     }
@@ -106,7 +108,7 @@ class MealCollectionViewCell: UICollectionViewCell {
     private func setupSubview() {
         addSubViews([whiteBackground, blueBackground])
         blueBackground.addSubview(timeLabel)
-        whiteBackground.addSubViews([mealLabel, mealImage, flipButton])
+        whiteBackground.addSubViews([flipButton, mealImage, mealLabel])
         mealImage.addSubview(noMealLabel)
         blueBackground.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -122,11 +124,10 @@ class MealCollectionViewCell: UICollectionViewCell {
         }
         timeLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalTo(20)
         }
         mealLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(blueBackground.snp_bottomMargin).offset(40)
+            $0.top.equalTo(blueBackground.snp_bottomMargin).offset(UIFrame.height / 22)
             $0.width.equalToSuperview()
         }
         mealImage.snp.makeConstraints {
@@ -137,11 +138,10 @@ class MealCollectionViewCell: UICollectionViewCell {
         }
         noMealLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalTo(15)
         }
         flipButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(whiteBackground.snp_bottomMargin).offset(-40)
+            $0.bottom.equalTo(whiteBackground.snp_bottomMargin).offset(-UIFrame.height / 22)
         }
         
         flipButton.rx.tap
@@ -164,7 +164,7 @@ class MealCollectionViewCell: UICollectionViewCell {
             }.disposed(by: disposeBag)
         
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowColor = Colors.gray.color.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
     }

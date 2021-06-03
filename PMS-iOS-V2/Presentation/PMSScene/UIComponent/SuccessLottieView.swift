@@ -24,7 +24,7 @@ class SuccessLottieView: UIView {
         self.layer.cornerRadius = 10
         self.layer.shadowOpacity = 1.0
         self.layer.shadowOffset = CGSize.zero
-        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowColor = Colors.gray.color.cgColor
         self.layer.shadowRadius = 3
         
         addSubview(animationView)

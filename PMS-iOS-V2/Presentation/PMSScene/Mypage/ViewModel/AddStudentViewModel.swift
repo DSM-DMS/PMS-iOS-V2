@@ -65,6 +65,8 @@ class AddStudentViewModel: Stepper {
         } else if error == 401 {
             Log.info("Token Refresh wasn't complete")
             return "내부 로직 오류"
+        } else if error == 404 {
+            return LocalizedString.notFoundUserErrorMsg.localized
         } else {
             return LocalizedString.unknownErrorMsg.localized
         }
@@ -76,6 +78,8 @@ class AddStudentViewModel: Stepper {
         } else if error == 401 {
             Log.info("Token Refresh wasn't complete")
             return .unknownErrorMsg
+        } else if error == 404 {
+            return .notFoundUserErrorMsg
         } else {
             return .unknownErrorMsg
         }

@@ -34,6 +34,10 @@ class CalendarViewController: UIViewController {
         $0.appearance.headerDateFormat = LocalizedString.calendarHeaderDateFormat.localized
         $0.appearance.headerTitleColor = Colors.black.color
         $0.appearance.weekdayTextColor = Colors.black.color
+        $0.appearance.titleFont = UIFont.preferredFont(forTextStyle: .callout)
+        $0.appearance.weekdayFont = UIFont.preferredFont(forTextStyle: .callout)
+        $0.appearance.subtitleFont = UIFont.preferredFont(forTextStyle: .callout)
+        $0.appearance.headerTitleFont = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let leftButton = LeftArrowButton()
@@ -174,7 +178,11 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         if viewModel.output.dateInSchool.value.contains(viewModel.output.date.value) {
             return Colors.green.color
         }
-        return UIColor.white
+        return Colors.white.color
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        return Colors.black.color
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {

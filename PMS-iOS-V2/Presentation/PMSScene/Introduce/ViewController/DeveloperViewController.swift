@@ -50,7 +50,7 @@ class DeveloperViewController: UIViewController {
     
     override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.title = LocalizedString.companyTitle.localized
+        self.navigationItem.title = LocalizedString.developerTitle.localized
         self.setupSubview()
         self.bindOutput()
     }

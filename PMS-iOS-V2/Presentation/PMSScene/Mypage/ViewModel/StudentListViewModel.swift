@@ -17,8 +17,6 @@ class StudentListViewModel: Stepper {
     struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
-        let deleteButtonTapped = PublishRelay<UsersStudent>()
-        let changeStudent = PublishRelay<Void>()
     }
     
     struct Output {
@@ -53,27 +51,6 @@ class StudentListViewModel: Stepper {
             .subscribe(onNext: { _ in
                 self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
-            .disposed(by: disposeBag)
-        
-        input.deleteButtonTapped
-            .filter { $0.number == UDManager.shared.studentNumber! }
-            .map { _ in }
-            .bind(to: output.change)
-            .disposed(by: disposeBag)
-        
-        input.changeStudent
-            .asObservable()
-            .flatMapLatest { _ in
-                repository.getNewStudent()
-                    .asObservable()
-                    .trackActivity(activityIndicator)
-                    .do(onError: { error in
-                        let error = error as! NetworkError
-                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
-                    })
-            }
-            .map { $0.students }
-            .bind(to: output.studentList)
             .disposed(by: disposeBag)
         
         activityIndicator

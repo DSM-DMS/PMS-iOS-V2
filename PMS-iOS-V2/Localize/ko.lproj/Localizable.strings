@@ -58,6 +58,8 @@
 "noMealPlaceholder" = "급식이 없습니다.";
 "noMealPicturePlaceholder" = "급식 사진이 없습니다.";
 "noOutingPlaceholder" = "외출 목록이 없습니다.";
+"noPointListPlaceholder" = "아직 상벌점 내역이 없습니다.";
+"noNoticeListPlaceholder" = "아직 공지사항 목록이 없습니다.";
 
 // Auth
 "loginButton" = "로그인";

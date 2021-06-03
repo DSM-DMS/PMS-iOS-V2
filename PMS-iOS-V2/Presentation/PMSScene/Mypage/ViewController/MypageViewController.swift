@@ -50,18 +50,18 @@ class MypageViewController: UIViewController {
         $0.backgroundColor = Colors.blue.color
     }
     
-    let nickNameLabel = UILabel().then {
+    private let nickNameLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 30)
+        $0.font = UIFont.preferredFont(forTextStyle: .title1)
         $0.text = "닉네임"
         $0.isUserInteractionEnabled = true
     }
     
-    let pencilImage = WhitePencilButton()
+    private let pencilImage = WhitePencilButton()
     
     private let studentLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.isUserInteractionEnabled = true
         $0.text = "학생 추가"
     }
@@ -289,21 +289,7 @@ class MypageViewController: UIViewController {
         
         viewModel.output.isNoLogin
             .subscribe(onNext: {
-                if $0 {
-                    self.statusView.isHidden = true
-                    self.noLoginView.isHidden = false
-                    self.studentLabel.alpha = 0.5
-                    self.downArrowImage.alpha = 0.5
-                    self.pencilImage.alpha = 0.5
-                    self.outingListButton.isHidden = true
-                } else {
-                    self.statusView.isHidden = false
-                    self.noLoginView.isHidden = true
-                    self.studentLabel.alpha = 1
-                    self.downArrowImage.alpha = 1
-                    self.pencilImage.alpha = 1
-                    self.outingListButton.isHidden = false
-                }
+                self.ifNoLoginChangeVisible($0)
             }).disposed(by: disposeBag)
         
         viewModel.output.isStudent
@@ -327,6 +313,36 @@ class MypageViewController: UIViewController {
                 self.plusPointRow.setupView(plus: $0.plus)
                 self.minusPointRow.setupView(minus: $0.minus)
             }).disposed(by: disposeBag)
+    }
+    
+    private func ifNoLoginChangeVisible(_ isNoLogin: Bool) {
+        if isNoLogin {
+            self.statusView.isHidden = true
+            self.changePasswordButton.isHidden = true
+            self.noLoginView.isHidden = false
+            self.studentLabel.alpha = 0.5
+            self.downArrowImage.alpha = 0.5
+            self.nickNameLabel.alpha = 0.5
+            self.pencilImage.alpha = 0.5
+            self.studentTapped.isEnabled = false
+            self.downArrowImage.isEnabled = false
+            self.nicknameTapped.isEnabled = false
+            self.pencilImage.isEnabled = false
+            self.outingListButton.isHidden = true
+        } else {
+            self.statusView.isHidden = false
+            self.changePasswordButton.isHidden = false
+            self.noLoginView.isHidden = true
+            self.studentLabel.alpha = 1
+            self.downArrowImage.alpha = 1
+            self.nickNameLabel.alpha = 1
+            self.pencilImage.alpha = 1
+            self.studentTapped.isEnabled = true
+            self.downArrowImage.isEnabled = true
+            self.nicknameTapped.isEnabled = true
+            self.pencilImage.isEnabled = true
+            self.outingListButton.isHidden = false
+        }
     }
 }
 

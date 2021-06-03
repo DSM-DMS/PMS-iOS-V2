@@ -56,6 +56,8 @@ public enum LocalizedString: String, Equatable, Hashable {
     case noMealPlaceholder
     case noMealPicturePlaceholder
     case noOutingPlaceholder
+    case noPointListPlaceholder
+    case noNoticeListPlaceholder
     
     // Auth
     case loginButton

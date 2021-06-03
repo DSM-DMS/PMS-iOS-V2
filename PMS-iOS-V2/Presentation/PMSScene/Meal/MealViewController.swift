@@ -45,6 +45,7 @@ class MealViewController: UIViewController {
     
     let leftButton = LeftArrowButton()
     let dateLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.tintColor = Colors.black.color
     }
     let rightButton = RightArrowButton()

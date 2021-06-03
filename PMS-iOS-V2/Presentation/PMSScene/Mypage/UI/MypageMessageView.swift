@@ -10,7 +10,7 @@ import UIKit
 final class MypageMessageView: UIView {
     
     private let titleLabel = UILabel().then {
-        $0.textColor = Colors.black.color
+        $0.textColor = UIColor.black
     }
     
     convenience init(title: LocalizedString, label: AccessibilityString) {
@@ -26,7 +26,7 @@ final class MypageMessageView: UIView {
         self.backgroundColor = .lightGray.lighter
         self.layer.cornerRadius = 20
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowColor = Colors.gray.color.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
         

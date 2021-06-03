@@ -16,10 +16,10 @@ class AddStudentViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     let whiteBackground = UIView().then {
-        $0.backgroundColor = Colors.white.color
+        $0.backgroundColor = Colors.whiteGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -29,18 +29,21 @@ class AddStudentViewController: UIViewController {
     }
     
     let cancelButton = UIButton().then {
-        $0.setTitleColor(.red, for: .normal)
+        $0.setTitleColor(Colors.red.color, for: .normal)
         $0.setTitle(.cancel)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     let addButton = UIButton().then {
-        $0.setTitleColor(.blue, for: .normal)
+        $0.setTitleColor(Colors.blue.color, for: .normal)
         $0.setTitle(.confirm)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     let otpFieldView = OTPFieldView()
     
     let textLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
         $0.text = LocalizedString.enterStudentCodeMsg.localized
     }
     
@@ -72,7 +75,7 @@ class AddStudentViewController: UIViewController {
         view.addSubview(activityIndicator)
         
         self.view.snp.makeConstraints {
-            $0.height.equalTo(UIFrame.height / 5.5)
+            $0.height.equalTo(170)
             $0.width.equalTo(UIFrame.width - 50)
         }
         
@@ -102,7 +105,7 @@ class AddStudentViewController: UIViewController {
         }
         
         cancelButton.snp.makeConstraints {
-            $0.top.equalTo(confirmLine.snp_bottomMargin).offset(30)
+            $0.top.equalTo(confirmLine.snp_bottomMargin).offset(20)
             $0.leading.equalToSuperview().offset(UIFrame.width / 6)
         }
         
@@ -144,12 +147,11 @@ class AddStudentViewController: UIViewController {
         viewModel.output.isSucceed
             .subscribe(onNext: {
                 if $0 {
-                    self.otpFieldView.isValidOtp = true
                     self.dismiss()
                 } else {
-                    self.otpFieldView.isValidOtp = false
+                    self.otpFieldView.shake()
                 }
-            }) .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
     }
 }
@@ -171,4 +173,14 @@ extension AddStudentViewController: OTPFieldViewDelegate {
         
     }
     
+}
+
+extension UIView {
+    func shake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 0.6
+        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
+        layer.add(animation, forKey: "shake")
+    }
 }

@@ -16,7 +16,7 @@ class DeveloperCollectionCell: UICollectionViewCell {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -30,6 +30,7 @@ class DeveloperCollectionCell: UICollectionViewCell {
     private let nameLabel = UILabel().then {
         $0.textAlignment = .center
         $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = UIColor.black
     }
     
     private let fieldLabel = UILabel().then {
