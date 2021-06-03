@@ -20,7 +20,8 @@ class CalendarTableViewCell: UITableViewCell {
     }
     
     private let eventLabel = UILabel().then {
-        $0.textColor = Colors.black.color
+        $0.textColor = UIColor.black
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
     }
     
     private let dateLabel = UILabel().then {
@@ -31,7 +32,7 @@ class CalendarTableViewCell: UITableViewCell {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -76,7 +77,8 @@ class CalendarTableViewCell: UITableViewCell {
     private func setupSubview() {
         addSubview(dateStack)
         dateStack.addSubview(calendarCellBackground)
-        dateStack.addArrangeSubviews([circle, eventLabel, dateLabel])
+        dateStack.addSubview(circle)
+        dateStack.addArrangeSubviews([eventLabel, dateLabel])
         calendarCellBackground.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.height.equalTo(55.0)
@@ -84,11 +86,11 @@ class CalendarTableViewCell: UITableViewCell {
         }
         dateStack.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalTo(15)
         }
         circle.snp.makeConstraints {
-            $0.width.equalTo(15)
+            $0.width.height.equalTo(15)
+            $0.trailing.equalTo(dateStack.snp_leadingMargin).offset(-15)
+            $0.centerY.equalToSuperview()
         }
-        
     }
 }

@@ -16,10 +16,10 @@ class ChangeNicknameViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     let whiteBackground = UIView().then {
-        $0.backgroundColor = Colors.white.color
+        $0.backgroundColor = Colors.whiteGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -31,11 +31,13 @@ class ChangeNicknameViewController: UIViewController {
     let cancelButton = UIButton().then {
         $0.setTitleColor(Colors.red.color, for: .normal)
         $0.setTitle(.cancel)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     let changeButton = UIButton().then {
         $0.setTitleColor(Colors.blue.color, for: .normal)
         $0.setTitle(.confirm)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     let nicknameStackView = UIStackView().then {
@@ -75,7 +77,7 @@ class ChangeNicknameViewController: UIViewController {
         view.addSubview(activityIndicator)
         
         self.view.snp.makeConstraints {
-            $0.height.equalTo(UIFrame.height / 5.5)
+            $0.height.equalTo(170)
             $0.width.equalTo(UIFrame.width - 50)
         }
         
@@ -105,7 +107,7 @@ class ChangeNicknameViewController: UIViewController {
         }
         
         cancelButton.snp.makeConstraints {
-            $0.top.equalTo(confirmLine.snp_bottomMargin).offset(30)
+            $0.top.equalTo(confirmLine.snp_bottomMargin).offset(20)
             $0.leading.equalToSuperview().offset(UIFrame.width / 6)
         }
         

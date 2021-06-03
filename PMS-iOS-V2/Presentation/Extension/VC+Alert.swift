@@ -28,7 +28,7 @@ extension UIViewController {
             lottieView.snp.makeConstraints {
                 $0.center.equalToSuperview()
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 UIView.animate(withDuration: 0.3, animations: {lottieView.alpha = 0.0},
                                            completion: {(_: Bool) in
                                             lottieView.removeFromSuperview()

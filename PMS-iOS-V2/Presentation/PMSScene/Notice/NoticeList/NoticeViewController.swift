@@ -31,10 +31,16 @@ class NoticeViewController: UIViewController {
     }
     let previousButton = PreviousPageButton(label: .previousPageButton)
     let nextButton = NextPageButton(label: .nextPageButton)
-    let pageLabel = UILabel()
+    let pageLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
+    }
     let pageStackView = UIStackView().then {
         $0.spacing = 5
         $0.distribution = .equalSpacing
+    }
+    
+    private let noNoticeView = MypageMessageView(title: .noNoticeListPlaceholder, label: .noNoticeListPlaceholder).then {
+        $0.isHidden = true
     }
     
     private let disposeBag = DisposeBag()
@@ -65,14 +71,17 @@ class NoticeViewController: UIViewController {
     
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
-        view.addSubViews([segmentedControl, tableView, pageStackView])
+        view.addSubViews([segmentedControl, tableView, noNoticeView, pageStackView])
         view.addSubview(activityIndicator)
         pageStackView.addArrangeSubviews([previousButton, pageLabel, nextButton])
         
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(30)
             $0.trailing.equalToSuperview().offset(-35)
+        }
+        
+        noNoticeView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
         
         tableView.snp.makeConstraints {
@@ -153,5 +162,11 @@ class NoticeViewController: UIViewController {
             .map { [ListSection(header: "", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        viewModel.output.noticeList
+            .filter { $0.isEmpty == true }
+            .subscribe(onNext: { _ in
+                self.noNoticeView.isHidden = false
+            }).disposed(by: disposeBag)
     }
 }

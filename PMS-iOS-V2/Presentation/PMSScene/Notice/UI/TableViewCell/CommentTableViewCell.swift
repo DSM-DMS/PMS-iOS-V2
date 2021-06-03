@@ -31,7 +31,7 @@ class CommentTableViewCell: UITableViewCell {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }

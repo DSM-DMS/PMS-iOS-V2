@@ -32,7 +32,7 @@ class NoticeDetailViewController: UIViewController {
         $0.backgroundColor = Colors.white.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 5
         $0.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMinYCorner, .layerMaxXMinYCorner)
     }
@@ -53,7 +53,7 @@ class NoticeDetailViewController: UIViewController {
         $0.rowHeight = 50
         $0.isHidden = true
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 5
         $0.layer.masksToBounds = false
         $0.layer.cornerRadius = 15

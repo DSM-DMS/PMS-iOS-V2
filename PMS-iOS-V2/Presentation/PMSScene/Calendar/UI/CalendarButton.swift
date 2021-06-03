@@ -19,6 +19,7 @@ class LeftArrowButton: UIButton {
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
+        self.tintColor = Colors.black.color
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +27,7 @@ class LeftArrowButton: UIButton {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 13, height: 13)
+        return CGSize(width: 15, height: 15)
     }
 
 }
@@ -43,6 +44,7 @@ class RightArrowButton: UIButton {
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
+        self.tintColor = Colors.black.color
     }
     
     required init?(coder: NSCoder) {
@@ -50,7 +52,7 @@ class RightArrowButton: UIButton {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 13, height: 13)
+        return CGSize(width: 15, height: 15)
     }
 
 }

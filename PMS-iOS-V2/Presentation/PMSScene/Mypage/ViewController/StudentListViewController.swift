@@ -27,12 +27,15 @@ class StudentListViewController: UIViewController {
         $0.textColor = .lightGray
         $0.text = LocalizedString.addStudentButton.localized
         $0.textAlignment = .left
+        $0.isUserInteractionEnabled = true
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let tableView = UITableView().then {
         $0.register(UserStudentTableViewCell.self, forCellReuseIdentifier: "UserStudentTableViewCell")
         $0.contentMode = .scaleAspectFit
         $0.rowHeight = 60
+        $0.backgroundColor = Colors.whiteGray.color
     }
     
     private let line = UIView().then {
@@ -77,10 +80,10 @@ class StudentListViewController: UIViewController {
     }
     
     private func setupSubview() {
-        view.backgroundColor = Colors.white.color
+        view.backgroundColor = Colors.whiteGray.color
         view.layer.cornerRadius = 20
         view.layer.shadowOpacity = 1.0
-        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowColor = Colors.gray.color.cgColor
         view.layer.shadowRadius = 3
         view.layer.shadowOffset = CGSize(width: 0, height: 3)
         view.layer.masksToBounds = true
@@ -143,20 +146,6 @@ class StudentListViewController: UIViewController {
                     student: self.viewModel.output.studentList.value[$0[1]])
             })
             .disposed(by: disposeBag)
-        
-        // Delete Swipe
-//        self.deleteImage.rx.tap
-//            .subscribe { _ in
-//                print("TAPPED")
-//
-//            }.disposed(by: disposeBag)
-        
-//        changeButtonTapped.rx.event
-//            .subscribe(onNext: { _ in
-//                print("EVENT")
-//                self.delegate?.changeStudent(student: model)
-//                UDManager.shared.student = self.titleLabel.text
-//            }).disposed(by: disposeBag)
         
         addButtonTapped.rx.event
             .subscribe(onNext: { _ in

@@ -24,6 +24,10 @@ class PointListViewController: UIViewController {
         $0.rowHeight = 85
     }
     
+    private let noPointView = MypageMessageView(title: .noPointListPlaceholder, label: .noPointListPlaceholder).then {
+        $0.isHidden = true
+    }
+    
     private let disposeBag = DisposeBag()
     
     private let dataSource = RxTableViewSectionedReloadDataSource<ListSection<Point>>(configureCell: {  (_, tableView, _, point) -> UITableViewCell in
@@ -62,10 +66,14 @@ class PointListViewController: UIViewController {
     
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
-        view.addSubViews([tableView, activityIndicator])
+        view.addSubViews([tableView, noPointView, activityIndicator])
         
         tableView.snp.makeConstraints {
             $0.edges.equalTo(view.layoutMarginsGuide)
+        }
+        
+        noPointView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
         
         activityIndicator.snp.makeConstraints {
@@ -96,5 +104,11 @@ class PointListViewController: UIViewController {
             .map { [ListSection(header: "", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        viewModel.output.pointList
+            .filter { $0.isEmpty == true }
+            .subscribe(onNext: { _ in
+                self.noPointView.isHidden = false
+            }).disposed(by: disposeBag)
     }
 }

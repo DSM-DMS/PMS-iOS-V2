@@ -16,7 +16,7 @@ class ClubCollectionCell: UICollectionViewCell {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -29,6 +29,7 @@ class ClubCollectionCell: UICollectionViewCell {
     
     private let clubLabel = UILabel().then {
         $0.textAlignment = .center
+        $0.textColor = UIColor.black
     }
     
     // MARK: - Initialization

@@ -19,18 +19,21 @@ class ChangePasswordViewController: UIViewController {
     private let nowPasswordTitle = UILabel().then {
         $0.textColor = Colors.blue.color
         $0.text = LocalizedString.currentPassword.localized
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.textAlignment = .center
     }
     
     private let newPasswordTitle = UILabel().then {
         $0.textColor = Colors.blue.color
         $0.text = LocalizedString.newPassword.localized
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.textAlignment = .center
     }
     
     private let reNewPasswordTitle = UILabel().then {
         $0.textColor = Colors.blue.color
         $0.text = LocalizedString.reNewPassword.localized
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.textAlignment = .center
     }
     

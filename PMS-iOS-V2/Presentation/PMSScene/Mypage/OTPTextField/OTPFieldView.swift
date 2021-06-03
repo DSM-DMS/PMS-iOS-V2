@@ -71,7 +71,7 @@ import UIKit
     public var defaultBorderColor: UIColor = UIColor.gray
     public var filledBorderColor: UIColor = UIColor.clear
     public var errorBorderColor: UIColor?
-    public var fieldColor: UIColor = .black
+    public var fieldColor: UIColor = Colors.black.color
     public var isValidOtp = true
     public weak var delegate: OTPFieldViewDelegate?
     fileprivate var secureEntryData = [String]()
@@ -283,7 +283,7 @@ extension OTPFieldView: UITextFieldDelegate {
                 }
             }
             if displayType == .diamond || displayType == .underlinedBottom {
-                var color = UIColor.blue.cgColor
+                var color = Colors.blue.color.cgColor
                 if !isValidOtp {
                     color = UIColor.red.cgColor
                 }
@@ -340,8 +340,6 @@ extension OTPFieldView: UITextFieldDelegate {
 extension OTPFieldView {
     func baseStyle() {
         fieldBorderWidth = 2
-        defaultBorderColor = Colors.gray.color
-        filledBorderColor = Colors.blue.color
         displayType = .underlinedBottom
         fieldSize = 24
         fieldsCount = 6

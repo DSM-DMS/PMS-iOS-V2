@@ -25,21 +25,24 @@ class OutingListTableViewCell: UITableViewCell {
     
     private let dateLabel = UILabel().then {
         $0.textColor = Colors.black.color
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     private let reasonLabel = UILabel().then {
         $0.textColor = .gray
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1)
     }
     
     private let placeLabel = UILabel().then {
         $0.textColor = .gray
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1)
     }
     
     private let cellBackground = UIView().then {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -82,7 +85,7 @@ class OutingListTableViewCell: UITableViewCell {
         dateStack.addArrangeSubviews([colorView, dateLabel])
         
         colorView.snp.makeConstraints {
-            $0.height.equalTo(15)
+//            $0.height.equalTo(15)
             $0.width.equalTo(3)
         }
         

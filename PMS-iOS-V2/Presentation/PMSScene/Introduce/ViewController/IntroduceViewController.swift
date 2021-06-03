@@ -15,7 +15,7 @@ class IntroduceViewController: UIViewController {
     let subTitle = UILabel().then {
         $0.text = LocalizedString.introduceSubtitle.localized
         $0.textColor = Colors.blue.color
-        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
     let clubButton = IntroduceRow(title: .clubTitle, desc: .clubSubtitle)

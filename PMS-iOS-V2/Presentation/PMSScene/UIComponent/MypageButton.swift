@@ -10,12 +10,14 @@ import UIKit
 final class MypageButton: UIButton {
     
     private let _titleLabel = UILabel().then {
-        $0.textColor = Colors.black.color
+        $0.textColor = UIColor.black
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
     }
     
     private let arrowImage = UIImageView().then {
         $0.image = Asset.rightArrow.image
         $0.contentMode = .scaleAspectFit
+        $0.tintColor = UIColor.black
     }
     
     convenience init(title: LocalizedString, label: AccessibilityString) {
@@ -31,7 +33,7 @@ final class MypageButton: UIButton {
         self.backgroundColor = Colors.lightGray.color
         self.layer.cornerRadius = 15
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowColor = Colors.gray.color.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
         

@@ -27,6 +27,7 @@ class ClubDetailView: UIView {
     
     private let descTitle = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = UIColor.black
         $0.text = LocalizedString.clubTitle.localized
     }
     
@@ -36,7 +37,7 @@ class ClubDetailView: UIView {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -45,6 +46,7 @@ class ClubDetailView: UIView {
     
     private let memberTitle = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = UIColor.black
         $0.text = LocalizedString.clubMember.localized
     }
     
@@ -57,7 +59,7 @@ class ClubDetailView: UIView {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
-        $0.layer.shadowColor = UIColor.lightGray.cgColor
+        $0.layer.shadowColor = Colors.gray.color.cgColor
         $0.layer.shadowRadius = 3
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
@@ -111,7 +113,7 @@ class ClubDetailView: UIView {
         
         descColorView.snp.makeConstraints {
             $0.width.equalTo(3)
-            $0.height.equalTo(15)
+            $0.height.equalTo(20)
             $0.top.equalTo(descBackground.snp_topMargin).offset(15)
             $0.leading.equalTo(descBackground.snp_leadingMargin).offset(10)
         }
@@ -137,7 +139,7 @@ class ClubDetailView: UIView {
         
         memberColorView.snp.makeConstraints {
             $0.width.equalTo(3)
-            $0.height.equalTo(15)
+            $0.height.equalTo(20)
             $0.top.equalTo(memberBackground.snp_topMargin).offset(15)
             $0.leading.equalTo(memberBackground.snp_leadingMargin).offset(10)
         }

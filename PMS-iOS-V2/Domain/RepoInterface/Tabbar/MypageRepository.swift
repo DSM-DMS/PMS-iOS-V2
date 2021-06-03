@@ -14,5 +14,4 @@ protocol MypageRepository {
     func changeNickname(name: String) -> Single<Bool>
     func addStudent(number: Int) -> Single<Bool>
     func deleteStudent(number: Int) -> Single<Bool>
-    func getNewStudent() -> Single<User>
 }

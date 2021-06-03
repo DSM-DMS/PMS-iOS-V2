@@ -13,7 +13,7 @@ final class DefaultMypageRepository: MypageRepository {
     let provider: MoyaProvider<AuthApi>
     
     init(provider: MoyaProvider<AuthApi>?) {
-        self.provider = provider ?? MoyaProvider<AuthApi>()
+        self.provider = provider ?? MoyaProvider<AuthApi>(plugins: [NetworkLoggerPlugin()])
     }
     
     func getUser() -> Single<User> {
@@ -103,6 +103,7 @@ final class DefaultMypageRepository: MypageRepository {
             .retryWithAuthIfNeeded()
             .map { _ in true }
             .catchError { error in
+                print(error)
                 if let moyaError = error as? MoyaError {
                     return Single.error(NetworkError(moyaError))
                 } else {
