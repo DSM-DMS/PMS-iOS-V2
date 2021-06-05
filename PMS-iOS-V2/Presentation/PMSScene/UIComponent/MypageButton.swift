@@ -58,3 +58,36 @@ final class MypageButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+#if canImport(SwiftUI) && DEGUG
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        Text("")
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ContentView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
+                .previewDisplayName("iPhone XS Max")
+        }
+    }
+}
+
+
+//struct MypageButton_Preview: PreviewProvider {
+//    static var previews: some View {
+//        Text("")
+////        Group {
+////            MypageButtonRepresentable()
+////            MypageButtonRepresentable()
+////                .previewLayout(.sizeThatFits)
+////        }
+//    }
+//}
+
+#endif
