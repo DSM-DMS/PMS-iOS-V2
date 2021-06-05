@@ -7,6 +7,7 @@
 
 import RxFlow
 import UIKit
+import Then
 
 class IntroduceFlow: Flow {
     var root: Presentable {
@@ -35,8 +36,8 @@ class IntroduceFlow: Flow {
             return navigateToDetailCompanyScreen(name: name)
         case .developerIsRequired:
             return navigateToDeveloperScreen()
-        case .alert(let string):
-            return alert(string: string)
+        case .alert(let string, let access):
+            return alert(string: string, access: access)
         default:
             return .none
         }
@@ -50,6 +51,7 @@ class IntroduceFlow: Flow {
     
     private func navigateToClubScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(ClubViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
@@ -62,6 +64,7 @@ class IntroduceFlow: Flow {
     
     private func navigateToCompanyScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(CompanyViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
@@ -74,12 +77,13 @@ class IntroduceFlow: Flow {
     
     private func navigateToDeveloperScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(DeveloperViewController.self)!
+        vc.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func alert(string: String) -> FlowContributors {
-        self.rootViewController.showErrorAlert(with: string)
+    private func alert(string: String, access: AccessibilityString) -> FlowContributors {
+        self.rootViewController.showErrorAlert(with: string, access: access)
         return .none
     }
 }

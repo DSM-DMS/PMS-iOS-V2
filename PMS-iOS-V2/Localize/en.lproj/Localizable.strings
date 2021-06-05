@@ -11,9 +11,10 @@
 "CFBundleDisplayName" = "PMS";
 
 // Basic Error
+"unauthorizedErrorMsg" = "The login information does not match.";
 "notFoundErrorMsg" = "Can't find student";
 "unknownErrorMsg" = "Unknown error";
-"noInternectErrorMsg" = "Not conneted to Internet";
+"noInternetErrorMsg" = "Not conneted to Internet";
 "serverErrorMsg" = "Server Error";
 
 // Ttitle
@@ -49,10 +50,16 @@
 "reNewPasswordPlaceholder" = "Check Password to be Changed.";
 "commentPlaceholder" = "Enter Comment.";
 "calendarPlaceholder" = "Click on the date to see the schedule.";
+"noEventPlaceholder" = "There is no schedule.";
 "searchNoticePlaceholder" = "Enter Notice title.";
 "searchLetterPlaceholder" = "Enter Letter title.";
 "noStudentPlaceholder" = "Add Student";
 "noAuthPlaceholder" = "Login is required.";
+"noMealPlaceholder" = "There is no meal.";
+"noMealPicturePlaceholder" = "There is no meal's picture.";
+"noOutingPlaceholder" = "There are no outings.";
+"noPointListPlaceholder" = "There are no point list.";
+"noNoticeListPlaceholder" = "There are. no notices.";
 
 // Auth
 "loginButton" = "Sign in";
@@ -61,8 +68,13 @@
 "notFoundUserErrorMsg" = "Email or password\ndoes not match.";
 "existUserErrorMsg" = "Duplicate email!\nPlease try again with another email.";
 "notMatchPasswordErrorMsg" = "Passwords don't match.";
+"loginSuccessMsg" = "Sign in was successful.";
+"registerSuccessMsg" = "Sign up was successful.";
+"changePasswordSuccessMsg" = "Success to change password.";
 
 // Calendar
+"calendarHeaderDateFormat" = "MMMM yyyy";
+"dateFormat" = "MMMM d, yyyy";
 
 // Meal
 "breakfast" = "Breakfast";
@@ -70,6 +82,7 @@
 "dinner" = "Dinner";
 
 // Notice
+"letter" = "Letter";
 "preview" = "Preview";
 
 // Introduce
@@ -97,7 +110,7 @@
 "enterStudentCodeMsg" = "Please enter your child verification code";
 "addStudentButton" = "Add Student";
 "deleteStudentMsg" = "Delete it from the list?";
-"scoreListTitle" = "List of bonus/minus";
+"pointListTitle" = "List of bonus/minus";
 "outingListTitle" = "List of Outing";
 "outinfReason" = "Reason";
 "outinfPlace" = "Place";
@@ -109,6 +122,7 @@
 "reNewPassword" = "Confirm Password";
 "changePasswordConfirmMsg" = "Change your password?";
 "notMatchCurrentPasswordErrorMsg" = "Current passwords do not match.";
+"notMatchStudentErrorMsg" = "There is no student with the code.";
 
 // MARK: - Accessibility
 
@@ -128,3 +142,13 @@
 "naverRegister" = "Sign up with naver";
 "kakaotalkRegister" = "Signup with kakaotalk";
 "appleRegister" = "Sign up with apple";
+
+// Button
+"showPasswordButton" = "Show password";
+"leftArrowButton" = "Go to the previous month";
+"rightArrowButton" = "Go to the next month";
+"previousPageButton" = "Go to previous page";
+"nextPageButton" = "Go to next page";
+"toOutingListButton" = "Go to Outing list button";
+"toChangePasswordButton" = "Go to Change Password Button";
+"toLogoutButton" = "Go to Logout";

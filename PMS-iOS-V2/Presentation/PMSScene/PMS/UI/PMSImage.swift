@@ -47,6 +47,10 @@ class PersonImage: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 18, height: 18)
+    }
 }
 
 class LockImage: UIImageView {
@@ -58,16 +62,28 @@ class LockImage: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
+    }
 }
 
-class EyeImage: UIImageView {
-    override init(image: UIImage? = Asset.lock.image) {
-        super.init(image: image)
+class EyeButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setImage(Asset.eye.image, for: .normal)
+        self.setAccessibility(.showPasswordButton)
+        self.contentHorizontalAlignment = .fill
+        self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 25, height: 15)
     }
 }
 
@@ -75,10 +91,15 @@ class BlackPencilImage: UIImageView {
     override init(image: UIImage? = Asset.blackPencil.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
+        self.tintColor = Colors.black.color
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
 }
 
@@ -91,22 +112,25 @@ class CircleCheckImage: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
+    }
 }
 
 class CheckImage: UIImageView {
     override init(image: UIImage? = Asset.check.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
+        self.tintColor = Colors.red.color
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-class GrayLineView: UIView {
-    override func draw(_ rect: CGRect) {
-        self.backgroundColor = .gray
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
 }
 

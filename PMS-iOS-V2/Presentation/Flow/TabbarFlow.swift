@@ -8,13 +8,16 @@
 import Foundation
 import UIKit
 import RxFlow
+import Then
 
 class TabbarFlow: Flow {
     var root: Presentable {
         return self.rootViewController
     }
 
-    let rootViewController = UITabBarController()
+    let rootViewController = UITabBarController().then {
+        $0.tabBar.barTintColor = Colors.white.color
+    }
 
     deinit {
         print("\(type(of: self)): \(#function)")
@@ -40,11 +43,11 @@ class TabbarFlow: Flow {
         let mypageFlow = MypageFlow()
 
         Flows.use(calendarFlow, mealFlow, noticeFlow, introduceFlow, mypageFlow, when: .created) { [unowned self] (root1: UINavigationController, root2: UINavigationController, root3: UINavigationController, root4: UINavigationController, root5: UINavigationController) in
-            root1.tabBarItem = UITabBarItem(title: "Beer List", image: UIImage(named: "1.circle"), tag: 0)
-            root2.tabBarItem = UITabBarItem(title: "Search ID", image: UIImage(named: "2.circle"), tag: 1)
-            root3.tabBarItem = UITabBarItem(title: "Random", image: UIImage(named: "3.circle"), tag: 2)
-            root4.tabBarItem = UITabBarItem(title: "Random", image: UIImage(named: "3.circle"), tag: 2)
-            root5.tabBarItem = UITabBarItem(title: "Random", image: UIImage(named: "3.circle"), tag: 2)
+            root1.tabBarItem = UITabBarItem(title: .calendar, image: Asset.calendar.image, tag: 0)
+            root2.tabBarItem = UITabBarItem(title: .meal, image: Asset.meal.image, tag: 1)
+            root3.tabBarItem = UITabBarItem(title: .notice, image: Asset.notice.image, tag: 2)
+            root4.tabBarItem = UITabBarItem(title: .introduce, image: Asset.introduce.image, tag: 3)
+            root5.tabBarItem = UITabBarItem(title: .mypage, image: Asset.mypage.image, tag: 4)
 
             self.rootViewController.setViewControllers([root1, root2, root3, root4, root5], animated: false)
         }

@@ -9,9 +9,10 @@ import Foundation
 
 public enum LocalizedString: String, Equatable, Hashable {
     // Basic Error
+    case unauthorizedErrorMsg
     case notFoundErrorMsg
     case unknownErrorMsg
-    case noInternectErrorMsg
+    case noInternetErrorMsg
     case serverErrorMsg
     
     // Title
@@ -47,10 +48,16 @@ public enum LocalizedString: String, Equatable, Hashable {
     case reNewPasswordPlaceholder
     case commentPlaceholder
     case calendarPlaceholder
+    case noEventPlaceholder
     case searchNoticePlaceholder
     case searchLetterPlaceholder
     case noStudentPlaceholder
     case noAuthPlaceholder
+    case noMealPlaceholder
+    case noMealPicturePlaceholder
+    case noOutingPlaceholder
+    case noPointListPlaceholder
+    case noNoticeListPlaceholder
     
     // Auth
     case loginButton
@@ -59,8 +66,13 @@ public enum LocalizedString: String, Equatable, Hashable {
     case notFoundUserErrorMsg
     case existUserErrorMsg
     case notMatchPasswordErrorMsg
+    case loginSuccessMsg
+    case registerSuccessMsg
+    case changePasswordSuccessMsg
     
     // Calendar
+    case calendarHeaderDateFormat
+    case dateFormat
     
     // Meal
     case breakfast
@@ -68,6 +80,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case dinner
     
     // Notice
+    case letter
     case preview
     
     // Introduce
@@ -95,7 +108,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case enterStudentCodeMsg
     case addStudentButton
     case deleteStudentMsg
-    case scoreListTitle
+    case pointListTitle
     case outingListTitle
     case outingReason
     case outingPlace
@@ -107,10 +120,18 @@ public enum LocalizedString: String, Equatable, Hashable {
     case reNewPassword
     case changePasswordConfirmMsg
     case notMatchCurrentPasswordErrorMsg
+    case notMatchStudentErrorMsg
 }
 
 extension LocalizedString {
     var localized: String {
         return NSLocalizedString(self.rawValue, comment: "")
+    }
+    
+    func localizedDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = self.localized
+        
+        return dateFormatter.string(from: date)
     }
 }

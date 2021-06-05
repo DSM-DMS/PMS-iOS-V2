@@ -7,6 +7,7 @@
 
 import RxFlow
 import UIKit
+import Then
 
 class NoticeFlow: Flow {
     var root: Presentable {
@@ -25,8 +26,10 @@ class NoticeFlow: Flow {
         switch step {
         case .noticeIsRequired:
             return navigateToNoticeScreen()
-        case .alert(let string):
-            return alert(string: string)
+        case .detailNoticeIsRequired(let id, let title):
+            return navigateToDetailNoticeScreen(id: id, title: title)
+        case .alert(let string, let access):
+            return alert(string: string, access: access)
         default:
             return .none
         }
@@ -38,8 +41,16 @@ class NoticeFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func alert(string: String) -> FlowContributors {
-        self.rootViewController.showErrorAlert(with: string)
+    private func navigateToDetailNoticeScreen(id: Int, title: String) -> FlowContributors {
+        let repository = AppDelegate.container.resolve(NoticeRepository.self)!
+        let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, repository: repository))
+        vc.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(vc, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
+    }
+    
+    private func alert(string: String, access: AccessibilityString) -> FlowContributors {
+        self.rootViewController.showErrorAlert(with: string, access: access)
         return .none
     }
 }

@@ -11,7 +11,9 @@ extension UIButton {
     func setTitle(_ title: LocalizedString) {
         self.setTitle(title.localized, for: .normal)
     }
-    
+}
+
+extension UIView {
     func setAccessibility(_ label: AccessibilityString) {
         self.accessibilityLabel = label.localized
     }
@@ -34,5 +36,11 @@ extension UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = isLarge
         self.navigationItem.title = title.localized
         self.navigationItem.accessibilityLabel = accessibilityLabel.localized
+    }
+}
+
+extension UITabBarItem {
+    convenience init(title: LocalizedString, image: UIImage, tag: Int) {
+        self.init(title: title.localized, image: image, tag: tag)
     }
 }

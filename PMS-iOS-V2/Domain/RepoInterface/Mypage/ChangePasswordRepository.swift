@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol ChangePasswordRepository {
-    
+    func changePassword(nowPassword: String, newPassword: String) -> Single<Bool>
 }

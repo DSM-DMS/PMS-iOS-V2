@@ -20,7 +20,7 @@ class PMSViewController: UIViewController {
     
     let PMSStack = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = UIFrame.height / 7
+        $0.spacing = UIFrame.height / 10
     }
     
     let buttonStack = UIStackView().then {
@@ -53,7 +53,7 @@ class PMSViewController: UIViewController {
         
         PMSStack.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-30)
+            $0.centerY.equalToSuperview().offset(-15)
         }
         
         noLoginButton.snp.makeConstraints {

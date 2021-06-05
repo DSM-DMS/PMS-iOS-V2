@@ -9,5 +9,6 @@ import Foundation
 import RxSwift
 
 protocol MealRepository {
-    
+    func getMeal(date: Int) -> Single<Meal>
+    func getMealPicutre(date: Int) -> Single<MealPicture>
 }

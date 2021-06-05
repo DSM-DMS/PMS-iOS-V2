@@ -17,10 +17,10 @@ final class BlueButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = Colors.blue.color
+        self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         self.layer.cornerRadius = 5
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize.zero
-        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowColor = Colors.gray.color.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
         
@@ -46,10 +46,10 @@ final class RedButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = Colors.red.color
+        self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         self.layer.cornerRadius = 5
         self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize.zero
-        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowColor = Colors.gray.color.cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
         

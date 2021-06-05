@@ -5,7 +5,6 @@ github "Alamofire/Alamofire" ~> 5.4.3
 github "Moya/Moya" ~> 14.0.1
 github "Swinject/Swinject" ~> 2.7.0
 github "Swinject/SwinjectAutoregistration" ~> 2.7.0
-github "evgenyneu/keychain-swift" ~> 19.0.0
 github "airbnb/lottie-ios" ~> 3.2.0
 github "WenchaoD/FSCalendar" ~> 2.8.2
 github "ashleymills/Reachability.swift" ~> 5.0.0
@@ -13,3 +12,4 @@ github "uber/ios-snapshot-test-case" ~> 6.1.0
 github "RxSwiftCommunity/RxFlow" ~> 2.11.0
 github "SnapKit/SnapKit" ~> 5.0.0
 gitHub "Goeun1001/Then-Carthage" ~> 1.0.0
+github "Juanpe/SkeletonView"

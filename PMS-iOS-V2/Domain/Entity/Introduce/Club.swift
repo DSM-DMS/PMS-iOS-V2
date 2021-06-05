@@ -6,15 +6,16 @@
 //
 
 import Foundation
+
 public struct ClubList: Codable, Hashable {
-    public var clubs: [ClubDetail]
+    public var clubs: [Club]
     
-    public init(clubs: [ClubDetail]) {
+    public init(clubs: [Club]) {
         self.clubs = clubs
     }
 }
 
-public struct ClubDetail: Codable, Hashable {
+public struct Club: Codable, Hashable {
     public var name: String
     public var imageUrl: String
     
@@ -29,7 +30,7 @@ public struct ClubDetail: Codable, Hashable {
     }
 }
 
-public struct Club: Codable, Hashable {
+public struct DetailClub: Codable, Hashable {
     public var title: String
     public var description: String
     public var imageUrl: String

@@ -36,7 +36,6 @@ extension Container {
     }
     
     func registerIntroduce() {
-        registerIntroduceRepositories()
         registerIntroduceViewModels()
         registerIntroduceViewControllers()
     }
@@ -72,19 +71,15 @@ extension Container {
     func registerMypageRepositories() {
         autoregister(ChangePasswordRepository.self, initializer: DefaultChangePasswordRepository.init)
         autoregister(OutingListRepository.self, initializer: DefaultOutingListRepository.init)
-        autoregister(ScoreListRepository.self, initializer: DefaultScoreListRepository.init)
+        autoregister(PointListRepository.self, initializer: DefaultPointListRepository.init)
     }
     
     func registerMypageViewModels() {
         autoregister(ChangePasswordViewModel.self, initializer: ChangePasswordViewModel.init)
-        autoregister(OutingListViewModel.self, initializer: OutingListViewModel.init)
-        autoregister(ScoreListViewModel.self, initializer: ScoreListViewModel.init)
     }
     
     func registerMypageViewControllers() {
         autoregister(ChangePasswordViewController.self, initializer: ChangePasswordViewController.init)
-        autoregister(OutingListViewController.self, initializer: OutingListViewController.init)
-        autoregister(ScoreListViewController.self, initializer: ScoreListViewController.init)
     }
     
     // MARK: - PMS
@@ -107,11 +102,6 @@ extension Container {
     }
     
     // MARK: - Introduce
-    
-    func registerIntroduceRepositories() {
-        autoregister(ClubRepository.self, initializer: DefaultClubRepository.init)
-        autoregister(CompanyRepository.self, initializer: DefaultCompanyRepository.init)
-    }
     
     func registerIntroduceViewModels() {
         autoregister(ClubViewModel.self, initializer: ClubViewModel.init)

@@ -30,3 +30,9 @@ public struct MealPicture: Codable, Hashable {
         self.dinner = dinner
     }
 }
+
+public struct MealCell: Equatable {
+    public var time: LocalizedString
+    public var meal: [String]
+    public var imageURL: String
+}

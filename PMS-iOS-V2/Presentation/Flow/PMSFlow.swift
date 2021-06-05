@@ -29,8 +29,12 @@ class PMSFlow: Flow {
             return navigateToLoginScreen()
         case .registerIsRequired:
             return navigateToRegisterScreen()
-        case .alert(let string):
-            return alert(string: string)
+        case .alert(let string, let access):
+            return alert(string: string, access: access)
+        case .success(let string):
+            return successLottie(string: string)
+        case .tabBarIsRequired:
+            return navigateToMainScreen()
         default:
             return .none
         }
@@ -54,8 +58,28 @@ class PMSFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func alert(string: String) -> FlowContributors {
-        self.rootViewController.showErrorAlert(with: string)
+    private func navigateToMainScreen() -> FlowContributors {
+        let tabbarFlow = TabbarFlow()
+
+        Flows.use(tabbarFlow, when: .ready) { [unowned self] root in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.rootViewController.viewControllers.removeAll()
+                self.rootViewController.isNavigationBarHidden = true
+                self.rootViewController.pushViewController(root, animated: false)
+            }
+        }
+
+        return .one(flowContributor: .contribute(withNextPresentable: tabbarFlow,
+                                                 withNextStepper: OneStepper(withSingleStep: PMSStep.tabBarIsRequired)))
+    }
+    
+    private func alert(string: String, access: AccessibilityString) -> FlowContributors {
+        self.rootViewController.showErrorAlert(with: string, access: access)
+        return .none
+    }
+    
+    private func successLottie(string: LocalizedString) -> FlowContributors {
+        self.rootViewController.showSuccessLottie(label: string)
         return .none
     }
 }
