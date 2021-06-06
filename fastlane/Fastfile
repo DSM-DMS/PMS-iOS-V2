@@ -32,7 +32,6 @@ platform :ios do
       platform: "iOS",
       concurrently: "true"
     )
-    sh("cd ..;carting update")
   end
 
   lane :test do
