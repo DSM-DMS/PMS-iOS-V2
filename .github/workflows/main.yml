@@ -23,6 +23,11 @@ jobs:
       - name: Set Appstore Connect User
         run: bundle exec fastlane fastlane-credentials add --username ${{ secrets.APPLE_ACCOUNT }} --password ${{ secrets.FASTLANE_PASSWORD }}
       - name: Deploy App
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
         env:
           MATCH_REPO: ${{ secrets.MATCH_REPO }}
           APPLE_ACCOUNT: ${{ secrets.APPLE_ACCOUNT }}
