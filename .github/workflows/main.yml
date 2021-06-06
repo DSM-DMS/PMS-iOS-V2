@@ -1,0 +1,30 @@
+name: Publish iOS App to App Store
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  release-ios:
+    name: Build and release iOS app
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: submodules-init
+        uses: snickerbockers/submodules-init@v4
+      - name: Bundle Install
+        run: bundle install
+      - name: Set Appstore Connect User
+        run: bundle exec fastlane fastlane-credentials add --username ${{ secrets.APPLE_ACCOUNT }} --password ${{ secrets.FASTLANE_PASSWORD }}
+      - name: Deploy App
+        env:
+          MATCH_REPO: ${{ secrets.MATCH_REPO }}
+          APPLE_ACCOUNT: ${{ secrets.APPLE_ACCOUNT }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+          ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          FASTLANE_SESSION: ${{ secrets.TOKEN }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+        run: bundle exec fastlane github

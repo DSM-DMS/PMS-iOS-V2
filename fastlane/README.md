@@ -26,6 +26,21 @@ Description of what the lane does
 fastlane ios pull
 ```
 
+### ios test
+```
+fastlane ios test
+```
+
+### ios github
+```
+fastlane ios github
+```
+
+### ios screenshots
+```
+fastlane ios screenshots
+```
+
 
 ----
 
