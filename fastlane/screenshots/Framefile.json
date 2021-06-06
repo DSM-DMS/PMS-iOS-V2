@@ -1,0 +1,59 @@
+{
+    "device_frame_version": "latest",
+    "default": {
+        "keyword": {
+            "font": "BMDOHYEON.otf"
+        },
+        "title": {
+            "font": "BMDOHYEON.otf",
+            "font_size": 128,
+            "color": "#545454"
+        },
+        "background": "BG.jpg",
+        "padding": 50,
+        "show_complete_frame": true,
+        "stack_title" : false,
+        "title_below_image": false,
+        "frame": "WHITE",
+        "use_platform": "IOS"
+    },
+    
+    "data": [
+        {
+            "filter": "PMS",
+            "keyword": {
+                "color": "#000000"
+            }
+        },
+        {
+            "filter": "Calendar",
+            "keyword": {
+                "color": "#000000"
+            }
+        },
+        {
+            "filter": "Meal",
+            "keyword": {
+                "color": "#000000"
+            }
+        },
+        {
+            "filter": "Notice",
+            "keyword": {
+                "color": "#000000"
+            }
+        },
+        {
+            "filter": "Introduce",
+            "keyword": {
+                "color": "#000000"
+            }
+        },
+        {
+            "filter": "Mypage",
+            "keyword": {
+                "color": "#000000"
+            }
+        }
+    ]
+}
