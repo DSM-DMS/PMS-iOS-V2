@@ -22,8 +22,9 @@ jobs:
           brew install tmspzz/homebrew-tap/rome
       - name: Set Appstore Connect User
         run: bundle exec fastlane fastlane-credentials add --username ${{ secrets.APPLE_ACCOUNT }} --password ${{ secrets.FASTLANE_PASSWORD }}
-      - name: Deploy App
+      - name: Set AWS Config
         uses: aws-actions/configure-aws-credentials@v1
+      - name: Deploy App
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
