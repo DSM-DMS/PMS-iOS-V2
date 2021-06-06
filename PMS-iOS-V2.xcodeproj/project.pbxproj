@@ -401,26 +401,6 @@
 		D8D0D3265AE7448F200911C6 /* ClubCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E1DF375E24B44DA160FE4F /* ClubCollectionCell.swift */; };
 		D8E143074C22CA399063D89C /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE4596D3F22FCA3603CA40C /* MypageViewModel.swift */; };
 		D917A095266BAF5500C2326B /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D917A094266BAF5400C2326B /* SnapshotHelper.swift */; };
-		D917A0AD266BAFA100C2326B /* Differentiator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A098266BAF9F00C2326B /* Differentiator.framework */; };
-		D917A0AE266BAFA100C2326B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A099266BAFA000C2326B /* Kingfisher.framework */; };
-		D917A0AF266BAFA100C2326B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A09A266BAFA000C2326B /* Reachability.framework */; };
-		D917A0B0266BAFA100C2326B /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A09B266BAFA000C2326B /* Lottie.framework */; };
-		D917A0B1266BAFA100C2326B /* FSCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A09C266BAFA000C2326B /* FSCalendar.framework */; };
-		D917A0B2266BAFA100C2326B /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A09D266BAFA000C2326B /* RxMoya.framework */; };
-		D917A0B3266BAFA100C2326B /* SkeletonView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A09E266BAFA000C2326B /* SkeletonView.framework */; };
-		D917A0B4266BAFA100C2326B /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A09F266BAFA000C2326B /* Swinject.framework */; };
-		D917A0B5266BAFA100C2326B /* SwinjectAutoregistration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A0266BAFA000C2326B /* SwinjectAutoregistration.framework */; };
-		D917A0B6266BAFA100C2326B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A1266BAFA000C2326B /* RxCocoa.framework */; };
-		D917A0B7266BAFA100C2326B /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A2266BAFA000C2326B /* RxBlocking.framework */; };
-		D917A0B8266BAFA100C2326B /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A3266BAFA000C2326B /* ReactiveSwift.framework */; };
-		D917A0B9266BAFA100C2326B /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A4266BAFA000C2326B /* RxRelay.framework */; };
-		D917A0BA266BAFA100C2326B /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A5266BAFA000C2326B /* SnapKit.framework */; };
-		D917A0BB266BAFA100C2326B /* RxFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A6266BAFA000C2326B /* RxFlow.framework */; };
-		D917A0BC266BAFA100C2326B /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A7266BAFA000C2326B /* RxDataSources.framework */; };
-		D917A0BE266BAFA100C2326B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A9266BAFA000C2326B /* RxSwift.framework */; };
-		D917A0BF266BAFA100C2326B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0AA266BAFA100C2326B /* Alamofire.framework */; };
-		D917A0C0266BAFA100C2326B /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0AB266BAFA100C2326B /* Then.framework */; };
-		D917A0C1266BAFA100C2326B /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0AC266BAFA100C2326B /* Moya.framework */; };
 		D917A0C3266BAFB900C2326B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A9266BAFA000C2326B /* RxSwift.framework */; };
 		D917A0C4266BAFB900C2326B /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0A8266BAFA000C2326B /* RxTest.framework */; };
 		D917A0C6266BAFBA00C2326B /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917A0C5266BAFBA00C2326B /* FBSnapshotTestCase.framework */; };
@@ -745,26 +725,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D917A0AD266BAFA100C2326B /* Differentiator.framework in Frameworks */,
-				D917A0AE266BAFA100C2326B /* Kingfisher.framework in Frameworks */,
-				D917A0AF266BAFA100C2326B /* Reachability.framework in Frameworks */,
-				D917A0B0266BAFA100C2326B /* Lottie.framework in Frameworks */,
-				D917A0B1266BAFA100C2326B /* FSCalendar.framework in Frameworks */,
-				D917A0B2266BAFA100C2326B /* RxMoya.framework in Frameworks */,
-				D917A0B3266BAFA100C2326B /* SkeletonView.framework in Frameworks */,
-				D917A0B4266BAFA100C2326B /* Swinject.framework in Frameworks */,
-				D917A0B5266BAFA100C2326B /* SwinjectAutoregistration.framework in Frameworks */,
-				D917A0B6266BAFA100C2326B /* RxCocoa.framework in Frameworks */,
-				D917A0B7266BAFA100C2326B /* RxBlocking.framework in Frameworks */,
-				D917A0B8266BAFA100C2326B /* ReactiveSwift.framework in Frameworks */,
-				D917A0B9266BAFA100C2326B /* RxRelay.framework in Frameworks */,
-				D917A0BA266BAFA100C2326B /* SnapKit.framework in Frameworks */,
-				D917A0BB266BAFA100C2326B /* RxFlow.framework in Frameworks */,
-				D917A0BC266BAFA100C2326B /* RxDataSources.framework in Frameworks */,
-				D917A0BE266BAFA100C2326B /* RxSwift.framework in Frameworks */,
-				D917A0BF266BAFA100C2326B /* Alamofire.framework in Frameworks */,
-				D917A0C0266BAFA100C2326B /* Then.framework in Frameworks */,
-				D917A0C1266BAFA100C2326B /* Moya.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
