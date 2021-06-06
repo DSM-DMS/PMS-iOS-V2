@@ -1,3 +1,0 @@
-$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework
-$(SRCROOT)/Carthage/Build/iOS/RxTest.framework
-$(SRCROOT)/Carthage/Build/iOS/FBSnapshotTestCase.framework

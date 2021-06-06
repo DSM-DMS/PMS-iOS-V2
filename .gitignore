@@ -46,7 +46,7 @@ playground.xcworkspace
 # Packages/
 # Package.pins
 # Package.resolved
-# *.xcodeproj
+*.xcodeproj
 # Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
 # hence it is not needed unless you have added a package configuration file to your project
 # .swiftpm
@@ -63,8 +63,7 @@ fastlane/report.xml
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-Carthage/Build/
-Carthage/Checkouts/
+Carthage/
 
 # Accio dependency management
 Dependencies/

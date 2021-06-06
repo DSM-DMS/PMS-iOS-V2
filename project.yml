@@ -1,6 +1,19 @@
 name: PMS-iOS-V2
 options:
-  postGenCommand: fastlane pull # 생성 이후 명령 실행
+  preGenCommand: fastlane pull
+  postGenCommand: carting update # 생성 이후 명령 실행
+  developmentLanguage: kr
+  deploymentTarget:
+    iOS: "11.0"
+  carthageBuildPath: "Carthage/Build/iOS"
+  findCarthageFrameworks: true
+configs: # configuration 별 설정
+    Debug: debug
+    Release: release
+configFiles:
+    Debug: xcconfig/Project-Debug.xcconfig
+    Release: xcconfig/Project-Release.xcconfig
+  
 settingGroups:
   app:
     DEVELOPMENT_TEAM: C2JSJLJ4FN
@@ -10,6 +23,9 @@ targets:
       testTargets:
         - PMS-iOS-V2Tests
         - PMS-iOS-V2UITests
+    configFiles:
+      Debug: xcconfig/PMS-iOS-V2-Debug.xcconfig
+      Release: xcconfig/PMS-iOS-V2-Release.xcconfig
     sources:
       excludes:
           - "SceneDelegate.swift"
@@ -19,26 +35,55 @@ targets:
       base:
         INFOPLIST_FILE: PMS-iOS-V2/Resource/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2
+    dependencies:
+      - carthage: Carthage/Build/iOS/Alamofire
+      - carthage: Carthage/Build/iOS/Differentiator
+      - carthage: Carthage/Build/iOS/FSCalendar
+      - carthage: Carthage/Build/iOS/Kingfisher
+      - carthage: Carthage/Build/iOS/Lottie
+      - carthage: Carthage/Build/iOS/Moya
+      - carthage: Carthage/Build/iOS/Reachability
+      - carthage: Carthage/Build/iOS/ReactiveSwift
+      - carthage: Carthage/Build/iOS/RxBlocking
+      - carthage: Carthage/Build/iOS/RxCocoa
+      - carthage: Carthage/Build/iOS/RxDataSources
+      - carthage: Carthage/Build/iOS/RxFlow
+      - carthage: Carthage/Build/iOS/RxMoya
+      - carthage: Carthage/Build/iOS/RxRelay
+      - carthage: Carthage/Build/iOS/RxSwift
+      - carthage: Carthage/Build/iOS/SkeletonView
+      - carthage: Carthage/Build/iOS/SnapKit
+      - carthage: Carthage/Build/iOS/Swinject
+      - carthage: Carthage/Build/iOS/SwinjectAutoregistration
+      - carthage: Carthage/Build/iOS/Then
     type: application
     platform: iOS
-    deploymentTarget: 11.0
     sources: [PMS-iOS-V2]
     
   PMS-iOS-V2Tests:
     type: bundle.unit-test # 테스트 타입
     platform: iOS # 플랫폼
     sources: [PMS-iOS-V2, PMS-iOS-V2Tests]
+    configFiles:
+      Debug: xcconfig/PMS-iOS-V2Tests-Debug.xcconfig
+      Release: xcconfig/PMS-iOS-V2Tests-Release.xcconfig
     settings:
       groups: [app]
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
       commandLineArguments: [test: true]
     dependencies:
       - target: PMS-iOS-V2
+      - carthage: Carthage/Build/iOS/FBSnapshotTestCase
+      - carthage: Carthage/Build/iOS/RxTest
+      - carthage: Carthage/Build/iOS/RxSwift
       
   PMS-iOS-V2UITests:
     type: bundle.ui-testing # 테스트 타입
     platform: iOS # 플랫폼
     sources: [PMS-iOS-V2, PMS-iOS-V2UITests]
+    configFiles:
+      Debug: xcconfig/PMS-iOS-V2UITests-Debug.xcconfig
+      Release: xcconfig/PMS-iOS-V2UITests-Release.xcconfig
     settings:
       groups: [app]
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
