@@ -44,6 +44,12 @@ platform :ios do
   end
 
   lane :github do
+    rome(
+      command: "download",
+      platform: "iOS",
+      concurrently: "true"
+    )
+    sh("cd ..;carting update")
     create_keychain(
       name: "ios_app_store",
       password: "1234",
