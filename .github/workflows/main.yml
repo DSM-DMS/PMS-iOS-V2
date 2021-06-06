@@ -16,6 +16,10 @@ jobs:
         uses: snickerbockers/submodules-init@v4
       - name: Bundle Install
         run: bundle install
+      - name: Rome Install
+        run: |
+          brew tap tmspzz/tap https://github.com/tmspzz/homebrew-tap.git
+          brew install tmspzz/homebrew-tap/rome
       - name: Set Appstore Connect User
         run: bundle exec fastlane fastlane-credentials add --username ${{ secrets.APPLE_ACCOUNT }} --password ${{ secrets.FASTLANE_PASSWORD }}
       - name: Deploy App
