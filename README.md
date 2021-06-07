@@ -1,26 +1,59 @@
-# PMS-iOS-V2
+## [fastlane match](https://docs.fastlane.tools/actions/match/)
 
-### 최소 지원 버전 : iOS 11
+This repository contains all your certificates and provisioning profiles needed to build and sign your applications. They are encrypted using OpenSSL via a passphrase.
+
+**Important:** Make sure this repository is set to private and only your team members have access to this repo.
+
+Do not modify this file, as it gets overwritten every time you run _match_.
+
+### Installation
+
+Make sure you have the latest version of the Xcode command line tools installed:
 
 ```
-$ xcodegen
+xcode-select --install
 ```
 
-### 사용 디자인패턴
+Install _fastlane_ using
 
-- RxSwift + MVVM
+```
+[sudo] gem install fastlane -NV
+```
 
-### 사용 기술
+or alternatively using `brew install fastlane`
 
-- SnapKit
-- RxFlow
-- Swinject
-- SwiftGen
-- XcodeGen
+### Usage
 
-### 사용 패키지 관리 매니저
+Navigate to your project folder and run
 
-- Carthage
-  - Rome
-  - Fastlane
+```
+fastlane match appstore
+```
 
+```
+fastlane match adhoc
+```
+
+```
+fastlane match development
+```
+
+```
+fastlane match enterprise
+```
+
+For more information open [fastlane match git repo](https://docs.fastlane.tools/actions/match/)
+
+### Content
+
+#### certs
+
+This directory contains all your certificates with their private keys
+
+#### profiles
+
+This directory contains all provisioning profiles
+
+---
+
+For more information open [fastlane match git repo](https://docs.fastlane.tools/actions/match/)
