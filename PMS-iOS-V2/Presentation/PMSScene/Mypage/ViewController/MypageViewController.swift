@@ -111,6 +111,7 @@ class MypageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        AnalyticsManager.view_mypage.log()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -365,6 +366,7 @@ extension MypageViewController: StudentListDelegate {
         let lastUser = UDManager.shared.student
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             if lastUser != UDManager.shared.student {
+                AnalyticsManager.click_changeStudent.log()
                 self.studentListView.viewModel.input.viewDidLoad.accept(())
                 self.viewModel.input.viewDidLoad.accept(())
             }
@@ -372,6 +374,7 @@ extension MypageViewController: StudentListDelegate {
     }
     
     func addStudentTapped() {
+        AnalyticsManager.click_addStudent.log()
         self.blackBackground.isHidden = false
         self.addStudentView.view.isHidden = false
     }
@@ -382,6 +385,7 @@ extension MypageViewController: StudentListDelegate {
             if student.number == UDManager.shared.studentNumber {
                 UDManager.shared.student = nil
             }
+            AnalyticsManager.click_deleteStudent.log()
             self.viewModel.input.deleteStudent.accept(student.number)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.studentListView.viewModel.input.viewDidLoad.accept(())

@@ -67,6 +67,11 @@ class MealViewController: UIViewController {
         collectionView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AnalyticsManager.view_meal.log()
+    }
+    
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubview(dateStatView)

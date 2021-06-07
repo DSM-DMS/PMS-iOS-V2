@@ -48,6 +48,7 @@ class ClubDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
+        AnalyticsManager.view_club_detail.log(name: name)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

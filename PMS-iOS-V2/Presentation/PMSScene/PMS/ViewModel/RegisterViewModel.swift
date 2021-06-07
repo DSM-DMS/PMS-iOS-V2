@@ -127,6 +127,7 @@ class RegisterViewModel: Stepper {
         
         input.registerButtonTapped
             .asObservable()
+            .map {  AnalyticsManager.click_signUp.log() }
             .flatMap {
                 repository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
@@ -147,6 +148,7 @@ class RegisterViewModel: Stepper {
         input.facebookButtonTapped
             .asObservable()
             .subscribe(onNext: { _ in
+                AnalyticsManager.click_facebook.log()
                 //                self.steps.accept(PMSStep.loginIsRequired)
             })
             .disposed(by: disposeBag)
@@ -154,6 +156,7 @@ class RegisterViewModel: Stepper {
         input.naverButtonTapped
             .asObservable()
             .subscribe(onNext: { _ in
+                AnalyticsManager.click_naver.log()
                 //                self.steps.accept(PMSStep.registerIsRequired)
             })
             .disposed(by: disposeBag)
@@ -161,6 +164,7 @@ class RegisterViewModel: Stepper {
         input.kakaotalkButtonTapped
             .asObservable()
             .subscribe(onNext: { _ in
+                AnalyticsManager.click_kakaotalk.log()
                 //                self.steps.accept(PMSStep.tabBarIsRequired)
             })
             .disposed(by: disposeBag)
@@ -168,6 +172,7 @@ class RegisterViewModel: Stepper {
         input.appleButtonTapped
             .asObservable()
             .subscribe(onNext: { _ in
+                AnalyticsManager.click_apple.log()
                 //                self.steps.accept(PMSStep.tabBarIsRequired)
             })
             .disposed(by: disposeBag)

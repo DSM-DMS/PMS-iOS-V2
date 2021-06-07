@@ -32,6 +32,7 @@ platform :ios do
       platform: "iOS",
       concurrently: "true"
     )
+    sh("cd ..;punic download")
   end
 
   lane :test do

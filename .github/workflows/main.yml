@@ -23,6 +23,8 @@ jobs:
           brew tap artemnovichkov/projects
           brew install carting
           brew install xcodegen
+          brew tap summerlabs/homebrew-punic
+          brew install punic
       - name: Set Appstore Connect User
         run: bundle exec fastlane fastlane-credentials add --username ${{ secrets.APPLE_ACCOUNT }} --password ${{ secrets.FASTLANE_PASSWORD }}
       - name: Set AWS Config

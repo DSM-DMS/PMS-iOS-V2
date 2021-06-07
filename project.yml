@@ -56,6 +56,19 @@ targets:
       - carthage: Carthage/Build/iOS/Swinject
       - carthage: Carthage/Build/iOS/SwinjectAutoregistration
       - carthage: Carthage/Build/iOS/Then
+      - framework: Carthage/Build/FirebaseAnalytics.xcframework
+      - framework: Carthage/Build/FirebaseCore.xcframework
+      - framework: Carthage/Build/FirebaseCoreDiagnostics.xcframework
+      - framework: Carthage/Build/FirebaseDynamicLinks.xcframework
+      - framework: Carthage/Build/FirebaseInstallations.xcframework
+      - framework: Carthage/Build/FirebasePerformance.xcframework
+      - framework: Carthage/Build/FirebaseRemoteConfig.xcframework
+      - framework: Carthage/Build/GoogleAppMeasurement.xcframework
+      - framework: Carthage/Build/GoogleDataTransport.xcframework
+      - framework: Carthage/Build/GoogleUtilities.xcframework
+      - framework: Carthage/Build/nanopb.xcframework
+      - framework: Carthage/Build/PromisesObjC.xcframework
+      - framework: Carthage/Build/Protobuf.xcframework
     type: application
     platform: iOS
     sources: [PMS-iOS-V2]

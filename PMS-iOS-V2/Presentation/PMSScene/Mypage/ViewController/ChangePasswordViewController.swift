@@ -114,6 +114,11 @@ class ChangePasswordViewController: UIViewController {
         self.addKeyboardNotification()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AnalyticsManager.view_changePassword.log()
+    }
+    
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubview(passwordViewStack)

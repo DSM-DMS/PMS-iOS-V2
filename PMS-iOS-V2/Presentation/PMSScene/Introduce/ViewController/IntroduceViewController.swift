@@ -44,6 +44,11 @@ class IntroduceViewController: UIViewController {
         developerButton.addGestureRecognizer(developerTapped)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AnalyticsManager.view_introduce.log()
+    }
+    
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubview(subTitle)

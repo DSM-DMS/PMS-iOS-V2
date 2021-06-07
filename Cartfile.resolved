@@ -1,3 +1,8 @@
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseABTestingBinary.json" "8.1.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" "8.1.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseDynamicLinksBinary.json" "8.1.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseMessagingBinary.json" "8.1.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebasePerformanceBinary.json" "8.1.0"
 github "Alamofire/Alamofire" "5.4.3"
 github "Goeun1001/Then-Carthage" "1.0.0"
 github "Juanpe/SkeletonView" "1.16.0"

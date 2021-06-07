@@ -1,0 +1,45 @@
+# Configure Punic
+configuration:
+  prefix: 1.0.1
+  local: ~/Library/Caches/Punic
+  output: Carthage/Build
+  s3Bucket: pms-carthage-bucket
+  
+# Search your output directory for these .xcframeworks
+dependencies:
+- FirebaseABTesting:
+  - name: FirebaseABTesting
+- FirebaseAnalytics:
+  - name: FirebaseAnalytics
+- FirebaseDynamicLinks:
+  - name: FirebaseDynamicLinks
+- FirebaseMessaging:
+  - name: FirebaseMessaging
+- FirebasePerformance:
+  - name: FirebasePerformance
+- Protobuf:
+  - name: Protobuf
+- nanopb:
+  - name: nanopb
+- PromisesObjC:
+  - name: PromisesObjC
+- GoogleUtilities:
+  - name: GoogleUtilities
+- GoogleDataTransport:
+  - name: GoogleDataTransport
+- GoogleAppMeasurement:
+  - name: GoogleAppMeasurement
+- FirebaseRemoteConfig:
+  - name: FirebaseRemoteConfig
+- FirebaseInstallations:
+  - name: FirebaseInstallations
+- FirebaseCore:
+  - name: FirebaseCore
+- FirebaseCoreDiagnostics:
+  - name: FirebaseCoreDiagnostics
+- FirebaseDynamicLinks:
+  - name: FirebaseDynamicLinks
+- FirebaseMessaging:
+  - name: FirebaseMessaging
+- FirebasePerformance:
+  - name: FirebasePerformance

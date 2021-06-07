@@ -13,7 +13,7 @@ final class DefaultNoticeRepository: NoticeRepository {
     let provider: MoyaProvider<PMSApi>
     
     init(provider: MoyaProvider<PMSApi>?) {
-        self.provider = provider ?? MoyaProvider<PMSApi>(plugins: [NetworkLoggerPlugin()])
+        self.provider = provider ?? MoyaProvider<PMSApi>()
     }
     
     func getNoticeList() -> Single<[Notice]> {

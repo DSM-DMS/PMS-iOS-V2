@@ -51,6 +51,7 @@ class ChangeNicknameViewModel: Stepper {
         
         input.changeButtonTapped
             .asObservable()
+            .map { AnalyticsManager.click_changeNickname.log() }
             .flatMap {
                 repository.changeNickname(name: self.input.nicknameText.value)
                     .do(onError: { error in

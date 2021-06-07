@@ -9,6 +9,7 @@ import UIKit
 import Swinject
 import RxFlow
 import RxSwift
+import FirebaseCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appFlow = AppFlow(window: AppDelegate.window!)
         
         self.coordinator.coordinate(flow: appFlow, with: stepper)
+        
+        FirebaseApp.configure()
+        AnalyticsManager.setUserID()
         
         return true
     }
