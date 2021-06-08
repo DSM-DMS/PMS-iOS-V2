@@ -14,6 +14,8 @@ github "SnapKit/SnapKit" ~> 5.0.0
 gitHub "Goeun1001/Then-Carthage" ~> 1.0.0
 github "Juanpe/SkeletonView"
 github "google/promises"
+github "facebook/facebook-ios-sdk"
+gitHub "naver/naveridlogin-sdk-ios"
 
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseABTestingBinary.json"
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json"

@@ -26,3 +26,11 @@ repositoryMap:
 - promises:
   - name: Promises
   - name: FBLPromises
+- facebook-ios-sdk:
+  - name: FBSDKCoreKit
+  - name: FBSDKGamingServicesKit
+  - name: FBSDKShareKit
+  - name: FBSDKLoginKit
+- naveridlogin-sdk-ios:
+  - name: NaverThirdPartyLogin
+  - name: KakaoOpenSDK

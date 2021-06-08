@@ -24,7 +24,6 @@ platform :ios do
     concurrently: "true",
     )
      sh("cd ..;carting update")
-     sh("punic upload")
   end
 
   lane :pull do

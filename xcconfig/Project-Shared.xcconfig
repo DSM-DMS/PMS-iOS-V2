@@ -508,3 +508,11 @@ SWIFT_VERSION = 5.0
 // * Apple Generic: Use the current project version setting. [apple-generic]
 
 VERSIONING_SYSTEM = apple-generic
+
+
+
+// Other Linker Flags
+//
+// Options defined in this setting are passed to invocations of the linker.
+
+OTHER_LDFLAGS = -ObjC -all_Load

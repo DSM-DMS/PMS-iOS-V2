@@ -19,11 +19,12 @@ class LoginViewModel: Stepper {
         let emailText = BehaviorRelay<String>(value: "")
         let passwordText = BehaviorRelay<String>(value: "")
         let eyeButtonTapped = PublishRelay<Void>()
-        let facebookButtonTapped = PublishRelay<Void>()
-        let naverButtonTapped = PublishRelay<Void>()
-        let kakaotalkButtonTapped = PublishRelay<Void>()
-        let appleButtonTapped = PublishRelay<Void>()
+        let facebookLoginSuccess = PublishRelay<String>()
+        let naverLoginSuccess = PublishRelay<String>()
+        let kakaotalkLoginSuccess = PublishRelay<String>()
+        let appleLoginSuccess = PublishRelay<String>()
         let loginButtonTapped = PublishRelay<Void>()
+        let oAuthError = PublishRelay<Error>()
     }
     
     struct Output {
@@ -96,7 +97,7 @@ class LoginViewModel: Stepper {
             .map {  AnalyticsManager.click_signIn.log() }
             .flatMap {
                 repository.login(email: self.input.emailText.value,
-                                      password: self.input.passwordText.value)
+                                 password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -112,37 +113,66 @@ class LoginViewModel: Stepper {
             })
             .disposed(by: disposeBag)
         
-        input.facebookButtonTapped
+        input.facebookLoginSuccess
             .asObservable()
-            .subscribe(onNext: { _ in
-                AnalyticsManager.click_facebook.log()
-                //                self.steps.accept(PMSStep.loginIsRequired)
-            })
+            .flatMap {
+                repository.sendFacebookToken(token: $0)
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+                    .catchErrorJustReturn(false)
+            }
+            .subscribe(onNext: { _ in })
             .disposed(by: disposeBag)
         
-        input.naverButtonTapped
+        input.naverLoginSuccess
             .asObservable()
-            .subscribe(onNext: { _ in
-                AnalyticsManager.click_naver.log()
-                //                self.steps.accept(PMSStep.registerIsRequired)
-            })
+            .flatMap {
+                repository.sendNaverToken(token: $0)
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+                    .catchErrorJustReturn(false)
+            }
+            .subscribe(onNext: { _ in })
             .disposed(by: disposeBag)
         
-        input.kakaotalkButtonTapped
+        input.kakaotalkLoginSuccess
             .asObservable()
-            .subscribe(onNext: { _ in
-                AnalyticsManager.click_kakaotalk.log()
-                //                self.steps.accept(PMSStep.tabBarIsRequired)
-            })
+            .flatMap {
+                repository.sendKakaotalkToken(token: $0)
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+                    .catchErrorJustReturn(false)
+            }
+            .subscribe(onNext: { _ in })
             .disposed(by: disposeBag)
         
-        input.appleButtonTapped
+        input.appleLoginSuccess
             .asObservable()
-            .subscribe(onNext: { _ in
-                AnalyticsManager.click_apple.log()
-                //                self.steps.accept(PMSStep.tabBarIsRequired)
-            })
+            .flatMap {
+                repository.sendKakaotalkToken(token: $0)
+                    .trackActivity(activityIndicator)
+                    .do(onError: { error in
+                        let error = error as! NetworkError
+                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
+                    })
+                    .catchErrorJustReturn(false)
+            }
+            .subscribe(onNext: { _ in })
             .disposed(by: disposeBag)
+        
+        input.oAuthError
+            .subscribe(onNext: {
+                self.steps.accept(PMSStep.alert($0.localizedDescription, .unknownErrorMsg))
+            }).disposed(by: disposeBag)
         
         activityIndicator
             .asObservable()
