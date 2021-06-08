@@ -13,7 +13,7 @@ final class DefaultMypageRepository: MypageRepository {
     let provider: MoyaProvider<AuthApi>
     
     init(provider: MoyaProvider<AuthApi>?) {
-        self.provider = provider ?? MoyaProvider<AuthApi>(plugins: [NetworkLoggerPlugin()])
+        self.provider = provider ?? MoyaProvider<AuthApi>()
     }
     
     func getUser() -> Single<User> {

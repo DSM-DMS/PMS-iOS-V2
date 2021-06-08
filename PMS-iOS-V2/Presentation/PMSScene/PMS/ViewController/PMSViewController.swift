@@ -43,6 +43,11 @@ class PMSViewController: UIViewController {
         setNavigationTitle(title: .PMSTitle, accessibilityLabel: .PMSView, isLarge: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AnalyticsManager.view_PMS.log()
+    }
+    
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubview(PMSStack)

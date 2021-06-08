@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController {
     }
     
     let oAuthStackView = UIStackView().then {
-        $0.alignment = .center
+        $0.alignment = .top
         $0.distribution = .equalSpacing
     }
     
@@ -130,6 +130,7 @@ class RegisterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
+        AnalyticsManager.view_signUp.log()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

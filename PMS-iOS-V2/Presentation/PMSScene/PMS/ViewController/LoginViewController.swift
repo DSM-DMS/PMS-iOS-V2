@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
     }
     
     let oAuthStackView = UIStackView().then {
-        $0.alignment = .center
+        $0.alignment = .top
         $0.distribution = .equalSpacing
     }
     
@@ -93,6 +93,7 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
+        AnalyticsManager.view_signIn.log()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

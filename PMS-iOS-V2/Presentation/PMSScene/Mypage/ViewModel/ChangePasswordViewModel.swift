@@ -118,6 +118,7 @@ class ChangePasswordViewModel: Stepper {
         
         input.changePasswordButtonTapped
             .asObservable()
+            .map { AnalyticsManager.click_changePassword.log() }
             .flatMap {
                 repository.changePassword(nowPassword: self.input.nowPasswordText.value,
                                           newPassword: self.input.newPasswordText.value)

@@ -24,6 +24,7 @@ platform :ios do
     concurrently: "true",
     )
      sh("cd ..;carting update")
+     sh("punic upload")
   end
 
   lane :pull do
@@ -32,6 +33,7 @@ platform :ios do
       platform: "iOS",
       concurrently: "true"
     )
+    sh("cd ..;punic download")
   end
 
   lane :test do

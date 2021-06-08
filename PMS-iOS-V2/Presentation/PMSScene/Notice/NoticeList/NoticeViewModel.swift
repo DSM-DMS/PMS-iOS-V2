@@ -45,6 +45,7 @@ class NoticeViewModel: Stepper {
         
         input.isLetter
             .asObservable()
+            .map { if $0 { AnalyticsManager.view_letter.log() } else { AnalyticsManager.view_notice.log() }}
             .flatMapLatest { _ in
                 repository.getNoticeList()
                     .asObservable()

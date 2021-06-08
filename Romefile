@@ -1,28 +1,28 @@
 cache: # required
   # at least one of the following is required:
   s3Bucket: pms-carthage-bucket
-                    
-repositoryMap: # optional
-  - RxSwift:
-     - name: RxSwift
-     - name: RxCocoa
-     - name: RxBlocking
-     - name: RxRelay
-     - name: RxTest
-  - RxDataSources:
-    - name: RxDataSources
-    - name: Differentiator
-  - Moya:
-    - name: Moya
-    - name: RxMoya
-  - lottie-ios:
-    - name: Lottie
-  - CocoaLumberjack:
-    - name: CocoaLumberjack
-    - name: CocoaLumberjackSwift
-  - Reachability.swift:
-    - name: Reachability
-  - ios-snapshot-test-case:
-    - name: FBSnapshotTestCase
-  - Then-Carthage:
-    - name: Then
+
+repositoryMap:
+- RxSwift:
+  - name: RxSwift
+  - name: RxCocoa
+  - name: RxBlocking
+  - name: RxRelay
+  - name: RxTest
+- RxDataSources:
+  - name: RxDataSources
+  - name: Differentiator
+- Moya:
+  - name: Moya
+  - name: RxMoya
+- lottie-ios:
+  - name: Lottie
+- Reachability.swift:
+  - name: Reachability
+- ios-snapshot-test-case:
+  - name: FBSnapshotTestCase
+- Then-Carthage:
+  - name: Then
+- promises:
+  - name: Promises
+  - name: FBLPromises
