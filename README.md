@@ -1,18 +1,10 @@
 # PMS-iOS-V2
 
-```
-$ xcodegen
-```
-
 ### 최소 지원 버전
 
 - iOS 11
 
 ### 사용 디자인패턴
-
-- RxSwift + MVVM
-
-### 사용 기술
 
 - SnapKit
 
@@ -42,4 +34,3 @@ $ xcodegen
 - Carthage
   - Rome
   - Punic
-
