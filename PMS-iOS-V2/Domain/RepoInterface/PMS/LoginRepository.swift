@@ -10,4 +10,7 @@ import RxSwift
 
 protocol LoginRepository {
     func login(email: String, password: String) -> Single<Bool>
+    func sendNaverToken(token: String) -> Single<Bool>
+    func sendFacebookToken(token: String) -> Single<Bool>
+    func sendKakaotalkToken(token: String) -> Single<Bool>
 }

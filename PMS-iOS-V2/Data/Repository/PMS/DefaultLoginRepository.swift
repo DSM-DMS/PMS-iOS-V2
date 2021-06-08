@@ -34,4 +34,46 @@ final class DefaultLoginRepository: LoginRepository {
                 }
             }
     }
+    
+    func sendNaverToken(token: String) -> Single<Bool> {
+        provider.rx.request(.naver(token: token))
+            .filterSuccessfulStatusCodes()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
+    
+    func sendFacebookToken(token: String) -> Single<Bool> {
+        provider.rx.request(.facebook(token: token))
+            .filterSuccessfulStatusCodes()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
+    
+    func sendKakaotalkToken(token: String) -> Single<Bool> {
+        provider.rx.request(.kakaotalk(token: token))
+            .filterSuccessfulStatusCodes()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
 }

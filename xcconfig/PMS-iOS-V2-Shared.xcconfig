@@ -78,6 +78,13 @@ INFOPLIST_FILE = PMS-iOS-V2/Resource/Info.plist
 PRODUCT_BUNDLE_IDENTIFIER = com.dsm.pms-v2
 
 
+// Objective-C Bridging Header
+//
+// Path to the header defining the Objective-C interfaces to be exposed in Swift.
+
+SWIFT_OBJC_BRIDGING_HEADER = PMS-iOS-V2/Resource/KakaoOpenSDK-Bridging-Header.h
+
+
 
 // Provisioning Profile
 //

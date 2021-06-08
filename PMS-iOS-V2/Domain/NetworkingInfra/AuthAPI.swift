@@ -25,6 +25,11 @@ public enum AuthApi {
     
     // FCM Token
     case notification(token: String)
+    
+    // OAuth
+    case naver(token: String)
+    case facebook(token: String)
+    case kakaotalk(token: String)
 }
 
 extension AuthApi: TargetType {
@@ -53,18 +58,24 @@ extension AuthApi: TargetType {
             return "/user/student/outing/\(number)"
         case .changePassword:
             return "/auth/password"
-        case .pointList(number: let number):
+        case .pointList(let number):
             return "/user/student/point/\(number)"
         case .deleteStudent:
             return "/user/student"
         case .notification:
             return "/notification"
+        case .naver:
+            return "/oauth2/authorize/naver"
+        case .facebook:
+            return "/oauth2/authorize/facebook"
+        case .kakaotalk:
+            return "/oauth2/authorize/kakaotalk"
         }
     }
     
     public var method: Moya.Method {
         switch self {
-        case .login, .register, .addStudent, .notification:
+        case .login, .register, .addStudent, .notification, .naver, .kakaotalk:
             return .post
         case .changePassword, .changeNickname:
             return .put
@@ -92,6 +103,12 @@ extension AuthApi: TargetType {
             return .requestParameters(parameters: ["number": number], encoding: JSONEncoding.default)
         case let .notification(token):
             return .requestParameters(parameters: ["token": token], encoding: JSONEncoding.default)
+        case let .naver(token):
+            return .requestParameters(parameters: ["token": token], encoding: URLEncoding.queryString)
+        case let .facebook(token):
+            return .requestParameters(parameters: ["token": token], encoding: URLEncoding.queryString)
+        case let .kakaotalk(token):
+            return .requestParameters(parameters: ["token": token], encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }

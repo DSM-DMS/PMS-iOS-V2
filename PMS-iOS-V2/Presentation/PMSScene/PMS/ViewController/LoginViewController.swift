@@ -8,12 +8,21 @@
 import UIKit
 import RxSwift
 import Reachability
+import NaverThirdPartyLogin
+import FBSDKLoginKit
+import KakaoOpenSDK
+import AuthenticationServices
 
 class LoginViewController: UIViewController {
     let viewModel: LoginViewModel
     private let disposeBag = DisposeBag()
     private let reachability = try! Reachability()
     let activityIndicator = UIActivityIndicatorView()
+    
+    // MARK: - OAuth
+    
+    private let loginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
+    let facebookManager = LoginManager()
     
     let loginViewStack = UIStackView().then {
         $0.axis = .vertical
@@ -50,7 +59,9 @@ class LoginViewController: UIViewController {
     let facebookButton = FacebookButton(label: .facebookLogin)
     let naverButton = NaverButton(label: .naverRegister)
     let kakaotalkButton = KakaotalkButton(label: .kakaotalkLogin)
-    let appleButton = AppleButton(label: .appleLogin)
+    let appleButton = AppleButton(label: .appleLogin).then {
+        $0.isEnabled = false
+    }
     let loginButton = BlueButton(title: .loginButton, label: .loginButton)
     
     let personImage = PersonImage()
@@ -88,6 +99,11 @@ class LoginViewController: UIViewController {
         self.setNavigationTitle(title: .loginTitle, accessibilityLabel: .loginView, isLarge: true)
         self.bindInput()
         self.bindOutput()
+        loginInstance?.delegate = self
+        
+        if #available(iOS 13.0, *) {
+            appleButton.isEnabled = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -168,20 +184,79 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         facebookButton.rx.tap
-            .bind(to: viewModel.input.facebookButtonTapped)
+            .subscribe(onNext: { _ in
+                AnalyticsManager.click_naver.log()
+                let configuration = LoginConfiguration(
+                    permissions:["email"],
+                    tracking: .enabled,
+                    nonce: "123"
+                )
+                self.facebookManager.logIn(configuration: configuration!, completion: { result in
+                    switch result {
+                    case .cancelled: break
+                    case .failed(let error):
+                        self.viewModel.input.oAuthError.accept(error)
+                    case .success:
+                        Log.info("Facebook : \(String(describing: AuthenticationToken.current?.tokenString))")
+                        if let token = AuthenticationToken.current?.tokenString {
+                            self.viewModel.input.facebookLoginSuccess.accept(token)
+                        }
+                    }
+                })
+            })
             .disposed(by: disposeBag)
         
         naverButton.rx.tap
-            .bind(to: viewModel.input.naverButtonTapped)
+            .subscribe(onNext: { _ in
+                AnalyticsManager.click_naver.log()
+                self.loginInstance?.requestThirdPartyLogin()
+            })
             .disposed(by: disposeBag)
         
         kakaotalkButton.rx.tap
-            .bind(to: viewModel.input.kakaotalkButtonTapped)
+            .subscribe(onNext: { _ in
+                AnalyticsManager.click_kakaotalk.log()
+                guard let session = KOSession.shared() else { return }
+                
+                if session.isOpen() {
+                    session.close()
+                }
+                
+                session.open(completionHandler: { (error) -> Void in
+                    
+                    if !session.isOpen() {
+                        if let error = error as NSError? {
+                            switch error.code {
+                            case Int(KOErrorCancelled.rawValue):
+                                break
+                            default:
+                                print("오류")
+                            }
+                        }
+                    } else {
+                        if let token = session.token {
+                            self.viewModel.input.kakaotalkLoginSuccess.accept(token.accessToken)
+                        }
+                    }
+                })
+            })
             .disposed(by: disposeBag)
         
-        appleButton.rx.tap
-            .bind(to: viewModel.input.appleButtonTapped)
-            .disposed(by: disposeBag)
+        if #available(iOS 13.0, *) {
+            appleButton.rx.tap
+                .subscribe(onNext: {
+                    AnalyticsManager.click_apple.log()
+                    let appleIDProvider = ASAuthorizationAppleIDProvider()
+                    let request = appleIDProvider.createRequest()
+                    request.requestedScopes = [.fullName, .email]
+                    
+                    let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+                    authorizationController.delegate = self
+                    authorizationController.presentationContextProvider = self
+                    authorizationController.performRequests()
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     private func bindOutput() {
@@ -283,5 +358,61 @@ extension LoginViewController {
                 self.view.frame.origin.y += keyboardHeight / 2
             }
         }
+    }
+}
+
+extension LoginViewController: NaverThirdPartyLoginConnectionDelegate {
+    func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+        sendNaverToken()
+    }
+    
+    func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
+        
+    }
+    
+    func oauth20ConnectionDidFinishDeleteToken() {
+        
+    }
+    
+    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
+        
+    }
+    
+    func sendNaverToken() {
+        guard let isValidAccessToken = loginInstance?.isValidAccessTokenExpireTimeNow() else { return }
+        
+        if !isValidAccessToken {
+            return
+        }
+        
+        guard let accessToken = loginInstance?.accessToken else { return }
+        self.viewModel.input.naverLoginSuccess.accept(accessToken)
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    @available(iOS 13.0, *)
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    // Apple ID 연동 성공 시
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        // Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            if let token = appleIDCredential.identityToken {
+                print(token)
+            }
+        default:
+            break
+        }
+    }
+    
+    // Apple ID 연동 실패 시
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        self.viewModel.input.oAuthError.accept(error)
     }
 }

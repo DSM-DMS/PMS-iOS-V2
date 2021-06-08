@@ -1,6 +1,6 @@
 name: PMS-iOS-V2
 options:
-#  preGenCommand: fastlane pull
+  preGenCommand: fastlane pull
   postGenCommand: carting update # 생성 이후 명령 실행
   developmentLanguage: kr
   deploymentTarget:
@@ -39,6 +39,7 @@ targets:
         VERSIONING_SYSTEM: Apple Generic
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
+        CODE_SIGN_ENTITLEMENTS: PMS-iOS-V2/Resource/PMS-iOS-V2.entitlements
     dependencies:
       - carthage: Carthage/Build/iOS/Alamofire
       - carthage: Carthage/Build/iOS/Differentiator
@@ -62,6 +63,12 @@ targets:
       - carthage: Carthage/Build/iOS/Then
       - carthage: Carthage/Build/iOS/FBLPromises
       - carthage: Carthage/Build/iOS/Promises
+      - carthage: Carthage/Build/iOS/FBSDKCoreKit
+      - carthage: Carthage/Build/iOS/FBSDKLoginKit
+      - carthage: Carthage/Build/iOS/FBSDKGamingServicesKit
+      - carthage: Carthage/Build/iOS/FBSDKShareKit
+      - carthage: Carthage/Build/iOS/NaverThirdPartyLogin
+      - carthage: Carthage/Build/iOS/KakaoOpenSDK
       - framework: Carthage/Build/FirebaseAnalytics.xcframework
       - framework: Carthage/Build/FirebaseMessaging.xcframework
       - framework: Carthage/Build/FirebaseABTesting.xcframework
