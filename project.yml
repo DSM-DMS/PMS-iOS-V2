@@ -35,6 +35,8 @@ targets:
       base:
         INFOPLIST_FILE: PMS-iOS-V2/Resource/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2
+        CURRENT_PROJECT_VERSION: 3
+        VERSIONING_SYSTEM: Apple Generic
     dependencies:
       - carthage: Carthage/Build/iOS/Alamofire
       - carthage: Carthage/Build/iOS/Differentiator
