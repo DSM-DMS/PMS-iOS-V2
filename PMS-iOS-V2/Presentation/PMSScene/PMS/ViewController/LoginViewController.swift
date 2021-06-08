@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
     }
     
     let oAuthStackView = UIStackView().then {
-        $0.alignment = .center
+        $0.alignment = .top
         $0.distribution = .equalSpacing
     }
     

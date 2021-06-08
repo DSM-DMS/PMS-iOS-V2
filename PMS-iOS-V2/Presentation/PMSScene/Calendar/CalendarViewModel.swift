@@ -68,8 +68,7 @@ class CalendarViewModel: Stepper {
         
         output.calendar
             .map { _ in
-                var month = Date().month
-                return String(month.removeFirst())
+                return String(Date().get(.month))
             }
             .bind(to: input.month)
             .disposed(by: disposeBag)

@@ -1,23 +1,25 @@
 {
   "images" : [
     {
-      "filename" : "그룹 184.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "White Logo Square.pdf",
+      "idiom" : "universal"
     },
     {
-      "filename" : "그룹 184@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "그룹 184@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Black Logo Square.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

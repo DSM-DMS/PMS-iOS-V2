@@ -7,8 +7,6 @@ configuration:
   
 # Search your output directory for these .xcframeworks
 dependencies:
-- FirebaseABTesting:
-  - name: FirebaseABTesting
 - FirebaseAnalytics:
   - name: FirebaseAnalytics
 - FirebaseDynamicLinks:
@@ -29,12 +27,12 @@ dependencies:
   - name: GoogleDataTransport
 - GoogleAppMeasurement:
   - name: GoogleAppMeasurement
-- FirebaseRemoteConfig:
-  - name: FirebaseRemoteConfig
 - FirebaseInstallations:
   - name: FirebaseInstallations
 - FirebaseCore:
   - name: FirebaseCore
+- FirebaseABTesting:
+  - name: FirebaseABTesting
 - FirebaseCoreDiagnostics:
   - name: FirebaseCoreDiagnostics
 - FirebaseDynamicLinks:
@@ -43,3 +41,5 @@ dependencies:
   - name: FirebaseMessaging
 - FirebasePerformance:
   - name: FirebasePerformance
+- FirebaseRemoteConfig:
+  - name: FirebaseRemoteConfig

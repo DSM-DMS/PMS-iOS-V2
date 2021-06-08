@@ -56,7 +56,11 @@ targets:
       - carthage: Carthage/Build/iOS/Swinject
       - carthage: Carthage/Build/iOS/SwinjectAutoregistration
       - carthage: Carthage/Build/iOS/Then
+      - carthage: Carthage/Build/iOS/FBLPromises
+      - carthage: Carthage/Build/iOS/Promises
       - framework: Carthage/Build/FirebaseAnalytics.xcframework
+      - framework: Carthage/Build/FirebaseMessaging.xcframework
+      - framework: Carthage/Build/FirebaseABTesting.xcframework
       - framework: Carthage/Build/FirebaseCore.xcframework
       - framework: Carthage/Build/FirebaseCoreDiagnostics.xcframework
       - framework: Carthage/Build/FirebaseDynamicLinks.xcframework

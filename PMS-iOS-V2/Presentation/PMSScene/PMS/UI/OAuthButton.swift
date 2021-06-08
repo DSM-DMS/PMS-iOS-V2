@@ -95,7 +95,7 @@ class AppleButton: UIButton {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 70, height: 70)
+        return CGSize(width: 65, height: 65)
     }
 }
 

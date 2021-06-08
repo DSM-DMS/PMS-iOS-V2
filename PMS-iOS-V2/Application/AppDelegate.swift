@@ -10,6 +10,9 @@ import Swinject
 import RxFlow
 import RxSwift
 import FirebaseCore
+import FirebaseMessaging
+import UserNotifications
+import Moya
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var window: UIWindow?
     static let container = Container()
     let stepper = AppStepper()
-
+    
+    let provider = MoyaProvider<AuthApi>()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.container.registerDependencies()
         
@@ -37,11 +42,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.coordinator.coordinate(flow: appFlow, with: stepper)
         
         FirebaseApp.configure()
+        Messaging.messaging().isAutoInitEnabled = true
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions,completionHandler: {_, _ in })
+        application.registerForRemoteNotifications()
         AnalyticsManager.setUserID()
         
         return true
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+}
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        print(userInfo)
+        completionHandler([[.alert, .sound]])
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(fcmToken)")
+        if let token = fcmToken {
+            pushToken(token: token)
+            let dataDict:[String: String] = ["token": token]
+            NotificationCenter.default.post(name: Notification.Name("fcmToken"), object: nil, userInfo: dataDict)
+        }
+    }
+    
+    func pushToken(token: String) {
+        if token != UserDefaults.standard.string(forKey: "fcmToken") {
+            provider.request(.notification(token: token)) { result in
+                switch result {
+                case .success:
+                    Log.info("Success")
+                    UserDefaults.standard.setValue(token, forKey: "fcmToken")
+                case let .failure(error):
+                    Log.info(error)
+                }
+            }
+        }
+        
+    }
 }
 
 extension AppDelegate {

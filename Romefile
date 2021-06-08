@@ -23,3 +23,6 @@ repositoryMap:
   - name: FBSnapshotTestCase
 - Then-Carthage:
   - name: Then
+- promises:
+  - name: Promises
+  - name: FBLPromises

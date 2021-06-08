@@ -22,6 +22,9 @@ public enum AuthApi {
     case outing(number: Int)
     case changePassword(password: String, prePassword: String)
     case pointList(number: Int)
+    
+    // FCM Token
+    case notification(token: String)
 }
 
 extension AuthApi: TargetType {
@@ -54,12 +57,14 @@ extension AuthApi: TargetType {
             return "/user/student/point/\(number)"
         case .deleteStudent:
             return "/user/student"
+        case .notification:
+            return "/notification"
         }
     }
     
     public var method: Moya.Method {
         switch self {
-        case .login, .register, .addStudent:
+        case .login, .register, .addStudent, .notification:
             return .post
         case .changePassword, .changeNickname:
             return .put
@@ -85,6 +90,8 @@ extension AuthApi: TargetType {
             return .requestParameters(parameters: ["name": name], encoding: JSONEncoding.default)
         case let.deleteStudent(number):
             return .requestParameters(parameters: ["number": number], encoding: JSONEncoding.default)
+        case let .notification(token):
+            return .requestParameters(parameters: ["token": token], encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }
