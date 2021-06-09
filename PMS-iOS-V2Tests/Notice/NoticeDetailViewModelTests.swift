@@ -72,6 +72,7 @@ class NoticeDetaiilViewModelTests: XCTestCase {
         scheduler.start()
         
         let exceptEvents: [Recorded<Event<DetailNotice>>] = [
+            .next(0, DetailNotice(id: 0, date: "", title: "", body: "", comment: [Comment]())),
             .next(100, Bundle.getDetialNoticeJson())
         ]
         

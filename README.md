@@ -6,6 +6,10 @@
 
 ### 사용 디자인패턴
 
+- MVVM + RxSwift
+
+### 사용 기술
+
 - SnapKit
 
 - RxFlow
@@ -18,7 +22,7 @@
 
 - Fastlane
 
-  - Github Actions -> CD
+  - Github Actions -> CI/CD
   - Rome & Punic upload, download
   - Snapshot, Frameit
 
@@ -34,3 +38,9 @@
 - Carthage
   - Rome
   - Punic
+  - Carting
+
+### 테스트
+
+- [Test.md](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/TEST.md)
+- FBSnapshotTestCase
