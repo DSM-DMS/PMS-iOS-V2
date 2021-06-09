@@ -74,20 +74,35 @@ targets:
       - carthage: Carthage/Build/iOS/NaverThirdPartyLogin
       - carthage: Carthage/Build/iOS/KakaoOpenSDK
       - framework: Carthage/Build/FirebaseAnalytics.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseMessaging.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseABTesting.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseCore.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseCoreDiagnostics.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseDynamicLinks.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseInstallations.xcframework
+        embed: false
       - framework: Carthage/Build/FirebasePerformance.xcframework
+        embed: false
       - framework: Carthage/Build/FirebaseRemoteConfig.xcframework
+        embed: false
       - framework: Carthage/Build/GoogleAppMeasurement.xcframework
+        embed: false
       - framework: Carthage/Build/GoogleDataTransport.xcframework
+        embed: false
       - framework: Carthage/Build/GoogleUtilities.xcframework
+        embed: false
       - framework: Carthage/Build/nanopb.xcframework
+        embed: false
       - framework: Carthage/Build/PromisesObjC.xcframework
+        embed: false
       - framework: Carthage/Build/Protobuf.xcframework
+        embed: false
     type: application
     platform: iOS
     sources: [PMS-iOS-V2]
@@ -111,6 +126,7 @@ targets:
           - $(SRCROOT)/PMS-iOS-V2Tests/Resource/PMS-iOS-V2-inputPaths.xcfilelist
     dependencies:
       - target: PMS-iOS-V2
+        embed: false
       - carthage: FBSnapshotTestCase
         embed: false
       - carthage: RxTest
@@ -131,3 +147,4 @@ targets:
       FRAMEWORK_SEARCH_PATHS: $(inherited)
     dependencies:
       - target: PMS-iOS-V2
+        embed: false

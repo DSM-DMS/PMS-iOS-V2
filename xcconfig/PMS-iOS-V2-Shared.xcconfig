@@ -11,7 +11,7 @@
 // keychain within your keychain path. A missing or invalid certificate will cause a
 // build error.
 
-CODE_SIGN_IDENTITY = iPhone Distribution
+CODE_SIGN_IDENTITY = Apple Distribution
 
 
 
