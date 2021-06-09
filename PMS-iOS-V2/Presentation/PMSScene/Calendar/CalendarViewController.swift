@@ -34,6 +34,9 @@ class CalendarViewController: UIViewController {
         $0.appearance.headerDateFormat = LocalizedString.calendarHeaderDateFormat.localized
         $0.appearance.headerTitleColor = Colors.black.color
         $0.appearance.weekdayTextColor = Colors.black.color
+        let localeID = Locale.preferredLanguages.first
+        let deviceLocale = (Locale(identifier: localeID!).languageCode)!
+        $0.locale = Locale(identifier: deviceLocale)
         $0.appearance.titleFont = UIFont.preferredFont(forTextStyle: .callout)
         $0.appearance.weekdayFont = UIFont.preferredFont(forTextStyle: .callout)
         $0.appearance.subtitleFont = UIFont.preferredFont(forTextStyle: .callout)

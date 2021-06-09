@@ -13,19 +13,31 @@ final class MockFailLoginRepository: LoginRepository {
     
     enum Test {
         case noInternet
-        case existUser
+        case notFoundUser
     }
     
     init(test: Test) {
         switch test {
         case .noInternet:
             self.error = NetworkError.noInternet
-        case .existUser:
-            self.error = NetworkError.conflict
+        case .notFoundUser:
+            self.error = NetworkError.error
         }
     }
     
     func login(email: String, password: String) -> Single<Bool> {
+        return Single.error(error)
+    }
+    
+    func sendNaverToken(token: String) -> Single<Bool> {
+        return Single.error(error)
+    }
+    
+    func sendFacebookToken(token: String) -> Single<Bool> {
+        return Single.error(error)
+    }
+    
+    func sendKakaotalkToken(token: String) -> Single<Bool> {
         return Single.error(error)
     }
 }

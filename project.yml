@@ -1,12 +1,10 @@
 name: PMS-iOS-V2
 options:
-  preGenCommand: fastlane pull
+#  preGenCommand: fastlane pull
   postGenCommand: carting update # 생성 이후 명령 실행
   developmentLanguage: kr
   deploymentTarget:
     iOS: "11.0"
-  carthageBuildPath: "Carthage/Build/iOS"
-  findCarthageFrameworks: true
 configs: # configuration 별 설정
     Debug: debug
     Release: release
@@ -23,6 +21,11 @@ targets:
       testTargets:
         - PMS-iOS-V2Tests
         - PMS-iOS-V2UITests
+      environmentVariables:
+        IMAGE_DIFF_DIR: $(SOURCE_ROOT)/$(PROJECT_NAME)Tests/FailureDiffs
+        FB_REFERENCE_IMAGE_DIR: $(SOURCE_ROOT)/$(PROJECT_NAME)Tests/ReferenceImages
+      language: Korean
+      region: South Korea
     configFiles:
       Debug: xcconfig/PMS-iOS-V2-Debug.xcconfig
       Release: xcconfig/PMS-iOS-V2-Release.xcconfig
@@ -40,6 +43,7 @@ targets:
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
         CODE_SIGN_ENTITLEMENTS: PMS-iOS-V2/Resource/PMS-iOS-V2.entitlements
+        FRAMEWORK_SEARCH_PATHS: $(inherited) $(PROJECT_DIR)/Carthage/Build $(PROJECT_DIR)/Carthage/Build/iOS
     dependencies:
       - carthage: Carthage/Build/iOS/Alamofire
       - carthage: Carthage/Build/iOS/Differentiator
@@ -91,7 +95,7 @@ targets:
   PMS-iOS-V2Tests:
     type: bundle.unit-test # 테스트 타입
     platform: iOS # 플랫폼
-    sources: [PMS-iOS-V2, PMS-iOS-V2Tests]
+    sources: [PMS-iOS-V2Tests]
     configFiles:
       Debug: xcconfig/PMS-iOS-V2Tests-Debug.xcconfig
       Release: xcconfig/PMS-iOS-V2Tests-Release.xcconfig
@@ -99,16 +103,25 @@ targets:
       groups: [app]
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
       commandLineArguments: [test: true]
+      FRAMEWORK_SEARCH_PATHS: $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+    preBuildScripts:
+      - path: PMS-iOS-V2Tests/Resource/script.sh
+        name: Carthage
+        inputFileLists:
+          - $(SRCROOT)/PMS-iOS-V2Tests/Resource/PMS-iOS-V2-inputPaths.xcfilelist
     dependencies:
       - target: PMS-iOS-V2
-      - carthage: Carthage/Build/iOS/FBSnapshotTestCase
-      - carthage: Carthage/Build/iOS/RxTest
-      - carthage: Carthage/Build/iOS/RxSwift
-      
+        embed: false
+      - carthage: FBSnapshotTestCase
+        embed: false
+      - carthage: RxTest
+        embed: false
+      - carthage: RxSwift
+        embed: false
   PMS-iOS-V2UITests:
     type: bundle.ui-testing # 테스트 타입
     platform: iOS # 플랫폼
-    sources: [PMS-iOS-V2, PMS-iOS-V2UITests]
+    sources: [PMS-iOS-V2UITests]
     configFiles:
       Debug: xcconfig/PMS-iOS-V2UITests-Debug.xcconfig
       Release: xcconfig/PMS-iOS-V2UITests-Release.xcconfig
@@ -116,5 +129,7 @@ targets:
       groups: [app]
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
       commandLineArguments: [test: true]
+      FRAMEWORK_SEARCH_PATHS: $(inherited)
     dependencies:
       - target: PMS-iOS-V2
+        embed: false

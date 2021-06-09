@@ -9,9 +9,65 @@ import RxFlow
 import UIKit
 
 enum PMSStep: Step, Equatable {
-    static func == (lhs: PMSStep, rhs: PMSStep) -> Bool {
-        lhs.self == rhs.self
-    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+            case let (.alert(lhsStr, lhsAccess), .alert(rhsStr, rhsAccess)):
+                return lhsStr == rhsStr && lhsAccess == rhsAccess
+            case let (.success(lhsStr), .success(rhsStr)):
+                return lhsStr == rhsStr
+            case (.dismiss, .dismiss):
+                return true
+            case (.tabBarIsRequired, .tabBarIsRequired):
+                return true
+            case (.PMSIsRequired, .PMSIsRequired):
+                return true
+            case (.loginIsRequired, .loginIsRequired):
+                return true
+            case (.registerIsRequired, .registerIsRequired):
+                return true
+            case (.calendarIsRequired, .calendarIsRequired):
+                return true
+            case (.mealIsRequired, .mealIsRequired):
+                return true
+            case let (.mealPictureIsRequired(lhsStr), .mealPictureIsRequired(rhsStr)):
+                return lhsStr == rhsStr
+            case (.noticeIsRequired, .noticeIsRequired):
+                return true
+            case let (.detailNoticeIsRequired(lhsId, lhsStr), .detailNoticeIsRequired(rhsId, rhsStr)):
+                return lhsId == rhsId && lhsStr == rhsStr
+            case (.introduceIsRequired, .introduceIsRequired):
+                return true
+            case (.clubIsRequired, .clubIsRequired):
+                return true
+            case let (.detailClubIsRequired(lhsStr), .detailClubIsRequired(rhsStr)):
+                return lhsStr == rhsStr
+            case (.companyIsRequired, .companyIsRequired):
+                return true
+            case let (.detailCompanyIsRequired(lhsStr), .detailCompanyIsRequired(rhsStr)):
+                return lhsStr == rhsStr
+            case (.developerIsRequired, .developerIsRequired):
+                return true
+            case (.mypageIsRequired, .mypageIsRequired):
+                return true
+            case let (.pointListIsRequired(lhsId), .pointListIsRequired(rhsId)):
+                return lhsId == rhsId
+            case let (.outingListIsRequired(lhsId), .outingListIsRequired(rhsId)):
+                return lhsId == rhsId
+            case (.changePasswordIsRequired, .changePasswordIsRequired):
+                return true
+            case (.logout, .logout):
+                return true
+            case let (.deleteStudent(lhsStr, _), .deleteStudent(rhsStr, _)):
+                return lhsStr == rhsStr
+            case (.dismissTabbar, .dismissTabbar):
+                return true
+            case (.presentTabbar, .presentTabbar):
+                return true
+            default:
+                return false
+            }
+        }
     
     // Global
     case alert(String, AccessibilityString)

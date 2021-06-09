@@ -134,6 +134,7 @@ class CalenddarViewModelTests: XCTestCase {
     func test_changeMonth_get_events() {
         // MARK: - WHEN
         viewModel.input.viewDidLoad.accept(())
+        viewModel.input.month.accept("5")
 
         scheduler.createHotObservable([.next(100, "8")])
             .bind(to: viewModel.input.month)
@@ -148,7 +149,7 @@ class CalenddarViewModelTests: XCTestCase {
         scheduler.start()
         
         let exceptEvents: [Recorded<Event<[String]>>] = [
-            .next(0, ["2021-05-03", "2021-05-04", "2021-05-05", "2021-05-07", "2021-05-19", "2021-05-27"]), // 현재 5월 테스트 기준 데이터입니다.
+            .next(0, ["2021-05-03", "2021-05-04", "2021-05-05", "2021-05-07", "2021-05-19", "2021-05-27"]),
             .next(100, ["2021-08-15", "2021-08-16"])
         ]
 
@@ -175,8 +176,10 @@ class CalenddarViewModelTests: XCTestCase {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             XCTAssertEqual(observer.events.count, 1)
-            XCTAssertEqual(observer.events[0].value.element as! PMSStep,
-                           PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            if observer.events.count == 1 {
+                XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+                               PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            }
         }
     }
 }

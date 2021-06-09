@@ -89,7 +89,7 @@ class LoginViewModelTests: XCTestCase {
             .bind(to: viewModel.input.emailText)
             .disposed(by: disposeBag)
         
-        scheduler.createHotObservable([.next(50, ""), .next(100, "asdfasdf"), .next(150, "")])
+        scheduler.createHotObservable([.next(50, ""), .next(100, "asdf"), .next(150, "")])
             .bind(to: viewModel.input.passwordText)
             .disposed(by: disposeBag)
         
@@ -103,7 +103,6 @@ class LoginViewModelTests: XCTestCase {
         
         let exceptEvents: [Recorded<Event<Bool>>] = [
             .next(0, false),
-            .next(50, false),
             .next(50, false),
             .next(100, false),
             .next(100, true),
@@ -147,7 +146,7 @@ class LoginViewModelTests: XCTestCase {
     
     func test_login_existUser_alert() {
         // MARK: - WHEN
-        viewModel = LoginViewModel(repository: MockFailLoginRepository(test: .existUser))
+        viewModel = LoginViewModel(repository: MockFailLoginRepository(test: .notFoundUser))
         
         scheduler.createHotObservable([.next(100, "login@.")])
             .bind(to: viewModel.input.emailText)
