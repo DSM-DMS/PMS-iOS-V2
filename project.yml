@@ -111,7 +111,6 @@ targets:
           - $(SRCROOT)/PMS-iOS-V2Tests/Resource/PMS-iOS-V2-inputPaths.xcfilelist
     dependencies:
       - target: PMS-iOS-V2
-        embed: false
       - carthage: FBSnapshotTestCase
         embed: false
       - carthage: RxTest
@@ -132,4 +131,3 @@ targets:
       FRAMEWORK_SEARCH_PATHS: $(inherited)
     dependencies:
       - target: PMS-iOS-V2
-        embed: false
