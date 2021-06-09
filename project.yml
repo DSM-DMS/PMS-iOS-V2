@@ -108,18 +108,16 @@ targets:
       - path: PMS-iOS-V2Tests/Resource/script.sh
         name: Carthage
         inputFileLists:
-          - $(SRCROOT)/Resource/PMS-iOS-V2-inputPaths.xcfilelist
+          - $(SRCROOT)/PMS-iOS-V2Tests/Resource/PMS-iOS-V2-inputPaths.xcfilelist
     dependencies:
       - target: PMS-iOS-V2
         embed: false
-        findFrameworks: false
       - carthage: FBSnapshotTestCase
         embed: false
       - carthage: RxTest
         embed: false
       - carthage: RxSwift
         embed: false
-      
   PMS-iOS-V2UITests:
     type: bundle.ui-testing # 테스트 타입
     platform: iOS # 플랫폼
@@ -135,4 +133,3 @@ targets:
     dependencies:
       - target: PMS-iOS-V2
         embed: false
-        findFrameworks: false
