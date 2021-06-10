@@ -34,10 +34,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-      - name: Create xcodeproj
-        env:
-          SLACK_URL: ${{ secrets.SLACK_URL }}
-        run: xcodegen
       - name: Deploy App
         env:
           MATCH_REPO: ${{ secrets.MATCH_REPO }}
@@ -47,4 +43,36 @@ jobs:
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
           FASTLANE_SESSION: ${{ secrets.TOKEN }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-        run: bundle exec fastlane github
+        run: |
+          xcodegen
+          bundle exec fastlane github
+    name: Unit Test my test codes
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: submodules-init
+        uses: snickerbockers/submodules-init@v4
+      - name: Bundle Install
+        run: bundle install
+      - name: Brew Install
+        run: |
+          brew tap tmspzz/tap https://github.com/tmspzz/homebrew-tap.git
+          brew install tmspzz/homebrew-tap/rome
+          brew tap artemnovichkov/projects
+          brew install carting
+          brew install xcodegen
+          brew tap summerlabs/homebrew-punic
+          brew install punic
+          chmod +x scripts/run scripts/upload-symbols
+      - name: Set AWS Config
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+      - name: Create xcodeproj
+        env:
+          SLACK_URL: ${{ secrets.SLACK_URL }}
+        run: xcodegen
+      - name: Test App
+        run: bundle exec fastlane unittest

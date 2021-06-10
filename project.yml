@@ -20,7 +20,6 @@ targets:
     scheme:
       testTargets:
         - PMS-iOS-V2Tests
-        - PMS-iOS-V2UITests
       environmentVariables:
         IMAGE_DIFF_DIR: $(SOURCE_ROOT)/$(PROJECT_NAME)Tests/FailureDiffs
         FB_REFERENCE_IMAGE_DIR: $(SOURCE_ROOT)/$(PROJECT_NAME)Tests/ReferenceImages

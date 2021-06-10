@@ -119,7 +119,8 @@ extension AuthApi: TargetType {
         case .login, .register:
             return ["Content-type": "application/json"]
         default:
-            return ["Authorization": "Bearer " + StorageManager.shared.readUser()!.token]
+            let token = StorageManager.shared.readUser() == nil ? "" : StorageManager.shared.readUser()!.token
+            return ["Authorization": "Bearer " + token]
         }
     }
     
