@@ -1,6 +1,6 @@
 name: PMS-iOS-V2
 options:
-  preGenCommand: fastlane pull
+#  preGenCommand: fastlane pull
   postGenCommand: carting update # 생성 이후 명령 실행
   developmentLanguage: kr
   deploymentTarget:
@@ -133,8 +133,6 @@ targets:
         inputFileLists:
           - $(SRCROOT)/PMS-iOS-V2Tests/Resource/PMS-iOS-V2-inputPaths.xcfilelist
     dependencies:
-      - target: PMS-iOS-V2
-        embed: false
       - carthage: FBSnapshotTestCase
         embed: false
       - carthage: RxTest
@@ -153,6 +151,3 @@ targets:
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
       commandLineArguments: [test: true]
       FRAMEWORK_SEARCH_PATHS: $(inherited)
-    dependencies:
-      - target: PMS-iOS-V2
-        embed: false

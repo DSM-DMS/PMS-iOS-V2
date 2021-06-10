@@ -40,7 +40,6 @@ platform :ios do
 
   lane :unittest do
     run_tests(
-      buildlog_path: "./fastlane/fastlane-buildlog",
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
       project: "PMS-iOS-V2.xcodeproj",
       scheme: "PMS-iOS-V2Tests"

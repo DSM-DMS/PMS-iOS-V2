@@ -97,7 +97,8 @@ extension PMSApi: TargetType {
     public var headers: [String: String]? {
         switch self {
         default:
-            return ["Authorization": "Bearer " + StorageManager.shared.readUser()!.token]
+            let token = StorageManager.shared.readUser() == nil ? "" : StorageManager.shared.readUser()!.token
+            return ["Authorization": "Bearer " + token]
         }
     }
     
