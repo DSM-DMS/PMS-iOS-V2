@@ -46,6 +46,7 @@ jobs:
         run: |
           xcodegen
           bundle exec fastlane github
+  unittest-ios:
     name: Unit Test my test codes
     runs-on: macos-latest
     steps:
