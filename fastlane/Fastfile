@@ -48,9 +48,6 @@ platform :ios do
   end
 
   lane :github do
-    get_certificates(
-      development: false
-    )
     create_keychain(
       name: "ios_app_store",
       password: "1234",
