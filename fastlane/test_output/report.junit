@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='PMS-iOS-V2Tests.xctest' tests='17' failures='2'>
+  <testsuite name='PMS_iOS_V2Tests.CalenddarViewModelTests' tests='1' failures='0'>
+    <testcase classname='PMS_iOS_V2Tests.CalenddarViewModelTests' name='test_login_noInternet_alert' time='0.010'/>
+  </testsuite>
+  <testsuite name='PMS_iOS_V2Tests.ChangePasswordViewModelTests' tests='6' failures='0'>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewModelTests' name='test_changePasswordButton_inValid' time='0.007'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewModelTests' name='test_new_password_eye_appear' time='0.001'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewModelTests' name='test_newPassword_reNewPassword_notMatch' time='0.002'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewModelTests' name='test_noInternet_alert' time='0.004'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewModelTests' name='test_now_password_eye_appear' time='0.001'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewModelTests' name='test_now_password_notMatch_alert' time='0.001'/>
+  </testsuite>
+  <testsuite name='PMS_iOS_V2Tests.ChangePasswordViewTests' tests='5' failures='0'>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewTests' name='test_active_new_password_Line' time='0.039'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewTests' name='test_active_now_password_Line' time='0.007'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewTests' name='test_active_re_new_passwordLine' time='0.007'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewTests' name='test_activityIndicator_isLoading' time='0.008'/>
+    <testcase classname='PMS_iOS_V2Tests.ChangePasswordViewTests' name='test_loginButton_enable' time='0.007'/>
+  </testsuite>
+  <testsuite name='PMS_iOS_V2Tests.ClubViewModelTests' tests='1' failures='0'>
+    <testcase classname='PMS_iOS_V2Tests.ClubViewModelTests' name='test_viewDidLoad_noInternet_alert' time='0.006'/>
+  </testsuite>
+  <testsuite name='PMS_iOS_V2Tests.DetailClubViewModelTests' tests='1' failures='0'>
+    <testcase classname='PMS_iOS_V2Tests.DetailClubViewModelTests' name='test_viewDidLoad_noInternet_alert' time='0.009'/>
+  </testsuite>
+  <testsuite name='PMS_iOS_V2Tests.DevleoperViewModelTests' tests='1' failures='0'>
+    <testcase classname='PMS_iOS_V2Tests.DevleoperViewModelTests' name='test_viewDidLoad_get_developerList' time='0.039'/>
+  </testsuite>
+  <testsuite name='PMS_iOS_V2Tests.FBSnapshotTestCaseSwiftTest' tests='2' failures='2'>
+    <testcase classname='PMS_iOS_V2Tests.FBSnapshotTestCaseSwiftTest' name='test_IntroduceView'>
+      <failure message='failed - Snapshot comparison failed: Optional(Error Domain=FBSnapshotTestControllerErrorDomain Code=1 &quot;Unable to load reference image.&quot; UserInfo={NSLocalizedFailureReason=Reference image not found. You need to run the test in record mode, NSLocalizedDescription=Unable to load reference image., FBReferenceImageFilePathKey=/Users/jge/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphonesimulator/PMS-iOS-V2.app/PlugIns/PMS-iOS-V2Tests.xctest/ReferenceImages_64/PMS_iOS_V2Tests.FBSnapshotTestCaseSwiftTest/test_IntroduceView@2x.png})'>PMS-iOS-V2Tests/SnapshotTesting/snapShotTests.swift:53</failure>
+    </testcase>
+    <testcase classname='PMS_iOS_V2Tests.FBSnapshotTestCaseSwiftTest' name='test_loginView'>
+      <failure message='failed - Snapshot comparison failed: Optional(Error Domain=FBSnapshotTestControllerErrorDomain Code=1 &quot;Unable to load reference image.&quot; UserInfo={NSLocalizedFailureReason=Reference image not found. You need to run the test in record mode, NSLocalizedDescription=Unable to load reference image., FBReferenceImageFilePathKey=/Users/jge/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphonesimulator/PMS-iOS-V2.app/PlugIns/PMS-iOS-V2Tests.xctest/ReferenceImages_64/PMS_iOS_V2Tests.FBSnapshotTestCaseSwiftTest/test_loginView@2x.png})'>PMS-iOS-V2Tests/SnapshotTesting/snapShotTests.swift:28</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

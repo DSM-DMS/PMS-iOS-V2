@@ -16,7 +16,10 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
+  before_all do
+    ENV["SLACK_CHANNEL"] = "#ios"
+  end
+
   lane :push do
     rome(
     command: "upload",
@@ -35,12 +38,13 @@ platform :ios do
     sh("cd ..;punic download")
   end
 
-  lane :test do
+  lane :unittest do
     run_tests(
       buildlog_path: "./fastlane/fastlane-buildlog",
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
-      workspace: "PMS-iOS-V2.xcodeproj",
-      scheme: "PMS-iOS-V2Tests")
+      project: "PMS-iOS-V2.xcodeproj",
+      scheme: "PMS-iOS-V2Tests"
+    )
   end
 
   lane :github do
@@ -91,5 +95,13 @@ platform :ios do
     capture_screenshots(
 	reinstall_app: true,
 	clean: true)
+  end
+
+  after_all do |lane|
+    slack(message: "Success")
+  end
+
+  error do |lane, exception|
+    slack(message: exception.message, success: false)
   end
 end

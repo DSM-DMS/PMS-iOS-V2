@@ -20,20 +20,15 @@ or alternatively using `brew install fastlane`
 ```
 fastlane ios push
 ```
-Description of what the lane does
+
 ### ios pull
 ```
 fastlane ios pull
 ```
 
-### ios test
+### ios unittest
 ```
-fastlane ios test
-```
-
-### ios cert
-```
-fastlane ios cert
+fastlane ios unittest
 ```
 
 ### ios github
