@@ -31,6 +31,11 @@ fastlane ios pull
 fastlane ios test
 ```
 
+### ios cert
+```
+fastlane ios cert
+```
+
 ### ios github
 ```
 fastlane ios github
