@@ -18,6 +18,7 @@ github "facebook/facebook-ios-sdk"
 gitHub "naver/naveridlogin-sdk-ios"
 
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseABTestingBinary.json"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseCrashlyticsBinary.json"
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json"
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseDynamicLinksBinary.json"
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseMessagingBinary.json"

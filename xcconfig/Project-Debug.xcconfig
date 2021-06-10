@@ -18,7 +18,7 @@
 // information from the individual object files (except that a dSYM file is not needed
 // and will not be created for static library or object file products). [dwarf-with-dsym]
 
-DEBUG_INFORMATION_FORMAT = dwarf
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 
 
 

@@ -43,3 +43,5 @@ dependencies:
   - name: FirebasePerformance
 - FirebaseRemoteConfig:
   - name: FirebaseRemoteConfig
+- FirebaseCrashlytics:
+  - name: FirebaseCrashlytics

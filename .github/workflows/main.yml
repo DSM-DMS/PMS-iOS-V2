@@ -25,6 +25,7 @@ jobs:
           brew install xcodegen
           brew tap summerlabs/homebrew-punic
           brew install punic
+          chmod +x scripts/run scripts/upload-symbols
       - name: Set Appstore Connect User
         run: bundle exec fastlane fastlane-credentials add --username ${{ secrets.APPLE_ACCOUNT }} --password ${{ secrets.FASTLANE_PASSWORD }}
       - name: Set AWS Config
@@ -37,6 +38,7 @@ jobs:
         run: xcodegen
       - name: Deploy App
         env:
+          SLACK_URL: ${{ secrets.SLACK_URL }}
           MATCH_REPO: ${{ secrets.MATCH_REPO }}
           APPLE_ACCOUNT: ${{ secrets.APPLE_ACCOUNT }}
           TEAM_ID: ${{ secrets.TEAM_ID }}

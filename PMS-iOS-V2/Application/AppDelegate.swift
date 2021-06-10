@@ -12,6 +12,7 @@ import RxSwift
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import FirebaseCrashlytics
 import Moya
 import FBSDKCoreKit
 import NaverThirdPartyLogin
@@ -84,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         instance?.consumerKey = kConsumerKey // 상수 - client id
         instance?.consumerSecret = kConsumerSecret // pw
         instance?.appName = kServiceAppName // app name
+        
+        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         
         return true
     }
