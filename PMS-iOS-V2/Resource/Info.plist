@@ -2,6 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb871620840269647</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>871620840269647</string>
+    <key>FacebookDisplayName</key>
+    <string>PMS</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fbauth</string>
+      <string>fb-messenger-share-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
+    </array>
 	<key>KAKAO_APP_KEY</key>
 	<string>c8076bcc57ebf6749750e562e40b1b3a</string>
     <key>LSApplicationQueriesSchemes</key>

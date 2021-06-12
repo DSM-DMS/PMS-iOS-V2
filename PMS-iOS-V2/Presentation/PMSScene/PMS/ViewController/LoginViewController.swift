@@ -235,6 +235,7 @@ class LoginViewController: UIViewController {
                         }
                     } else {
                         if let token = session.token {
+                            Log.info("Kakao : \(token)")
                             self.viewModel.input.kakaotalkLoginSuccess.accept(token.accessToken)
                         }
                     }

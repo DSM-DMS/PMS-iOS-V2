@@ -69,7 +69,6 @@ class PMSViewController: UIViewController {
     
     private func bindViewModel() {
         loginButton.rx.tap
-            .map { fatalError() }
             .bind(to: viewModel.input.loginButtonTapped)
             .disposed(by: disposeBag)
         
