@@ -57,7 +57,7 @@ platform :ios do
       add_to_search_list: true,
     )
     match(type: "appstore", readonly: true, keychain_name: 'ios_app_store', keychain_password: '1234')
-    security find-identity -v -p codesigning ios_app_store
+    sh("security find-identity -v -p codesigning ios_app_store")
     increment_build_number
     build_app(project: "PMS-iOS-V2.xcodeproj", scheme: "PMS-iOS-V2")
     upload_to_app_store(
@@ -71,10 +71,10 @@ platform :ios do
       submission_information: {
         add_id_info_serves_ads: false,
         add_id_info_tracks_action: false,
-        add_id_info_tracks_install: true,
-        add_id_info_uses_idfa: true,
-        content_rights_has_rights: true,
-        content_rights_contains_third_party_content: true,
+        add_id_info_tracks_install: false,
+        add_id_info_uses_idfa: false,
+        content_rights_has_rights: false,
+        content_rights_contains_third_party_content: false,
         export_compliance_platform: 'ios',
         export_compliance_compliance_required: false,
         export_compliance_encryption_updated: false,
