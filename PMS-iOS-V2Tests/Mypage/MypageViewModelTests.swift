@@ -189,4 +189,49 @@ class MypageViewModelTests: XCTestCase {
         XCTAssertEqual(observer.events[0].value.element as! PMSStep,
                        PMSStep.logout)
     }
+    
+    func test_dismiss_tabbar_studentList_screen() {
+        // MARK: - WHEN
+        
+        scheduler.createHotObservable([.next(100, ())])
+            .bind(to: viewModel.input.studentListButtonTapped)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Step.self)
+        
+        viewModel.steps
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        // MARK: - THEN
+        
+        XCTAssertEqual(observer.events.count, 1)
+        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+                       PMSStep.dismissTabbar)
+    }
+    
+    func test_dismiss_tabbar_nickname_screen() {
+        // MARK: - WHEN
+        
+        scheduler.createHotObservable([.next(100, ())])
+            .bind(to: viewModel.input.changeNicknameButtonTapped)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Step.self)
+        
+        viewModel.steps
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        // MARK: - THEN
+        
+        XCTAssertEqual(observer.events.count, 1)
+        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+                       PMSStep.dismissTabbar)
+    }
+    
 }

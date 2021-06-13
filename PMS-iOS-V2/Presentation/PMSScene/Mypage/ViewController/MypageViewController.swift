@@ -13,10 +13,10 @@ class MypageViewController: UIViewController {
     let viewModel: MypageViewModel!
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
-    private let pointTapped = UITapGestureRecognizer()
-    private let nicknameTapped = UITapGestureRecognizer()
-    private let studentTapped = UITapGestureRecognizer()
-    private let backgroundTapped = UITapGestureRecognizer()
+    let pointTapped = UITapGestureRecognizer()
+    let nicknameTapped = UITapGestureRecognizer()
+    let studentTapped = UITapGestureRecognizer()
+    let backgroundTapped = UITapGestureRecognizer()
     lazy var changeNicknameView = ChangeNicknameViewController(
         viewModel: ChangeNicknameViewModel(
             repository: AppDelegate.container.resolve(MypageRepository.self)!),
