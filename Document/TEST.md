@@ -177,16 +177,16 @@ Unit Test
 - [x] ViewDidLoad 시 유저 정보 잘 가지고 오는지
 - [x] ViewDidLoad 시 학생 정보 잘 가지고 오는지
 - [x] ViewDidLoad 시 Activity Indicator is Animating
-- [ ] 학생 바꿨을 때 그 학생 정보 잘 가져오는지
+- [ ] 학생 바꿨을 때 그 학생 정보 잘 가져오는지 // Massive VC...
 - [x] 로그아웃 버튼 클릭 시 alert가 steps에 잘 들어가는지
 - [x] 비밀번호 변경 버튼 클릭 시 steps에 잘 들어가는지
 - [x] 외출 내역 보기 버튼 클릭 시 steps에 잘 들어가는지
 - [x] 상벌점 클릭 시 steps에 잘 들어가는지
-- [ ] // 닉네임 클릭 시 닉네임 변경 뷰의 isHidden이 바뀌는지
-- [ ] // 학생 클릭 시 학생 리스트 뷰의 isHidden이 바뀌는지
-- [ ] 학생 리스트가 비었을 시 학생 추가 문구가 뜨는지 등등
-- [ ] 로그인하지 않았을 때 로그인이 필요합니다 문구가 뜨는지
-
+- [x] 학생 리스트 및 닉네임 변경 클릭 시 tabbar가 사라지는지
+- [x] 검은 배경 클릭 시 tabbar가 나타나는지
+- [ ] 닉네임 클릭 시 닉네임 변경 뷰의 isHidden이 바뀌는지 // Massive VC...
+- [ ] 학생 클릭 시 학생 리스트 뷰의 isHidden이 바뀌는지 // Massive VC...
+- [x] 로그인하지 않았을 때 로그인이 필요합니다 뷰가 뜨는지
 - ChangePasswordViewModelTests
 - [x] 비밀번호 두 개가 서로 맞지 않을 때 회원가입 버튼 비활성화, ErrorMessage 활성화
 - [x] 현재 비밀번호 입력x 또는 비밀번호가 맞지 않았을 시 변경 버튼이 비활성화
@@ -200,12 +200,10 @@ Unit Test
 - [x] 바꿀 비밀번호 재입력중일 시 reNewPasswordLine 색상 변경
 - [x] 변경 버튼이 비활성화일 시 버튼 alpha 변경
 - [x] 로딩중일 시 activityIndicator isAnimating
-
 - PointListViewModelTests
 - [x] ViewDidLoad 시 Activity Indicator is Animating
 - [x] ViewDidLoad 시 상벌점 내역 잘 가지고 오는지
 - [x] 네트워크가 없을 시 Alert가 잘 띄워지는지.
-
 - OutingListViewModelTests
 - [x] ViewDidLoad 시 Activity Indicator is Animating
 - [x] ViewDidLoad 시 외출 내역 잘 가지고 오는지

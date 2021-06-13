@@ -516,3 +516,14 @@ VERSIONING_SYSTEM = apple-generic
 // Options defined in this setting are passed to invocations of the linker.
 
 OTHER_LDFLAGS = -ObjC -all_Load
+
+
+// Excluded Architectures
+//
+// A list of architectures for which the target should not be built. These architectures
+// will be removed from the list in `ARCHS` when the target is built. If the resulting
+// list of architectures is empty, no binary will be produced. This can be used to
+// declare architectures a target does not support for use in environments where `ARCHS`
+// is being overridden at a higher level (e.g., via `xcodebuild`).
+
+EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64

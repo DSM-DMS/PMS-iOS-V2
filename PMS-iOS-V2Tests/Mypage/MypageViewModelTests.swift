@@ -234,4 +234,55 @@ class MypageViewModelTests: XCTestCase {
                        PMSStep.dismissTabbar)
     }
     
+    func test_present_tabbar_background_tapped_screen() {
+        // MARK: - WHEN
+        
+        scheduler.createHotObservable([.next(100, ())])
+            .bind(to: viewModel.input.backgroundTapped)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Step.self)
+        
+        viewModel.steps
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        // MARK: - THEN
+        
+        XCTAssertEqual(observer.events.count, 1)
+        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+                       PMSStep.presentTabbar)
+    }
+    
+    func test_no_login_screen() {
+        StorageManager.shared.updateUser(
+            user: Auth(token: "",
+                       email: Bundle.main.infoDictionary!["Auth Email"] as! String,
+                       password: Bundle.main.infoDictionary!["Auth Email"] as! String))
+        
+        scheduler.createHotObservable([.next(100, ())])
+            .bind(to: viewModel.input.viewDidLoad)
+            .disposed(by: disposeBag)
+        
+        let observer = scheduler.createObserver(Bool.self)
+        
+        viewModel.output.isNoLogin
+            .bind(to: observer)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        let exceptEvents: [Recorded<Event<Bool>>] = [
+            .next(0, false),
+            .next(100, true)
+        ]
+        
+        // MARK: - THEN
+        
+        XCTAssertEqual(observer.events, exceptEvents)
+        
+    }
+    
 }
