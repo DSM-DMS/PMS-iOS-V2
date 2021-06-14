@@ -527,3 +527,7 @@ OTHER_LDFLAGS = -ObjC -all_Load
 // is being overridden at a higher level (e.g., via `xcodebuild`).
 
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
+
+
+
+ONLY_ACTIVE_ARCH = YES
