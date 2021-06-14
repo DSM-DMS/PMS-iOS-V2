@@ -539,3 +539,11 @@ ONLY_ACTIVE_ARCH = YES
 // support for library evolution and generation of a module interface file.
 
 BUILD_LIBRARY_FOR_DISTRIBUTION = YES
+
+
+// Validate Workspace
+//
+// If enabled, perform validation checks on the workspace configuration as part of the
+// build process.
+
+VALIDATE_WORKSPACE = YES
