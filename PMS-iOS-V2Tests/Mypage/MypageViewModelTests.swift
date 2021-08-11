@@ -120,7 +120,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.pointListIsRequired(number: UDManager.shared.studentNumber!))
     }
 
@@ -142,7 +142,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.outingListIsRequired(number: UDManager.shared.studentNumber!))
     }
     
@@ -164,7 +164,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.changePasswordIsRequired)
     }
     
@@ -186,7 +186,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.logout)
     }
     
@@ -208,7 +208,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.dismissTabbar)
     }
     
@@ -230,7 +230,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.dismissTabbar)
     }
     
@@ -252,7 +252,7 @@ class MypageViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.presentTabbar)
     }
     

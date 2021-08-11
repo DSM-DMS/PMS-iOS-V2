@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class CalendarViewModel: Stepper {
+final class CalendarViewModel: Stepper {
     let steps = PublishRelay<Step>()
     let repository: CalendarRepository
     private var disposeBag = DisposeBag()
@@ -66,13 +66,6 @@ class CalendarViewModel: Stepper {
             }.bind(to: output.calendar)
             .disposed(by: disposeBag)
         
-        output.calendar
-            .map { _ in
-                return String(Date().get(.month))
-            }
-            .bind(to: input.month)
-            .disposed(by: disposeBag)
-        
         input.date
             .map { self.dateFormatter.string(from: $0 )}
             .bind(to: output.date)
@@ -81,6 +74,33 @@ class CalendarViewModel: Stepper {
         input.selectedDate
             .map { self.dateFormatter.string(from: $0 )}
             .bind(to: output.selectedDate)
+            .disposed(by: disposeBag)
+        
+        input.month
+            .subscribe(onNext: { month in
+                var dateInHome = [String]()
+                var dateInSchool = [String]()
+                for (key, value) in self.output.calendar.value {
+                    if key == String(month) {
+                        for (key, value) in value {
+                            if value.contains("의무귀가") {
+                                dateInHome.append(key)
+                            } else if !value.contains("빙학") && !value.contains("토요휴업일") {
+                                dateInSchool.append(key)
+                            }
+                        }
+                    }
+                }
+                self.output.dateInHome.accept(dateInHome.sorted())
+                self.output.dateInSchool.accept(dateInSchool.sorted())
+                self.output.reloadData.accept(())
+            }).disposed(by: disposeBag)
+        
+        output.calendar
+            .map { _ in
+                return String(Date().get(.month))
+            }
+            .bind(to: input.month)
             .disposed(by: disposeBag)
         
         output.selectedDate
@@ -110,26 +130,6 @@ class CalendarViewModel: Stepper {
                         }
                     }
                 }
-            }).disposed(by: disposeBag)
-        
-        input.month
-            .subscribe(onNext: { month in
-                var dateInHome = [String]()
-                var dateInSchool = [String]()
-                for (key, value) in self.output.calendar.value {
-                    if key == String(month) {
-                        for (key, value) in value {
-                            if value.contains("의무귀가") {
-                                dateInHome.append(key)
-                            } else if !value.contains("빙학") && !value.contains("토요휴업일") {
-                                dateInSchool.append(key)
-                            }
-                        }
-                    }
-                }
-                self.output.dateInHome.accept(dateInHome.sorted())
-                self.output.dateInSchool.accept(dateInSchool.sorted())
-                self.output.reloadData.accept(())
             }).disposed(by: disposeBag)
         
         activityIndicator

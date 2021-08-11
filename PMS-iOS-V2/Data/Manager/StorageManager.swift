@@ -27,7 +27,7 @@ final class StorageManager {
                 kSecAttrAccount: self.account]
     }()
     
-    func createUser(user: Auth) {
+    public func createUser(user: Auth) {
         guard let data = try? JSONEncoder().encode(user),
               let service = self.service else { return }
         
@@ -39,7 +39,7 @@ final class StorageManager {
         SecItemAdd(query as CFDictionary, nil)
     }
     
-    func readUser() -> Auth? {
+    public func readUser() -> Auth? {
         guard let service = self.service else { return nil }
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                       kSecAttrService: service,
@@ -58,7 +58,7 @@ final class StorageManager {
         return user
     }
     
-    func updateUser(user: Auth) {
+    public func updateUser(user: Auth) {
         guard let query = self.query,
               let data = try? JSONEncoder().encode(user) else { return }
         
@@ -68,10 +68,8 @@ final class StorageManager {
         SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
     }
     
-    func deleteUser() {
+    public func deleteUser() {
         guard let query = self.query else { Log.error("self query isn't here."); return }
-        if SecItemDelete(query as CFDictionary) == errSecSuccess {
-            Log.info("Success to delete User \(String(describing: self.query))")
-        }
+        SecItemDelete(query as CFDictionary)
     }
 }

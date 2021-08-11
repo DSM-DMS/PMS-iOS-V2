@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 import FBSnapshotTestCase
 @testable import PMS_iOS_V2
 

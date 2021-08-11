@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UDManager {
+final class UDManager {
     static let shared = UDManager()
     
     let UD = UserDefaults.standard
@@ -24,14 +24,12 @@ class UDManager {
             } else {
                 number = nil
             }
-           
+            
             UD.set(number, forKey: "studentNumber")
         }
     }
     
     public var studentNumber: Int? {
-        get {
-            return UD.integer(forKey: "studentNumber")
-        }
+        return UD.integer(forKey: "studentNumber")
     }
 }

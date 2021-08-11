@@ -108,7 +108,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        try! reachability.startNotifier()
+        try? reachability.startNotifier()
         AnalyticsManager.view_signIn.log()
     }
     
@@ -187,7 +187,7 @@ class LoginViewController: UIViewController {
             .subscribe(onNext: { _ in
                 AnalyticsManager.click_naver.log()
                 let configuration = LoginConfiguration(
-                    permissions:["email"],
+                    permissions: ["email"],
                     tracking: .enabled,
                     nonce: "123"
                 )

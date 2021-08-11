@@ -36,13 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AppDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         
-        self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
-            print("will navigate to flow=\(flow) and step=\(step)")
-        }).disposed(by: self.disposeBag)
-        
-        self.coordinator.rx.didNavigate.subscribe(onNext: { (flow, step) in
-            print("did navigate to flow=\(flow) and step=\(step)")
-        }).disposed(by: self.disposeBag)
+//        self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
+//            print("will navigate to flow=\(flow) and step=\(step)")
+//        }).disposed(by: self.disposeBag)
+//
+//        self.coordinator.rx.didNavigate.subscribe(onNext: { (flow, step) in
+//            print("did navigate to flow=\(flow) and step=\(step)")
+//        }).disposed(by: self.disposeBag)
         
         let appFlow = AppFlow(window: AppDelegate.window!)
         
@@ -55,9 +55,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions,completionHandler: {_, _ in })
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
         application.registerForRemoteNotifications()
         AnalyticsManager.setUserID()
+
+        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         
         // MARK: - OAuth
         
@@ -86,8 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         instance?.consumerSecret = kConsumerSecret // pw
         instance?.appName = kServiceAppName // app name
         
-        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
-        
         return true
     }
     
@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().apnsToken = deviceToken
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         NaverThirdPartyLoginConnection.getSharedInstance()?.application(app, open: url, options: options)
         
         return ApplicationDelegate.shared.application(
@@ -138,7 +138,7 @@ extension AppDelegate: MessagingDelegate {
             if StorageManager.shared.readUser() != nil {
                 pushToken(token: token)
             }
-            let dataDict:[String: String] = ["token": token]
+            let dataDict: [String: String] = ["token": token]
             NotificationCenter.default.post(name: Notification.Name("fcmToken"), object: nil, userInfo: dataDict)
         }
     }

@@ -97,7 +97,7 @@ class DetailClubViewModelTests: XCTestCase {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             XCTAssertEqual(observer.events.count, 1)
-            XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+            XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                            PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
         }
     }

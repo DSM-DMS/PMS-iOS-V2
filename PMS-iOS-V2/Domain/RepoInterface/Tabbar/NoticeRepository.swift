@@ -10,6 +10,6 @@ import RxSwift
 import Moya
 
 protocol NoticeRepository {
-    func getNoticeList() -> Single<[Notice]>
+    func getNoticeList(page: Int) -> Single<[Notice]>
     func getDetailNotice(id: Int) -> Single<DetailNotice>
 }

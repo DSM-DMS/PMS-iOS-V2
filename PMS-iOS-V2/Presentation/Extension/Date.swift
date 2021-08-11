@@ -8,14 +8,6 @@
 import Foundation
 import UIKit
 
-//extension Date {
-//    var month: String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "MM"
-//        return dateFormatter.string(from: self)
-//    }
-//}
-
 extension Date {
     func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: self)

@@ -42,7 +42,8 @@ class TabbarFlow: Flow {
         let introduceFlow = IntroduceFlow()
         let mypageFlow = MypageFlow()
 
-        Flows.use(calendarFlow, mealFlow, noticeFlow, introduceFlow, mypageFlow, when: .created) { [unowned self] (root1: UINavigationController, root2: UINavigationController, root3: UINavigationController, root4: UINavigationController, root5: UINavigationController) in
+        Flows.use(calendarFlow, mealFlow, noticeFlow, introduceFlow, mypageFlow, when: .created) { [unowned self]
+            (root1: UINavigationController, root2: UINavigationController, root3: UINavigationController, root4: UINavigationController, root5: UINavigationController) in
             root1.tabBarItem = UITabBarItem(title: .calendar, image: Asset.calendar.image, tag: 0)
             root2.tabBarItem = UITabBarItem(title: .meal, image: Asset.meal.image, tag: 1)
             root3.tabBarItem = UITabBarItem(title: .notice, image: Asset.notice.image, tag: 2)

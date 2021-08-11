@@ -46,7 +46,7 @@ class PMSViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.loginIsRequired)
     }
     
@@ -68,7 +68,7 @@ class PMSViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.registerIsRequired)
     }
     
@@ -90,9 +90,9 @@ class PMSViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 2)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.success(.loginSuccessMsg))
-        XCTAssertEqual(observer.events[1].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[1].value.element as? PMSStep,
                        PMSStep.tabBarIsRequired)
     }
 }

@@ -47,7 +47,7 @@ class NoticeViewModel: Stepper {
             .asObservable()
             .map { if $0 { AnalyticsManager.view_letter.log() } else { AnalyticsManager.view_notice.log() }}
             .flatMapLatest { _ in
-                repository.getNoticeList()
+                repository.getNoticeList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in

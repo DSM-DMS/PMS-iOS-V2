@@ -178,7 +178,7 @@ class ChangePasswordViewModelTests: XCTestCase {
         // MARK: - THEN
 
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.success(.changePasswordSuccessMsg))
     }
     
@@ -213,7 +213,7 @@ class ChangePasswordViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.alert(LocalizedString.notMatchCurrentPasswordErrorMsg.localized, .notMatchCurrentPasswordErrorMsg))
     }
     
@@ -248,7 +248,7 @@ class ChangePasswordViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
     }
     

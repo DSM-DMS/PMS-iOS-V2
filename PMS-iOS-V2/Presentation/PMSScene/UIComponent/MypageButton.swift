@@ -78,16 +78,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-
-//struct MypageButton_Preview: PreviewProvider {
-//    static var previews: some View {
-//        Text("")
-////        Group {
-////            MypageButtonRepresentable()
-////            MypageButtonRepresentable()
-////                .previewLayout(.sizeThatFits)
-////        }
-//    }
-//}
-
 #endif

@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import Reachability
 
-class RegisterViewController: UIViewController {
+final class RegisterViewController: UIViewController {
     let viewModel: RegisterViewModel
     let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()

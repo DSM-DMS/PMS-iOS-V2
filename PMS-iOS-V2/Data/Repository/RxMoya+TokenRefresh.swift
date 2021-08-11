@@ -13,8 +13,8 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     public func retryWithAuthIfNeeded() -> Single<Element> {
         let provider = MoyaProvider<AuthApi>()
         let user = StorageManager.shared.readUser() ?? Auth(token: "", email: "", password: "")
-        return retryWhen { e in
-            Observable.zip(e, Observable.range(start: 1, count: 3),
+        return retryWhen { error in
+            Observable.zip(error, Observable.range(start: 1, count: 3),
                            resultSelector: { $1 })
                 .flatMap { _ -> Single<AccessToken> in
                     return provider.rx

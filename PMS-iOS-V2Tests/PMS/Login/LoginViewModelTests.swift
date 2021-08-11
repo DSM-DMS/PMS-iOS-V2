@@ -140,7 +140,7 @@ class LoginViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 2)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.success(.loginSuccessMsg))
     }
     
@@ -171,7 +171,7 @@ class LoginViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.alert(LocalizedString.notFoundUserErrorMsg.localized, .notFoundUserErrorMsg))
     }
     
@@ -202,7 +202,7 @@ class LoginViewModelTests: XCTestCase {
         // MARK: - THEN
         
         XCTAssertEqual(observer.events.count, 1)
-        XCTAssertEqual(observer.events[0].value.element as! PMSStep,
+        XCTAssertEqual(observer.events[0].value.element as? PMSStep,
                        PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
     }
     

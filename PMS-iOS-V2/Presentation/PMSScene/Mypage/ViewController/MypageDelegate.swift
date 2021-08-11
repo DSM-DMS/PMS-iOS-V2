@@ -7,17 +7,17 @@
 
 import Foundation
 
-protocol ChangeNicknameDelegate {
+protocol ChangeNicknameDelegate: AnyObject {
     func dismissChangeNickname()
     func success()
 }
 
-protocol StudentListDelegate {
+protocol StudentListDelegate: AnyObject {
     func changeStudent(student: UsersStudent)
     func addStudentTapped()
     func delete(student: UsersStudent)
 }
 
-protocol AddStudentDelegate {
+protocol AddStudentDelegate: AnyObject {
     func dismissAddStudent()
 }

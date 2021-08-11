@@ -17,7 +17,7 @@ public enum PMSApi {
     case mealPicture(_ date: Int)
     
     // Notice
-    case notice
+    case notice(_ page: Int)
     case letter
     case noticeDetail(_ id: Int)
     case letterDetail(_ id: Int)
@@ -89,6 +89,8 @@ extension PMSApi: TargetType {
     
     public var task: Task {
         switch self {
+        case .notice(let page):
+            return .requestParameters(parameters: ["page": page], encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }

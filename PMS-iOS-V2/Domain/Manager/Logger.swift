@@ -16,12 +16,10 @@ import Foundation
 /// - warning: Log type warning
 /// - severe: Log type severe
 enum LogEvent: String {
-    case e = "[‼️ ERROR ]" // error
-    case i = "[ℹ️ INFO ]" // info
-    case d = "[💬 DEBUG]" // debug
-    case v = "[🔬 VERBOSE]" // verbose
-    case w = "[⚠️ WARNING]" // warning
-    case s = "[🔥 SEVERE]" // severe
+    case error = "[‼️ ERROR ]"
+    case info = "[ℹ️ INFO ]"
+    case debug = "[💬 DEBUG]"
+    case warning = "[⚠️ WARNING]"
 }
 
 /// Wrapping Swift.print() within DEBUG flag
@@ -38,7 +36,6 @@ func print(_ object: Any) {
 }
 
 class Log {
-    
     static var dateFormat = "yyyy-MM-dd hh:mm:ssSSS"
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -68,7 +65,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func error ( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.e.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+            print("\(Date().toString()) \(LogEvent.error.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
         }
     }
     
@@ -82,7 +79,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func info ( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.i.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+            print("\(Date().toString()) \(LogEvent.info.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
         }
     }
     
@@ -96,21 +93,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func debug ( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.d.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
-        }
-    }
-    
-    /// Logs messages verbosely on console with prefix [🔬]
-    ///
-    /// - Parameters:
-    ///   - object: Object or message to be logged
-    ///   - filename: File name from where loggin to be done
-    ///   - line: Line number in file from where the logging is done
-    ///   - column: Column number of the log message
-    ///   - funcName: Name of the function from where the logging is done
-    class func verbose( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
-        if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.v.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+            print("\(Date().toString()) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
         }
     }
     
@@ -124,21 +107,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func warning ( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.w.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
-        }
-    }
-    
-    /// Logs severe events on console with prefix [🔥]
-    ///
-    /// - Parameters:
-    ///   - object: Object or message to be logged
-    ///   - filename: File name from where loggin to be done
-    ///   - line: Line number in file from where the logging is done
-    ///   - column: Column number of the log message
-    ///   - funcName: Name of the function from where the logging is done
-    class func severe ( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
-        if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.s.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+            print("\(Date().toString()) \(LogEvent.warning.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
         }
     }
     

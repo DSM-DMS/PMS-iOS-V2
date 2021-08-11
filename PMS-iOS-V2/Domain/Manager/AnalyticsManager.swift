@@ -82,19 +82,6 @@ extension AnalyticsManager {
     }
     
     static func setUserID() {
-        let curDevice = DCDevice.current
-        if curDevice.isSupported
-        {
-            curDevice.generateToken(completionHandler: { (data, error) in
-                if let tokenData = data
-                {
-                    Analytics.setUserID("\(tokenData)")
-                }
-                else
-                {
-                    Log.error(error?.localizedDescription as Any)
-                }
-            })
-        }
+        Analytics.setUserID(UIDevice.current.identifierForVendor?.uuidString)
     }
 }

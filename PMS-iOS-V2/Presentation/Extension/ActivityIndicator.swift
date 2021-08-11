@@ -50,8 +50,8 @@ public class ActivityIndicator: SharedSequenceConvertibleType {
         return Observable.using({ () -> ActivityToken<O.Element> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
-        }) { y in
-            return y.asObservable()
+        }) { obj in
+            return obj.asObservable()
         }
     }
 

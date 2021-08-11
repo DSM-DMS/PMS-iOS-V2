@@ -16,8 +16,8 @@ final class DefaultNoticeRepository: NoticeRepository {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
     
-    func getNoticeList() -> Single<[Notice]> {
-        provider.rx.request(.notice)
+    func getNoticeList(page: Int) -> Single<[Notice]> {
+        provider.rx.request(.notice(page))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
             .map([Notice].self)
