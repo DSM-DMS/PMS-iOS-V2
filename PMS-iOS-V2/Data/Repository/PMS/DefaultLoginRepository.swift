@@ -6,17 +6,16 @@
 //
 
 import Moya
-import RxMoya
 import RxSwift
 
-final class DefaultLoginRepository: LoginRepository {
-    let provider: MoyaProvider<AuthApi>
+final public class DefaultLoginRepository: LoginRepository {
+    private let provider: MoyaProvider<AuthApi>
     
-    init(provider: MoyaProvider<AuthApi>?) {
+    public init(provider: MoyaProvider<AuthApi>?) {
         self.provider = provider ??  MoyaProvider<AuthApi>()
     }
     
-    func login(email: String, password: String) -> Single<Bool> {
+    public func login(email: String, password: String) -> Single<Bool> {
         provider.rx.request(.login(email: email, password: password))
             .filterSuccessfulStatusCodes()
             .map(AccessToken.self)
@@ -35,7 +34,7 @@ final class DefaultLoginRepository: LoginRepository {
             }
     }
     
-    func sendNaverToken(token: String) -> Single<Bool> {
+    public func sendNaverToken(token: String) -> Single<Bool> {
         provider.rx.request(.naver(token: token))
             .filterSuccessfulStatusCodes()
             .map { _ in true }
@@ -49,7 +48,7 @@ final class DefaultLoginRepository: LoginRepository {
             }
     }
     
-    func sendFacebookToken(token: String) -> Single<Bool> {
+    public func sendFacebookToken(token: String) -> Single<Bool> {
         provider.rx.request(.facebook(token: token))
             .filterSuccessfulStatusCodes()
             .map { _ in true }
@@ -63,7 +62,7 @@ final class DefaultLoginRepository: LoginRepository {
             }
     }
     
-    func sendKakaotalkToken(token: String) -> Single<Bool> {
+    public func sendKakaotalkToken(token: String) -> Single<Bool> {
         provider.rx.request(.kakaotalk(token: token))
             .filterSuccessfulStatusCodes()
             .map { _ in true }

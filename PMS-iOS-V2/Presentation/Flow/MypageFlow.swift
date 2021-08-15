@@ -7,10 +7,9 @@
 
 import RxFlow
 import UIKit
-import Then
 
-class MypageFlow: Flow {
-    var root: Presentable {
+final public class MypageFlow: Flow {
+    public var root: Presentable {
         return self.rootViewController
     }
 
@@ -18,11 +17,9 @@ class MypageFlow: Flow {
         $0.isNavigationBarHidden = true
     }
 
-    deinit {
-        print("\(type(of: self)): \(#function)")
-    }
+    public init() {}
 
-    func navigate(to step: Step) -> FlowContributors {
+    public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? PMSStep else { return .none }
 
         switch step {

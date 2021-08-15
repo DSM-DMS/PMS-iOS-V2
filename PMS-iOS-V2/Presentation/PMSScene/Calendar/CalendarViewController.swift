@@ -13,8 +13,8 @@ import RxDataSources
 import SnapKit
 import Reachability
 
-class CalendarViewController: UIViewController {
-    let viewModel: CalendarViewModel
+final public class CalendarViewController: UIViewController {
+    internal let viewModel: CalendarViewModel
     private let tableView = UITableView().then {
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
@@ -23,7 +23,7 @@ class CalendarViewController: UIViewController {
         $0.allowsSelection = false
         $0.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarTableViewCell")
     }
-    let activityIndicator = UIActivityIndicatorView()
+    public let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
@@ -75,19 +75,19 @@ class CalendarViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setNavigationTitle(title: .calendarTitle, accessibilityLabel: .calendarTitle, isLarge: true)
         setupSubview()
         bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_calendar.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }
@@ -173,7 +173,7 @@ class CalendarViewController: UIViewController {
 }
 
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+    public func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         self.viewModel.input.date.accept(date)
         if viewModel.output.dateInHome.value.contains(viewModel.output.date.value) {
             return Colors.red.color
@@ -185,15 +185,15 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         return Colors.white.color
     }
     
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+    public func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         return Colors.black.color
     }
     
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+    public func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.viewModel.input.selectedDate.accept(date)
     }
     
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+    public func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         changeMonth()
     }
     

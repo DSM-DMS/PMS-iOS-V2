@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import Moya
 import RxSwift
 
-final class DefaultCalendarRepository: CalendarRepository {
-    let provider: MoyaProvider<PMSApi>
+final public class DefaultCalendarRepository: CalendarRepository {
+    private let provider: MoyaProvider<PMSApi>
     
-    init(provider: MoyaProvider<PMSApi>?) {
+    public init(provider: MoyaProvider<PMSApi>?) {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
     
-    func getCalendar() -> Single<PMSCalendar> {
+    public func getCalendar() -> Single<PMSCalendar> {
         provider.rx.request(.calendar)
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()

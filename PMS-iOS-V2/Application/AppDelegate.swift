@@ -19,14 +19,14 @@ import NaverThirdPartyLogin
 import KakaoOpenSDK
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    let disposeBag = DisposeBag()
-    var coordinator = FlowCoordinator()
+final class AppDelegate: UIResponder, UIApplicationDelegate {
+    private let disposeBag = DisposeBag()
+    private var coordinator = FlowCoordinator()
     static var window: UIWindow?
     static let container = Container()
-    let stepper = AppStepper()
+    private let stepper = AppStepper()
     
-    let provider = MoyaProvider<AuthApi>()
+    private let provider = MoyaProvider<AuthApi>()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         

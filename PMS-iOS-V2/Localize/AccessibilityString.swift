@@ -60,7 +60,7 @@ public enum AccessibilityString: String, Equatable, Hashable {
 }
 
 extension AccessibilityString {
-    var localized: String {
+    public var localized: String {
         return NSLocalizedString(self.rawValue, comment: "")
     }
 }

@@ -8,18 +8,16 @@
 import RxFlow
 import UIKit
 
-class PMSFlow: Flow {
-    var root: Presentable {
+final public class PMSFlow: Flow {
+    public var root: Presentable {
         return self.rootViewController
     }
 
     private let rootViewController = UINavigationController()
 
-    deinit {
-        print("\(type(of: self)): \(#function)")
-    }
+    public init() {}
 
-    func navigate(to step: Step) -> FlowContributors {
+    public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? PMSStep else { return .none }
 
         switch step {

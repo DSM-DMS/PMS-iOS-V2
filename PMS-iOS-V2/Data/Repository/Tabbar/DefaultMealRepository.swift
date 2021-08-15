@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import Moya
 import RxSwift
 
-final class DefaultMealRepository: MealRepository {
-    let provider: MoyaProvider<PMSApi>
+final public class DefaultMealRepository: MealRepository {
+    private let provider: MoyaProvider<PMSApi>
     
-    init(provider: MoyaProvider<PMSApi>?) {
+    public init(provider: MoyaProvider<PMSApi>?) {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
     
-    func getMeal(date: Int) -> Single<Meal> {
+    public func getMeal(date: Int) -> Single<Meal> {
         provider.rx.request(.meal(date))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -31,7 +30,7 @@ final class DefaultMealRepository: MealRepository {
             }
     }
     
-    func getMealPicutre(date: Int) -> Single<MealPicture> {
+    public func getMealPicutre(date: Int) -> Single<MealPicture> {
         provider.rx.request(.mealPicture(date))
             .map(MealPicture.self)
             .catchErrorJustReturn(MealPicture(breakfast: "", lunch: "", dinner: ""))

@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import Moya
 import RxSwift
 
-final class DefaultNoticeRepository: NoticeRepository {
-    let provider: MoyaProvider<PMSApi>
+final public class DefaultNoticeRepository: NoticeRepository {
+    private let provider: MoyaProvider<PMSApi>
     
-    init(provider: MoyaProvider<PMSApi>?) {
+    public init(provider: MoyaProvider<PMSApi>?) {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
     
-    func getNoticeList(page: Int) -> Single<[Notice]> {
+    public func getNoticeList(page: Int) -> Single<[Notice]> {
         provider.rx.request(.notice(page))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -31,7 +30,7 @@ final class DefaultNoticeRepository: NoticeRepository {
             }
     }
     
-    func getDetailNotice(id: Int) -> Single<DetailNotice> {
+    public func getDetailNotice(id: Int) -> Single<DetailNotice> {
         provider.rx.request(.noticeDetail(id))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()

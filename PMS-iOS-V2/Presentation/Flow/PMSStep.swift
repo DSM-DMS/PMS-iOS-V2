@@ -8,9 +8,8 @@
 import RxFlow
 import UIKit
 
-enum PMSStep: Step, Equatable {
-    
-    static func == (lhs: Self, rhs: Self) -> Bool {
+public enum PMSStep: Step, Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
             case let (.alert(lhsStr, lhsAccess), .alert(rhsStr, rhsAccess)):
                 return lhsStr == rhsStr && lhsAccess == rhsAccess

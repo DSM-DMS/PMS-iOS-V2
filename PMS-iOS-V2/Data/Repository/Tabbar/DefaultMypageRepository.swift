@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import Moya
 import RxSwift
 
-final class DefaultMypageRepository: MypageRepository {
-    let provider: MoyaProvider<AuthApi>
+final public class DefaultMypageRepository: MypageRepository {
+    private let provider: MoyaProvider<AuthApi>
     
-    init(provider: MoyaProvider<AuthApi>?) {
+    public init(provider: MoyaProvider<AuthApi>?) {
         self.provider = provider ?? MoyaProvider<AuthApi>()
     }
     
-    func getUser() -> Single<User> {
+    public func getUser() -> Single<User> {
         provider.rx.request(.userInform)
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -42,7 +41,7 @@ final class DefaultMypageRepository: MypageRepository {
         }
     }
     
-    func getNewStudent() -> Single<User> {
+    public func getNewStudent() -> Single<User> {
         provider.rx.request(.userInform)
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -67,7 +66,7 @@ final class DefaultMypageRepository: MypageRepository {
         }
     }
     
-    func getStudent(number: Int) -> Single<Student> {
+    public func getStudent(number: Int) -> Single<Student> {
         provider.rx.request(.mypage(number: number))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -82,7 +81,7 @@ final class DefaultMypageRepository: MypageRepository {
             }
     }
     
-    func changeNickname(name: String) -> Single<Bool> {
+    public func changeNickname(name: String) -> Single<Bool> {
         provider.rx.request(.changeNickname(name: name))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -97,7 +96,7 @@ final class DefaultMypageRepository: MypageRepository {
             }
     }
     
-    func addStudent(number: Int) -> Single<Bool> {
+    public func addStudent(number: Int) -> Single<Bool> {
         provider.rx.request(.addStudent(number: number))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -113,7 +112,7 @@ final class DefaultMypageRepository: MypageRepository {
             }
     }
     
-    func deleteStudent(number: Int) -> Single<Bool> {
+    public func deleteStudent(number: Int) -> Single<Bool> {
         provider.rx.request(.deleteStudent(number: number))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()

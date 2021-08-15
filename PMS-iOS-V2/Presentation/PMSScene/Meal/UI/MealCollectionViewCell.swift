@@ -24,7 +24,6 @@ class MealCollectionViewCell: UICollectionViewCell {
     private let mealLabel = UILabel().then {
         $0.textColor = UIColor.black
         $0.font = UIFont.preferredFont(forTextStyle: .body)
-        $0.fitTextToBounds()
         $0.textAlignment = .center
         $0.sizeToFit()
         $0.numberOfLines = 0
