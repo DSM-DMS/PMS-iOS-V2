@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-protocol MypageRepository {
+public protocol MypageRepository {
     func getUser() -> Single<User>
     func getStudent(number: Int) -> Single<Student>
     func changeNickname(name: String) -> Single<Bool>

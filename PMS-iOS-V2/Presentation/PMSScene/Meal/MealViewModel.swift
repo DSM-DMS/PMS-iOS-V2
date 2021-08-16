@@ -9,17 +9,17 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class MealViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class MealViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let repository: MealRepository
     private let disposeBag = DisposeBag()
     private var changeDate = 0
     
-    let viewDateFormatter = DateFormatter().then {
+    private let viewDateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy-MM-dd"
     }
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let previousButtonTapped = PublishRelay<Void>()
         let nextButtonTapped = PublishRelay<Void>()
@@ -29,7 +29,7 @@ class MealViewModel: Stepper {
         let getMealCell = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let modelDate = BehaviorRelay<String>(value: DateFormatter().then {
             $0.dateFormat = "yyyyMMdd"
         }.string(from: Date()))
@@ -42,10 +42,10 @@ class MealViewModel: Stepper {
         let mealCellList = BehaviorRelay<[MealCell]>(value: .init())
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: MealRepository) {
+    public init(repository: MealRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         

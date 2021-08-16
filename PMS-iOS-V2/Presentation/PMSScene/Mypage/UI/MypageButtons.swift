@@ -1,21 +1,21 @@
 //
-//  OAuthButton.swift
+//  MypageButton.swift
 //  PMS-iOS-V2
 //
-//  Created by GoEun Jeong on 2021/05/20.
+//  Created by GoEun Jeong on 2021/05/31.
 //
 
 import UIKit
 
-class FacebookButton: UIButton {
-    convenience init(label: AccessibilityString) {
+final public class WhitePencilButton: UIButton {
+    public convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(Asset.facebook.image, for: .normal)
+        self.setImage(Asset.whitePencil.image, for: .normal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -25,20 +25,21 @@ class FacebookButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 70, height: 70)
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
+
 }
 
-class NaverButton: UIButton {
-    convenience init(label: AccessibilityString) {
+final public class BottomArrowButton: UIButton {
+    public convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(Asset.naver.image, for: .normal)
+        self.setImage(Asset.bottomArrow.image, for: .normal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -48,20 +49,20 @@ class NaverButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 70, height: 70)
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 13, height: 13)
     }
 }
 
-class KakaotalkButton: UIButton {
-    convenience init(label: AccessibilityString) {
+final public class DeleteButton: UIButton {
+    public convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(Asset.kakaoTalk.image, for: .normal)
+        self.setImage(Asset.minus.image, for: .normal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -71,20 +72,21 @@ class KakaotalkButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 70, height: 70)
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 3)
     }
+
 }
 
-class AppleButton: UIButton {
-    convenience init(label: AccessibilityString) {
+final public class CirclePlusButton: UIButton {
+    public convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(Asset.apple.image, for: .normal)
+        self.setImage(Asset.circlePlus.image, for: .normal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -94,17 +96,8 @@ class AppleButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 65, height: 65)
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 25, height: 25)
     }
-}
 
-class EmptyView: UIButton {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

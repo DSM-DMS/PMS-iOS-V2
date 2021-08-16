@@ -7,19 +7,18 @@
 
 import UIKit
 
-final class MypageMessageView: UIView {
-    
+final public class MypageMessageView: UIView {
     private let titleLabel = UILabel().then {
         $0.textColor = UIColor.black
     }
     
-    convenience init(title: LocalizedString, label: AccessibilityString) {
+    public convenience init(title: LocalizedString, label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
         self.titleLabel.text = title.localized
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(titleLabel)
         

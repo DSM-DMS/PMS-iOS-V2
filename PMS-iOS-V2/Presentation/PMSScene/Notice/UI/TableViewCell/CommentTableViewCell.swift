@@ -10,8 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class CommentTableViewCell: UITableViewCell {
-    
+final public class CommentTableViewCell: UITableViewCell {
     private let commentStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 5.0
@@ -38,7 +37,7 @@ class CommentTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
@@ -47,13 +46,13 @@ class CommentTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: Comment) {
+    public func setupView(model: Comment) {
         DispatchQueue.main.async {
             self.contentLabel.text = model.body
             self.userLabel.text = model.user.name

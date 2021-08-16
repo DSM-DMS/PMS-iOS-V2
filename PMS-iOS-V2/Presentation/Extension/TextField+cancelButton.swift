@@ -1,13 +1,13 @@
 //
-//  numberPadReturn.swift
+//  TextField+cancelButton.swift
 //  PMS-iOS-V2
 //
-//  Created by GoEun Jeong on 2021/06/01.
+//  Created by GoEun Jeong on 2021/08/16.
 //
 
 import UIKit
 
-extension UITextField {
+public extension UITextField {
     func addDoneCancelToolbar(onDone: (target: Any, action: Selector)? = nil, onCancel: (target: Any, action: Selector)? = nil) {
         let onCancel = onCancel ?? (target: self, action: #selector(cancelButtonTapped))
         let onDone = onDone ?? (target: self, action: #selector(doneButtonTapped))

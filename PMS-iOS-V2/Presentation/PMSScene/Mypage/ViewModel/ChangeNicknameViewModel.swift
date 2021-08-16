@@ -9,27 +9,27 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class ChangeNicknameViewModel: Stepper {
-    let steps = PublishRelay<Step>()
-    let repository: MypageRepository
+final public class ChangeNicknameViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
+    private let repository: MypageRepository
     private var disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let noInternet = PublishRelay<Void>()
         let nicknameText = BehaviorRelay<String>(value: "")
         let changeButtonTapped = PublishRelay<Void>()
         let cancelButtonTapped = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isNicknameTyping = PublishRelay<Bool>()
         let changeButtonIsEnable = BehaviorRelay<Bool>(value: false)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: MypageRepository) {
+    public init(repository: MypageRepository) {
         self.repository = repository
         
         input.noInternet

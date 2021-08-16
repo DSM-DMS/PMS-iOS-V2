@@ -13,9 +13,9 @@ import SnapKit
 import Then
 import Reachability
 
-class PointListViewController: UIViewController {
-    let viewModel: PointListViewModel
-    let activityIndicator = UIActivityIndicatorView()
+final public class PointListViewController: UIViewController {
+    internal let viewModel: PointListViewModel
+    private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let tableView = UITableView().then {
         $0.register(PointListTableViewCell.self, forCellReuseIdentifier: "PointListTableViewCell")
@@ -37,7 +37,7 @@ class PointListViewController: UIViewController {
         return cell
     })
     
-    init(viewModel: PointListViewModel) {
+    internal init(viewModel: PointListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -47,20 +47,20 @@ class PointListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = LocalizedString.pointListTitle.localized
         self.setupSubview()
         self.bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_pointList.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }

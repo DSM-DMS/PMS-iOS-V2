@@ -85,9 +85,9 @@ class MypageViewController: UIViewController {
     private let plusPointRow = PlusPointRow()
     private let minusPointRow = MinusPointRow()
     private let statusView = StatusView()
-    private let outingListButton = MypageButton(title: .toOutingList, label: .toOutingListButton)
-    private let changePasswordButton = MypageButton(title: .toChangePassword, label: .toChangePasswordButton)
-    private let logoutButton = MypageButton(title: .toLogout, label: .toLogoutButton)
+    private let outingListButton = MypageRow(title: .toOutingList, label: .toOutingListButton)
+    private let changePasswordButton = MypageRow(title: .toChangePassword, label: .toChangePasswordButton)
+    private let logoutButton = MypageRow(title: .toLogout, label: .toLogoutButton)
     
     init(viewModel: MypageViewModel) {
         self.viewModel = viewModel

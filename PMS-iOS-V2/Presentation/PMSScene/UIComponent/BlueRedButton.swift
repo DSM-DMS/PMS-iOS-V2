@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class BlueButton: UIButton {
-    convenience init(title: LocalizedString, label: AccessibilityString) {
+final public class BlueButton: UIButton {
+    public convenience init(title: LocalizedString, label: AccessibilityString) {
         self.init()
         self.setTitle(title)
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = Colors.blue.color
         self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
@@ -35,15 +35,14 @@ final class BlueButton: UIButton {
     }
 }
 
-final class RedButton: UIButton {
-    
-    convenience init(title: LocalizedString, label: AccessibilityString) {
+final public class RedButton: UIButton {
+    public convenience init(title: LocalizedString, label: AccessibilityString) {
         self.init()
         self.setTitle(title)
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = Colors.red.color
         self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)

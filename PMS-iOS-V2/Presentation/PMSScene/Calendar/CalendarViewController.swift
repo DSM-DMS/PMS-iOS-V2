@@ -63,7 +63,7 @@ final public class CalendarViewController: UIViewController {
         $0.dateFormat = "yyyy-MM-dd"
     }
     
-    init(viewModel: CalendarViewModel) {
+    internal init(viewModel: CalendarViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

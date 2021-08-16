@@ -8,25 +8,25 @@
 import UIKit
 import RxSwift
 
-class IntroduceViewController: UIViewController {
-    let viewModel: IntroduceViewModel
+final public class IntroduceViewController: UIViewController {
+    internal let viewModel: IntroduceViewModel
     private let disposeBag = DisposeBag()
     
-    let subTitle = UILabel().then {
+    private let subTitle = UILabel().then {
         $0.text = LocalizedString.introduceSubtitle.localized
         $0.textColor = Colors.blue.color
         $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
-    let clubButton = IntroduceRow(title: .clubTitle, desc: .clubSubtitle)
-    let companyButton = IntroduceRow(title: .companyTitle, desc: .companySubtitle)
-    let developerButton = IntroduceRow(title: .developerTitle, desc: .developerSubtitle)
+    private let clubButton = IntroduceRow(title: .clubTitle, desc: .clubSubtitle)
+    private let companyButton = IntroduceRow(title: .companyTitle, desc: .companySubtitle)
+    private let developerButton = IntroduceRow(title: .developerTitle, desc: .developerSubtitle)
     
-    let clubTapped = UITapGestureRecognizer()
-    let companyTapped = UITapGestureRecognizer()
-    let developerTapped = UITapGestureRecognizer()
+    private let clubTapped = UITapGestureRecognizer()
+    private let companyTapped = UITapGestureRecognizer()
+    private let developerTapped = UITapGestureRecognizer()
     
-    init(viewModel: IntroduceViewModel) {
+    public init(viewModel: IntroduceViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -36,7 +36,7 @@ class IntroduceViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setNavigationTitle(title: .introduceTitle, accessibilityLabel: .introduceTitle, isLarge: true)
         setupSubview()
         clubButton.addGestureRecognizer(clubTapped)
@@ -44,7 +44,7 @@ class IntroduceViewController: UIViewController {
         developerButton.addGestureRecognizer(developerTapped)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AnalyticsManager.view_introduce.log()
     }

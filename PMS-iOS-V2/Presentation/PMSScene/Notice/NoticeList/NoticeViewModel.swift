@@ -9,14 +9,14 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class NoticeViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class NoticeViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let repository: NoticeRepository
     private let disposeBag = DisposeBag()
     private var changeDate = 0
     private var page = 1
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let searchText = PublishRelay<String>()
         let previousPageTapped = PublishRelay<Void>()
@@ -25,16 +25,16 @@ class NoticeViewModel: Stepper {
         let goNoticeDetail = PublishRelay<NoticeCell>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let noticeList = PublishRelay<[NoticeCell]>()
         let page = BehaviorRelay<Int>(value: 1)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: NoticeRepository) {
+    public init(repository: NoticeRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         

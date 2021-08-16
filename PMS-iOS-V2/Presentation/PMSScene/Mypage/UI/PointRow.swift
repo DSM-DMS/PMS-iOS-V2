@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlusPointRow: UIView {
+final public class PlusPointRow: UIView {
     private let pointlabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25)
         $0.text = "00"
@@ -31,13 +31,21 @@ class PlusPointRow: UIView {
     
     // MARK: - Initialization
     
-    override func draw(_ rect: CGRect) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func draw(_ rect: CGRect) {
         setupSubview()
     }
     
     // MARK: - Public Methods
     
-    func setupView(plus: Int) {
+    public func setupView(plus: Int) {
         if plus > 10 {
             self.pointlabel.text = String(plus)
         } else {
@@ -71,7 +79,7 @@ class PlusPointRow: UIView {
     }
 }
 
-class MinusPointRow: UIView {
+final public class MinusPointRow: UIView {
     private let pointlabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 25)
         $0.text = "00"
@@ -95,7 +103,15 @@ class MinusPointRow: UIView {
     
     // MARK: - Initialization
     
-    override func draw(_ rect: CGRect) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func draw(_ rect: CGRect) {
         setupSubview()
     }
     

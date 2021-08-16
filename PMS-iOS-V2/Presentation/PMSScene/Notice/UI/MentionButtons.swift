@@ -1,21 +1,21 @@
 //
-//  PageButton.swift
+//  MentionButton.swift
 //  PMS-iOS-V2
 //
-//  Created by GoEun Jeong on 2021/05/24.
+//  Created by GoEun Jeong on 2021/05/25.
 //
 
 import UIKit
 
-class PreviousPageButton: UIButton {
-    convenience init(label: AccessibilityString) {
+final public class MentionButton: UIButton {
+    public convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(Asset.blueLeftArrow.image, for: .normal)
+        self.setImage(Asset.mention.image, for: .normal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -25,21 +25,21 @@ class PreviousPageButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 13, height: 13)
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
 
 }
 
-class NextPageButton: UIButton {
-    convenience init(label: AccessibilityString) {
+final public class EnterButton: UIButton {
+    public convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(Asset.blueRightArrow.image, for: .normal)
+        self.setImage(Asset.enter.image, for: .normal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -49,8 +49,8 @@ class NextPageButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 13, height: 13)
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
     }
 
 }

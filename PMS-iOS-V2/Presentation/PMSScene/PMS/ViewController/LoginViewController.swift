@@ -13,72 +13,72 @@ import FBSDKLoginKit
 import KakaoOpenSDK
 import AuthenticationServices
 
-class LoginViewController: UIViewController {
-    let viewModel: LoginViewModel
+final public class LoginViewController: UIViewController {
+    internal let viewModel: LoginViewModel
     private let disposeBag = DisposeBag()
     private let reachability = try! Reachability()
-    let activityIndicator = UIActivityIndicatorView()
+    private let activityIndicator = UIActivityIndicatorView()
     
     // MARK: - OAuth
     
     private let loginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
-    let facebookManager = LoginManager()
+    private let facebookManager = LoginManager()
     
-    let loginViewStack = UIStackView().then {
+    private let loginViewStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 40.0
     }
     
-    let emailView = UIStackView().then {
+    private let emailView = UIStackView().then {
         $0.spacing = 15.0
         $0.alignment = .leading
     }
     
-    let emailStackView = UIStackView().then {
+    private let emailStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let passwordView = UIStackView().then {
+    private let passwordView = UIStackView().then {
         $0.spacing = 15.0
         $0.alignment = .leading
     }
     
-    let passwordStackView = UIStackView().then {
+    private let passwordStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let oAuthStackView = UIStackView().then {
+    private let oAuthStackView = UIStackView().then {
         $0.alignment = .top
         $0.distribution = .equalSpacing
     }
     
-    let facebookButton = FacebookButton(label: .facebookLogin)
-    let naverButton = NaverButton(label: .naverRegister)
-    let kakaotalkButton = KakaotalkButton(label: .kakaotalkLogin)
-    let appleButton = AppleButton(label: .appleLogin).then {
+    private let facebookButton = FacebookButton(label: .facebookLogin)
+    private let naverButton = NaverButton(label: .naverRegister)
+    private let kakaotalkButton = KakaotalkButton(label: .kakaotalkLogin)
+    private let appleButton = AppleButton(label: .appleLogin).then {
         $0.isEnabled = false
     }
-    let loginButton = BlueButton(title: .loginButton, label: .loginButton)
+    private let loginButton = BlueButton(title: .loginButton, label: .loginButton)
     
-    let personImage = PersonImage()
-    let lockImage = LockImage()
-    let emailLine = UIView().then {
+    private let personImage = PersonImage()
+    private let lockImage = LockImage()
+    private let emailLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    let passwordLine = UIView().then {
+    private let passwordLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    let emailTextField = PMSTextField(title: .emailPlaceholder)
-    let passwordTextField = PMSTextField(title: .passwordPlaceholder).then {
+    private let emailTextField = PMSTextField(title: .emailPlaceholder)
+    private let passwordTextField = PMSTextField(title: .passwordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    let passwordEyeButton = EyeButton()
+    private let passwordEyeButton = EyeButton()
     
-    init(viewModel: LoginViewModel) {
+    internal init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.setupDelegate()
@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setupSubview()
         self.addKeyboardNotification()
         self.setNavigationTitle(title: .loginTitle, accessibilityLabel: .loginView, isLarge: true)
@@ -106,13 +106,13 @@ class LoginViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try? reachability.startNotifier()
         AnalyticsManager.view_signIn.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }
@@ -363,23 +363,23 @@ extension LoginViewController {
 }
 
 extension LoginViewController: NaverThirdPartyLoginConnectionDelegate {
-    func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+    public func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
         sendNaverToken()
     }
     
-    func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
+    public func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
         
     }
     
-    func oauth20ConnectionDidFinishDeleteToken() {
+    public func oauth20ConnectionDidFinishDeleteToken() {
         
     }
     
-    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
+    public func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
         
     }
     
-    func sendNaverToken() {
+    private func sendNaverToken() {
         guard let isValidAccessToken = loginInstance?.isValidAccessTokenExpireTimeNow() else { return }
         
         if !isValidAccessToken {
@@ -393,13 +393,13 @@ extension LoginViewController: NaverThirdPartyLoginConnectionDelegate {
 
 extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     @available(iOS 13.0, *)
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
     
     // Apple ID 연동 성공 시
     @available(iOS 13.0, *)
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         // Apple ID
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
@@ -413,7 +413,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
     
     // Apple ID 연동 실패 시
     @available(iOS 13.0, *)
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         self.viewModel.input.oAuthError.accept(error)
     }
 }

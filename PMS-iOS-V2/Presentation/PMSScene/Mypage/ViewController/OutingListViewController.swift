@@ -13,9 +13,9 @@ import SnapKit
 import Then
 import Reachability
 
-class OutingListViewController: UIViewController {
-    let viewModel: OutingListViewModel
-    let activityIndicator = UIActivityIndicatorView()
+final public class OutingListViewController: UIViewController {
+    internal let viewModel: OutingListViewModel
+    private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let tableView = UITableView().then {
         $0.register(OutingListTableViewCell.self, forCellReuseIdentifier: "OutingListTableViewCell")
@@ -37,7 +37,7 @@ class OutingListViewController: UIViewController {
         return cell
     })
     
-    init(viewModel: OutingListViewModel) {
+    internal init(viewModel: OutingListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -47,20 +47,20 @@ class OutingListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = LocalizedString.outingListTitle.localized
         self.setupSubview()
         self.bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_outingList.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }

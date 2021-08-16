@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class ClubDetailView: UIView {
+final public class ClubDetailView: UIView {
     private let upLine = UIView().then { $0.backgroundColor = .lightGray }
     
     private let clubImage = UIImageView().then {
@@ -66,13 +66,21 @@ class ClubDetailView: UIView {
 
     // MARK: - Initialization
     
-    override func draw(_ rect: CGRect) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func draw(_ rect: CGRect) {
         setupSubview()
     }
 
     // MARK: - Public Methods
     
-    func setupView(model: DetailClub) {
+    public func setupView(model: DetailClub) {
         DispatchQueue.main.async {
             self.nameLabel.text = model.title
             self.descLabel.text = model.description

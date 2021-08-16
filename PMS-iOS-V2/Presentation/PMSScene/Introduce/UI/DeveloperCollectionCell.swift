@@ -8,10 +8,8 @@
 import UIKit
 import SnapKit
 import Then
-import Kingfisher
 
-class DeveloperCollectionCell: UICollectionViewCell {
-    
+final public class DeveloperCollectionCell: UICollectionViewCell {
     private let background = UIView().then {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
@@ -39,7 +37,7 @@ class DeveloperCollectionCell: UICollectionViewCell {
     
     // MARK: - Initialization
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupSubview()
     }
@@ -48,13 +46,13 @@ class DeveloperCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: Developer) {
+    public func setupView(model: Developer) {
         self.nameLabel.text = model.name
         self.fieldLabel.text = model.field
         self.personImage.image = model.image

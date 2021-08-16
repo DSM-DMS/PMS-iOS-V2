@@ -13,7 +13,7 @@ import RxCocoa
 import RxSwift
 import SkeletonView
 
-class MealCollectionViewCell: UICollectionViewCell {
+final public class MealCollectionViewCell: UICollectionViewCell {
     private let disposeBag = DisposeBag()
     
     private let timeLabel = UILabel().then {
@@ -61,7 +61,7 @@ class MealCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Initialization
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupSubview()
     }
@@ -70,17 +70,17 @@ class MealCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override class func awakeFromNib() {
+    public override class func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: MealCell) {
+    public func setupView(model: MealCell) {
         DispatchQueue.main.async {
             self.timeLabel.setText(model.time)
             if model.meal.isEmpty {
@@ -169,7 +169,7 @@ class MealCollectionViewCell: UICollectionViewCell {
     }
 }
 
-class FlipButton: UIButton {
+final internal class FlipButton: UIButton {
     convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)

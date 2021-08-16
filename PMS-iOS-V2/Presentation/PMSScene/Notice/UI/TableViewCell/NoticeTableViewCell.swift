@@ -10,8 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class NoticeTableViewCell: UITableViewCell {
-    
+final public class NoticeTableViewCell: UITableViewCell {
     private let noticeStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 10.0
@@ -41,7 +40,7 @@ class NoticeTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
@@ -50,13 +49,13 @@ class NoticeTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: NoticeCell) {
+    public func setupView(model: NoticeCell) {
         DispatchQueue.main.async {
             if !model.type {
                 self.colorView.backgroundColor = Colors.red.color

@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class ChangePasswordViewModel: Stepper {
-    let steps = PublishRelay<Step>()
-    let repository: ChangePasswordRepository
+final public class ChangePasswordViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
+    private let repository: ChangePasswordRepository
     private var disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let noInternet = PublishRelay<Void>()
         let nowPasswordText = BehaviorRelay<String>(value: "")
         let newPasswordText = BehaviorRelay<String>(value: "")
@@ -24,7 +24,7 @@ class ChangePasswordViewModel: Stepper {
         let changePasswordButtonTapped = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let isNowPasswordTyping = PublishRelay<Bool>()
         let isNowPasswordValid = BehaviorRelay<Bool>(value: false)
@@ -40,10 +40,10 @@ class ChangePasswordViewModel: Stepper {
         let changePasswordButtonIsEnable = BehaviorRelay<Bool>(value: false)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: ChangePasswordRepository) {
+    public init(repository: ChangePasswordRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         

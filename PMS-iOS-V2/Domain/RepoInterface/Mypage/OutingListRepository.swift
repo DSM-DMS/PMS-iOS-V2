@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol OutingListRepository {
+public protocol OutingListRepository {
     func getOutingList(number: Int) -> Single<OutingList>
 }

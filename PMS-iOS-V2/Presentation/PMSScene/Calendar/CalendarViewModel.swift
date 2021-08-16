@@ -9,15 +9,15 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-final class CalendarViewModel: Stepper {
-    let steps = PublishRelay<Step>()
-    let repository: CalendarRepository
+final public class CalendarViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
+    public let repository: CalendarRepository
     private var disposeBag = DisposeBag()
-    let dateFormatter = DateFormatter().then {
+    private let dateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy-MM-dd"
     }
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
         let date = BehaviorRelay<Date>(value: Date())
@@ -26,7 +26,7 @@ final class CalendarViewModel: Stepper {
         let noInternet = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let reloadData = PublishRelay<Void>()
         let date = BehaviorRelay<String>(value: "")
         let selectedDate = BehaviorRelay<String>(value: "")
@@ -37,10 +37,10 @@ final class CalendarViewModel: Stepper {
         let isLoading = BehaviorRelay<Bool>(value: false)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: CalendarRepository) {
+    public init(repository: CalendarRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         
@@ -136,7 +136,6 @@ final class CalendarViewModel: Stepper {
             .asObservable()
             .bind(to: output.isLoading)
             .disposed(by: disposeBag)
-        
     }
     
     private func mapError(error: Int) -> String {
@@ -162,7 +161,7 @@ final class CalendarViewModel: Stepper {
     }
 }
 
-extension Date {
+public extension Date {
     func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: self)
     }

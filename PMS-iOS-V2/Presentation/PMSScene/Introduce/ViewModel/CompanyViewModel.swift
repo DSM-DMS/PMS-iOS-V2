@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class CompanyViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class CompanyViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let repository: IntroduceRepository
     private let disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
         let noInternet = PublishRelay<Void>()
@@ -22,16 +22,16 @@ class CompanyViewModel: Stepper {
         let getDetailClub = PublishRelay<String>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let clubList = PublishRelay<[Club]>()
         let detailClub = PublishRelay<DetailClub>()
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: IntroduceRepository) {
+    public init(repository: IntroduceRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         

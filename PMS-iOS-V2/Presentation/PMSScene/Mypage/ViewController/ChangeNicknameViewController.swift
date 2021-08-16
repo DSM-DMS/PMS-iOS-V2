@@ -9,10 +9,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ChangeNicknameViewController: UIViewController {
-    let viewModel: ChangeNicknameViewModel
+final public class ChangeNicknameViewController: UIViewController {
+    internal let viewModel: ChangeNicknameViewModel
     private let delegate: ChangeNicknameDelegate
-    let activityIndicator = UIActivityIndicatorView()
+    private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     
     let whiteBackground = UIView().then {
@@ -64,7 +64,7 @@ class ChangeNicknameViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setupSubview()
         self.bindOutput()
         self.setDelegate()

@@ -7,8 +7,7 @@
 
 import UIKit
 
-class IntroduceRow: UIView {
-    
+final public class IntroduceRow: UIView {
     private let titleStackView = UIStackView().then { $0.spacing = 10.0 }
     private let _titleLabel = UILabel().then {
         $0.textColor = UIColor.black
@@ -29,19 +28,19 @@ class IntroduceRow: UIView {
     
     // MARK: - Initialization
     
-    convenience init(title: LocalizedString, desc: LocalizedString) {
+    public convenience init(title: LocalizedString, desc: LocalizedString) {
         self.init()
         self._titleLabel.text = title.localized
         self.descLabel.text = desc.localized
     }
     
-    override func draw(_ rect: CGRect) {
+    public override func draw(_ rect: CGRect) {
         setupSubview()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: DetailNotice) {
+    public func setupView(model: DetailNotice) {
         DispatchQueue.main.async {
             self._titleLabel.text = model.title
             self.descLabel.text = model.body

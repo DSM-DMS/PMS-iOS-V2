@@ -22,7 +22,7 @@ final class MockNoticeRepository: NoticeRepository {
         }
     }
     
-    func getNoticeList() -> Single<[Notice]> {
+    func getNoticeList(page: Int) -> Single<[Notice]> {
         Single.error(error)
     }
     

@@ -11,13 +11,13 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class CompanyViewController: UIViewController {
-    let viewModel: CompanyViewModel
-    let activityIndicator = UIActivityIndicatorView()
+final public class CompanyViewController: UIViewController {
+    internal let viewModel: CompanyViewModel
+    private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout().then {
             $0.minimumLineSpacing = 20
             $0.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
@@ -36,7 +36,7 @@ class CompanyViewController: UIViewController {
         return cell
     })
     
-    init(viewModel: CompanyViewModel) {
+    public init(viewModel: CompanyViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.collectionView.delegate = self
@@ -47,20 +47,20 @@ class CompanyViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = LocalizedString.companyTitle.localized
         self.setupSubview()
         self.bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_companyIntroduce.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }
@@ -105,7 +105,7 @@ class CompanyViewController: UIViewController {
 }
 
 extension CompanyViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIFrame.width / 2 - 50, height: UIFrame.width / 2 - 10)
     }
 }
