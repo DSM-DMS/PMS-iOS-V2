@@ -14,14 +14,14 @@
 
 ----
 
-1. Application
+## 1. Application
 
 | filename                 | description                                                  |
 | ------------------------ | ------------------------------------------------------------ |
 | AppDelegate.swift        | RxFlow로 플로우를 관리, Firebase 설정, OAuth 설정            |
 | Container+Register.swift | Container에 SwinjectAutoregistration을 사용해 ViewModel, VC, Repository 생성 |
 
-2. Data
+## 2. Data
 
 - Repository
 
@@ -37,7 +37,7 @@
 | StorageManager.swift | 키체인에 token, email, password를 CRUD하는 클래스            |
 | UDManager.swift      | 현재 선택한 학생을 저장하고 있는 UserDefaults를 프로퍼티로 가짐 |
 
-3. Domain
+## 3. Domain
 
 - Entity
 
@@ -61,7 +61,7 @@
 | ------------------- | --------------------------- |
 | -- Repository.swift | -- Repository 프로토콜 정의 |
 
-4. Presentation
+## 4. Presentation
 
 - Constraints
 
@@ -107,14 +107,14 @@
 | Mypage      | OTPTextField - OTPFieldView, OTPTextField \| UI - MypageButtons, MypageMessageView, MypageRow, OutingListTableViewCell, PointListTableViewCell, PlusPointRow, StatusView, UserStudentTableViewCell \| VC - AddStudentVC, ChangeNicknameVC, ChangePasswordVC, MypageDelegate, MypageVC, OutingListVC, PointListVC, StudentListVC \| ViewModel - AddStudentVM, ChangeNicknameVM, ChangePasswordVM, MypageVM, OutingListVM, PointListVM, StudentListVM |
 | UIComponent | ArrowButtons, BlueRedButton, SuccessLottieView               |
 
-5. Extension
+## 5. Extension
 
 | filename               | description                                                  |
 | ---------------------- | ------------------------------------------------------------ |
 | Assets+Generated.swift | SwiftGen으로 생성된 Assets.xcassets의 swift 파일             |
 | Colors+Generated.swift | SwiftGen으로 생성된 Colors.xcassets의 swift 파일. 다크모드를 지원하기 위한 컬러 |
 
-6. Localize
+## 6. Localize
 
 | filename                  | description                                          |
 | ------------------------- | ---------------------------------------------------- |
@@ -122,7 +122,7 @@
 | LocalizedString.swift     | LocalizedString을 제공하는 열겨형                    |
 | Localizable.strings       | 한국어 & 영어                                        |
 
-7. Resource
+## 7. Resource
 
 | filename                       | description                           |
 | ------------------------------ | ------------------------------------- |
