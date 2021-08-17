@@ -25,7 +25,7 @@ public enum NetworkError: Int, Error {
             self = .noInternet
         } else {
             let code = error.response!.statusCode
-//            Log.info("Status code: \(code)")
+            Log.info("Status code: \(code)")
             let networkError = NetworkError(rawValue: code)
             self = networkError ?? .unknown
         }

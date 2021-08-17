@@ -3,7 +3,7 @@ configuration:
   prefix: 1.0.1
   local: ~/Library/Caches/Punic
   output: Carthage/Build
-  s3Bucket: pms-carthage-bucket
+  s3Bucket: pms-carthage-bucket2
   
 # Search your output directory for these .xcframeworks
 dependencies:
