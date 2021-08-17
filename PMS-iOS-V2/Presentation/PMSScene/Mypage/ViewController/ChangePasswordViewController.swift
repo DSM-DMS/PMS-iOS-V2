@@ -13,7 +13,7 @@ import Reachability
 final public class ChangePasswordViewController: UIViewController {
     internal let viewModel: ChangePasswordViewModel
     private let reachability = try! Reachability()
-    private let activityIndicator = UIActivityIndicatorView()
+    let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     
     private let nowPasswordTitle = UILabel().then {
@@ -63,15 +63,15 @@ final public class ChangePasswordViewController: UIViewController {
     private let checkImage = CheckImage()
     private let nowPasswordEyeButton = EyeButton()
     private let newPasswordEyeButton = EyeButton()
-    private let changePasswordButton = BlueButton(title: .confirm, label: .toChangePasswordButton)
+    let changePasswordButton = BlueButton(title: .confirm, label: .toChangePasswordButton)
     
-    private let nowPasswordLine = UIView().then {
+    let nowPasswordLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    private let newPasswordLine = UIView().then {
+    let newPasswordLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    private let reNewPasswordLine = UIView().then {
+    let reNewPasswordLine = UIView().then {
         $0.backgroundColor = .gray
     }
     

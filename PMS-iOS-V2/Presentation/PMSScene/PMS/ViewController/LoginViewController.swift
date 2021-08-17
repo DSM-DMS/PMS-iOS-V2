@@ -17,7 +17,7 @@ final public class LoginViewController: UIViewController {
     internal let viewModel: LoginViewModel
     private let disposeBag = DisposeBag()
     private let reachability = try! Reachability()
-    private let activityIndicator = UIActivityIndicatorView()
+    public let activityIndicator = UIActivityIndicatorView()
     
     // MARK: - OAuth
     
@@ -62,21 +62,21 @@ final public class LoginViewController: UIViewController {
     private let appleButton = AppleButton(label: .appleLogin).then {
         $0.isEnabled = false
     }
-    private let loginButton = BlueButton(title: .loginButton, label: .loginButton)
+    let loginButton = BlueButton(title: .loginButton, label: .loginButton)
     
     private let personImage = PersonImage()
     private let lockImage = LockImage()
-    private let emailLine = UIView().then {
+    let emailLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    private let passwordLine = UIView().then {
+    let passwordLine = UIView().then {
         $0.backgroundColor = .gray
     }
     private let emailTextField = PMSTextField(title: .emailPlaceholder)
     private let passwordTextField = PMSTextField(title: .passwordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    private let passwordEyeButton = EyeButton()
+    let passwordEyeButton = EyeButton()
     
     internal init(viewModel: LoginViewModel) {
         self.viewModel = viewModel

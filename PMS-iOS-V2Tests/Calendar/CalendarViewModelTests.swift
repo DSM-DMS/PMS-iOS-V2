@@ -107,9 +107,13 @@ class CalenddarViewModelTests: XCTestCase {
     
     func test_selectDate_none_calendar() {
         // MARK: - WHEN
+        let dateStringFormatter = DateFormatter()
+        dateStringFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateStringFormatter.date(from: "2021-08-17")!
+        
         viewModel.input.viewDidLoad.accept(())
 
-        scheduler.createHotObservable([.next(100, Date())])
+        scheduler.createHotObservable([.next(100, Date(timeInterval: 0,  since:date))])
             .bind(to: viewModel.input.selectedDate)
             .disposed(by: disposeBag)
         

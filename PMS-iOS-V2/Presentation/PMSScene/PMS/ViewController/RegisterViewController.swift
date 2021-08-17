@@ -11,7 +11,7 @@ import Reachability
 
 final public class RegisterViewController: UIViewController {
     internal let viewModel: RegisterViewModel
-    private let activityIndicator = UIActivityIndicatorView()
+    public let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
@@ -73,7 +73,7 @@ final public class RegisterViewController: UIViewController {
     private let naverButton = NaverButton(label: .naverRegister)
     private let kakaotalkButton = KakaotalkButton(label: .kakaotalkLogin)
     private let appleButton = AppleButton(label: .appleLogin)
-    private let registerButton = RedButton(title: .registerButton, label: .registerButton)
+    let registerButton = RedButton(title: .registerButton, label: .registerButton)
     
     private let pencilImage = BlackPencilImage()
     private let personImage = PersonImage()
@@ -81,16 +81,16 @@ final public class RegisterViewController: UIViewController {
     private let circleCheckImage = CircleCheckImage()
     private let checkImage = CheckImage()
     
-    private let nicknameLine = UIView().then {
+    let nicknameLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    private let emailLine = UIView().then {
+    let emailLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    private let passwordLine = UIView().then {
+    let passwordLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    private let rePasswordLine = UIView().then {
+    let rePasswordLine = UIView().then {
         $0.backgroundColor = .gray
     }
     

@@ -2,7 +2,7 @@ name: Publish iOS App to App Store
 
 on:
   push:
-    branches: [ master ]
+    branches: [ fastlane ]
   pull_request:
     branches: [ master ]
 
@@ -64,6 +64,7 @@ jobs:
           brew tap artemnovichkov/projects
           brew install carting
           brew install xcodegen
+          brew install swiftlint
           brew tap summerlabs/homebrew-punic
           brew install punic
           chmod +x scripts/run scripts/upload-symbols
