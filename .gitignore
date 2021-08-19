@@ -1,6 +1,7 @@
 PMS-iOS-V2Tests/FailureDiffs
 /screenshots
-/fastlane/fastlane-buildlog
+fastlane/fastlane-buildlog
+fastlane/test_output
 
 # Created by https://www.toptal.com/developers/gitignore/api/swift
 # Edit at https://www.toptal.com/developers/gitignore?templates=swift
