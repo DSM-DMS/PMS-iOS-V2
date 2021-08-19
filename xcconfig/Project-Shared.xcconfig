@@ -538,7 +538,7 @@ ONLY_ACTIVE_ARCH = YES
 // Ensures that your libraries are built for distribution. For Swift, this enables
 // support for library evolution and generation of a module interface file.
 
-BUILD_LIBRARY_FOR_DISTRIBUTION = YES
+//BUILD_LIBRARY_FOR_DISTRIBUTION = YES
 //
 //
 //// Validate Workspace

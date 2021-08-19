@@ -389,12 +389,6 @@ extension RegisterViewController {
     }
     
     @objc private func keyboardWillHide(_ notification: Notification) {
-        if self.view.frame.origin.y != 0 {
-            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keybaordRectangle = keyboardFrame.cgRectValue
-                let keyboardHeight = keybaordRectangle.height
-                self.view.frame.origin.y += keyboardHeight / 2
-            }
-        }
+        self.view.frame.origin.y = 0
     }
 }

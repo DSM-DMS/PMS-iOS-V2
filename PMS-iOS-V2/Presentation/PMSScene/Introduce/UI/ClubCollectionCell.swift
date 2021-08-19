@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import Kingfisher
+import SkeletonView
 
 final public class ClubCollectionCell: UICollectionViewCell {
     private let background = UIView().then {
@@ -23,6 +24,7 @@ final public class ClubCollectionCell: UICollectionViewCell {
     private let clubImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.layer.cornerRadius = 20
+        $0.isSkeletonable = true
         $0.layer.masksToBounds = true
     }
     
@@ -51,7 +53,9 @@ final public class ClubCollectionCell: UICollectionViewCell {
     public func setupView(model: Club) {
         self.clubLabel.text = model.name
         
-        self.clubImage.kf.setImage(with: (URL(string: model.imageUrl)))
+        self.clubImage.kf.setImage(with: URL(string: model.imageUrl), placeholder: nil, options: nil, progressBlock: { _, _ in
+            self.clubImage.showAnimatedGradientSkeleton()
+        }, completionHandler: { _ in self.clubImage.hideSkeleton() })
     }
     
     // MARK: Private Methods

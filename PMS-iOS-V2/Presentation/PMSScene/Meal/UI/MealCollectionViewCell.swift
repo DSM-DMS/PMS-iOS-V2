@@ -83,6 +83,11 @@ final public class MealCollectionViewCell: UICollectionViewCell {
     public func setupView(model: MealCell) {
         DispatchQueue.main.async {
             self.timeLabel.setText(model.time)
+            if model.time == .lunch {
+                self.blueBackground.backgroundColor = Colors.green.color
+            } else if model.time == .dinner {
+                self.blueBackground.backgroundColor = Colors.red.color
+            }
             if model.meal.isEmpty {
                 self.mealLabel.text = LocalizedString.noMealPlaceholder.localized
             } else {
