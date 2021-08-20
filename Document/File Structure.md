@@ -4,13 +4,13 @@
 
 목차
 
-1. [Application](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#1-application)
-2. [Data](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#2-data)
-3. [Domain](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#3-domain)
-4. [Presentation](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#4-presentation)
-5. [Extension](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#5-extension)
-6. [Localize](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#6-localize)
-7. [Resource](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20structure.md#7-resource)
+1. [Application](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#1-application)
+2. [Data](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#2-data)
+3. [Domain](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#3-domain)
+4. [Presentation](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#4-presentation)
+5. [Extension](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#5-extension)
+6. [Localize](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#6-localize)
+7. [Resource](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md#7-resource)
 
 ----
 
