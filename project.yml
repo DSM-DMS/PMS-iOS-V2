@@ -170,7 +170,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2.PMS-TodayExtension
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
-        FRAMEWORK_SEARCH_PATHS: $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+        FRAMEWORK_SEARCH_PATHS: $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks $(PROJECT_DIR)/Carthage/Build $(PROJECT_DIR)/Carthage/Build/iOS
     preBuildScripts:
       - path: PMS-iOS-V2Tests/Resource/script.sh
         name: Carthage
