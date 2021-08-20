@@ -2,8 +2,6 @@ name: Publish iOS App to App Store
 
 on:
   push:
-    branches: [ fastlane ]
-  pull_request:
     branches: [ master ]
 
 jobs:

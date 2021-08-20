@@ -37,10 +37,10 @@
 //        FBSnapshotVerifyView(viewcontroller.view)
 //    }
 //    
-////    func test_mealView() {
-////        let viewcontroller = AppDelegate.container.resolve(MealViewController.self)!
-////        FBSnapshotVerifyView(viewcontroller.view)
-////    }
+//    func test_mealView() {
+//        let viewcontroller = AppDelegate.container.resolve(MealViewController.self)!
+//        FBSnapshotVerifyView(viewcontroller.view)
+//    }
 //    
 //    func test_noticeView() {
 //        let viewcontroller = AppDelegate.container.resolve(NoticeViewController.self)!

@@ -2,58 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb2902370403311821</string>
-      </array>
-      </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>2902370403311821</string>
-    <key>FacebookClientToken</key>
-    <string>76482f127d69d354bb33dd3250a09b55</string>
-    <key>FacebookDisplayName</key>
-    <string>PMS</string>
-    <key>FacebookAutoLogAppEventsEnabled</key>
-    <string>FALSE</string>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <string>FALSE</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>fbapi</string>
-      <string>fbapi20130214</string>
-      <string>fbapi20130410</string>
-      <string>fbapi20130702</string>
-      <string>fbapi20131010</string>
-      <string>fbapi20131219</string>
-      <string>fbapi20140410</string>
-      <string>fbapi20140116</string>
-      <string>fbapi20150313</string>
-      <string>fbapi20150629</string>
-      <string>fbapi20160328</string>
-      <string>fbauth</string>
-      <string>fb-messenger-share-api</string>
-      <string>fbauth2</string>
-      <string>fbshareextension</string>
-    </array>
-	<key>KAKAO_APP_KEY</key>
-	<string>c8076bcc57ebf6749750e562e40b1b3a</string>
-    <key>LSApplicationQueriesSchemes</key>
-        <array>
-                <string>kakaoc8076bcc57ebf6749750e562e40b1b3a</string>
-                <string>kakaokompassauth</string>
-                <string>kakaolink</string>
-                <string>kakaotalk-5.9.7</string>
-        </array>
 	<key>Auth Email</key>
 	<string>test@test.com</string>
 	<key>Auth Password</key>
 	<string>testpass</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>PMS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -61,7 +17,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<string>PMS</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -120,6 +76,8 @@
 		<string>kakaolink</string>
 		<string>kakaotalk-5.9.7</string>
 	</array>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
