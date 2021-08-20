@@ -7,8 +7,7 @@
 
 import UIKit
 
-class StatusView: UIView {
-    
+final public class StatusView: UIView {
     private let pointStatus = UIButton().then {
         $0.backgroundColor = Colors.blue.color
         $0.isUserInteractionEnabled = false
@@ -49,13 +48,21 @@ class StatusView: UIView {
     
     // MARK: - Initialization
     
-    override func draw(_ rect: CGRect) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func draw(_ rect: CGRect) {
         setupSubview()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: Student) {
+    public func setupView(model: Student) {
         DispatchQueue.main.async {
             self.pointStatus.setTitle( self.minusStatus(num: model.minus), for: .normal)
             self.statuslabel.text = self.convertStatus(num: model.status)
@@ -67,7 +74,7 @@ class StatusView: UIView {
         }
     }
     
-    func convertStatus(num: Int) -> String {
+    private func convertStatus(num: Int) -> String {
         if num == 1 {
             return "금요귀가"
         } else if num == 2 {
@@ -81,7 +88,7 @@ class StatusView: UIView {
         }
     }
     
-    func minusStatus(num: Int) -> String {
+    private func minusStatus(num: Int) -> String {
         if UDManager.shared.student == nil {
             return "-"
         } else if num < 5 {
@@ -126,7 +133,6 @@ class StatusView: UIView {
         }
         
         statusTitle.snp.makeConstraints {
-//            $0.top.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview().offset(-20)
             $0.leading.equalToSuperview().offset(20)
         }
@@ -137,7 +143,6 @@ class StatusView: UIView {
         }
         
         mealTitle.snp.makeConstraints {
-//            $0.bottom.equalToSuperview().offset(-20)
             $0.centerY.equalToSuperview().offset(20)
             $0.leading.equalToSuperview().offset(20)
         }

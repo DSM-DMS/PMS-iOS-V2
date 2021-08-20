@@ -9,26 +9,26 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class PMSViewController: UIViewController {
-    let viewModel: PMSViewModel
+final public class PMSViewController: UIViewController {
+    internal let viewModel: PMSViewModel
     private let disposeBag = DisposeBag()
     
-    let pmsImage = PMSImage()
-    let loginButton = BlueButton(title: .loginButton, label: .loginButton)
-    let registerButton = RedButton(title: .registerButton, label: .registerButton)
-    let noLoginButton = NoLoginButton(title: .noLoginButton)
+    private let pmsImage = PMSImage()
+    private let loginButton = BlueButton(title: .loginButton, label: .loginButton)
+    private let registerButton = RedButton(title: .registerButton, label: .registerButton)
+    private let noLoginButton = NoLoginButton(title: .noLoginButton)
     
-    let PMSStack = UIStackView().then {
+    private let PMSStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = UIFrame.height / 10
     }
     
-    let buttonStack = UIStackView().then {
+    private let buttonStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 30.0
     }
     
-    init(viewModel: PMSViewModel) {
+    internal init(viewModel: PMSViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindViewModel()
@@ -38,12 +38,12 @@ class PMSViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         setupSubview()
         setNavigationTitle(title: .PMSTitle, accessibilityLabel: .PMSView, isLarge: true)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AnalyticsManager.view_PMS.log()
     }

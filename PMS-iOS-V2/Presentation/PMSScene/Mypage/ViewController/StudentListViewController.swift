@@ -13,10 +13,10 @@ import SnapKit
 import Then
 import Reachability
 
-class StudentListViewController: UIViewController {
-    let viewModel: StudentListViewModel
+final public class StudentListViewController: UIViewController {
+    internal let viewModel: StudentListViewModel
     private let delegate: StudentListDelegate
-    let activityIndicator = UIActivityIndicatorView()
+    private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     
     private let addButtonTapped = UITapGestureRecognizer()
@@ -51,7 +51,7 @@ class StudentListViewController: UIViewController {
         return cell
     }, canEditRowAtIndexPath: { _, _ in return true })
     
-    init(viewModel: StudentListViewModel,
+    internal init(viewModel: StudentListViewModel,
          delegate: StudentListDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
@@ -63,18 +63,18 @@ class StudentListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         addStudentLabel.addGestureRecognizer(addButtonTapped)
         self.setupSubview()
         self.bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }

@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class UDManager {
+final public class UDManager {
     static let shared = UDManager()
     
-    let UD = UserDefaults.standard
+    private let UD = UserDefaults.standard
     
     public var student: String? {
         get {

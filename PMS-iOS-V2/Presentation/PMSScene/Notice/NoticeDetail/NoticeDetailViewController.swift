@@ -13,10 +13,10 @@ import SnapKit
 import Then
 import Reachability
 
-class NoticeDetailViewController: UIViewController {
-    let viewModel: NoticeDetailViewModel
+final public class NoticeDetailViewController: UIViewController {
+    internal let viewModel: NoticeDetailViewModel
     private let reachability = try! Reachability()
-    let activityIndicator = UIActivityIndicatorView()
+    private let activityIndicator = UIActivityIndicatorView()
     
     private let noticeView = NoticeDetailView()
     
@@ -39,7 +39,7 @@ class NoticeDetailViewController: UIViewController {
     
     private let mentionButton = MentionButton()
     private let enterButton = EnterButton()
-    let commentTextField = UITextField().then {
+    private let commentTextField = UITextField().then {
         $0.setPlaceholder(.commentPlaceholder)
     }
     private let commentBackground = UIView().then {
@@ -47,7 +47,7 @@ class NoticeDetailViewController: UIViewController {
         $0.layer.cornerRadius = 15
     }
     
-    let mentionTableView = UITableView().then {
+    private let mentionTableView = UITableView().then {
         $0.register(MentionTableViewCell.self, forCellReuseIdentifier: "MentionTableViewCell")
         $0.contentMode = .scaleAspectFit
         $0.rowHeight = 50
@@ -73,7 +73,7 @@ class NoticeDetailViewController: UIViewController {
         return cell
     })
     
-    init(viewModel: NoticeDetailViewModel) {
+    internal init(viewModel: NoticeDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -83,7 +83,7 @@ class NoticeDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = viewModel.title
         self.setupSubview()
@@ -97,18 +97,18 @@ class NoticeDetailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_notice_detail.log(name: viewModel.title)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }
     
-    override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         inputBackground.snp.makeConstraints {
             $0.height.equalTo(80 + view.safeAreaInsets.bottom / 2)
         }

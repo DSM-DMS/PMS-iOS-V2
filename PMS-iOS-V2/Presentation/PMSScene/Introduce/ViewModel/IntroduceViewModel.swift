@@ -9,19 +9,19 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class IntroduceViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class IntroduceViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let clubButtonTapped = PublishRelay<Void>()
         let companyButtonTapped = PublishRelay<Void>()
         let developerButtonTapped = PublishRelay<Void>()
     }
     
-    let input = Input()
+    public let input = Input()
     
-    init() {
+    public init() {
         input.clubButtonTapped
             .subscribe { _ in
                 self.steps.accept(PMSStep.clubIsRequired)

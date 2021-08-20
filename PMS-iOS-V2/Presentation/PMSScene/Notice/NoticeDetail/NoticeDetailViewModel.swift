@@ -9,14 +9,14 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class NoticeDetailViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class NoticeDetailViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let id: Int
-    let title: String
+    public let title: String
     private let repository: NoticeRepository
     private let disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
@@ -25,15 +25,15 @@ class NoticeDetailViewModel: Stepper {
         let enterButtonTapped = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let detailNotice = BehaviorRelay<DetailNotice>(value: DetailNotice(id: 0, date: "", title: "", body: "", comment: [Comment]()))
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(id: Int, title: String, repository: NoticeRepository) {
+    public init(id: Int, title: String, repository: NoticeRepository) {
         self.id = id
         self.title = title
         self.repository = repository

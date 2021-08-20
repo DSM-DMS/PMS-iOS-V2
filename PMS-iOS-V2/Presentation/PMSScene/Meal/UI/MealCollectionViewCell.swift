@@ -13,7 +13,7 @@ import RxCocoa
 import RxSwift
 import SkeletonView
 
-class MealCollectionViewCell: UICollectionViewCell {
+final public class MealCollectionViewCell: UICollectionViewCell {
     private let disposeBag = DisposeBag()
     
     private let timeLabel = UILabel().then {
@@ -24,7 +24,6 @@ class MealCollectionViewCell: UICollectionViewCell {
     private let mealLabel = UILabel().then {
         $0.textColor = UIColor.black
         $0.font = UIFont.preferredFont(forTextStyle: .body)
-        $0.fitTextToBounds()
         $0.textAlignment = .center
         $0.sizeToFit()
         $0.numberOfLines = 0
@@ -62,7 +61,7 @@ class MealCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Initialization
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupSubview()
     }
@@ -71,19 +70,24 @@ class MealCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override class func awakeFromNib() {
+    public override class func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: MealCell) {
+    public func setupView(model: MealCell) {
         DispatchQueue.main.async {
             self.timeLabel.setText(model.time)
+            if model.time == .lunch {
+                self.blueBackground.backgroundColor = Colors.green.color
+            } else if model.time == .dinner {
+                self.blueBackground.backgroundColor = Colors.red.color
+            }
             if model.meal.isEmpty {
                 self.mealLabel.text = LocalizedString.noMealPlaceholder.localized
             } else {
@@ -170,7 +174,7 @@ class MealCollectionViewCell: UICollectionViewCell {
     }
 }
 
-class FlipButton: UIButton {
+final internal class FlipButton: UIButton {
     convenience init(label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)

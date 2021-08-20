@@ -9,25 +9,25 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class PMSViewModel: Stepper {
-    let steps = PublishRelay<Step>()
-    let repository: LoginRepository
+final public class PMSViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
+    private let repository: LoginRepository
     private var disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let loginButtonTapped = PublishRelay<Void>()
         let registerButtonTapped = PublishRelay<Void>()
         let noLoginButtonTapped = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: LoginRepository) {
+    public init(repository: LoginRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         
@@ -44,13 +44,6 @@ class PMSViewModel: Stepper {
                 self.steps.accept(PMSStep.registerIsRequired)
             })
             .disposed(by: disposeBag)
-        
-        //        input.noLoginButtonTapped
-        //            .asObservable()
-        //            .subscribe(onNext: { _ in
-        //                self.steps.accept(PMSStep.tabBarIsRequired)
-        //            })
-        //            .disposed(by: disposeBag)
         
         input.noLoginButtonTapped
             .asObservable()

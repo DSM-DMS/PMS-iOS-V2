@@ -8,10 +8,9 @@
 import Foundation
 import UIKit
 import RxFlow
-import Then
 
-class TabbarFlow: Flow {
-    var root: Presentable {
+final public class TabbarFlow: Flow {
+    public var root: Presentable {
         return self.rootViewController
     }
 
@@ -19,11 +18,9 @@ class TabbarFlow: Flow {
         $0.tabBar.barTintColor = Colors.white.color
     }
 
-    deinit {
-        print("\(type(of: self)): \(#function)")
-    }
+    public init() {}
 
-    func navigate(to step: Step) -> FlowContributors {
+    public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? PMSStep else { return .none }
 
         switch step {
@@ -35,7 +32,6 @@ class TabbarFlow: Flow {
     }
 
     private func navigateToTabBar() -> FlowContributors {
-
         let calendarFlow = CalendarFlow()
         let mealFlow = MealFlow()
         let noticeFlow = NoticeFlow()

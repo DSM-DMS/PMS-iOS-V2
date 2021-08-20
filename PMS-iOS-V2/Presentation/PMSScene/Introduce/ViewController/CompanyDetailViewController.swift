@@ -10,15 +10,15 @@ import Reachability
 import RxSwift
 import RxCocoa
 
-class CompanyDetailViewController: UIViewController {
-    let viewModel: CompanyViewModel
-    let name: String
-    let activityIndicator = UIActivityIndicatorView()
+final public class CompanyDetailViewController: UIViewController {
+    internal let viewModel: CompanyViewModel
+    private let name: String
+    private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     private let detailView = ClubDetailView()
     
-    init(viewModel: CompanyViewModel, name: String) {
+    public init(viewModel: CompanyViewModel, name: String) {
         self.viewModel = viewModel
         self.name = name
         super.init(nibName: nil, bundle: nil)
@@ -29,7 +29,7 @@ class CompanyDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = name
         self.setupSubview()
@@ -45,13 +45,13 @@ class CompanyDetailViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_company_detail.log(name: name)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }

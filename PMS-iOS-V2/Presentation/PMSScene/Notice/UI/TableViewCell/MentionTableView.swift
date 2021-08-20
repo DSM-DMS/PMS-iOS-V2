@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class MentionTableViewCell: UITableViewCell {
+final public class MentionTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: 20)
@@ -18,7 +18,7 @@ class MentionTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
@@ -27,13 +27,13 @@ class MentionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(text: String) {
+    public func setupView(text: String) {
         self.titleLabel.text = text
     }
     

@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol RegisterRepository {
+public protocol RegisterRepository {
     func register(name: String, email: String, password: String) -> Single<Bool>
 }

@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class LoginViewModel: Stepper {
-    let steps = PublishRelay<Step>()
-    let repository: LoginRepository
+final public class LoginViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
+    private let repository: LoginRepository
     private var disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let noInternet = PublishRelay<Void>()
         let emailText = BehaviorRelay<String>(value: "")
         let passwordText = BehaviorRelay<String>(value: "")
@@ -27,7 +27,7 @@ class LoginViewModel: Stepper {
         let oAuthError = PublishRelay<Error>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let isEmailValid = BehaviorRelay<Bool>(value: false)
         let isEmailTyping = PublishRelay<Bool>()
@@ -38,10 +38,10 @@ class LoginViewModel: Stepper {
         let loginButtonIsEnable = BehaviorRelay<Bool>(value: false)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: LoginRepository) {
+    public init(repository: LoginRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         

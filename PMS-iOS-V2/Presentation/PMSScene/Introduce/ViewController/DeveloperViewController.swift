@@ -11,13 +11,13 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class DeveloperViewController: UIViewController {
-    let viewModel: DeveloperViewModel
-    let activityIndicator = UIActivityIndicatorView()
+final public class DeveloperViewController: UIViewController {
+    internal let viewModel: DeveloperViewModel
+    private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout().then {
             $0.minimumLineSpacing = 20
             $0.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
@@ -37,7 +37,7 @@ class DeveloperViewController: UIViewController {
             return cell
     })
     
-    init(viewModel: DeveloperViewModel) {
+    public init(viewModel: DeveloperViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.collectionView.delegate = self
@@ -48,20 +48,20 @@ class DeveloperViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = LocalizedString.developerTitle.localized
         self.setupSubview()
         self.bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_developers.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }
@@ -100,7 +100,7 @@ class DeveloperViewController: UIViewController {
 }
 
 extension DeveloperViewController: UICollectionViewDelegateFlowLayout {
-   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
        return CGSize(width: UIFrame.width / 2 - 50, height: UIFrame.width / 2 - 10)
    }
 }

@@ -7,8 +7,7 @@
 
 import UIKit
 
-final class MypageButton: UIButton {
-    
+final public class MypageRow: UIButton {
     private let _titleLabel = UILabel().then {
         $0.textColor = UIColor.black
         $0.font = UIFont.preferredFont(forTextStyle: .body)
@@ -20,13 +19,13 @@ final class MypageButton: UIButton {
         $0.tintColor = UIColor.black
     }
     
-    convenience init(title: LocalizedString, label: AccessibilityString) {
+    public convenience init(title: LocalizedString, label: AccessibilityString) {
         self.init()
         self.setAccessibility(label)
         self._titleLabel.text = title.localized
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubViews([_titleLabel, arrowImage])
         
@@ -58,24 +57,3 @@ final class MypageButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-#if canImport(SwiftUI) && DEGUG
-import SwiftUI
-
-struct ContentView: View {
-    var body: some View {
-        Text("")
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ContentView()
-                .previewDevice(PreviewDevice(rawValue: "iPhone XS Max"))
-                .previewDisplayName("iPhone XS Max")
-        }
-    }
-}
-
-#endif

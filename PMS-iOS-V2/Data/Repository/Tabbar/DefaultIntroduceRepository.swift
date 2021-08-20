@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import RxSwift
 import Moya
 
-final class DefaultIntroduceRepository: IntroduceRepository {
-    let provider: MoyaProvider<PMSApi>
+final public class DefaultIntroduceRepository: IntroduceRepository {
+    private let provider: MoyaProvider<PMSApi>
     
-    init(provider: MoyaProvider<PMSApi>?) {
+    public init(provider: MoyaProvider<PMSApi>?) {
         self.provider = provider ?? MoyaProvider<PMSApi>()
     }
     
-    func getClubList() -> Single<ClubList> {
+    public func getClubList() -> Single<ClubList> {
         provider.rx.request(.clubs)
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -31,7 +30,7 @@ final class DefaultIntroduceRepository: IntroduceRepository {
             }
     }
     
-    func getDetailClub(name: String) -> Single<DetailClub> {
+    public func getDetailClub(name: String) -> Single<DetailClub> {
         provider.rx.request(.clubDetail(name))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
@@ -46,7 +45,7 @@ final class DefaultIntroduceRepository: IntroduceRepository {
             }
     }
     
-    func getDeveloper() -> Single<[Developer]> {
+    public func getDeveloper() -> Single<[Developer]> {
         let developers = [
             Developer(name: "정고은", field: "iOS", image: Asset.ios1.image),
             Developer(name: "강은빈", field: "웹", image: Asset.front1.image),

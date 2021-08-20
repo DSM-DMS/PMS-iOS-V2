@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import Moya
 import RxSwift
 
-final class DefaultRegisterRepository: RegisterRepository {
-    let provider: MoyaProvider<AuthApi>
+final public class DefaultRegisterRepository: RegisterRepository {
+    private let provider: MoyaProvider<AuthApi>
     
-    init(provider: MoyaProvider<AuthApi>?) {
+    public init(provider: MoyaProvider<AuthApi>?) {
         self.provider = provider ?? MoyaProvider<AuthApi>()
     }
     
-    func register(name: String, email: String, password: String) -> Single<Bool> {
+    public func register(name: String, email: String, password: String) -> Single<Bool> {
         provider.rx.request(.register(email: email, password: password, name: name))
             .filterSuccessfulStatusCodes()
             .flatMap { _ in

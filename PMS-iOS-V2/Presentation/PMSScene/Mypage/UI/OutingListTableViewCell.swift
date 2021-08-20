@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class OutingListTableViewCell: UITableViewCell {
+final public class OutingListTableViewCell: UITableViewCell {
     private let outingStack = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
@@ -49,7 +49,7 @@ class OutingListTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
@@ -58,13 +58,13 @@ class OutingListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: Outing) {
+    public func setupView(model: Outing) {
         DispatchQueue.main.async {
             if model.type == "DISEASE" {
                 self.colorView.backgroundColor = Colors.red.color
@@ -85,7 +85,6 @@ class OutingListTableViewCell: UITableViewCell {
         dateStack.addArrangeSubviews([colorView, dateLabel])
         
         colorView.snp.makeConstraints {
-//            $0.height.equalTo(15)
             $0.width.equalTo(3)
         }
         

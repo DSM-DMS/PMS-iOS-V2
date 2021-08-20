@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol ChangePasswordRepository {
+public protocol ChangePasswordRepository {
     func changePassword(nowPassword: String, newPassword: String) -> Single<Bool>
 }

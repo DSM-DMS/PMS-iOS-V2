@@ -12,8 +12,8 @@ import RxDataSources
 import SnapKit
 import Then
 
-class NoticeViewController: UIViewController {
-    let viewModel: NoticeViewModel
+final public class NoticeViewController: UIViewController {
+    internal let viewModel: NoticeViewModel
     private let searchController = UISearchController(searchResultsController: nil)
     private let segmentedControl = UISegmentedControl(items: [LocalizedString.noticeTitle.localized, LocalizedString.letter.localized]).then {
         $0.contentMode = .scaleAspectFit
@@ -22,19 +22,19 @@ class NoticeViewController: UIViewController {
         $0.setWidth(100, forSegmentAt: 0)
         $0.setWidth(100, forSegmentAt: 1)
     }
-    let activityIndicator = UIActivityIndicatorView()
+    private let activityIndicator = UIActivityIndicatorView()
     private let tableView = UITableView().then {
         $0.register(NoticeTableViewCell.self, forCellReuseIdentifier: "NoticeTableViewCell")
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
         $0.rowHeight = 70
     }
-    let previousButton = PreviousPageButton(label: .previousPageButton)
-    let nextButton = NextPageButton(label: .nextPageButton)
-    let pageLabel = UILabel().then {
+    private let previousButton = PreviousPageButton(label: .previousPageButton)
+    private let nextButton = NextPageButton(label: .nextPageButton)
+    private let pageLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
-    let pageStackView = UIStackView().then {
+    private let pageStackView = UIStackView().then {
         $0.spacing = 5
         $0.distribution = .equalSpacing
     }
@@ -52,7 +52,7 @@ class NoticeViewController: UIViewController {
         return cell
     })
     
-    init(viewModel: NoticeViewModel) {
+    internal init(viewModel: NoticeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -62,7 +62,7 @@ class NoticeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setNavigationTitle(title: .noticeTitle, accessibilityLabel: .noticeTitle, isLarge: true)
         self.navigationItem.searchController = searchController
         self.setupSubview()

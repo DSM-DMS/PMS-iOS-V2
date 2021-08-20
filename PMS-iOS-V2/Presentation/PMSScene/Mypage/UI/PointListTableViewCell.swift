@@ -10,8 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class PointListTableViewCell: UITableViewCell {
-    
+final public class PointListTableViewCell: UITableViewCell {
     private let textStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 5.0
@@ -43,7 +42,7 @@ class PointListTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
@@ -52,13 +51,13 @@ class PointListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: Point) {
+    public func setupView(model: Point) {
         DispatchQueue.main.async {
             if !model.type {
                 self.scoreLabel.textColor = Colors.red.color

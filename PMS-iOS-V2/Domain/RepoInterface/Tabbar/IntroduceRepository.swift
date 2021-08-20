@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-protocol IntroduceRepository {
+public protocol IntroduceRepository {
     func getClubList() -> Single<ClubList>
     func getDetailClub(name: String) -> Single<DetailClub>
     func getDeveloper() -> Single<[Developer]>

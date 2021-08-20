@@ -9,77 +9,77 @@ import UIKit
 import RxSwift
 import Reachability
 
-final class RegisterViewController: UIViewController {
-    let viewModel: RegisterViewModel
-    let activityIndicator = UIActivityIndicatorView()
+final public class RegisterViewController: UIViewController {
+    internal let viewModel: RegisterViewModel
+    public let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     
-    let registerViewStack = UIStackView().then {
+    private let registerViewStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 40.0
     }
     
-    let nicknameView = UIStackView().then {
+    private let nicknameView = UIStackView().then {
         $0.spacing = 15.0
         $0.alignment = .leading
     }
     
-    let nicknameStackView = UIStackView().then {
+    private let nicknameStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let emailView = UIStackView().then {
+    private let emailView = UIStackView().then {
         $0.spacing = 15.0
         $0.alignment = .leading
     }
     
-    let emailStackView = UIStackView().then {
+    private let emailStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let passwordView = UIStackView().then {
+    private let passwordView = UIStackView().then {
         $0.spacing = 15.0
         $0.alignment = .leading
     }
     
-    let passwordStackView = UIStackView().then {
+    private let passwordStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let rePasswordView = UIStackView().then {
+    private let rePasswordView = UIStackView().then {
         $0.spacing = 15.0
         $0.alignment = .leading
     }
     
-    let rePasswordStackView = UIStackView().then {
+    private let rePasswordStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let oAuthStackView = UIStackView().then {
+    private let oAuthStackView = UIStackView().then {
         $0.alignment = .top
         $0.distribution = .equalSpacing
     }
     
-    let facebookButton = FacebookButton(label: .facebookLogin)
-    let naverButton = NaverButton(label: .naverRegister)
-    let kakaotalkButton = KakaotalkButton(label: .kakaotalkLogin)
-    let appleButton = AppleButton(label: .appleLogin)
+    private let facebookButton = FacebookButton(label: .facebookLogin)
+    private let naverButton = NaverButton(label: .naverRegister)
+    private let kakaotalkButton = KakaotalkButton(label: .kakaotalkLogin)
+    private let appleButton = AppleButton(label: .appleLogin)
     let registerButton = RedButton(title: .registerButton, label: .registerButton)
     
-    let pencilImage = BlackPencilImage()
-    let personImage = PersonImage()
-    let lockImage = LockImage()
-    let circleCheckImage = CircleCheckImage()
-    let checkImage = CheckImage()
+    private let pencilImage = BlackPencilImage()
+    private let personImage = PersonImage()
+    private let lockImage = LockImage()
+    private let circleCheckImage = CircleCheckImage()
+    private let checkImage = CheckImage()
     
     let nicknameLine = UIView().then {
         $0.backgroundColor = .gray
@@ -94,23 +94,23 @@ final class RegisterViewController: UIViewController {
         $0.backgroundColor = .gray
     }
     
-    let nicknameTextField = PMSTextField(title: .nicknamePlaceholder)
-    let emailTextField = PMSTextField(title: .emailPlaceholder)
-    let passwordTextField = PMSTextField(title: .passwordPlaceholder).then {
+    private let nicknameTextField = PMSTextField(title: .nicknamePlaceholder)
+    private let emailTextField = PMSTextField(title: .emailPlaceholder)
+    private let passwordTextField = PMSTextField(title: .passwordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    let rePasswordTextField = PMSTextField(title: .rePasswordPlaceholder).then {
+    private let rePasswordTextField = PMSTextField(title: .rePasswordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    let rePasswordValidMsg = UILabel().then {
+    private let rePasswordValidMsg = UILabel().then {
         $0.text = ""
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         $0.textColor = Colors.red.color
     }
     
-    let passwordEyeButton = EyeButton()
+    private let passwordEyeButton = EyeButton()
     
-    init(viewModel: RegisterViewModel) {
+    internal init(viewModel: RegisterViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.setupDelegate()
@@ -120,20 +120,20 @@ final class RegisterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         setupSubview()
         setNavigationTitle(title: .registerTitle, accessibilityLabel: .registerView, isLarge: true)
         bindInput()
         bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! reachability.startNotifier()
         AnalyticsManager.view_signUp.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reachability.stopNotifier()
     }
@@ -389,12 +389,6 @@ extension RegisterViewController {
     }
     
     @objc private func keyboardWillHide(_ notification: Notification) {
-        if self.view.frame.origin.y != 0 {
-            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keybaordRectangle = keyboardFrame.cgRectValue
-                let keyboardHeight = keybaordRectangle.height
-                self.view.frame.origin.y += keyboardHeight / 2
-            }
-        }
+        self.view.frame.origin.y = 0
     }
 }

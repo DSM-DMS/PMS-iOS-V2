@@ -7,20 +7,17 @@
 
 import RxFlow
 import UIKit
-import Then
 
-class CalendarFlow: Flow {
-    var root: Presentable {
+final public class CalendarFlow: Flow {
+    public var root: Presentable {
         return self.rootViewController
     }
 
     private let rootViewController = UINavigationController()
+    
+    public init() {}
 
-    deinit {
-        print("\(type(of: self)): \(#function)")
-    }
-
-    func navigate(to step: Step) -> FlowContributors {
+    public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? PMSStep else { return .none }
 
         switch step {

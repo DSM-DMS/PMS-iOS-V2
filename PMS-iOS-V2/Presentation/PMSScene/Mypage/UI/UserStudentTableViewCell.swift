@@ -12,7 +12,7 @@ import Kingfisher
 import RxSwift
 import RxCocoa
 
-class UserStudentTableViewCell: UITableViewCell {
+final public class UserStudentTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
         $0.textColor = Colors.black.color
         $0.font = UIFont.preferredFont(forTextStyle: .body)
@@ -21,11 +21,11 @@ class UserStudentTableViewCell: UITableViewCell {
 
     private let disposeBag = DisposeBag()
     
-    var delegate: StudentListDelegate?
+    public var delegate: StudentListDelegate?
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = Colors.whiteGray.color
         setupSubview()
@@ -35,13 +35,13 @@ class UserStudentTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: UsersStudent) {
+    public func setupView(model: UsersStudent) {
         DispatchQueue.main.async {
             if model.number == UDManager.shared.studentNumber! {
                 self.titleLabel.textColor = Colors.blue.color

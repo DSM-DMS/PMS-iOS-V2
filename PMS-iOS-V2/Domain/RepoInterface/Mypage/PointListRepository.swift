@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol PointListRepository {
+public protocol PointListRepository {
     func getPointList(number: Int) -> Single<PointList>
 }

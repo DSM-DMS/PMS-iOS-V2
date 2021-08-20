@@ -124,11 +124,11 @@ public enum LocalizedString: String, Equatable, Hashable {
 }
 
 extension LocalizedString {
-    var localized: String {
+    public var localized: String {
         return NSLocalizedString(self.rawValue, comment: "")
     }
     
-    func localizedDate(date: Date) -> String {
+    public func localizedDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = self.localized
         

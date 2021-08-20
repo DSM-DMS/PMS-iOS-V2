@@ -8,31 +8,31 @@
 import UIKit
 
 extension UIButton {
-    func setTitle(_ title: LocalizedString) {
+    public func setTitle(_ title: LocalizedString) {
         self.setTitle(title.localized, for: .normal)
     }
 }
 
 extension UIView {
-    func setAccessibility(_ label: AccessibilityString) {
+    public func setAccessibility(_ label: AccessibilityString) {
         self.accessibilityLabel = label.localized
     }
 }
 
 extension UILabel {
-    func setText(_ text: LocalizedString) {
+    public func setText(_ text: LocalizedString) {
         self.text = text.localized
     }
 }
 
 extension UITextField {
-    func setPlaceholder(_ title: LocalizedString) {
+    public func setPlaceholder(_ title: LocalizedString) {
         self.placeholder = title.localized
     }
 }
 
 extension UIViewController {
-    func setNavigationTitle(title: LocalizedString, accessibilityLabel: AccessibilityString, isLarge: Bool) {
+    public func setNavigationTitle(title: LocalizedString, accessibilityLabel: AccessibilityString, isLarge: Bool) {
         self.navigationController?.navigationBar.prefersLargeTitles = isLarge
         self.navigationItem.title = title.localized
         self.navigationItem.accessibilityLabel = accessibilityLabel.localized
@@ -40,7 +40,7 @@ extension UIViewController {
 }
 
 extension UITabBarItem {
-    convenience init(title: LocalizedString, image: UIImage, tag: Int) {
+    public convenience init(title: LocalizedString, image: UIImage, tag: Int) {
         self.init(title: title.localized, image: image, tag: tag)
     }
 }

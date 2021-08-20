@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-protocol LoginRepository {
+public protocol LoginRepository {
     func login(email: String, password: String) -> Single<Bool>
     func sendNaverToken(token: String) -> Single<Bool>
     func sendFacebookToken(token: String) -> Single<Bool>

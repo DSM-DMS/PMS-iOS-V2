@@ -2,11 +2,19 @@
 
 부모님의 대덕소프트웨어마이스터고등학교 앱입니다.
 
+
+
 ## App Features
 
 - [x] 페이스북, 카카오, 네이버, 애플아이디 그리고 이메일로 로그인할 수 있습니다.
 - [x] 학사일정 ([FSCalendar](https://github.com/WenchaoD/FSCalendar)), 급식, 공지사항 및 가정통신문, 학교 소개, 자녀에 대한 정보를 볼 수 있습니다.
 - [x] 다크모드를 지원합니다.
+
+| 학사일정 | 급식 | 공지사항 및 가정통신문 | 학교 소개 | 마이페이지 |
+| :------: | :--: | :--------------------: | --------- | ---------- |
+<img src = ".Document/screenshots/1.png" width = 400> | <img src = ".Document/screenshots/2.png" width = 400> | <img src = ".Document/screenshots/3.png" width = 400> |
+
+
 
 
 
@@ -31,7 +39,7 @@
 
 ## Description of files
 
-[Docs]
+[File Structure.md](https://github.com/DSM-DMS/PMS-iOS-V2/blob/master/Document/File%20Structure.md)
 
 
 

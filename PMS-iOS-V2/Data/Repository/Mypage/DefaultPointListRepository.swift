@@ -5,18 +5,17 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import Moya
 import RxSwift
 
-final class DefaultPointListRepository: PointListRepository {
-    let provider: MoyaProvider<AuthApi>
+final public class DefaultPointListRepository: PointListRepository {
+    private let provider: MoyaProvider<AuthApi>
     
-    init(provider: MoyaProvider<AuthApi>?) {
+    public init(provider: MoyaProvider<AuthApi>?) {
         self.provider = provider ?? MoyaProvider<AuthApi>()
     }
     
-    func getPointList(number: Int) -> Single<PointList> {
+    public func getPointList(number: Int) -> Single<PointList> {
         provider.rx.request(.pointList(number: number))
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()

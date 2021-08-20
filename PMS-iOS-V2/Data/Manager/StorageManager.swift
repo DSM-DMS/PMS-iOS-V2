@@ -8,7 +8,7 @@
 import Foundation
 import Security
 
-final class StorageManager {
+final public class StorageManager {
     
     // MARK: Shared instance
     

@@ -10,8 +10,8 @@ import SnapKit
 import Then
 import Kingfisher
 
-class PMSImage: UIImageView {
-    override init(image: UIImage? = Asset.pms.image) {
+final public class PMSImage: UIImageView {
+    internal override init(image: UIImage? = Asset.pms.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
     }
@@ -19,16 +19,20 @@ class PMSImage: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIFrame.width / 2, height: UIFrame.width / 2)
+    }
 }
 
-class NoLoginButton: UIButton {
-    convenience init(title: LocalizedString) {
+final public class NoLoginButton: UIButton {
+    public convenience init(title: LocalizedString) {
         self.init()
         self.setTitle(title)
         self.setAccessibility(.noLoginButton)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setTitleColor(Colors.blue.color, for: .normal)
     }
@@ -38,8 +42,8 @@ class NoLoginButton: UIButton {
     }
 }
 
-class PersonImage: UIImageView {
-    override init(image: UIImage? = Asset.person.image) {
+final public class PersonImage: UIImageView {
+    internal override init(image: UIImage? = Asset.person.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
     }
@@ -48,13 +52,13 @@ class PersonImage: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: 18, height: 18)
     }
 }
 
-class LockImage: UIImageView {
-    override init(image: UIImage? = Asset.lock.image) {
+final public class LockImage: UIImageView {
+    internal override init(image: UIImage? = Asset.lock.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
     }
@@ -63,13 +67,13 @@ class LockImage: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: 20, height: 20)
     }
 }
 
-class EyeButton: UIButton {
-    override init(frame: CGRect) {
+final public class EyeButton: UIButton {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.eye.image, for: .normal)
         self.setAccessibility(.showPasswordButton)
@@ -82,13 +86,13 @@ class EyeButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: 25, height: 15)
     }
 }
 
-class BlackPencilImage: UIImageView {
-    override init(image: UIImage? = Asset.blackPencil.image) {
+final public class BlackPencilImage: UIImageView {
+    internal override init(image: UIImage? = Asset.blackPencil.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
         self.tintColor = Colors.black.color
@@ -98,13 +102,13 @@ class BlackPencilImage: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: 20, height: 20)
     }
 }
 
-class CircleCheckImage: UIImageView {
-    override init(image: UIImage? = Asset.circleCheck.image) {
+final public class CircleCheckImage: UIImageView {
+    internal override init(image: UIImage? = Asset.circleCheck.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
     }
@@ -113,13 +117,13 @@ class CircleCheckImage: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: 20, height: 20)
     }
 }
 
-class CheckImage: UIImageView {
-    override init(image: UIImage? = Asset.check.image) {
+final public class CheckImage: UIImageView {
+    internal override init(image: UIImage? = Asset.check.image) {
         super.init(image: image)
         self.contentMode = .scaleAspectFit
         self.tintColor = Colors.red.color
@@ -129,18 +133,18 @@ class CheckImage: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: 20, height: 20)
     }
 }
 
-class PMSTextField: UITextField {
-    convenience init(title: LocalizedString) {
+final public class PMSTextField: UITextField {
+    public convenience init(title: LocalizedString) {
         self.init()
         self.setPlaceholder(title)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
     

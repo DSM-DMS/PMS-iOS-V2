@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class RegisterViewModel: Stepper {
-    let steps = PublishRelay<Step>()
-    let repository: RegisterRepository
+final public class RegisterViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
+    private let repository: RegisterRepository
     private var disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let noInternet = PublishRelay<Void>()
         let nicknameText = BehaviorRelay<String>(value: "")
         let emailText = BehaviorRelay<String>(value: "")
@@ -28,7 +28,7 @@ class RegisterViewModel: Stepper {
         let registerButtonTapped = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let isNicknameTyping = PublishRelay<Bool>()
         let isNicknameValid = BehaviorRelay<Bool>(value: false)
@@ -44,10 +44,10 @@ class RegisterViewModel: Stepper {
         let registerButtonIsEnable = BehaviorRelay<Bool>(value: false)
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: RegisterRepository) {
+    public init(repository: RegisterRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         
@@ -149,7 +149,6 @@ class RegisterViewModel: Stepper {
             .asObservable()
             .subscribe(onNext: { _ in
                 AnalyticsManager.click_facebook.log()
-                //                self.steps.accept(PMSStep.loginIsRequired)
             })
             .disposed(by: disposeBag)
         
@@ -157,7 +156,6 @@ class RegisterViewModel: Stepper {
             .asObservable()
             .subscribe(onNext: { _ in
                 AnalyticsManager.click_naver.log()
-                //                self.steps.accept(PMSStep.registerIsRequired)
             })
             .disposed(by: disposeBag)
         
@@ -165,7 +163,6 @@ class RegisterViewModel: Stepper {
             .asObservable()
             .subscribe(onNext: { _ in
                 AnalyticsManager.click_kakaotalk.log()
-                //                self.steps.accept(PMSStep.tabBarIsRequired)
             })
             .disposed(by: disposeBag)
         
@@ -173,7 +170,6 @@ class RegisterViewModel: Stepper {
             .asObservable()
             .subscribe(onNext: { _ in
                 AnalyticsManager.click_apple.log()
-                //                self.steps.accept(PMSStep.tabBarIsRequired)
             })
             .disposed(by: disposeBag)
         

@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class NoticeDetailView: UIView {
+final public class NoticeDetailView: UIView {
     private let noticeStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 15.0
@@ -43,7 +43,6 @@ class NoticeDetailView: UIView {
     }
     
     private let dateStackView = UIStackView().then {
-//        $0.spacing = 10.0
         $0.distribution = .equalSpacing
         $0.alignment = .leading
     }
@@ -61,13 +60,21 @@ class NoticeDetailView: UIView {
 
     // MARK: - Initialization
     
-    override func draw(_ rect: CGRect) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func draw(_ rect: CGRect) {
         setupSubview()
     }
 
     // MARK: - Public Methods
     
-    func setupView(model: DetailNotice) {
+    public func setupView(model: DetailNotice) {
         DispatchQueue.main.async {
             self.titleLabel.text = model.title
             self.descLabel.text = model.body

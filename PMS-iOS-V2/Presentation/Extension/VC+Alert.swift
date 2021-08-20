@@ -8,7 +8,7 @@
 import UIKit
 import Then
 
-extension UIViewController {
+public extension UIViewController {
     func showErrorAlert(with message: String, access: AccessibilityString) {
         AnalyticsManager.error.log(message: message)
         DispatchQueue.main.async {

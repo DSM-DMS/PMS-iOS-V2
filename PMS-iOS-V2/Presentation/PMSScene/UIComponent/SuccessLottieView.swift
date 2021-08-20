@@ -9,16 +9,16 @@ import UIKit
 import Lottie
 import Then
 
-class SuccessLottieView: UIView {
-    let animationView = AnimationView(name: "success")
-    let label = UILabel()
+final public class SuccessLottieView: UIView {
+    private let animationView = AnimationView(name: "success")
+    private let label = UILabel()
     
-    convenience init(text: LocalizedString) {
+    public convenience init(text: LocalizedString) {
         self.init()
         label.setText(text)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = Colors.white.color
         self.layer.cornerRadius = 10
@@ -49,7 +49,7 @@ class SuccessLottieView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: UIFrame.width / 1.75, height: UIFrame.width / 1.75)
     }
     

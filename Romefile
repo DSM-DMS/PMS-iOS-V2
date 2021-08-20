@@ -1,6 +1,6 @@
 cache: # required
   # at least one of the following is required:
-  s3Bucket: pms-carthage-bucket
+  s3Bucket: pms-carthage-bucket2
 
 repositoryMap:
 - RxSwift:

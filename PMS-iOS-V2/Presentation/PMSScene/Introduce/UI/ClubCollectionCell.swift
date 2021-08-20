@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import Then
 import Kingfisher
+import SkeletonView
 
-class ClubCollectionCell: UICollectionViewCell {
-    
+final public class ClubCollectionCell: UICollectionViewCell {
     private let background = UIView().then {
         $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
@@ -24,6 +24,7 @@ class ClubCollectionCell: UICollectionViewCell {
     private let clubImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.layer.cornerRadius = 20
+        $0.isSkeletonable = true
         $0.layer.masksToBounds = true
     }
     
@@ -34,7 +35,7 @@ class ClubCollectionCell: UICollectionViewCell {
     
     // MARK: - Initialization
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupSubview()
     }
@@ -43,16 +44,18 @@ class ClubCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: Club) {
+    public func setupView(model: Club) {
         self.clubLabel.text = model.name
         
-        self.clubImage.kf.setImage(with: (URL(string: model.imageUrl)))
+        self.clubImage.kf.setImage(with: URL(string: model.imageUrl), placeholder: nil, options: nil, progressBlock: { _, _ in
+            self.clubImage.showAnimatedGradientSkeleton()
+        }, completionHandler: { _ in self.clubImage.hideSkeleton() })
     }
     
     // MARK: Private Methods

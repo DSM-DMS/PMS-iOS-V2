@@ -12,10 +12,10 @@ import RxDataSources
 import SnapKit
 import Then
 
-class MealViewController: UIViewController {
-    let viewModel: MealViewModel
+final public class MealViewController: UIViewController {
+    internal let viewModel: MealViewModel
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout().then {
             $0.scrollDirection = .horizontal
             $0.minimumLineSpacing = 20
@@ -43,14 +43,14 @@ class MealViewController: UIViewController {
         $0.alignment = .center
     }
     
-    let leftButton = LeftArrowButton()
-    let dateLabel = UILabel().then {
+    private let leftButton = LeftArrowButton()
+    public let dateLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.tintColor = Colors.black.color
     }
-    let rightButton = RightArrowButton()
+    private let rightButton = RightArrowButton()
     
-    init(viewModel: MealViewModel) {
+    public init(viewModel: MealViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -60,14 +60,14 @@ class MealViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setNavigationTitle(title: .mealTitle, accessibilityLabel: .mealTitle, isLarge: true)
         self.setupSubview()
         self.bindOutput()
         collectionView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AnalyticsManager.view_meal.log()
     }
@@ -122,10 +122,6 @@ class MealViewController: UIViewController {
                 self.dateLabel.text = $0
             }).disposed(by: disposeBag)
         
-        //        collectionView.rx.itemSelected
-        //            .subscribe(onNext: { self.collectionView.deselectRow(at: $0, animated: true)})
-        //            .disposed(by: disposeBag)
-        
         viewModel.output.mealCellList
             .map { [ListSection<MealCell>(header: "", items: $0)] }
             .bind(to: collectionView.rx.items(dataSource: mealDataSource))
@@ -134,7 +130,7 @@ class MealViewController: UIViewController {
 }
 
  extension MealViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width / 1.5, height: UIFrame.height / 2)
     }
  }

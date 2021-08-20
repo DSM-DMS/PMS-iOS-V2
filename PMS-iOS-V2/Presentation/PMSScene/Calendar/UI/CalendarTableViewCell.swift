@@ -8,9 +8,8 @@
 import UIKit
 import SnapKit
 import Then
-import Kingfisher
 
-class CalendarTableViewCell: UITableViewCell {
+final public class CalendarTableViewCell: UITableViewCell {
     private let dateStack = UIStackView().then {
         $0.spacing = 15.0
     }
@@ -39,7 +38,7 @@ class CalendarTableViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
@@ -48,13 +47,13 @@ class CalendarTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     // MARK: - Public Methods
     
-    func setupView(model: CalendarCell) {
+    public func setupView(model: CalendarCell) {
         DispatchQueue.main.async {
             if model.isHome != nil {
                 self.circle.backgroundColor = model.isHome! ? Colors.red.color : Colors.green.color

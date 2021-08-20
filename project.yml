@@ -37,22 +37,24 @@ targets:
       base:
         INFOPLIST_FILE: PMS-iOS-V2/Resource/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2
-        CURRENT_PROJECT_VERSION: 3
+        CURRENT_PROJECT_VERSION: 5
         VERSIONING_SYSTEM: Apple Generic
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
         CODE_SIGN_ENTITLEMENTS: PMS-iOS-V2/Resource/PMS-iOS-V2.entitlements
         FRAMEWORK_SEARCH_PATHS: $(inherited) $(PROJECT_DIR)/Carthage/Build $(PROJECT_DIR)/Carthage/Build/iOS
-#    postBuildScripts:
-#      - script: "${PROJECT_DIR}/scripts/run"
-#        name: Carthage
-#        inputFiles:
-#          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
-#          - ${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}
     postCompileScripts:
       - script: swiftlint
-        name: Swiftlint
+      - name: Swiftlint
+    postBuildScripts:
+      - script: |
+            cp -r ${BUILT_PRODUCTS_DIR}/PMS.appex ${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/PMS.appex
+      - name: Embed App Extensions
+
     dependencies:
+      - target: PMS-Today-Extension
+        codeSign: false
+        embed: true
       - carthage: Carthage/Build/iOS/Alamofire
       - carthage: Carthage/Build/iOS/Differentiator
       - carthage: Carthage/Build/iOS/FSCalendar
@@ -153,3 +155,26 @@ targets:
       INFOPLIST_FILE: Resource/Info.plist # Info.plist 등록
       commandLineArguments: [test: true]
       FRAMEWORK_SEARCH_PATHS: $(inherited)
+
+  PMS-Today-Extension:
+    type: app-extension
+    platform: iOS
+    sources: [PMS-Today-Extension, PMS-iOS-V2/Extension/Colors+Generated.swift, PMS-iOS-V2/Localize/LocalizedString.swift, PMS-iOS-V2/Domain/Entity/Calendar/PMSCalendar.swift, PMS-iOS-V2/Resource/Colors.xcassets]
+    configFiles:
+      Debug: xcconfig/PMS-Today-Extension-Debug.xcconfig
+      Release: xcconfig/PMS-Today-Extension-Release.xcconfig
+    settings:
+      groups: [app]
+      base:
+        INFOPLIST_FILE: PMS-Today-Extension/Resource/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2.PMS-Today-Extension
+        FRAMEWORK_SEARCH_PATHS: $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+    preBuildScripts:
+      - path: PMS-iOS-V2Tests/Resource/script.sh
+        name: Carthage
+        inputFileLists:
+          - $(SRCROOT)/PMS-Today-Extension/Resource/PMS-Today-Extension-inputPaths.xcfilelist
+    dependencies:
+      - sdk: NotificationCenter.framework
+      - carthage: Carthage/Build/iOS/FSCalendar
+      - carthage: Carthage/Build/iOS/Alamofire

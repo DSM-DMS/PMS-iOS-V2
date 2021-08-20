@@ -9,26 +9,26 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class DeveloperViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class DeveloperViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let repository: IntroduceRepository
     private let disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
         let noInternet = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let developerList = PublishRelay<[Developer]>()
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: IntroduceRepository) {
+    public init(repository: IntroduceRepository) {
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         

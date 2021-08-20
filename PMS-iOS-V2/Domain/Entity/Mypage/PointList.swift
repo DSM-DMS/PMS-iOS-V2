@@ -16,10 +16,10 @@ public struct PointList: Codable {
 }
 
 public struct Point: Codable, Hashable {
-    var date: String
-    var reason: String
-    var point: Int
-    var type: Bool
+    public var date: String
+    public var reason: String
+    public var point: Int
+    public var type: Bool
     
     public init(date: String, reason: String, point: Int, type: Bool) {
         self.date = date

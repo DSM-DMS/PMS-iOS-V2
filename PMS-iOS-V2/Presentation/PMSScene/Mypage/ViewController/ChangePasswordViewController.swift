@@ -10,8 +10,8 @@ import RxSwift
 import RxCocoa
 import Reachability
 
-class ChangePasswordViewController: UIViewController {
-    let viewModel: ChangePasswordViewModel
+final public class ChangePasswordViewController: UIViewController {
+    internal let viewModel: ChangePasswordViewModel
     private let reachability = try! Reachability()
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
@@ -37,32 +37,32 @@ class ChangePasswordViewController: UIViewController {
         $0.textAlignment = .center
     }
     
-    let passwordViewStack = UIStackView().then {
+    private let passwordViewStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = UIFrame.height / 15
     }
     
-    let nowPasswordStackView = UIStackView().then {
+    private let nowPasswordStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let newPasswordStackView = UIStackView().then {
+    private let newPasswordStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let reNewPasswordStackView = UIStackView().then {
+    private let reNewPasswordStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
         $0.alignment = .leading
     }
     
-    let checkImage = CheckImage()
-    let nowPasswordEyeButton = EyeButton()
-    let newPasswordEyeButton = EyeButton()
+    private let checkImage = CheckImage()
+    private let nowPasswordEyeButton = EyeButton()
+    private let newPasswordEyeButton = EyeButton()
     let changePasswordButton = BlueButton(title: .confirm, label: .toChangePasswordButton)
     
     let nowPasswordLine = UIView().then {
@@ -75,22 +75,22 @@ class ChangePasswordViewController: UIViewController {
         $0.backgroundColor = .gray
     }
     
-    let nowPasswordTextField = PMSTextField(title: .passwordPlaceholder).then {
+    private let nowPasswordTextField = PMSTextField(title: .passwordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    let newPasswordTextField = PMSTextField(title: .passwordPlaceholder).then {
+    private let newPasswordTextField = PMSTextField(title: .passwordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    let reNewPasswordTextField = PMSTextField(title: .rePasswordPlaceholder).then {
+    private let reNewPasswordTextField = PMSTextField(title: .rePasswordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    let reNewPasswordValidMsg = UILabel().then {
+    private let reNewPasswordValidMsg = UILabel().then {
         $0.text = ""
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         $0.textColor = Colors.red.color
     }
 
-    init(viewModel: ChangePasswordViewModel) {
+    internal init(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -105,7 +105,7 @@ class ChangePasswordViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = LocalizedString.changePasswordTitle.localized
         self.setupSubview()
@@ -114,7 +114,7 @@ class ChangePasswordViewController: UIViewController {
         self.addKeyboardNotification()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AnalyticsManager.view_changePassword.log()
     }

@@ -9,6 +9,7 @@ import Foundation
 
 public struct AccessToken: Codable {
     public var accessToken: String
+    
     enum CodingKeys: String, CodingKey {
         case accessToken = "access-token"
     }

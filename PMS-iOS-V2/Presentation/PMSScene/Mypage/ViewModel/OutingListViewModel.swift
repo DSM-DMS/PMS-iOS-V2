@@ -9,26 +9,26 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class OutingListViewModel: Stepper {
-    let steps = PublishRelay<Step>()
+final public class OutingListViewModel: Stepper {
+    public let steps = PublishRelay<Step>()
     private let repository: OutingListRepository
     private let number: Int
     private let disposeBag = DisposeBag()
     
-    struct Input {
+    public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
     }
     
-    struct Output {
+    public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let outingList = PublishRelay<[Outing]>()
     }
     
-    let input = Input()
-    let output = Output()
+    public let input = Input()
+    public let output = Output()
     
-    init(repository: OutingListRepository, number: Int) {
+    public init(repository: OutingListRepository, number: Int) {
         self.repository = repository
         self.number = number
         let activityIndicator = ActivityIndicator()

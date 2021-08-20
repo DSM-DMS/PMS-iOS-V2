@@ -9,13 +9,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class AddStudentViewController: UIViewController {
-    let viewModel: AddStudentViewModel
-    let dismiss: () -> Void
-    let activityIndicator = UIActivityIndicatorView()
+final public class AddStudentViewController: UIViewController {
+    internal let viewModel: AddStudentViewModel
+    private let dismiss: () -> Void
+    private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     
-    let whiteBackground = UIView().then {
+    private let whiteBackground = UIView().then {
         $0.backgroundColor = Colors.whiteGray.color
         $0.layer.cornerRadius = 15
         $0.layer.shadowOpacity = 1.0
@@ -24,30 +24,30 @@ class AddStudentViewController: UIViewController {
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     }
     
-    let confirmLine = UIView().then {
+    private let confirmLine = UIView().then {
         $0.backgroundColor = .lightGray
     }
     
-    let cancelButton = UIButton().then {
+    private let cancelButton = UIButton().then {
         $0.setTitleColor(Colors.red.color, for: .normal)
         $0.setTitle(.cancel)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
-    let addButton = UIButton().then {
+    private let addButton = UIButton().then {
         $0.setTitleColor(Colors.blue.color, for: .normal)
         $0.setTitle(.confirm)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
     }
     
-    let otpFieldView = OTPFieldView()
+    private let otpFieldView = OTPFieldView()
     
-    let textLabel = UILabel().then {
+    private let textLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout)
         $0.text = LocalizedString.enterStudentCodeMsg.localized
     }
     
-    init(viewModel: AddStudentViewModel,
+    internal init(viewModel: AddStudentViewModel,
          dismiss: @escaping () -> Void) {
         self.viewModel = viewModel
         self.dismiss = dismiss
@@ -59,7 +59,7 @@ class AddStudentViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setupSubview()
         self.bindOutput()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -157,19 +157,19 @@ class AddStudentViewController: UIViewController {
 }
 
 extension AddStudentViewController: OTPFieldViewDelegate {
-    func shouldBecomeFirstResponderForOTP(otpTextFieldIndex index: Int) -> Bool {
+    public func shouldBecomeFirstResponderForOTP(otpTextFieldIndex index: Int) -> Bool {
         return true
     }
     
-    func enteredOTP(otp: String) {
+    public func enteredOTP(otp: String) {
         self.viewModel.input.otpString.accept(otp)
     }
     
-    func hasEnteredAllOTP(hasEnteredAll: Bool) -> Bool {
+    public func hasEnteredAllOTP(hasEnteredAll: Bool) -> Bool {
         return true
     }
     
-    func deletedOTP() {
+    public func deletedOTP() {
         
     }
     

@@ -10,39 +10,39 @@ import SwinjectAutoregistration
 import Moya
 
 extension Container {
-    func registerDependencies() {
+    public func registerDependencies() {
         registerTabbar()
         registerMypage()
         registerPMS()
         registerIntroduce()
     }
     
-    func registerTabbar() {
+    private func registerTabbar() {
         registerTabbarRepositories()
         registerTabbarViewModels()
         registerTabbarViewControllers()
     }
     
-    func registerMypage() {
+    private func registerMypage() {
         registerMypageRepositories()
         registerMypageViewModels()
         registerMypageViewControllers()
     }
     
-    func registerPMS() {
+    private func registerPMS() {
         registerPMSRepositories()
         registerPMSViewModels()
         registerPMSViewControllers()
     }
     
-    func registerIntroduce() {
+    private func registerIntroduce() {
         registerIntroduceViewModels()
         registerIntroduceViewControllers()
     }
     
     // MARK: - Tab bar
     
-    func registerTabbarRepositories() {
+    private func registerTabbarRepositories() {
         autoregister(CalendarRepository.self, initializer: DefaultCalendarRepository.init)
         autoregister(MealRepository.self, initializer: DefaultMealRepository.init)
         autoregister(NoticeRepository.self, initializer: DefaultNoticeRepository.init)
@@ -50,7 +50,7 @@ extension Container {
         autoregister(MypageRepository.self, initializer: DefaultMypageRepository.init)
     }
     
-    func registerTabbarViewModels() {
+    private func registerTabbarViewModels() {
         autoregister(CalendarViewModel.self, initializer: CalendarViewModel.init)
         autoregister(MealViewModel.self, initializer: MealViewModel.init)
         autoregister(NoticeViewModel.self, initializer: NoticeViewModel.init)
@@ -58,7 +58,7 @@ extension Container {
         autoregister(MypageViewModel.self, initializer: MypageViewModel.init)
     }
     
-    func registerTabbarViewControllers() {
+    private func registerTabbarViewControllers() {
         autoregister(CalendarViewController.self, initializer: CalendarViewController.init)
         autoregister(MealViewController.self, initializer: MealViewController.init)
         autoregister(NoticeViewController.self, initializer: NoticeViewController.init)
@@ -68,34 +68,34 @@ extension Container {
     
     // MARK: - Mypage
     
-    func registerMypageRepositories() {
+    private func registerMypageRepositories() {
         autoregister(ChangePasswordRepository.self, initializer: DefaultChangePasswordRepository.init)
         autoregister(OutingListRepository.self, initializer: DefaultOutingListRepository.init)
         autoregister(PointListRepository.self, initializer: DefaultPointListRepository.init)
     }
     
-    func registerMypageViewModels() {
+    private func registerMypageViewModels() {
         autoregister(ChangePasswordViewModel.self, initializer: ChangePasswordViewModel.init)
     }
     
-    func registerMypageViewControllers() {
+    private func registerMypageViewControllers() {
         autoregister(ChangePasswordViewController.self, initializer: ChangePasswordViewController.init)
     }
     
     // MARK: - PMS
     
-    func registerPMSRepositories() {
+    private func registerPMSRepositories() {
         autoregister(LoginRepository.self, initializer: DefaultLoginRepository.init)
         autoregister(RegisterRepository.self, initializer: DefaultRegisterRepository.init)
     }
     
-    func registerPMSViewModels() {
+    private func registerPMSViewModels() {
         autoregister(PMSViewModel.self, initializer: PMSViewModel.init)
         autoregister(LoginViewModel.self, initializer: LoginViewModel.init)
         autoregister(RegisterViewModel.self, initializer: RegisterViewModel.init)
     }
     
-    func registerPMSViewControllers() {
+    private func registerPMSViewControllers() {
         autoregister(PMSViewController.self, initializer: PMSViewController.init)
         autoregister(LoginViewController.self, initializer: LoginViewController.init)
         autoregister(RegisterViewController.self, initializer: RegisterViewController.init)
@@ -103,13 +103,13 @@ extension Container {
     
     // MARK: - Introduce
     
-    func registerIntroduceViewModels() {
+    private func registerIntroduceViewModels() {
         autoregister(ClubViewModel.self, initializer: ClubViewModel.init)
         autoregister(CompanyViewModel.self, initializer: CompanyViewModel.init)
         autoregister(DeveloperViewModel.self, initializer: DeveloperViewModel.init)
     }
     
-    func registerIntroduceViewControllers() {
+    private func registerIntroduceViewControllers() {
         autoregister(ClubViewController.self, initializer: ClubViewController.init)
         autoregister(CompanyViewController.self, initializer: CompanyViewController.init)
         autoregister(DeveloperViewController.self, initializer: DeveloperViewController.init)

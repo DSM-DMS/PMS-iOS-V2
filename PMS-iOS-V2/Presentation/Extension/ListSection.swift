@@ -8,13 +8,18 @@
 import Foundation
 import RxDataSources
 
-struct ListSection<T> {
-    let header: String
-    var items: [T]
+public struct ListSection<T> {
+    public let header: String
+    public var items: [T]
+    
+    public init(header: String, items: [T]) {
+        self.header = header
+        self.items = items
+    }
 }
 
 extension ListSection: SectionModelType {
-    init(original: ListSection, items: [T]) {
+    public init(original: ListSection, items: [T]) {
         self = original
         self.items = items
     }

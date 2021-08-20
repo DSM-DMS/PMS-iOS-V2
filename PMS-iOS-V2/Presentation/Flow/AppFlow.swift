@@ -5,28 +5,23 @@
 //  Created by GoEun Jeong on 2021/05/19.
 //
 
-import Foundation
 import UIKit
 import RxFlow
 import RxCocoa
 import RxSwift
 
-class AppFlow: Flow {
-    var root: Presentable {
+final public class AppFlow: Flow {
+    public var root: Presentable {
         return self.rootWindow
     }
     
     private let rootWindow: UIWindow
     
-    init(window: UIWindow) {
+    public init(window: UIWindow) {
         self.rootWindow = window
     }
 
-    deinit {
-        print("\(type(of: self)): \(#function)")
-    }
-
-    func navigate(to step: Step) -> FlowContributors {
+    public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? PMSStep else { return .none }
 
         switch step {
@@ -68,19 +63,19 @@ class AppFlow: Flow {
     
 }
 
-class AppStepper: Stepper {
-    let steps = PublishRelay<Step>()
+final public class AppStepper: Stepper {
+    public let steps = PublishRelay<Step>()
     private let disposeBag = DisposeBag()
 
-    var initialStep: Step {
+    public var initialStep: Step {
         return PMSStep.PMSIsRequired
     }
     
-    var userIsSignedIn: Observable<Bool> {
+    private var userIsSignedIn: Observable<Bool> {
         return .just(StorageManager.shared.readUser() != nil)
     }
     
-    func readyToEmitSteps() {
+    public func readyToEmitSteps() {
         userIsSignedIn
             .map { $0 ? PMSStep.tabBarIsRequired : PMSStep.PMSIsRequired }
             .bind(to: steps)
