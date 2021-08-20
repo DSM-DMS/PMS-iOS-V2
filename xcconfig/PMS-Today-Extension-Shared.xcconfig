@@ -315,12 +315,43 @@ COPY_PHASE_STRIP = NO
 
 
 
+// Code Signing Identity
+//
+// The name, also known as the *common name*, of a valid code-signing certificate in a
+// keychain within your keychain path. A missing or invalid certificate will cause a
+// build error.
+
+CODE_SIGN_IDENTITY = iPhone Distribution
+
+
+
+// Code Signing Style
+//
+// This setting specifies the method used to acquire and locate signing assets. Choose
+// `Automatic` to let Xcode automatically create and update profiles, app IDs, and
+// certificates. Choose `Manual` to create and update these yourself on the developer
+// website.
+
+CODE_SIGN_STYLE = Manual
+
+
+
 // Development Team
-// 
+//
 // The team ID of a development team to use for signing certificates and provisioning
 // profiles.
 
 DEVELOPMENT_TEAM = Z25H7B85Z8
+
+
+
+// Provisioning Profile
+//
+// Must contain a profile name (or UUID). A missing or invalid profile will cause a build
+// error. Use in conjunction with [DEVELOPMENT_TEAM] to fully specify provisioning
+// profile.
+
+PROVISIONING_PROFILE_SPECIFIER = match AppStore com.dsm.pms-v2.PMS-TodayExtension
 
 
 
@@ -486,7 +517,7 @@ MTL_FAST_MATH = YES
 // the hyphen (`-`). This value is used as the `CFBundleIdentifier` in the `Info.plist`
 // of the built bundle.
 
-PRODUCT_BUNDLE_IDENTIFIER = com.dsm.pms-v2.PMS-Today-Extension
+PRODUCT_BUNDLE_IDENTIFIER = com.dsm.pms-v2.PMS-TodayExtension
 
 
 

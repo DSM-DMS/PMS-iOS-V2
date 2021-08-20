@@ -164,10 +164,11 @@ targets:
       Debug: xcconfig/PMS-Today-Extension-Debug.xcconfig
       Release: xcconfig/PMS-Today-Extension-Release.xcconfig
     settings:
-      groups: [app]
       base:
         INFOPLIST_FILE: PMS-Today-Extension/Resource/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2.PMS-Today-Extension
+        PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2.PMS-TodayExtension
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: Z25H7B85Z8
         FRAMEWORK_SEARCH_PATHS: $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
     preBuildScripts:
       - path: PMS-iOS-V2Tests/Resource/script.sh
