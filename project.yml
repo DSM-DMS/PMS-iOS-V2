@@ -1,5 +1,4 @@
 name: PMS-iOS-V2
-
 options:
   preGenCommand: fastlane pull
   postGenCommand: carting update # 생성 이후 명령 실행
