@@ -31,7 +31,7 @@ CODE_SIGN_STYLE = Manual
 // This setting defines the current version of the project. The value must be a integer
 // or floating point number, such as `57` or `365.8`.
 
-CURRENT_PROJECT_VERSION = 5
+CURRENT_PROJECT_VERSION = 6
 
 
 

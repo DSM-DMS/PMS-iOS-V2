@@ -38,7 +38,7 @@ targets:
       base:
         INFOPLIST_FILE: PMS-iOS-V2/Resource/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2
-        CURRENT_PROJECT_VERSION: 5
+        CURRENT_PROJECT_VERSION: 6
         VERSIONING_SYSTEM: Apple Generic
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
@@ -47,10 +47,10 @@ targets:
     postCompileScripts:
       - script: swiftlint
       - name: Swiftlint
-    postBuildScripts:
-      - script: |
-            cp -r ${BUILT_PRODUCTS_DIR}/PMS.appex ${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/PMS.appex
-      - name: Embed App Extensions
+#    postBuildScripts:
+#      - script: |
+#            cp -r ${BUILT_PRODUCTS_DIR}/PMS.appex ${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/PMS.appex
+#      - name: Embed App Extensions
 
     dependencies:
       - target: PMS-Today-Extension
@@ -171,11 +171,6 @@ targets:
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
         FRAMEWORK_SEARCH_PATHS: $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks $(PROJECT_DIR)/Carthage/Build $(PROJECT_DIR)/Carthage/Build/iOS
-    preBuildScripts:
-      - path: PMS-iOS-V2Tests/Resource/script.sh
-        name: Carthage
-        inputFileLists:
-          - $(SRCROOT)/PMS-Today-Extension/Resource/PMS-Today-Extension-inputPaths.xcfilelist
     dependencies:
       - sdk: NotificationCenter.framework
       - carthage: Carthage/Build/iOS/FSCalendar
