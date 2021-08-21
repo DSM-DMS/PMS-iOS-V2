@@ -313,15 +313,6 @@ COPY_PHASE_STRIP = NO
 
 
 
-// Current Project Version
-// 
-// This setting defines the current version of the project. The value must be a integer
-// or floating point number, such as `57` or `365.8`.
-
-CURRENT_PROJECT_VERSION = 3
-
-
-
 // Enable Strict Checking of objc_msgSend Calls
 // 
 // Controls whether `objc_msgSend` calls must be cast to the appropriate function pointer

@@ -85,7 +85,7 @@ platform :ios do
         export_compliance_available_on_french_store: false
       }
     )
-    upload_to_testflight
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
   lane :screenshots do 

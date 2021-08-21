@@ -47,10 +47,6 @@ targets:
     postCompileScripts:
       - script: swiftlint
       - name: Swiftlint
-#    postBuildScripts:
-#      - script: |
-#            cp -r ${BUILT_PRODUCTS_DIR}/PMS.appex ${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}/PMS.appex
-#      - name: Embed App Extensions
 
     dependencies:
       - target: PMS-Today-Extension
@@ -173,5 +169,3 @@ targets:
         FRAMEWORK_SEARCH_PATHS: $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks $(PROJECT_DIR)/Carthage/Build $(PROJECT_DIR)/Carthage/Build/iOS
     dependencies:
       - sdk: NotificationCenter.framework
-      - carthage: Carthage/Build/iOS/FSCalendar
-      - carthage: Carthage/Build/iOS/Alamofire
