@@ -18,13 +18,11 @@ final public class TodayViewController: UIViewController, NCWidgetProviding {
     private var currentPage: Date?
     
     private let dateFormatter = DateFormatter()
-    
-    private var response: Any? {
-        UserDefaults.standard.value(forKey: "PMSCalendar")
-    }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("ViewDidLoad")
         
         extensionContext?.widgetLargestAvailableDisplayMode = .expanded
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -93,7 +91,8 @@ final public class TodayViewController: UIViewController, NCWidgetProviding {
                     
                     self.dateInHome = UDManager.shared.dateInHome![self.month]
                     self.dateInSchool = UDManager.shared.dateInSchool![self.month]
-                    
+                    print(self.dateInHome)
+                    print(self.dateInSchool)
                     self.calendar.reloadData()
                     
                 case .failure(_):
@@ -121,6 +120,7 @@ final public class TodayViewController: UIViewController, NCWidgetProviding {
 extension TodayViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     
     public func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        print(dateFormatter.string(from: date))
         if dateInHome.contains(dateFormatter.string(from: date)) {
             return Colors.red.color
         }
