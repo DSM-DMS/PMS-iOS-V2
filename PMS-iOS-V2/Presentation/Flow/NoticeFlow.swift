@@ -23,8 +23,8 @@ final public class NoticeFlow: Flow {
         switch step {
         case .noticeIsRequired:
             return navigateToNoticeScreen()
-        case .detailNoticeIsRequired(let id, let title):
-            return navigateToDetailNoticeScreen(id: id, title: title)
+        case .detailNoticeIsRequired(let id, let title, let segment):
+            return navigateToDetailNoticeScreen(id: id, title: title, segment: segment)
         case .alert(let string, let access):
             return alert(string: string, access: access)
         default:
@@ -38,12 +38,20 @@ final public class NoticeFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
     
-    private func navigateToDetailNoticeScreen(id: Int, title: String) -> FlowContributors {
+    private func navigateToDetailNoticeScreen(id: Int, title: String, segment: Int) -> FlowContributors {
         let repository = AppDelegate.container.resolve(NoticeRepository.self)!
-        let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, repository: repository))
-        vc.hidesBottomBarWhenPushed = true
-        self.rootViewController.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
+        if segment == 2 {
+            let vc = AlbumDetailViewController(viewModel: AlbumDetailViewModel(id: id, title: title, repository: repository))
+            vc.hidesBottomBarWhenPushed = true
+            self.rootViewController.pushViewController(vc, animated: true)
+            return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
+        } else {
+            let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, isLetter: segment == 1, repository: repository))
+            vc.hidesBottomBarWhenPushed = true
+            self.rootViewController.pushViewController(vc, animated: true)
+            return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
+        }
+       
     }
     
     private func alert(string: String, access: AccessibilityString) -> FlowContributors {

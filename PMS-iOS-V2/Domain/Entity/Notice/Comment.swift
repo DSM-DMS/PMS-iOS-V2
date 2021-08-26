@@ -12,14 +12,14 @@ public struct Comment: Codable, Hashable {
     public var date: String
     public var body: String
     public var user: CommentUser
-    public var comment: [Comment]
+//    public var comment: [Comment]
     
     enum CodingKeys: String, CodingKey {
         case id
         case date = "upload-date"
         case body
         case user
-        case comment
+//        case comment
     }
 }
 

@@ -1,4 +1,4 @@
-# PMS: Parent's Management System
+# PMS: Parent's Management System  ![master](https://github.com/DSM-DMS/PMS-iOS-V2/actions/workflows/main.yml/badge.svg?branch=master)
 
 부모님의 대덕소프트웨어마이스터고등학교 앱입니다.
 

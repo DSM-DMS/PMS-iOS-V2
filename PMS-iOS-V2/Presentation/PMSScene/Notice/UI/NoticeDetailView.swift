@@ -11,17 +11,17 @@ import Then
 import Kingfisher
 
 final public class NoticeDetailView: UIView {
-    private let noticeStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 15.0
-    }
+    private let clipButton = ClipButton()
     
     private let titleStackView = UIStackView().then {
         $0.axis = .vertical
-        $0.distribution = .equalSpacing
+        $0.spacing = 5.0
     }
     
-    private let titleLabel = UILabel()
+    private let titleLabel = UILabel().then {
+        $0.numberOfLines = 0
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
+    }
     
     private let titleLine = UIView().then { $0.backgroundColor = .lightGray }
 
@@ -30,25 +30,24 @@ final public class NoticeDetailView: UIView {
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
     }
     
-    private let viewTextLabel = UILabel().then {
-        $0.text = "| 조회수"
+    private let wrtierTextLabel = UILabel().then {
+        $0.text = "| 작성자"
         $0.textColor = .gray
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
     }
 
-    private let viewLabel = UILabel().then {
-        $0.text = "0"
+    private let writerLabel = UILabel().then {
         $0.textColor = .gray
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
     }
     
     private let dateStackView = UIStackView().then {
-        $0.distribution = .equalSpacing
+        $0.spacing = 10.0
         $0.alignment = .leading
     }
     
-    private let descLabel = UILabel().then {
-        $0.numberOfLines = 0
+    private let descLabel = UITextView().then {
+        $0.isScrollEnabled = true
     }
     
     private let descLine = UIView().then { $0.backgroundColor = .darkGray }
@@ -79,38 +78,46 @@ final public class NoticeDetailView: UIView {
             self.titleLabel.text = model.title
             self.descLabel.text = model.body
             self.dateLabel.text = model.date
+            if model.writer == nil {
+                self.wrtierTextLabel.isHidden = true
+                self.writerLabel.isHidden = true
+            } else {
+                self.writerLabel.text = model.writer
+                self.wrtierTextLabel.isHidden = false
+                self.writerLabel.isHidden = false
+            }
+            if model.attach.isEmpty {
+                self.clipButton.isHidden = true
+            } else {
+                self.clipButton.isHidden = false
+            }
         }
     }
 
     // MARK: Private Methods
     
     private func setupSubview() {
-        addSubview(noticeStackView)
-        noticeStackView.addArrangeSubviews([titleStackView, descStackView])
-        titleStackView.addArrangeSubviews([titleLabel, dateStackView, titleLine])
-        dateStackView.addArrangeSubviews([dateLabel, viewTextLabel, viewLabel])
-        descStackView.addArrangeSubviews([descLabel, descLine])
+        addSubViews([titleStackView, clipButton, descStackView])
+        titleStackView.addArrangeSubviews([titleLabel, dateStackView])
+        dateStackView.addArrangeSubviews([dateLabel, wrtierTextLabel, writerLabel])
+        descStackView.addArrangeSubviews([titleLine, descLabel, descLine])
         
-        noticeStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview()
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.height.equalTo(15)
-        }
-        
-        dateStackView.snp.makeConstraints {
-            $0.height.equalTo(15)
+        clipButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.width.height.equalTo(20)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         titleStackView.snp.makeConstraints {
-            $0.height.equalTo(50)
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalTo(clipButton.snp_leadingMargin).offset(-15)
         }
         
-        viewLabel.snp.makeConstraints {
-            $0.width.equalTo(UIFrame.width / 2)
+        descStackView.snp.makeConstraints {
+            $0.top.equalTo(titleStackView.snp_bottomMargin).offset(10)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
         }
         
         descStackView.snp.makeConstraints {

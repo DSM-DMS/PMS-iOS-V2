@@ -1,89 +1,45 @@
 //
-//  NoticeDetailViewModel.swift
+//  AlbumDetailViewModel.swift
 //  PMS-iOS-V2
 //
-//  Created by GoEun Jeong on 2021/05/25.
+//  Created by GoEun Jeong on 2021/08/26.
 //
 
 import RxSwift
 import RxCocoa
 import RxFlow
 
-final public class NoticeDetailViewModel: Stepper {
+final public class AlbumDetailViewModel: Stepper {
     public let steps = PublishRelay<Step>()
     private let id: Int
     public let title: String
-    private let isLetter: Bool
     private let repository: NoticeRepository
     private let disposeBag = DisposeBag()
     
     public struct Input {
         let viewDidLoad = PublishRelay<Void>()
-        let getNotice = PublishRelay<Void>()
-        let getLetter = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
-        let commentText = PublishRelay<String>()
-        let previewButtonTapped = PublishRelay<Void>()
-        let enterButtonTapped = PublishRelay<Void>()
     }
     
     public struct Output {
         let isLoading = BehaviorRelay<Bool>(value: false)
-        let detailNotice = BehaviorRelay<DetailNotice>(value: DetailNotice(id: 0, date: "", title: "", writer: "", body: "", attach: [Attach](), comment: [Comment]()))
+        let detailNotice = BehaviorRelay<DetailAlbum>(value: DetailAlbum(id: 0, date: "", title: "", body: "", attach: [String](), thumbnail: ""))
     }
     
     public let input = Input()
     public let output = Output()
     
-    public init(id: Int, title: String, isLetter: Bool, repository: NoticeRepository) {
+    public init(id: Int, title: String, repository: NoticeRepository) {
         self.id = id
         self.title = title
-        self.isLetter = isLetter
         self.repository = repository
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
-            .subscribe(onNext: { _ in
-                if !isLetter {
-                    self.input.getNotice.accept(())
-                } else {
-                    self.input.getLetter.accept(())
-                }
-            }) .disposed(by: disposeBag)
-        
-        input.getNotice
             .asObservable()
             .flatMapLatest { _ in
-                repository.getDetailNotice(id: self.id)
-                    .asObservable()
-                    .trackActivity(activityIndicator)
-                    .do(onError: { error in
-                        let error = error as! NetworkError
-                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
-                    })
-            }
-            .bind(to: output.detailNotice)
-            .disposed(by: disposeBag)
-        
-        input.getNotice
-            .asObservable()
-            .flatMapLatest { _ in
-                repository.getDetailNotice(id: self.id)
-                    .asObservable()
-                    .trackActivity(activityIndicator)
-                    .do(onError: { error in
-                        let error = error as! NetworkError
-                        self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
-                    })
-            }
-            .bind(to: output.detailNotice)
-            .disposed(by: disposeBag)
-        
-        input.getLetter
-            .asObservable()
-            .flatMapLatest { _ in
-                repository.getDetailLetter(id: self.id)
+                repository.getDetailAlbum(id: self.id)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -99,11 +55,6 @@ final public class NoticeDetailViewModel: Stepper {
                 self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
-        
-        input.enterButtonTapped
-            .subscribe { _ in
-                
-            }.disposed(by: disposeBag)
         
         activityIndicator
             .asObservable()

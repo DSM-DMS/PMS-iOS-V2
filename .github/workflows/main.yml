@@ -2,7 +2,7 @@ name: Publish iOS App to App Store
 
 on:
   push:
-    branches: [ master ]
+    branches: [ release ]
 
 jobs:
   release-ios:

@@ -19,12 +19,14 @@ enum AnalyticsManager: String {
     case view_meal
     case view_notice
     case view_letter
+    case view_album
     case view_introduce
     case view_mypage
     
     // Introduce
     case view_notice_detail
     case view_letter_detail
+    case view_album_detail
     case view_clubIntroduce
     case view_club_detail
     case view_companyIntroduce

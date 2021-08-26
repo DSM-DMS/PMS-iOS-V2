@@ -33,8 +33,8 @@ public enum PMSStep: Step, Equatable {
                 return lhsStr == rhsStr
             case (.noticeIsRequired, .noticeIsRequired):
                 return true
-            case let (.detailNoticeIsRequired(lhsId, lhsStr), .detailNoticeIsRequired(rhsId, rhsStr)):
-                return lhsId == rhsId && lhsStr == rhsStr
+            case let (.detailNoticeIsRequired(lhsId, lhsStr, lhsSeg), .detailNoticeIsRequired(rhsId, rhsStr, rhsSeg)):
+                return lhsId == rhsId && lhsStr == rhsStr && lhsSeg == rhsSeg
             case (.introduceIsRequired, .introduceIsRequired):
                 return true
             case (.clubIsRequired, .clubIsRequired):
@@ -90,7 +90,7 @@ public enum PMSStep: Step, Equatable {
 
     // Notice
     case noticeIsRequired
-    case detailNoticeIsRequired(id: Int, title: String)
+    case detailNoticeIsRequired(id: Int, title: String, segment: Int)
     
     // Introduce
     case introduceIsRequired

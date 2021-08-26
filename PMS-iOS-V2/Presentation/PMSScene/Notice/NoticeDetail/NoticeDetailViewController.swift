@@ -43,7 +43,7 @@ final public class NoticeDetailViewController: UIViewController {
         $0.setPlaceholder(.commentPlaceholder)
     }
     private let commentBackground = UIView().then {
-        $0.backgroundColor = Colors.gray.color
+        $0.backgroundColor = UIColor.lightGray
         $0.layer.cornerRadius = 15
     }
     

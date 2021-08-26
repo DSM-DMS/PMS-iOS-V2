@@ -18,12 +18,15 @@ public enum PMSApi {
     
     // Notice
     case notice(_ page: Int)
-    case letter
+    case letter(_ page: Int)
+    case album(_ page: Int)
     case noticeDetail(_ id: Int)
     case letterDetail(_ id: Int)
+    case albumDetail(_ id: Int)
+    case searchNotice(_ string: String)
+    case searchLetter(_ string: String)
     
     case addComment(_ id: Int)
-    case filePath(_ id: Int)
     
     // Introduce
     case clubs
@@ -55,15 +58,21 @@ extension PMSApi: TargetType {
         case .notice:
             return "/notice"
         case .letter:
-            return "/notice/home"
+            return "/notice/news"
+        case .album:
+            return "/gallery"
         case .noticeDetail(let id):
             return "/notice/\(id)"
         case .letterDetail(let id):
             return "/notice/home/\(id)"
+        case .albumDetail(let id):
+            return "/gallery/\(id)"
+        case .searchNotice:
+            return "/notice/search"
+        case .searchLetter:
+            return "/notice/news/search"
         case .addComment:
             return "/notice/comment"
-        case .filePath(let id):
-            return "/notice/download/\(id)"
             
         // Introduce
         case .clubs:
@@ -90,7 +99,15 @@ extension PMSApi: TargetType {
     public var task: Task {
         switch self {
         case .notice(let page):
-            return .requestParameters(parameters: ["page": page], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["page": page, "size": 6], encoding: URLEncoding.queryString)
+        case .letter(let page):
+            return .requestParameters(parameters: ["page": page, "size": 6], encoding: URLEncoding.queryString)
+        case .album(let page):
+            return .requestParameters(parameters: ["page": page, "size": 6], encoding: URLEncoding.queryString)
+        case .searchNotice(let string):
+            return .requestParameters(parameters: ["q": string], encoding: URLEncoding.queryString)
+        case .searchLetter(let string):
+            return .requestParameters(parameters: ["q": string], encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }

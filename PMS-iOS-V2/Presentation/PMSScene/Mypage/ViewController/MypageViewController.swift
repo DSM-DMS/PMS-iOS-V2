@@ -302,6 +302,9 @@ class MypageViewController: UIViewController {
                     self.noStudentView.isHidden = true
                     self.outingListButton.isHidden = false
                 } else {
+                    self.plusPointRow.setupView(plus: 0)
+                    self.minusPointRow.setupView(minus: 0)
+                    self.studentLabel.text = "학생 추가"
                     self.statusView.isHidden = true
                     self.noStudentView.isHidden = false
                     self.outingListButton.isHidden = true
@@ -404,6 +407,7 @@ extension MypageViewController: AddStudentDelegate {
         self.addStudentView.view.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.studentListView.viewModel.input.viewDidLoad.accept(())
+            self.viewModel.input.viewDidLoad.accept(())
         }
     }
 }

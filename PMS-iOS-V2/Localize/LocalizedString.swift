@@ -81,6 +81,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     
     // Notice
     case letter
+    case album
     case preview
     
     // Introduce

@@ -15,12 +15,13 @@ import Then
 final public class NoticeViewController: UIViewController {
     internal let viewModel: NoticeViewModel
     private let searchController = UISearchController(searchResultsController: nil)
-    private let segmentedControl = UISegmentedControl(items: [LocalizedString.noticeTitle.localized, LocalizedString.letter.localized]).then {
+    private let segmentedControl = UISegmentedControl(items: [LocalizedString.noticeTitle.localized, LocalizedString.letter.localized, LocalizedString.album.localized]).then {
         $0.contentMode = .scaleAspectFit
         $0.selectedSegmentIndex = 0
         $0.apportionsSegmentWidthsByContent = true
         $0.setWidth(100, forSegmentAt: 0)
         $0.setWidth(100, forSegmentAt: 1)
+        $0.setWidth(100, forSegmentAt: 2)
     }
     private let activityIndicator = UIActivityIndicatorView()
     private let tableView = UITableView().then {
@@ -127,8 +128,7 @@ final public class NoticeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         segmentedControl.rx.selectedSegmentIndex
-            .map { Bool(truncating: NSNumber(value: $0)) }
-            .bind(to: viewModel.input.isLetter)
+            .bind(to: viewModel.input.segmentControl)
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(NoticeCell.self)
@@ -164,9 +164,8 @@ final public class NoticeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.noticeList
-            .filter { $0.isEmpty == true }
-            .subscribe(onNext: { _ in
-                self.noNoticeView.isHidden = false
+            .subscribe(onNext: {
+                self.noNoticeView.isHidden = !$0.isEmpty
             }).disposed(by: disposeBag)
     }
 }

@@ -11,13 +11,9 @@ import Then
 import Kingfisher
 
 final public class NoticeTableViewCell: UITableViewCell {
-    private let noticeStack = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 10.0
-        $0.alignment = .leading
-    }
+    private let titleStack = UIStackView().then { $0.spacing = 10.0 }
     
-    private let colorView = UIView()
+    private let colorView = UIView().then { $0.backgroundColor = Colors.blue.color }
     
     private let titleLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout)
@@ -42,6 +38,7 @@ final public class NoticeTableViewCell: UITableViewCell {
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+//        shadow()
         setupSubview()
     }
     
@@ -57,7 +54,7 @@ final public class NoticeTableViewCell: UITableViewCell {
     
     public func setupView(model: NoticeCell) {
         DispatchQueue.main.async {
-            if !model.type {
+            if model.type {
                 self.colorView.backgroundColor = Colors.red.color
             } else {
                 self.colorView.backgroundColor = Colors.blue.color
@@ -70,16 +67,19 @@ final public class NoticeTableViewCell: UITableViewCell {
     // MARK: Private Methods
     
     private func setupSubview() {
-        addSubViews([cellBackground, colorView, noticeStack])
-        noticeStack.addArrangeSubviews([titleLabel, dateLabel])
+        addSubViews([cellBackground, titleStack, dateLabel])
+        titleStack.addArrangeSubviews([colorView, titleLabel])
         colorView.snp.makeConstraints {
             $0.width.equalTo(3)
-            $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
-            $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
         }
-        noticeStack.snp.makeConstraints {
-            $0.top.equalTo(cellBackground.snp_topMargin).offset(5)
-            $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(20)
+        titleStack.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
+            $0.trailing.equalTo(cellBackground.snp_trailingMargin).offset(-20)
+        }
+        dateLabel.snp.makeConstraints {
+            $0.top.equalTo(titleStack.snp_bottomMargin)
+            $0.leading.equalTo(titleStack.snp_leadingMargin).offset(10)
             $0.trailing.equalTo(cellBackground.snp_trailingMargin).offset(-20)
         }
         cellBackground.snp.makeConstraints {
