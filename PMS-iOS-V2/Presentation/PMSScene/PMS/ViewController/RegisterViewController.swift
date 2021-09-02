@@ -8,12 +8,21 @@
 import UIKit
 import RxSwift
 import Reachability
+import NaverThirdPartyLogin
+import FBSDKLoginKit
+import KakaoOpenSDK
+import AuthenticationServices
 
 final public class RegisterViewController: UIViewController {
     internal let viewModel: RegisterViewModel
     public let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
+    
+    // MARK: - OAuth
+    
+    private let loginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
+    private let facebookManager = LoginManager()
     
     private let registerViewStack = UIStackView().then {
         $0.axis = .vertical
@@ -160,7 +169,7 @@ final public class RegisterViewController: UIViewController {
             $0.center.equalToSuperview()
         }
         
-        registerViewStack.addArrangeSubviews([nicknameStackView, emailStackView, passwordStackView, rePasswordStackView, oAuthStackView, registerButton])
+        registerViewStack.addArrangeSubviews([nicknameStackView, emailStackView, passwordStackView, rePasswordStackView, registerButton])
         nicknameView.addArrangeSubviews([nicknameSpacing, pencilImage, nicknameTextField])
         nicknameStackView.addArrangeSubviews([nicknameView, nicknameLine])
         nicknameLine.snp.makeConstraints {
@@ -203,7 +212,7 @@ final public class RegisterViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-10)
         }
         
-        oAuthStackView.addArrangeSubviews([leftSpacing, facebookButton, naverButton, kakaotalkButton, appleButton, rightSpacing])
+        oAuthStackView.addArrangeSubviews([leftSpacing, facebookButton, naverButton, appleButton, rightSpacing])
         
         registerViewStack.snp.makeConstraints {
             $0.centerX.equalTo(view.layoutMarginsGuide)
@@ -251,6 +260,52 @@ final public class RegisterViewController: UIViewController {
         passwordEyeButton.rx.tap
             .bind(to: viewModel.input.eyeButtonTapped)
             .disposed(by: disposeBag)
+        
+        facebookButton.rx.tap
+            .subscribe(onNext: { _ in
+                AnalyticsManager.click_naver.log()
+                let configuration = LoginConfiguration(
+                    permissions: ["email"],
+                    tracking: .enabled,
+                    nonce: "123"
+                )
+                self.facebookManager.logIn(configuration: configuration!, completion: { result in
+                    switch result {
+                    case .cancelled: break
+                    case .failed(let error):
+                        self.viewModel.input.oAuthError.accept(error)
+                    case .success:
+                        Log.info("Facebook : \(String(describing: AuthenticationToken.current?.tokenString))")
+                        if let token = AuthenticationToken.current?.tokenString {
+                            self.viewModel.input.facebookRegisterSuccess.accept(token)
+                        }
+                    }
+                })
+            })
+            .disposed(by: disposeBag)
+        
+        naverButton.rx.tap
+            .subscribe(onNext: { _ in
+                AnalyticsManager.click_naver.log()
+                self.loginInstance?.requestThirdPartyLogin()
+            })
+            .disposed(by: disposeBag)
+        
+        if #available(iOS 13.0, *) {
+            appleButton.rx.tap
+                .subscribe(onNext: {
+                    AnalyticsManager.click_apple.log()
+                    let appleIDProvider = ASAuthorizationAppleIDProvider()
+                    let request = appleIDProvider.createRequest()
+                    request.requestedScopes = [.fullName, .email]
+                    
+                    let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+                    authorizationController.delegate = self
+                    authorizationController.presentationContextProvider = self
+                    authorizationController.performRequests()
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     private func bindOutput() {
@@ -390,5 +445,61 @@ extension RegisterViewController {
     
     @objc private func keyboardWillHide(_ notification: Notification) {
         self.view.frame.origin.y = 0
+    }
+}
+
+extension RegisterViewController: NaverThirdPartyLoginConnectionDelegate {
+    public func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+        sendNaverToken()
+    }
+    
+    public func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
+        
+    }
+    
+    public func oauth20ConnectionDidFinishDeleteToken() {
+        
+    }
+    
+    public func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
+        
+    }
+    
+    private func sendNaverToken() {
+        guard let isValidAccessToken = loginInstance?.isValidAccessTokenExpireTimeNow() else { return }
+        
+        if !isValidAccessToken {
+            return
+        }
+        
+        guard let accessToken = loginInstance?.accessToken else { return }
+        self.viewModel.input.naverRegisterSuccess.accept(accessToken)
+    }
+}
+
+extension RegisterViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    @available(iOS 13.0, *)
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    // Apple ID 연동 성공 시
+    @available(iOS 13.0, *)
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        // Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            if let token = appleIDCredential.identityToken {
+                print(token)
+            }
+        default:
+            break
+        }
+    }
+    
+    // Apple ID 연동 실패 시
+    @available(iOS 13.0, *)
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        self.viewModel.input.oAuthError.accept(error)
     }
 }

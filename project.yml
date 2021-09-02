@@ -155,7 +155,7 @@ targets:
   PMS-Today-Extension:
     type: app-extension
     platform: iOS
-    sources: [PMS-Today-Extension, PMS-iOS-V2/Extension/Colors+Generated.swift, PMS-iOS-V2/Localize/LocalizedString.swift, PMS-iOS-V2/Domain/Entity/Calendar/PMSCalendar.swift, PMS-iOS-V2/Resource/Colors.xcassets]
+    sources: [PMS-Today-Extension, PMS-iOS-V2/Extension/Colors+Generated.swift, PMS-iOS-V2/Extension/UserDefaults+AppGroup.swift, PMS-iOS-V2/Domain/Entity/Calendar/PMSCalendar.swift, PMS-iOS-V2/Resource/Colors.xcassets]
     configFiles:
       Debug: xcconfig/PMS-Today-Extension-Debug.xcconfig
       Release: xcconfig/PMS-Today-Extension-Release.xcconfig
@@ -165,6 +165,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.dsm.pms-v2.PMS-TodayExtension
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Z25H7B85Z8
+        CODE_SIGN_ENTITLEMENTS: PMS-Today-Extension/Resource/PMS.entitlements
         FRAMEWORK_SEARCH_PATHS: $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks $(PROJECT_DIR)/Carthage/Build $(PROJECT_DIR)/Carthage/Build/iOS
     dependencies:
       - sdk: NotificationCenter.framework

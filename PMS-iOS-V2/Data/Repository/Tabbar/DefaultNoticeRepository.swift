@@ -45,6 +45,21 @@ final public class DefaultNoticeRepository: NoticeRepository {
             }
     }
     
+    public func addComment(id: Int, body: String) -> Single<Bool> {
+        provider.rx.request(.addComment(id, body))
+            .filterSuccessfulStatusCodes()
+            .retryWithAuthIfNeeded()
+            .map { _ in true }
+            .catchError { error in
+                if let moyaError = error as? MoyaError {
+                    return Single.error(NetworkError(moyaError))
+                } else {
+                    Log.error("Unkown Error!")
+                    return Single.error(NetworkError.unknown)
+                }
+            }
+    }
+
     public func searchNotice(search: String) -> Single<NoticeList> {
         provider.rx.request(.searchNotice(search))
             .filterSuccessfulStatusCodes()
@@ -65,21 +80,6 @@ final public class DefaultNoticeRepository: NoticeRepository {
             .filterSuccessfulStatusCodes()
             .retryWithAuthIfNeeded()
             .map(NoticeList.self)
-            .catchError { error in
-                if let moyaError = error as? MoyaError {
-                    return Single.error(NetworkError(moyaError))
-                } else {
-                    Log.error("Unkown Error!")
-                    return Single.error(NetworkError.unknown)
-                }
-            }
-    }
-    
-    public func getDetailLetter(id: Int) -> Single<DetailNotice> {
-        provider.rx.request(.letterDetail(id))
-            .filterSuccessfulStatusCodes()
-            .retryWithAuthIfNeeded()
-            .map(DetailNotice.self)
             .catchError { error in
                 if let moyaError = error as? MoyaError {
                     return Single.error(NetworkError(moyaError))

@@ -131,7 +131,7 @@ final public class LoginViewController: UIViewController {
             $0.center.equalToSuperview()
         }
         
-        loginViewStack.addArrangeSubviews([emailStackView, passwordStackView, oAuthStackView, loginButton])
+        loginViewStack.addArrangeSubviews([emailStackView, passwordStackView, loginButton])
         emailView.addArrangeSubviews([emailSpacing, personImage, emailTextField])
         emailStackView.addArrangeSubviews([emailView, emailLine])
         emailLine.snp.makeConstraints {
@@ -149,7 +149,7 @@ final public class LoginViewController: UIViewController {
             $0.trailing.equalTo(passwordLine.snp_trailingMargin)
             $0.centerY.equalToSuperview()
         }
-        oAuthStackView.addArrangeSubviews([leftSpacing, facebookButton, naverButton, kakaotalkButton, appleButton, rightSpacing])
+        oAuthStackView.addArrangeSubviews([leftSpacing, facebookButton, naverButton, appleButton, rightSpacing])
         
         loginViewStack.snp.makeConstraints {
             $0.center.equalTo(view.layoutMarginsGuide)

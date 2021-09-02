@@ -30,6 +30,7 @@ public enum AuthApi {
     case naver(token: String)
     case facebook(token: String)
     case kakaotalk(token: String)
+    case apple(token: String)
 }
 
 extension AuthApi: TargetType {
@@ -70,6 +71,8 @@ extension AuthApi: TargetType {
             return "/oauth2/authorize/facebook"
         case .kakaotalk:
             return "/oauth2/authorize/kakaotalk"
+        case .apple:
+            return "/oauth2/authorize/apple"
         }
     }
     

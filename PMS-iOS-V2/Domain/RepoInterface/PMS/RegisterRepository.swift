@@ -10,4 +10,7 @@ import RxSwift
 
 public protocol RegisterRepository {
     func register(name: String, email: String, password: String) -> Single<Bool>
+    func sendNaverToken(token: String) -> Single<Bool>
+    func sendFacebookToken(token: String) -> Single<Bool>
+    func sendKakaotalkToken(token: String) -> Single<Bool>
 }

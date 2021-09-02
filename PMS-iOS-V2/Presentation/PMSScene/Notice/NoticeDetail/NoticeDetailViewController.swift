@@ -19,6 +19,12 @@ final public class NoticeDetailViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView()
     
     private let noticeView = NoticeDetailView()
+    private let attachView = AttachViewController().then {
+        $0.view.isHidden = true
+    }
+    
+    private let clipTapped = UITapGestureRecognizer()
+    private let backgroundTapped = UITapGestureRecognizer()
     
     private let commentTableView = UITableView().then {
         $0.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentTableViewCell")
@@ -37,13 +43,19 @@ final public class NoticeDetailViewController: UIViewController {
         $0.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMinYCorner, .layerMaxXMinYCorner)
     }
     
+    lazy var blackBackground = UIView().then {
+        $0.backgroundColor = .black
+        $0.alpha = 0.2
+        $0.isHidden = true
+    }
+    
     private let mentionButton = MentionButton()
     private let enterButton = EnterButton()
     private let commentTextField = UITextField().then {
         $0.setPlaceholder(.commentPlaceholder)
     }
     private let commentBackground = UIView().then {
-        $0.backgroundColor = UIColor.lightGray
+        $0.backgroundColor = Colors.lightGray.color
         $0.layer.cornerRadius = 15
     }
     
@@ -86,6 +98,10 @@ final public class NoticeDetailViewController: UIViewController {
     public override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = viewModel.title
+        self.noticeView.clipButton.addGestureRecognizer(clipTapped)
+        self.blackBackground.addGestureRecognizer(backgroundTapped)
+        
+        
         self.setupSubview()
         self.bindOutput()
         self.setDelegate()
@@ -117,9 +133,10 @@ final public class NoticeDetailViewController: UIViewController {
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubViews([noticeView, commentTableView])
-        view.addSubview(mentionTableView)
+//        view.addSubview(mentionTableView)
         view.addSubViews([inputBackground])
-        view.addSubViews([mentionButton, commentBackground, commentTextField, enterButton])
+        view.addSubViews([commentBackground, commentTextField, enterButton])
+        view.addSubViews([blackBackground, attachView.view])
         view.addSubview(activityIndicator)
         
         noticeView.snp.makeConstraints {
@@ -129,25 +146,36 @@ final public class NoticeDetailViewController: UIViewController {
             $0.width.equalTo(UIFrame.width - 50)
         }
         
+        attachView.view.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalToSuperview().offset(-50)
+            $0.height.equalTo(UIFrame.height / 4)
+        }
+        
+        blackBackground.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         commentTableView.snp.makeConstraints {
             $0.top.equalTo(noticeView.snp_bottomMargin).offset(20)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(UIFrame.width - 50)
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(view.layoutMarginsGuide).offset(-70)
         }
         
-        mentionButton.snp.makeConstraints {
-            $0.centerY.equalTo(commentBackground)
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.equalTo(20)
-            $0.height.equalTo(25)
-        }
+//        mentionButton.snp.makeConstraints {
+//            $0.centerY.equalTo(commentBackground)
+//            $0.leading.equalToSuperview().offset(10)
+//            $0.width.equalTo(20)
+//            $0.height.equalTo(25)
+//        }
         
         commentBackground.snp.makeConstraints {
             $0.centerX.equalTo(inputBackground)
             $0.bottom.equalTo(view.layoutMarginsGuide)
             $0.height.equalTo(50)
-            $0.leading.equalTo(mentionButton.snp_trailingMargin).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+//            $0.leading.equalTo(mentionButton.snp_trailingMargin).offset(20)
             $0.trailing.equalTo(enterButton.snp_leadingMargin).offset(-20)
         }
         
@@ -171,11 +199,11 @@ final public class NoticeDetailViewController: UIViewController {
             $0.leading.equalToSuperview()
         }
         
-        mentionTableView.snp.makeConstraints {
-            $0.bottom.equalTo(inputBackground.snp_topMargin)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(UIFrame.height / 4.5)
-        }
+//        mentionTableView.snp.makeConstraints {
+//            $0.bottom.equalTo(inputBackground.snp_topMargin)
+//            $0.width.equalToSuperview()
+//            $0.height.equalTo(UIFrame.height / 4.5)
+//        }
         
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -191,20 +219,35 @@ final public class NoticeDetailViewController: UIViewController {
             .bind(to: viewModel.input.noInternet)
             .disposed(by: disposeBag)
         
-        commentTextField.rx.text
-            .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .bind(to: viewModel.input.commentText)
+        clipTapped.rx.event
+            .subscribe(onNext: { _ in
+                self.attachView.setAttach(attach: self.viewModel.output.detailNotice.value.attach)
+                self.attachView.view.isHidden = false
+                self.blackBackground.isHidden = false
+            })
             .disposed(by: disposeBag)
         
-        commentTextField.rx.text
-            .orEmpty
-            .map { if $0.contains("@") { return true } else { return false }}
-            .subscribe { 
-                self.popUpMentionView(popUp: $0)
-            }
+        backgroundTapped.rx.event
+            .subscribe(onNext: { _ in
+                self.attachView.view.isHidden = true
+                self.blackBackground.isHidden = true
+            })
             .disposed(by: disposeBag)
+        
+//        commentTextField.rx.text
+//            .orEmpty
+//            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+//            .distinctUntilChanged()
+//            .bind(to: viewModel.input.commentText)
+//            .disposed(by: disposeBag)
+        
+//        commentTextField.rx.text
+//            .orEmpty
+//            .map { if $0.contains("@") { return true } else { return false }}
+//            .subscribe {
+//                self.popUpMentionView(popUp: $0)
+//            }
+//            .disposed(by: disposeBag)
         
         mentionButton.rx.tap
             .subscribe { _ in
@@ -213,6 +256,15 @@ final public class NoticeDetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         enterButton.rx.tap
+            .map { _ in
+                let temp = self.commentTextField.text
+                self.commentTextField.text = ""
+                
+                if temp == nil {
+                    return ""
+                }
+                return temp!
+            }
             .bind(to: viewModel.input.enterButtonTapped)
             .disposed(by: disposeBag)
     }

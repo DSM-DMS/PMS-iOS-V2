@@ -17,13 +17,25 @@ final public class CommentTableViewCell: UITableViewCell {
         $0.alignment = .leading
     }
     
+    private let conetentStack = UIStackView().then {
+        $0.distribution = .equalSpacing
+        $0.alignment = .leading
+    }
+    
     private let contentLabel = UILabel().then {
         $0.textColor = Colors.black.color
+    }
+    
+    private let dateLabel = UILabel().then {
+        $0.textColor = .gray
+        $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        $0.textAlignment = .right
     }
     
     private let userLabel = UILabel().then {
         $0.textColor = .gray
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        $0.textAlignment = .left
     }
     
     private let cellBackground = UIView().then {
@@ -56,6 +68,7 @@ final public class CommentTableViewCell: UITableViewCell {
         DispatchQueue.main.async {
             self.contentLabel.text = model.body
             self.userLabel.text = model.user.name
+            self.dateLabel.text = String(Array(model.date)[5...9]).replacingOccurrences(of: "-", with: " / ")
         }
     }
     
@@ -63,12 +76,19 @@ final public class CommentTableViewCell: UITableViewCell {
     
     private func setupSubview() {
         addSubViews([cellBackground, commentStack])
-        commentStack.addArrangeSubviews([contentLabel, userLabel])
+        commentStack.addArrangeSubviews([conetentStack, userLabel])
+        conetentStack.addArrangeSubviews([contentLabel, dateLabel])
         
         commentStack.snp.makeConstraints {
             $0.top.equalTo(cellBackground).offset(15)
             $0.leading.equalTo(cellBackground.snp_leadingMargin).offset(10)
+            $0.trailing.equalTo(cellBackground.snp_trailingMargin).offset(-10)
         }
+        
+        conetentStack.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+        }
+        
         contentLabel.snp.makeConstraints {
             $0.height.equalTo(15)
         }

@@ -55,7 +55,6 @@ final public class NextPageButton: UIButton {
 
 }
 
-
 final public class MentionButton: UIButton {
     public convenience init(label: AccessibilityString) {
         self.init()
@@ -126,4 +125,19 @@ final public class ClipButton: UIButton {
         return CGSize(width: 13, height: 13)
     }
 
+}
+
+final public class DownloadImage: UIImageView {
+    internal override init(image: UIImage? = Asset.download.image) {
+        super.init(image: image)
+        self.contentMode = .scaleAspectFit
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 20, height: 20)
+    }
 }

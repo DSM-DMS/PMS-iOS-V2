@@ -18,30 +18,30 @@ class ScreenShotUITests: XCTestCase {
         app.launch()
     }
     
-    func test_A_PMS_Main_View() {
-        snapshot("0Main_View")
-    }
+    //    func test_A_PMS_Main_View() {
+    //        snapshot("0Main_View")
+    //    }
     
-    func test_CalendarView() {
+    func test_A_CalendarView() {
         if !app.buttons["일정"].exists {
             login()
         }
         
-        snapshot("1Calendar_View")
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            snapshot("1Calendar_View")
+        }
     }
     
-    func test_MealView() {
+    func test_B_MealView() {
         if !app.buttons["일정"].exists {
             login()
         }
         
         app.buttons["급식"].tap()
         snapshot("2Meal_View")
-        
     }
     
-    func test_NoticeView() {
+    func test_C_NoticeView() {
         if !app.buttons["일정"].exists {
             login()
         }
@@ -50,17 +50,16 @@ class ScreenShotUITests: XCTestCase {
         snapshot("3Notice_View")
     }
     
-    func test_IntroduceView() {
+    func test_D_IntroduceView() {
         if !app.buttons["일정"].exists {
             login()
         }
         
         self.app.buttons["소개"].tap()
         snapshot("4Introduce_View")
-        
     }
     
-    func test_MypageView() {
+    func test_E_MypageView() {
         if !app.buttons["일정"].exists {
             login()
         }

@@ -113,7 +113,7 @@ class CalenddarViewModelTests: XCTestCase {
         
         viewModel.input.viewDidLoad.accept(())
 
-        scheduler.createHotObservable([.next(100, Date(timeInterval: 0,  since: date))])
+        scheduler.createHotObservable([.next(100, Date(timeInterval: 0, since: date))])
             .bind(to: viewModel.input.selectedDate)
             .disposed(by: disposeBag)
         

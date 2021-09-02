@@ -21,12 +21,11 @@ public enum PMSApi {
     case letter(_ page: Int)
     case album(_ page: Int)
     case noticeDetail(_ id: Int)
-    case letterDetail(_ id: Int)
     case albumDetail(_ id: Int)
     case searchNotice(_ string: String)
     case searchLetter(_ string: String)
     
-    case addComment(_ id: Int)
+    case addComment(_ id: Int, _ body: String)
     
     // Introduce
     case clubs
@@ -63,16 +62,14 @@ extension PMSApi: TargetType {
             return "/gallery"
         case .noticeDetail(let id):
             return "/notice/\(id)"
-        case .letterDetail(let id):
-            return "/notice/home/\(id)"
         case .albumDetail(let id):
             return "/gallery/\(id)"
         case .searchNotice:
             return "/notice/search"
         case .searchLetter:
             return "/notice/news/search"
-        case .addComment:
-            return "/notice/comment"
+        case .addComment(let id, _):
+            return "/notice/\(id)/comment"
             
         // Introduce
         case .clubs:
@@ -108,6 +105,8 @@ extension PMSApi: TargetType {
             return .requestParameters(parameters: ["q": string], encoding: URLEncoding.queryString)
         case .searchLetter(let string):
             return .requestParameters(parameters: ["q": string], encoding: URLEncoding.queryString)
+        case .addComment(_, let body):
+            return .requestParameters(parameters: ["body": body], encoding: URLEncoding.default)
         default:
             return .requestPlain
         }

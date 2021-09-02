@@ -8,10 +8,29 @@
 import UIKit
 import NotificationCenter
 import FSCalendar
-import Alamofire
+import SnapKit
+import Then
 
+@objc(TodayViewController)
 final public class TodayViewController: UIViewController, NCWidgetProviding {
-    @IBOutlet private weak var calendar: FSCalendar!
+    
+    private let calendar = FSCalendar().then {
+        $0.appearance.selectionColor = Colors.blue.color
+        $0.appearance.headerMinimumDissolvedAlpha = 0.0
+        $0.today = nil
+//        $0.appearance.headerDateFormat = LocalizedString.calendarHeaderDateFormat.localized
+        $0.appearance.headerTitleColor = UIColor.black
+        $0.appearance.weekdayTextColor = UIColor.black
+        $0.placeholderType = .none
+        let localeID = Locale.preferredLanguages.first
+        let deviceLocale = (Locale(identifier: localeID!).languageCode)!
+        $0.locale = Locale(identifier: deviceLocale)
+        $0.appearance.titleFont = UIFont.preferredFont(forTextStyle: .callout)
+        $0.appearance.weekdayFont = UIFont.preferredFont(forTextStyle: .callout)
+        $0.appearance.subtitleFont = UIFont.preferredFont(forTextStyle: .callout)
+        $0.appearance.headerTitleFont = UIFont.preferredFont(forTextStyle: .callout)
+    }
+    
     private var dateInHome = [String]()
     private var dateInSchool = [String]()
     private var month = Date().get(.month)
@@ -22,83 +41,34 @@ final public class TodayViewController: UIViewController, NCWidgetProviding {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("ViewDidLoad")
-        
         extensionContext?.widgetLargestAvailableDisplayMode = .expanded
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        self.setCalendar()
-        self.getData()
+        view.addSubview(calendar)
+        self.setupView()
+        self.intializeCalendar()
     }
     
-    private func setCalendar() {
-        calendar.appearance.selectionColor = Colors.blue.color
-        calendar.appearance.headerDateFormat = LocalizedString.calendarHeaderDateFormat.localized
-        calendar.appearance.headerTitleColor = Colors.black.color
-        calendar.appearance.weekdayTextColor = Colors.black.color
-        let localeID = Locale.preferredLanguages.first
-        let deviceLocale = (Locale(identifier: localeID!).languageCode)!
-        calendar.locale = Locale(identifier: deviceLocale)
-        calendar.appearance.titleFont = UIFont.preferredFont(forTextStyle: .callout)
-        calendar.appearance.weekdayFont = UIFont.preferredFont(forTextStyle: .callout)
-        calendar.appearance.subtitleFont = UIFont.preferredFont(forTextStyle: .callout)
-        calendar.appearance.headerTitleFont = UIFont.preferredFont(forTextStyle: .callout)
+    private func setupView() {
+        calendar.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.height.equalTo(300)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
+    }
+    
+    private func intializeCalendar() {
         calendar.delegate = self
         calendar.dataSource = self
-    }
-    
-    private func getData() {
-        let url = "http://api.potatochips.live/calendar"
-        AF.request(url,
-                   method: .get,
-                   parameters: nil,
-                   encoding: URLEncoding.default)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: PMSCalendar.self) { response in
-                switch response.result {
-                case .success(let calendar):
-                    if calendar == UDManager.shared.response { // 데이터 변경 X
-                        self.dateInHome = UDManager.shared.dateInHome![self.month]
-                        self.dateInSchool = UDManager.shared.dateInSchool![self.month]
-                        self.calendar.reloadData()
-                        break
-                    } else {
-                        UDManager.shared.response = calendar
-                    }
-                    
-                    if UDManager.shared.dateInHome == nil { // 비어있으면 Intialize
-                        UDManager.shared.dateInHome = [[String]]()
-                        UDManager.shared.dateInSchool = [[String]]()
-                    }
-                    
-                    var homeTemp = [String]()
-                    var schoolTemp = [String]()
-                    
-                    for (key, value) in calendar {
-                        for (key, value) in value {
-                            if value.contains("의무귀가") {
-                                homeTemp.append(key)
-                            } else if !value.contains("빙학") && !value.contains("토요휴업일") {
-                                schoolTemp.append(key)
-                            }
-                        }
-                        UDManager.shared.dateInHome![Int(key)!] = homeTemp
-                        UDManager.shared.dateInSchool![Int(key)!] = schoolTemp
-                        
-                        homeTemp = [String]()
-                        schoolTemp = [String]()
-                    }
-                    
-                    self.dateInHome = UDManager.shared.dateInHome![self.month]
-                    self.dateInSchool = UDManager.shared.dateInSchool![self.month]
-                    print(self.dateInHome)
-                    print(self.dateInSchool)
-                    self.calendar.reloadData()
-                    
-                case .failure(_):
-                    break
-                }
-            }
+        
+        if  UserDefaults.shared.object(forKey: "PMSCalendar") != nil {
+            let dateInHome = UserDefaults.shared.object(forKey: "dateInHome") as! [[String]]
+            let dateInSchool = UserDefaults.shared.object(forKey: "dateInSchool") as! [[String]]
+            self.dateInHome = dateInHome[self.month]
+            self.dateInSchool = dateInSchool[self.month]
+            self.calendar.reloadData()
+        }
     }
     
     public func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
@@ -113,6 +83,12 @@ final public class TodayViewController: UIViewController, NCWidgetProviding {
     
     public func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
         preferredContentSize = activeDisplayMode == .expanded ? CGSize(width: maxSize.width, height: 300) : maxSize
+        
+        if activeDisplayMode == .expanded {
+            self.calendar.scope = .month
+        } else {
+            self.calendar.scope = .week
+        }
     }
     
 }
@@ -128,12 +104,13 @@ extension TodayViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalen
         if dateInSchool.contains(dateFormatter.string(from: date)) {
             return Colors.green.color
         }
-        return Colors.white.color
+        return UIColor.clear
     }
     
     public func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         return Colors.black.color
     }
+    
     public func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         changeMonth()
     }
@@ -142,9 +119,14 @@ extension TodayViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalen
         let currentPageDate = calendar.currentPage
         let month = Calendar.current.component(.month, from: currentPageDate)
         self.month = month
-        self.dateInHome = UDManager.shared.dateInHome![self.month]
-        self.dateInSchool = UDManager.shared.dateInSchool![self.month]
-        self.calendar.reloadData()
+        
+        if UserDefaults.shared.object(forKey: "dateInHome") != nil {
+            let dateInHome = UserDefaults.shared.object(forKey: "dateInHome") as! [[String]]
+            let dateInSchool = UserDefaults.shared.object(forKey: "dateInSchool") as! [[String]]
+            self.dateInHome = dateInHome[self.month]
+            self.dateInSchool = dateInSchool[self.month]
+            self.calendar.reloadData()
+        }
     }
     
     private func moveCurrentPage(moveUp: Bool) {

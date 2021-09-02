@@ -11,7 +11,7 @@ import Then
 import Kingfisher
 
 final public class NoticeDetailView: UIView {
-    private let clipButton = ClipButton()
+    public let clipButton = ClipButton()
     
     private let titleStackView = UIStackView().then {
         $0.axis = .vertical
@@ -118,11 +118,14 @@ final public class NoticeDetailView: UIView {
             $0.top.equalTo(titleStackView.snp_bottomMargin).offset(10)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-10)
+//            $0.height.equalTo(UIFrame.height / 3.5)
+//            $0.centerX.equalToSuperview()
         }
         
-        descStackView.snp.makeConstraints {
-            $0.height.equalTo(self.frame.height - 70)
-        }
+//        descStackView.snp.makeConstraints {
+//            $0.height.equalTo(self.frame.height - 70)
+//        }
         
         titleLine.snp.makeConstraints {
             $0.height.equalTo(1)

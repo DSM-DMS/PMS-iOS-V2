@@ -46,7 +46,7 @@ final public class NoticeFlow: Flow {
             self.rootViewController.pushViewController(vc, animated: true)
             return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
         } else {
-            let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, isLetter: segment == 1, repository: repository))
+            let vc = NoticeDetailViewController(viewModel: NoticeDetailViewModel(id: id, title: title, repository: repository))
             vc.hidesBottomBarWhenPushed = true
             self.rootViewController.pushViewController(vc, animated: true)
             return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))

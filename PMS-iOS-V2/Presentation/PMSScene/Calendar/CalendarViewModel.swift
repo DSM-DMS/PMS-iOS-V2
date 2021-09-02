@@ -22,15 +22,15 @@ final public class CalendarViewModel: Stepper {
         let isLoading = BehaviorRelay<Bool>(value: false)
         let date = BehaviorRelay<Date>(value: Date())
         let selectedDate = BehaviorRelay<Date>(value: Date())
-        let month = BehaviorRelay<String>(value: "")
+        let month =  BehaviorRelay<String>(value: String(Date().get(.month)))
         let noInternet = PublishRelay<Void>()
     }
     
     public struct Output {
         let reloadData = PublishRelay<Void>()
         let date = BehaviorRelay<String>(value: "")
-        let selectedDate = BehaviorRelay<String>(value: "")
-        let calendar = BehaviorRelay<PMSCalendar>(value: PMSCalendar())
+        let selectedDate = PublishRelay<String>()
+        let calendar = PublishRelay<PMSCalendar>()
         let dateInHome = BehaviorRelay<[String]>(value: .init())
         let dateInSchool = BehaviorRelay<[String]>(value: .init())
         let detailCalendar = BehaviorRelay<[CalendarCell]?>(value: nil)
@@ -78,26 +78,28 @@ final public class CalendarViewModel: Stepper {
         
         input.month
             .subscribe(onNext: { month in
-                var dateInHome = [String]()
-                var dateInSchool = [String]()
-                for (key, value) in self.output.calendar.value {
-                    if key == String(month) {
-                        for (key, value) in value {
-                            if value.contains("의무귀가") {
-                                dateInHome.append(key)
-                            } else if !value.contains("빙학") && !value.contains("토요휴업일") {
-                                dateInSchool.append(key)
-                            }
-                        }
-                    }
+                if UserDefaults.shared.object(forKey: "dateInHome") != nil {
+                    let dateInHome = UserDefaults.shared.object(forKey: "dateInHome") as! [[String]]
+                    let dateInSchool = UserDefaults.shared.object(forKey: "dateInSchool") as! [[String]]
+                    self.output.dateInHome.accept(dateInHome[Int(month)!])
+                    self.output.dateInSchool.accept(dateInSchool[Int(month)!])
+                    self.output.reloadData.accept(())
                 }
-                self.output.dateInHome.accept(dateInHome.sorted())
-                self.output.dateInSchool.accept(dateInSchool.sorted())
-                self.output.reloadData.accept(())
             }).disposed(by: disposeBag)
         
         output.calendar
-            .map { _ in
+            .map {
+                let ud = UserDefaults.shared.object(forKey: "PMSCalendar")
+
+                if ud == nil {
+                    UserDefaults.shared.setValue($0, forKey: "PMSCalendar")
+                    self.saveUserDefaults(calendar: $0)
+                } else if ud as! PMSCalendar == $0 {
+                    return String(Date().get(.month))
+                } else if !$0.isEmpty {
+                    UserDefaults.shared.setValue($0, forKey: "PMSCalendar")
+                    self.saveUserDefaults(calendar: $0)
+                }
                 return String(Date().get(.month))
             }
             .bind(to: input.month)
@@ -105,7 +107,9 @@ final public class CalendarViewModel: Stepper {
         
         output.selectedDate
             .subscribe(onNext: { date in
-                for (key, value) in self.output.calendar.value {
+                let ud = UserDefaults.shared.object(forKey: "PMSCalendar")
+                
+                for (key, value) in ud as! PMSCalendar {
                     if key == String(self.input.month.value) {
                         var cells = [CalendarCell]()
                         for (key, value) in value {
@@ -158,6 +162,27 @@ final public class CalendarViewModel: Stepper {
         } else {
             return .unknownErrorMsg
         }
+    }
+    
+    private func saveUserDefaults(calendar: PMSCalendar) {
+        var dateInHome = [[String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String]()] // 총 13개
+        var dateInSchool =  [[String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String](), [String]()]
+        
+        for (key, value) in calendar { // key: month
+            for (date, value) in value {
+                if value.contains("의무귀가") {
+                    dateInHome[Int(key)!].append(date)
+                    
+                } else if !value.contains("토요휴업일") {
+                    dateInSchool[Int(key)!].append(date)
+                }
+            }
+        }
+        UserDefaults.shared.setValue(dateInHome, forKey: "dateInHome")
+        UserDefaults.shared.setValue(dateInSchool, forKey: "dateInSchool")
+        
+        print(dateInHome)
+        print(dateInSchool)
     }
 }
 
