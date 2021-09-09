@@ -47,8 +47,7 @@ final public class AddStudentViewController: UIViewController {
         $0.text = LocalizedString.enterStudentCodeMsg.localized
     }
     
-    internal init(viewModel: AddStudentViewModel,
-         dismiss: @escaping () -> Void) {
+    internal init(viewModel: AddStudentViewModel, dismiss: @escaping () -> Void) {
         self.viewModel = viewModel
         self.dismiss = dismiss
         super.init(nibName: nil, bundle: nil)
@@ -121,8 +120,8 @@ final public class AddStudentViewController: UIViewController {
     
     private func bindInput() {
         cancelButton.rx.tap
-            .subscribe(onNext: {
-                self.dismiss()
+            .subscribe(onNext: { [weak self] _ in
+                self?.dismiss()
             }).disposed(by: disposeBag)
         
         addButton.rx.tap
@@ -133,23 +132,23 @@ final public class AddStudentViewController: UIViewController {
     private func bindOutput() {
         
         viewModel.output.addButtonIsEnable
-            .subscribe(onNext: {
-                if $0 {
-                    self.addButton.isEnabled = $0
-                    self.addButton.alpha = 1.0
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.addButton.isEnabled = bool
+                    self?.addButton.alpha = 1.0
                 } else {
-                    self.addButton.isEnabled = $0
-                    self.addButton.alpha = 0.5
+                    self?.addButton.isEnabled = bool
+                    self?.addButton.alpha = 0.5
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isSucceed
-            .subscribe(onNext: {
-                if $0 {
-                    self.dismiss()
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.dismiss()
                 } else {
-                    self.otpFieldView.shake()
+                    self?.otpFieldView.shake()
                 }
             }).disposed(by: disposeBag)
         

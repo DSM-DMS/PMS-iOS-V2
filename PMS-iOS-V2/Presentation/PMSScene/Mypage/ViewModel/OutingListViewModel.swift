@@ -35,8 +35,12 @@ final public class OutingListViewModel: Stepper {
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { _ in
-                repository.getOutingList(number: self.number)
+            .flatMapLatest { [weak self] _ -> Observable<OutingList> in
+                guard let self = self else {
+                    return Observable.just(OutingList(outings: [Outing]()))
+                }
+                
+                return repository.getOutingList(number: self.number)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -49,8 +53,8 @@ final public class OutingListViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.noInternet
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
         

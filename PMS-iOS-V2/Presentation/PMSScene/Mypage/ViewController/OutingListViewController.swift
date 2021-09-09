@@ -108,8 +108,8 @@ final public class OutingListViewController: UIViewController {
         
         viewModel.output.outingList
             .filter { $0.isEmpty == true }
-            .subscribe(onNext: { _ in
-                self.noOutingView.isHidden = false
+            .subscribe(onNext: { [weak self] _ in
+                self?.noOutingView.isHidden = false
             }).disposed(by: disposeBag)
     }
 }

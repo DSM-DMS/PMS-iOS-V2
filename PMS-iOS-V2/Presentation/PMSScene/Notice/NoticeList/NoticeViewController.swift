@@ -112,18 +112,21 @@ final public class NoticeViewController: UIViewController {
         searchController.searchBar.rx.text
             .orEmpty
             .filter { $0 != "" }
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .map { self.pageStackView.isHidden = true; return $0 }
+            .map { [weak self] text in
+                self?.pageStackView.isHidden = true
+                return text
+            }
             .bind(to: viewModel.input.searchText)
             .disposed(by: disposeBag)
         
         searchController.searchBar.rx.text
             .orEmpty
             .filter { $0 == "" }
-            .subscribe { _ in
-                self.viewModel.input.viewDidLoad.accept(())
-                self.pageStackView.isHidden = false
+            .subscribe { [weak self] _ in
+                self?.viewModel.input.viewDidLoad.accept(())
+                self?.pageStackView.isHidden = false
             }
             .disposed(by: disposeBag)
         
@@ -136,7 +139,9 @@ final public class NoticeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
-            .subscribe(onNext: { self.tableView.deselectRow(at: $0, animated: true)})
+            .subscribe(onNext: { [weak self] index in
+                self?.tableView.deselectRow(at: index, animated: true)
+            })
             .disposed(by: disposeBag)
         
         previousButton.rx.tap
@@ -154,8 +159,8 @@ final public class NoticeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.page
-            .subscribe {
-                self.pageLabel.text = String($0)
+            .subscribe { [weak self] page in
+                self?.pageLabel.text = String(page)
             }.disposed(by: disposeBag)
         
         viewModel.output.noticeList
@@ -164,8 +169,8 @@ final public class NoticeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.noticeList
-            .subscribe(onNext: {
-                self.noNoticeView.isHidden = !$0.isEmpty
+            .subscribe(onNext: { [weak self] notice in
+                self?.noNoticeView.isHidden = !notice.isEmpty
             }).disposed(by: disposeBag)
     }
 }

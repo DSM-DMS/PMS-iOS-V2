@@ -101,7 +101,6 @@ final public class NoticeDetailViewController: UIViewController {
         self.noticeView.clipButton.addGestureRecognizer(clipTapped)
         self.blackBackground.addGestureRecognizer(backgroundTapped)
         
-        
         self.setupSubview()
         self.bindOutput()
         self.setDelegate()
@@ -133,7 +132,7 @@ final public class NoticeDetailViewController: UIViewController {
     private func setupSubview() {
         view.backgroundColor = Colors.white.color
         view.addSubViews([noticeView, commentTableView])
-//        view.addSubview(mentionTableView)
+        //        view.addSubview(mentionTableView)
         view.addSubViews([inputBackground])
         view.addSubViews([commentBackground, commentTextField, enterButton])
         view.addSubViews([blackBackground, attachView.view])
@@ -163,19 +162,19 @@ final public class NoticeDetailViewController: UIViewController {
             $0.bottom.equalTo(view.layoutMarginsGuide).offset(-70)
         }
         
-//        mentionButton.snp.makeConstraints {
-//            $0.centerY.equalTo(commentBackground)
-//            $0.leading.equalToSuperview().offset(10)
-//            $0.width.equalTo(20)
-//            $0.height.equalTo(25)
-//        }
+        //        mentionButton.snp.makeConstraints {
+        //            $0.centerY.equalTo(commentBackground)
+        //            $0.leading.equalToSuperview().offset(10)
+        //            $0.width.equalTo(20)
+        //            $0.height.equalTo(25)
+        //        }
         
         commentBackground.snp.makeConstraints {
             $0.centerX.equalTo(inputBackground)
             $0.bottom.equalTo(view.layoutMarginsGuide)
             $0.height.equalTo(50)
             $0.leading.equalToSuperview().offset(20)
-//            $0.leading.equalTo(mentionButton.snp_trailingMargin).offset(20)
+            //            $0.leading.equalTo(mentionButton.snp_trailingMargin).offset(20)
             $0.trailing.equalTo(enterButton.snp_leadingMargin).offset(-20)
         }
         
@@ -199,11 +198,11 @@ final public class NoticeDetailViewController: UIViewController {
             $0.leading.equalToSuperview()
         }
         
-//        mentionTableView.snp.makeConstraints {
-//            $0.bottom.equalTo(inputBackground.snp_topMargin)
-//            $0.width.equalToSuperview()
-//            $0.height.equalTo(UIFrame.height / 4.5)
-//        }
+        //        mentionTableView.snp.makeConstraints {
+        //            $0.bottom.equalTo(inputBackground.snp_topMargin)
+        //            $0.width.equalToSuperview()
+        //            $0.height.equalTo(UIFrame.height / 4.5)
+        //        }
         
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -220,7 +219,8 @@ final public class NoticeDetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         clipTapped.rx.event
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 self.attachView.setAttach(attach: self.viewModel.output.detailNotice.value.attach)
                 self.attachView.view.isHidden = false
                 self.blackBackground.isHidden = false
@@ -228,37 +228,37 @@ final public class NoticeDetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         backgroundTapped.rx.event
-            .subscribe(onNext: { _ in
-                self.attachView.view.isHidden = true
-                self.blackBackground.isHidden = true
+            .subscribe(onNext: { [weak self] _ in
+                self?.attachView.view.isHidden = true
+                self?.blackBackground.isHidden = true
             })
             .disposed(by: disposeBag)
         
-//        commentTextField.rx.text
-//            .orEmpty
-//            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
-//            .distinctUntilChanged()
-//            .bind(to: viewModel.input.commentText)
-//            .disposed(by: disposeBag)
+        //        commentTextField.rx.text
+        //            .orEmpty
+        //            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+        //            .distinctUntilChanged()
+        //            .bind(to: viewModel.input.commentText)
+        //            .disposed(by: disposeBag)
         
-//        commentTextField.rx.text
-//            .orEmpty
-//            .map { if $0.contains("@") { return true } else { return false }}
-//            .subscribe {
-//                self.popUpMentionView(popUp: $0)
-//            }
-//            .disposed(by: disposeBag)
+        //        commentTextField.rx.text
+        //            .orEmpty
+        //            .map { if $0.contains("@") { return true } else { return false }}
+        //            .subscribe {
+        //                self.popUpMentionView(popUp: $0)
+        //            }
+        //            .disposed(by: disposeBag)
         
         mentionButton.rx.tap
-            .subscribe { _ in
-                self.commentTextField.text?.append("@")
+            .subscribe { [weak self] _ in
+                self?.commentTextField.text?.append("@")
             }
             .disposed(by: disposeBag)
         
         enterButton.rx.tap
-            .map { _ in
-                let temp = self.commentTextField.text
-                self.commentTextField.text = ""
+            .map { [weak self] _ in
+                let temp = self?.commentTextField.text
+                self?.commentTextField.text = ""
                 
                 if temp == nil {
                     return ""
@@ -275,8 +275,8 @@ final public class NoticeDetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.detailNotice
-            .subscribe {
-                self.noticeView.setupView(model: $0)
+            .subscribe { [weak self] notice in
+                self?.noticeView.setupView(model: notice)
             }.disposed(by: disposeBag)
         
         viewModel.output.detailNotice
@@ -292,15 +292,17 @@ final public class NoticeDetailViewController: UIViewController {
     
     private func setDelegate() {
         commentTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.commentTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.commentTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
     }
     
     private func popUpMentionView(popUp: Bool) {
         if popUp {
-            mentionTableView.isHidden = false
+            self.mentionTableView.isHidden = false
         } else {
-            mentionTableView.isHidden = true
+            self.mentionTableView.isHidden = true
         }
     }
 }

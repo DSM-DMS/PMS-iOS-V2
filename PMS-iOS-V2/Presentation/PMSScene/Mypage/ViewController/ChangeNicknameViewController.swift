@@ -124,44 +124,44 @@ final public class ChangeNicknameViewController: UIViewController {
     private func bindInput() {
         nicknameTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .bind(to: viewModel.input.nicknameText)
             .disposed(by: disposeBag)
         
         cancelButton.rx.tap
-            .subscribe(onNext: {
-                self.delegate.dismissChangeNickname()
+            .subscribe(onNext: { [weak self] _ in
+                self?.delegate.dismissChangeNickname()
             }).disposed(by: disposeBag)
         
         changeButton.rx.tap
-            .subscribe(onNext: {
-                self.delegate.dismissChangeNickname()
-                self.viewModel.input.changeButtonTapped.accept(())
-                self.delegate.success()
+            .subscribe(onNext: { [weak self] _ in
+                self?.delegate.dismissChangeNickname()
+                self?.viewModel.input.changeButtonTapped.accept(())
+                self?.delegate.success()
             }).disposed(by: disposeBag)
         
     }
     
     private func bindOutput() {
         viewModel.output.isNicknameTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.nicknameLine.backgroundColor = Colors.blue.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.nicknameLine.backgroundColor = Colors.blue.color
                 } else {
-                    self.nicknameLine.backgroundColor = .gray
+                    self?.nicknameLine.backgroundColor = .gray
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.changeButtonIsEnable
-            .subscribe(onNext: {
-                if $0 {
-                    self.changeButton.isEnabled = $0
-                    self.changeButton.alpha = 1.0
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.changeButton.isEnabled = bool
+                    self?.changeButton.alpha = 1.0
                 } else {
-                    self.changeButton.isEnabled = $0
-                    self.changeButton.alpha = 0.5
+                    self?.changeButton.isEnabled = bool
+                    self?.changeButton.alpha = 0.5
                 }
             })
             .disposed(by: disposeBag)
@@ -170,7 +170,9 @@ final public class ChangeNicknameViewController: UIViewController {
     
     private func setDelegate() {
         nicknameTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.nicknameTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.nicknameTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
     }
 }

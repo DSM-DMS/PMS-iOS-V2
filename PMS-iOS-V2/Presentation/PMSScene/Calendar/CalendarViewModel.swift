@@ -45,22 +45,22 @@ final public class CalendarViewModel: Stepper {
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                    self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
                 }
             })
             .disposed(by: disposeBag)
         
         input.viewDidLoad
-            .flatMap {
+            .flatMap { [weak self] _ in
                 repository.getCalendar()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
-                        
                     })
                     .catchErrorJustReturn(PMSCalendar())
             }.bind(to: output.calendar)
@@ -106,8 +106,10 @@ final public class CalendarViewModel: Stepper {
             .disposed(by: disposeBag)
         
         output.selectedDate
-            .subscribe(onNext: { date in
+            .subscribe(onNext: { [weak self] date in
                 let ud = UserDefaults.shared.object(forKey: "PMSCalendar")
+                
+                guard let self = self else { return }
                 
                 for (key, value) in ud as! PMSCalendar {
                     if key == String(self.input.month.value) {
@@ -180,9 +182,6 @@ final public class CalendarViewModel: Stepper {
         }
         UserDefaults.shared.setValue(dateInHome, forKey: "dateInHome")
         UserDefaults.shared.setValue(dateInSchool, forKey: "dateInSchool")
-        
-        print(dateInHome)
-        print(dateInSchool)
     }
 }
 

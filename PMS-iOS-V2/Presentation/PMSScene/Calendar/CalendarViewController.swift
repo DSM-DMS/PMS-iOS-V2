@@ -135,20 +135,20 @@ final public class CalendarViewController: UIViewController {
             .disposed(by: disposeBag)
         
         leftButton.rx.tap
-            .subscribe { _ in
-                self.moveCurrentPage(moveUp: false)
+            .subscribe { [weak self] _ in
+                self?.moveCurrentPage(moveUp: false)
             }.disposed(by: disposeBag)
         
         rightButton.rx.tap
-            .subscribe { _ in
-                self.moveCurrentPage(moveUp: true)
+            .subscribe { [weak self] _ in
+                self?.moveCurrentPage(moveUp: true)
             }.disposed(by: disposeBag)
     }
     
     private func bindOutput() {
         viewModel.output.reloadData
-            .subscribe(onNext: { _ in
-                self.calendar.reloadData()
+            .subscribe(onNext: { [weak self] _ in
+                self?.calendar.reloadData()
             }).disposed(by: disposeBag)
         
         viewModel.output.isLoading
@@ -156,7 +156,9 @@ final public class CalendarViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
-            .subscribe(onNext: { self.tableView.deselectRow(at: $0, animated: true)})
+            .subscribe(onNext: { [weak self] index in
+                self?.tableView.deselectRow(at: index, animated: true)
+            })
             .disposed(by: disposeBag)
         
         viewModel.output.detailCalendar
@@ -164,7 +166,7 @@ final public class CalendarViewController: UIViewController {
                 if $0 == nil {
                     return [ListSection<CalendarCell>(header: "", items: [CalendarCell(label: .calendarPlaceholder)])]
                 } else {
-                   return [ListSection<CalendarCell>(header: "", items: $0!)]
+                    return [ListSection<CalendarCell>(header: "", items: $0!)]
                 }
             }
             .bind(to: tableView.rx.items(dataSource: dataSource))

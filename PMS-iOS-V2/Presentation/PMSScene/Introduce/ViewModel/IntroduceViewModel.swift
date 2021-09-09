@@ -23,18 +23,18 @@ final public class IntroduceViewModel: Stepper {
     
     public init() {
         input.clubButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.clubIsRequired)
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.clubIsRequired)
             }.disposed(by: disposeBag)
         
         input.companyButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.companyIsRequired)
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.companyIsRequired)
             }.disposed(by: disposeBag)
         
         input.developerButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.developerIsRequired)
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.developerIsRequired)
             }.disposed(by: disposeBag)
     }
 }

@@ -130,33 +130,35 @@ final public class StudentListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
-            .subscribe(onNext: { self.tableView.deselectRow(at: $0, animated: true)})
+            .subscribe(onNext: { [weak self] index in
+                        self?.tableView.deselectRow(at: index, animated: true)
+            })
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(UsersStudent.self)
-            .subscribe(onNext: {
-                self.delegate.changeStudent(student: $0)
-                UDManager.shared.student = String($0.number) + " " + $0.name
+            .subscribe(onNext: { [weak self] student in
+                self?.delegate.changeStudent(student: student)
+                UDManager.shared.student = String(student.number) + " " + student.name
             })
             .disposed(by: disposeBag)
         
         tableView.rx.itemDeleted
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] students in
+                guard let self = self else { return }
                 self.delegate.delete(
-                    student: self.viewModel.output.studentList.value[$0[1]])
+                    student: self.viewModel.output.studentList.value[students[1]])
             })
             .disposed(by: disposeBag)
         
         addButtonTapped.rx.event
-            .subscribe(onNext: { _ in
-                print("EVENT")
-                self.delegate.addStudentTapped()
+            .subscribe(onNext: { [weak self] _ in
+                self?.delegate.addStudentTapped()
             })
             .disposed(by: disposeBag)
         
         addStudentButton.rx.tap
-            .subscribe(onNext: { _ in
-                self.delegate.addStudentTapped()
+            .subscribe(onNext: { [weak self] _ in
+                self?.delegate.addStudentTapped()
             })
             .disposed(by: disposeBag)
     }

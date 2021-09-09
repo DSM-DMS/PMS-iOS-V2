@@ -93,12 +93,13 @@ final public class MypageViewModel: Stepper {
         
         output.isStudent
             .filter { $0 == true }
-            .flatMapLatest { _ in
+            .flatMapLatest { [weak self] _ in
                 repository.getStudent(number: UDManager.shared.studentNumber!)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
@@ -106,49 +107,50 @@ final public class MypageViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.backgroundTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.presentTabbar)
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.presentTabbar)
             }.disposed(by: disposeBag)
         
         input.studentListButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.dismissTabbar)
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.dismissTabbar)
             }.disposed(by: disposeBag)
         
         input.changeNicknameButtonTapped
-            .subscribe { _ in
+            .subscribe { [weak self] _ in
                 AnalyticsManager.view_changeNickname.log()
-                self.steps.accept(PMSStep.dismissTabbar)
+                self?.steps.accept(PMSStep.dismissTabbar)
             }.disposed(by: disposeBag)
         
         input.pointListButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.pointListIsRequired(number: UDManager.shared.studentNumber!))
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.pointListIsRequired(number: UDManager.shared.studentNumber!))
             }.disposed(by: disposeBag)
         
         input.outingListButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.outingListIsRequired(number: UDManager.shared.studentNumber!))
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.outingListIsRequired(number: UDManager.shared.studentNumber!))
             }.disposed(by: disposeBag)
         
         input.chanegePasswordButtonTapped
-            .subscribe { _ in
-                self.steps.accept(PMSStep.changePasswordIsRequired)
+            .subscribe { [weak self] _ in
+                self?.steps.accept(PMSStep.changePasswordIsRequired)
             }.disposed(by: disposeBag)
         
         input.logoutButtonTapped
-            .subscribe { _ in
+            .subscribe { [weak self] _ in
                 AnalyticsManager.view_logout.log()
-                self.steps.accept(PMSStep.logout)
+                self?.steps.accept(PMSStep.logout)
             }.disposed(by: disposeBag)
         
         input.deleteStudent
-            .flatMapLatest {
-                repository.deleteStudent(number: $0)
+            .flatMapLatest { [weak self] student in
+                repository.deleteStudent(number: student)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }.subscribe { _ in }

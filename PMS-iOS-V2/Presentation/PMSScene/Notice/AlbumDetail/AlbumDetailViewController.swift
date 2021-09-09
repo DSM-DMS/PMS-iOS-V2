@@ -152,8 +152,8 @@ final public class AlbumDetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.detailNotice
-            .subscribe {
-                self.setupView(model: $0)
+            .subscribe { [weak self] notice in
+                self?.setupView(model: notice)
             }.disposed(by: disposeBag)
         
         viewModel.output.detailNotice

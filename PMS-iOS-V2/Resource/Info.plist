@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>Auth Email</key>
 	<string>test@test.com</string>
 	<key>Auth Password</key>
@@ -69,6 +67,8 @@
 	<string>76482f127d69d354bb33dd3250a09b55</string>
 	<key>FacebookDisplayName</key>
 	<string>PMS</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>KAKAO_APP_KEY</key>
 	<string>c8076bcc57ebf6749750e562e40b1b3a</string>
 	<key>LSApplicationQueriesSchemes</key>

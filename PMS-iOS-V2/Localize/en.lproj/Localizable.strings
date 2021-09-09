@@ -45,6 +45,7 @@
 "emailPlaceholder" = "Enter Email.";
 "passwordPlaceholder" = "Enter Password.";
 "rePasswordPlaceholder" = "Enter Password Again.";
+"numberPlaceholder" = "Enter specific number";
 "currentPasswordPlaceholder" = "Enter Current Password.";
 "newPasswordPlaceholder" = "Enter Password to be Changed.";
 "reNewPasswordPlaceholder" = "Check Password to be Changed.";

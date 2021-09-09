@@ -34,12 +34,13 @@ final public class StudentListViewModel: Stepper {
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { _ in
+            .flatMapLatest { [weak self] _ in
                 repository.getUser()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
@@ -48,8 +49,8 @@ final public class StudentListViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.noInternet
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
         

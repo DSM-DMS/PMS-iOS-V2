@@ -45,6 +45,16 @@ final public class RegisterViewController: UIViewController {
         $0.alignment = .leading
     }
     
+    private let emailButton = UIButton().then {
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 10.0
+        $0.setTitle("이메일 인증", for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
+        $0.backgroundColor = Colors.red.color
+    }
+    
+    private let emailButtonTapped = UITapGestureRecognizer()
+    
     private let emailStackView = UIStackView().then {
         $0.spacing = 5.0
         $0.axis = .vertical
@@ -73,6 +83,17 @@ final public class RegisterViewController: UIViewController {
         $0.alignment = .leading
     }
     
+    private let numberView = UIStackView().then {
+        $0.spacing = 15.0
+        $0.alignment = .leading
+    }
+    
+    private let numberStackView = UIStackView().then {
+        $0.spacing = 5.0
+        $0.axis = .vertical
+        $0.alignment = .leading
+    }
+    
     private let oAuthStackView = UIStackView().then {
         $0.alignment = .top
         $0.distribution = .equalSpacing
@@ -89,6 +110,9 @@ final public class RegisterViewController: UIViewController {
     private let lockImage = LockImage()
     private let circleCheckImage = CircleCheckImage()
     private let checkImage = CheckImage()
+    private let numberLabel = UILabel().then {
+        $0.text = "#"
+    }
     
     let nicknameLine = UIView().then {
         $0.backgroundColor = .gray
@@ -102,6 +126,9 @@ final public class RegisterViewController: UIViewController {
     let rePasswordLine = UIView().then {
         $0.backgroundColor = .gray
     }
+    let numberLine = UIView().then {
+        $0.backgroundColor = .gray
+    }
     
     private let nicknameTextField = PMSTextField(title: .nicknamePlaceholder)
     private let emailTextField = PMSTextField(title: .emailPlaceholder)
@@ -111,6 +138,8 @@ final public class RegisterViewController: UIViewController {
     private let rePasswordTextField = PMSTextField(title: .rePasswordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
+    private let numberTextField = PMSTextField(title: .numberPlaceholder)
+    
     private let rePasswordValidMsg = UILabel().then {
         $0.text = ""
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
@@ -130,6 +159,7 @@ final public class RegisterViewController: UIViewController {
     }
     
     public override func viewDidLoad() {
+        emailButton.addGestureRecognizer(emailButtonTapped)
         setupSubview()
         setNavigationTitle(title: .registerTitle, accessibilityLabel: .registerView, isLarge: true)
         bindInput()
@@ -158,18 +188,21 @@ final public class RegisterViewController: UIViewController {
         
         let nicknameSpacing = UIView().then { $0.frame.size = CGSize(width: 20, height: 20)}
         let emailSpacing = UIView().then { $0.frame.size = CGSize(width: 20, height: 20)}
+        let buttonSpacing = UIView().then { $0.frame.size = CGSize(width: 30, height: 0)}
         let passwordSpacing = UIView().then { $0.frame.size = CGSize(width: 20, height: 20)}
         let rePasswordSpacing = UIView().then { $0.frame.size = CGSize(width: 20, height: 20)}
+        let numberSpacing = UIView().then { $0.frame.size = CGSize(width: 20, height: 20)}
         
         view.backgroundColor = Colors.white.color
         view.addSubview(registerViewStack)
+        view.addSubview(emailButton)
         view.addSubview(activityIndicator)
         
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
         
-        registerViewStack.addArrangeSubviews([nicknameStackView, emailStackView, passwordStackView, rePasswordStackView, registerButton])
+        registerViewStack.addArrangeSubviews([nicknameStackView, emailStackView, passwordStackView, rePasswordStackView, numberStackView, registerButton])
         nicknameView.addArrangeSubviews([nicknameSpacing, pencilImage, nicknameTextField])
         nicknameStackView.addArrangeSubviews([nicknameView, nicknameLine])
         nicknameLine.snp.makeConstraints {
@@ -181,6 +214,11 @@ final public class RegisterViewController: UIViewController {
         emailLine.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.width.equalTo(UIFrame.width - 70)
+        }
+        emailButton.snp.makeConstraints {
+            $0.width.equalTo(90)
+            $0.trailing.equalTo(emailStackView.snp_trailingMargin).offset(-7)
+            $0.bottom.equalTo(emailLine.snp_topMargin).offset(-12)
         }
         passwordView.addArrangeSubviews([passwordSpacing, lockImage, passwordTextField])
         passwordStackView.addArrangeSubviews([passwordView, passwordLine])
@@ -212,6 +250,16 @@ final public class RegisterViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-10)
         }
         
+        numberView.addArrangeSubviews([numberSpacing, numberLabel, numberTextField])
+        numberStackView.addArrangeSubviews([numberView, numberLine])
+        numberLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.width.equalTo(UIFrame.width - 70)
+        }
+        numberLabel.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+        }
+        
         oAuthStackView.addArrangeSubviews([leftSpacing, facebookButton, naverButton, appleButton, rightSpacing])
         
         registerViewStack.snp.makeConstraints {
@@ -227,29 +275,37 @@ final public class RegisterViewController: UIViewController {
         
         nicknameTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .share()
             .bind(to: viewModel.input.nicknameText)
             .disposed(by: disposeBag)
         
         emailTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
+            .share()
             .distinctUntilChanged()
             .bind(to: viewModel.input.emailText)
             .disposed(by: disposeBag)
         
+        emailButtonTapped.rx.event
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         passwordTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .share()
             .bind(to: viewModel.input.passwordText)
             .disposed(by: disposeBag)
         
         rePasswordTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .share()
             .bind(to: viewModel.input.rePasswordText)
             .disposed(by: disposeBag)
         
@@ -262,22 +318,22 @@ final public class RegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         facebookButton.rx.tap
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 AnalyticsManager.click_naver.log()
                 let configuration = LoginConfiguration(
                     permissions: ["email"],
                     tracking: .enabled,
                     nonce: "123"
                 )
-                self.facebookManager.logIn(configuration: configuration!, completion: { result in
+                self?.facebookManager.logIn(configuration: configuration!, completion: { result in
                     switch result {
                     case .cancelled: break
                     case .failed(let error):
-                        self.viewModel.input.oAuthError.accept(error)
+                        self?.viewModel.input.oAuthError.accept(error)
                     case .success:
                         Log.info("Facebook : \(String(describing: AuthenticationToken.current?.tokenString))")
                         if let token = AuthenticationToken.current?.tokenString {
-                            self.viewModel.input.facebookRegisterSuccess.accept(token)
+                            self?.viewModel.input.facebookRegisterSuccess.accept(token)
                         }
                     }
                 })
@@ -285,15 +341,15 @@ final public class RegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         naverButton.rx.tap
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 AnalyticsManager.click_naver.log()
-                self.loginInstance?.requestThirdPartyLogin()
+                self?.loginInstance?.requestThirdPartyLogin()
             })
             .disposed(by: disposeBag)
         
         if #available(iOS 13.0, *) {
             appleButton.rx.tap
-                .subscribe(onNext: {
+                .subscribe(onNext: { [weak self] _ in
                     AnalyticsManager.click_apple.log()
                     let appleIDProvider = ASAuthorizationAppleIDProvider()
                     let request = appleIDProvider.createRequest()
@@ -314,49 +370,49 @@ final public class RegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isNicknameTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.nicknameLine.backgroundColor = Colors.red.color
-                    self.pencilImage.tintColor = Colors.red.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.nicknameLine.backgroundColor = Colors.red.color
+                    self?.pencilImage.tintColor = Colors.red.color
                 } else {
-                    self.nicknameLine.backgroundColor = .gray
-                    self.pencilImage.tintColor = Colors.black.color
+                    self?.nicknameLine.backgroundColor = .gray
+                    self?.pencilImage.tintColor = Colors.black.color
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isEmailTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.emailLine.backgroundColor = Colors.red.color
-                    self.personImage.tintColor = Colors.red.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.emailLine.backgroundColor = Colors.red.color
+                    self?.personImage.tintColor = Colors.red.color
                 } else {
-                    self.emailLine.backgroundColor = .gray
-                    self.personImage.tintColor = Colors.black.color
+                    self?.emailLine.backgroundColor = .gray
+                    self?.personImage.tintColor = Colors.black.color
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isPasswordTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.passwordLine.backgroundColor = Colors.red.color
-                    self.lockImage.tintColor = Colors.red.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.passwordLine.backgroundColor = Colors.red.color
+                    self?.lockImage.tintColor = Colors.red.color
                 } else {
-                    self.passwordLine.backgroundColor = .gray
-                    self.lockImage.tintColor = Colors.black.color
+                    self?.passwordLine.backgroundColor = .gray
+                    self?.lockImage.tintColor = Colors.black.color
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isRePasswordTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.rePasswordLine.backgroundColor = Colors.red.color
-                    self.circleCheckImage.tintColor = Colors.red.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.rePasswordLine.backgroundColor = Colors.red.color
+                    self?.circleCheckImage.tintColor = Colors.red.color
                 } else {
-                    self.rePasswordLine.backgroundColor = .gray
-                    self.circleCheckImage.tintColor = Colors.black.color
+                    self?.rePasswordLine.backgroundColor = .gray
+                    self?.circleCheckImage.tintColor = Colors.black.color
                 }
             })
             .disposed(by: disposeBag)
@@ -367,13 +423,13 @@ final public class RegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.registerButtonIsEnable
-            .subscribe(onNext: {
-                if $0 {
-                    self.registerButton.isEnabled = $0
-                    self.registerButton.alpha = 1.0
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.registerButton.isEnabled = bool
+                    self?.registerButton.alpha = 1.0
                 } else {
-                    self.registerButton.isEnabled = $0
-                    self.registerButton.alpha = 0.5
+                    self?.registerButton.isEnabled = bool
+                    self?.registerButton.alpha = 0.5
                 }
             })
             .disposed(by: disposeBag)
@@ -384,11 +440,11 @@ final public class RegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isRePasswordValid
-            .subscribe(onNext: {
-                if $0 {
-                    self.checkImage.tintColor = Colors.green.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.checkImage.tintColor = Colors.green.color
                 } else {
-                    self.checkImage.tintColor = Colors.red.color
+                    self?.checkImage.tintColor = Colors.red.color
                 }
             })
             .disposed(by: disposeBag)
@@ -401,16 +457,24 @@ final public class RegisterViewController: UIViewController {
     
     private func setupDelegate() {
         nicknameTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.nicknameTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.nicknameTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
         emailTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.emailTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.emailTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
         passwordTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.passwordTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.passwordTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
         rePasswordTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.rePasswordTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.rePasswordTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
     }
 }

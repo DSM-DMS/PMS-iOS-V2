@@ -92,7 +92,9 @@ final public class PointListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
-            .subscribe(onNext: { self.tableView.deselectRow(at: $0, animated: true)})
+            .subscribe(onNext: { [weak self] index in
+                self?.tableView.deselectRow(at: index, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     
@@ -108,8 +110,8 @@ final public class PointListViewController: UIViewController {
         
         viewModel.output.pointList
             .filter { $0.isEmpty == true }
-            .subscribe(onNext: { _ in
-                self.noPointView.isHidden = false
+            .subscribe(onNext: { [weak self] _ in
+                self?.noPointView.isHidden = false
             }).disposed(by: disposeBag)
     }
 }

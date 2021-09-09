@@ -45,6 +45,7 @@
 "emailPlaceholder" = "이메일을 입력해주세요.";
 "passwordPlaceholder" = "비밀번호를 입력해주세요.";
 "rePasswordPlaceholder" = "비밀번호를 한번 더 입력해주세요.";
+"numberPlaceholder" = "인증번호를 입력해주세요.";
 "currentPasswordPlaceholder" = "현재 비밀번호를 입력해주세요.";
 "newPasswordPlaceholder" = "변결할 비밀번호를 입력해주세요.";
 "reNewPasswordPlaceholder" = "변결할 비밀번호를 확인해주세요.";

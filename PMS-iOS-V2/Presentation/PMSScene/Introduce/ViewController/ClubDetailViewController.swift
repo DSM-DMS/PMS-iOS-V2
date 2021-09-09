@@ -69,8 +69,8 @@ public final class ClubDetailViewController: UIViewController {
     
     private func bindOutput() {
         viewModel.output.detailClub
-            .subscribe {
-                self.detailView.setupView(model: $0)
+            .subscribe { [weak self] club in
+                self?.detailView.setupView(model: club)
             }.disposed(by: disposeBag)
         
         viewModel.output.isLoading

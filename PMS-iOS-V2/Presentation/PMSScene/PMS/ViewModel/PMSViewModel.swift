@@ -33,34 +33,35 @@ final public class PMSViewModel: Stepper {
         
         input.loginButtonTapped
             .asObservable()
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.loginIsRequired)
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.loginIsRequired)
             })
             .disposed(by: disposeBag)
         
         input.registerButtonTapped
             .asObservable()
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.registerIsRequired)
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.registerIsRequired)
             })
             .disposed(by: disposeBag)
         
         input.noLoginButtonTapped
             .asObservable()
-            .flatMap {
+            .flatMap { [weak self] _ in
                 repository.login(email: Bundle.main.infoDictionary!["Auth Email"] as! String,
                                  password: Bundle.main.infoDictionary!["Auth Password"] as! String)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
             }
-            .subscribe(onNext: {
-                if $0 {
-                    self.steps.accept(PMSStep.success(.loginSuccessMsg))
-                    self.steps.accept(PMSStep.tabBarIsRequired)
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.steps.accept(PMSStep.success(.loginSuccessMsg))
+                    self?.steps.accept(PMSStep.tabBarIsRequired)
                 }
             })
             .disposed(by: disposeBag)

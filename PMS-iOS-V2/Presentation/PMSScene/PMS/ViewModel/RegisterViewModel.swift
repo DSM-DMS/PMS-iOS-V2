@@ -61,47 +61,45 @@ final public class RegisterViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.nicknameText
-            .map { if $0.count > 0 { return true } else { return false }}
+            .map { $0.isNotEmpty() }
             .bind(to: output.isNicknameTyping)
             .disposed(by: disposeBag)
         
         input.nicknameText
             .distinctUntilChanged()
-            .map { if $0.count > 0 { return true } else { return false }}
+            .map { $0.isNotEmpty() }
             .bind(to: output.isNicknameValid)
             .disposed(by: disposeBag)
         
         input.emailText
             .distinctUntilChanged()
-            .map {
-                if $0.contains("@") && $0.contains(".") { return true } else { return false }
-            }
+            .map { $0.isEmail() }
             .bind(to: output.isEmailValid)
             .disposed(by: disposeBag)
         
         input.passwordText
             .distinctUntilChanged()
-            .map { if $0.count > 0 { return true } else { return false }}
+            .map { $0.isNotEmpty() }
             .bind(to: output.isPasswordValid)
             .disposed(by: disposeBag)
         
         input.emailText
-            .map { if $0.count > 0 { return true } else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.isEmailTyping)
             .disposed(by: disposeBag)
         
         input.passwordText
-            .map { if $0.count > 0 { return true } else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.isPasswordTyping)
             .disposed(by: disposeBag)
         
         input.passwordText
-            .map { if $0.count > 0 { return true } else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.passwordEyeVisiable)
             .disposed(by: disposeBag)
         
         input.rePasswordText
-            .map { if $0.count > 0 { return true } else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.isRePasswordTyping)
             .disposed(by: disposeBag)
         
@@ -129,8 +127,12 @@ final public class RegisterViewModel: Stepper {
         input.registerButtonTapped
             .asObservable()
             .map {  AnalyticsManager.click_signUp.log() }
-            .flatMap {
-                repository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
+            .flatMap { [weak self] _ -> Observable<Bool> in
+                guard let self = self else {
+                    return Observable.just(false)
+                }
+                
+                return repository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -138,21 +140,22 @@ final public class RegisterViewModel: Stepper {
                     })
                     .catchErrorJustReturn(false)
             }
-            .subscribe(onNext: {
-                if $0 {
-                    self.steps.accept(PMSStep.success(.registerSuccessMsg))
-                    self.steps.accept(PMSStep.tabBarIsRequired)
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.steps.accept(PMSStep.success(.registerSuccessMsg))
+                    self?.steps.accept(PMSStep.tabBarIsRequired)
                 }
             })
             .disposed(by: disposeBag)
         
         input.facebookRegisterSuccess
             .asObservable()
-            .flatMap {
-                repository.sendFacebookToken(token: $0)
+            .flatMap { [weak self] token in
+                repository.sendFacebookToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
@@ -162,11 +165,12 @@ final public class RegisterViewModel: Stepper {
         
         input.naverRegisterSuccess
             .asObservable()
-            .flatMap {
-                repository.sendNaverToken(token: $0)
+            .flatMap { [weak self] token in
+                repository.sendNaverToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
@@ -176,11 +180,12 @@ final public class RegisterViewModel: Stepper {
         
         input.kakaotalkRegisterSuccess
             .asObservable()
-            .flatMap {
-                repository.sendKakaotalkToken(token: $0)
+            .flatMap { [weak self] token in
+                repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
@@ -190,26 +195,27 @@ final public class RegisterViewModel: Stepper {
         
         input.appleRegisterSuccess
             .asObservable()
-            .flatMap {
-                repository.sendKakaotalkToken(token: $0)
+            .flatMap { [weak self] token in
+                repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
             }
-            .subscribe(onNext: {
-                if $0 {
-                    self.steps.accept(PMSStep.success(.registerSuccessMsg))
-                    self.steps.accept(PMSStep.tabBarIsRequired)
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.steps.accept(PMSStep.success(.registerSuccessMsg))
+                    self?.steps.accept(PMSStep.tabBarIsRequired)
                 }
             })
             .disposed(by: disposeBag)
         
         input.oAuthError
-            .subscribe(onNext: {
-                self.steps.accept(PMSStep.alert($0.localizedDescription, .unknownErrorMsg))
+            .subscribe(onNext: { [weak self] error in
+                self?.steps.accept(PMSStep.alert(error.localizedDescription, .unknownErrorMsg))
             }).disposed(by: disposeBag)
         
         activityIndicator

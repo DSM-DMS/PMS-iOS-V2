@@ -19,7 +19,6 @@ final public class NoticeDetailViewModel: Stepper {
     public struct Input {
         let viewDidLoad = PublishRelay<Void>()
         let getNotice = PublishRelay<Void>()
-        let clipTapped = PublishRelay<Void>()
         let noInternet = PublishRelay<Void>()
         let isLoading = BehaviorRelay<Bool>(value: false)
 //        let commentText = PublishRelay<String>()
@@ -42,14 +41,18 @@ final public class NoticeDetailViewModel: Stepper {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
-            .subscribe(onNext: { _ in
-                self.input.getNotice.accept(())
+            .subscribe(onNext: { [weak self] _ in
+                self?.input.getNotice.accept(())
             }) .disposed(by: disposeBag)
         
         input.getNotice
             .asObservable()
-            .flatMapLatest { _ in
-                repository.getDetailNotice(id: self.id)
+            .flatMapLatest { [weak self] _ -> Observable<DetailNotice> in
+                guard let self = self else { return
+                    Observable.just(DetailNotice(id: 0, date: "", title: "", writer: "", body: "", attach: [Attach](), comment: [Comment]()))
+                }
+                
+                return repository.getDetailNotice(id: self.id)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -60,31 +63,28 @@ final public class NoticeDetailViewModel: Stepper {
             .bind(to: output.detailNotice)
             .disposed(by: disposeBag)
         
-        input.clipTapped
-            .subscribe { _ in
-                
-            }.disposed(by: disposeBag)
-        
         input.noInternet
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
         
         input.enterButtonTapped
             .filter { $0 != "" }
             .asObservable()
-            .flatMapLatest {
-                repository.addComment(id: self.id, body: $0)
+            .flatMapLatest { [weak self] body -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return repository.addComment(id: self.id, body: body)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
-            }.subscribe(onNext: {
-                if $0 == true {
-                    self.input.viewDidLoad.accept(())
+            }.subscribe(onNext: { [weak self] bool in
+                if bool == true {
+                    self?.input.viewDidLoad.accept(())
                 }
             })
             .disposed(by: disposeBag)

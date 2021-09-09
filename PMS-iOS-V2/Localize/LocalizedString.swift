@@ -43,6 +43,7 @@ public enum LocalizedString: String, Equatable, Hashable {
     case emailPlaceholder
     case passwordPlaceholder
     case rePasswordPlaceholder
+    case numberPlaceholder
     case currentPasswordPlaceholder
     case newPasswordPlaceholder
     case reNewPasswordPlaceholder

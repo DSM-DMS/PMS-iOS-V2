@@ -58,8 +58,12 @@ final public class MealViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.getMeal
-            .flatMap {
-                repository.getMeal(date: Int(self.output.modelDate.value)!)
+            .flatMap { [weak self] _ -> Observable<Meal> in
+                guard let self = self else {
+                    return Observable.just(Meal(breakfast: [String](), lunch: [String](), dinner: [String]()))
+                }
+                
+                return repository.getMeal(date: Int(self.output.modelDate.value)!)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -71,8 +75,12 @@ final public class MealViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.getMealPicture
-            .flatMap {
-                repository.getMealPicutre(date: Int(self.output.modelDate.value)!)
+            .flatMap { [weak self] _ -> Observable<MealPicture> in
+                guard let self = self else {
+                    return Observable.just(MealPicture(breakfast: "", lunch: "", dinner: ""))
+                }
+                
+                return repository.getMealPicutre(date: Int(self.output.modelDate.value)!)
                     .asObservable()
             }
             .bind(to: output.mealPictureList)
@@ -80,7 +88,7 @@ final public class MealViewModel: Stepper {
         
         Observable.combineLatest(
             self.output.mealList.asObservable(),
-            self.output.mealPictureList.distinctUntilChanged().asObservable()
+            self.output.mealPictureList.asObservable()
         ) { (meal, picture) -> [MealCell] in
             var mealList = [MealCell]()
             mealList.append(MealCell(time: .breakfast, meal: meal.breakfast, imageURL: picture.breakfast))
@@ -89,8 +97,9 @@ final public class MealViewModel: Stepper {
             return mealList
         }
         .catchErrorJustReturn([])
-        .do(onError: { error in
+        .do(onError: { [weak self] error in
             let error = error as! NetworkError
+            guard let self = self else { return }
             self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
         })
         .bind(to: output.mealCellList)
@@ -99,13 +108,19 @@ final public class MealViewModel: Stepper {
         input.previousButtonTapped
             .asObservable()
             .map { self.changeDate -= 1}
-            .subscribe(onNext: { _ in self.setDate() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.setDate()
+            })
             .disposed(by: disposeBag)
         
         input.nextButtonTapped
             .asObservable()
-            .map { self.changeDate += 1}
-            .subscribe(onNext: { _ in self.setDate() })
+            .map { [weak self] _ in
+                self?.changeDate += 1
+            }
+            .subscribe(onNext: { [weak self] _ in
+                self?.setDate()
+            })
             .disposed(by: disposeBag)
         
         output.modelDate

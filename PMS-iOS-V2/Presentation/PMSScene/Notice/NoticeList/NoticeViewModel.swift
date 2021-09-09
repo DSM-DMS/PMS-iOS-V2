@@ -44,7 +44,9 @@ final public class NoticeViewModel: Stepper {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
-            .map { _ in self.input.segmentControl.value }
+            .map { [weak self] _ in
+                self?.input.segmentControl.value ?? 0
+            }
             .bind(to: input.segmentControl)
             .disposed(by: disposeBag)
         
@@ -68,8 +70,12 @@ final public class NoticeViewModel: Stepper {
         input.getNotice
             .asObservable()
             .map { _ in AnalyticsManager.view_notice.log() }
-            .flatMapLatest { _ in
-                repository.getNoticeList(page: self.page)
+            .flatMapLatest { [weak self] _ -> Observable<NoticeList> in
+                guard let self = self else {
+                    return Observable.just(NoticeList(totalPage: 1, notices: [Notice]()))
+                }
+                
+                return repository.getNoticeList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -85,8 +91,12 @@ final public class NoticeViewModel: Stepper {
         input.getLetter
             .asObservable()
             .map { _ in AnalyticsManager.view_letter.log() }
-            .flatMapLatest { _ in
-                repository.getLetterList(page: self.page)
+            .flatMapLatest { [weak self] _ -> Observable<NoticeList> in
+                guard let self = self else {
+                    return Observable.just(NoticeList(totalPage: 1, notices: [Notice]()))
+                }
+                
+                return repository.getLetterList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -102,8 +112,12 @@ final public class NoticeViewModel: Stepper {
         input.getAlbum
             .asObservable()
             .map { _ in AnalyticsManager.view_album.log() }
-            .flatMapLatest { _ in
-                repository.getAlbumList(page: self.page)
+            .flatMapLatest { [weak self] _ -> Observable<AlbumList> in
+                guard let self = self else {
+                    return Observable.just(AlbumList(totalPage: 1, totalLength: 1, albums: [Album]()))
+                }
+                
+                return repository.getAlbumList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -118,23 +132,24 @@ final public class NoticeViewModel: Stepper {
         
         input.searchText
             .asObservable()
-            .subscribe(onNext: { str in
-                if self.input.segmentControl.value == 0 { // 가정통신문이면
-                    self.input.searchNotice.accept(str)
-                } else if self.input.segmentControl.value == 1 {
-                    self.input.searchLetter.accept(str)
+            .subscribe(onNext: { [weak self] str in
+                if self?.input.segmentControl.value == 0 { // 가정통신문이면
+                    self?.input.searchNotice.accept(str)
+                } else if self?.input.segmentControl.value == 1 {
+                    self?.input.searchLetter.accept(str)
                 }
             })
             .disposed(by: disposeBag)
         
         input.searchNotice
             .asObservable()
-            .flatMapLatest {
-                repository.searchNotice(search: $0)
+            .flatMapLatest { [weak self] text in
+                repository.searchNotice(search: text)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(NoticeList(totalPage: 1, notices: [Notice]()))
@@ -145,12 +160,13 @@ final public class NoticeViewModel: Stepper {
         
         input.searchLetter
             .asObservable()
-            .flatMapLatest {
-                repository.searchLetter(search: $0)
+            .flatMapLatest { [weak self] text in
+                repository.searchLetter(search: text)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(NoticeList(totalPage: 1, notices: [Notice]()))
@@ -192,9 +208,11 @@ final public class NoticeViewModel: Stepper {
             }).disposed(by: disposeBag)
         
         input.goNoticeDetail
-            .subscribe {
-                self.steps.accept(PMSStep.detailNoticeIsRequired(id: $0.notice.id, title: $0.notice.title, segment: self.input.segmentControl.value))
-            }.disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] cell in
+                guard let self = self else { return }
+                
+                self.steps.accept(PMSStep.detailNoticeIsRequired(id: cell.notice.id, title: cell.notice.title, segment: self.input.segmentControl.value))
+            }).disposed(by: disposeBag)
         
         activityIndicator
             .asObservable()

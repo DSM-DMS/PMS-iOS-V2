@@ -47,13 +47,13 @@ final public class DefaultIntroduceRepository: IntroduceRepository {
     
     public func getDeveloper() -> Single<[Developer]> {
         let developers = [
-            Developer(name: "정고은", field: "iOS", image: Asset.ios1.image),
-            Developer(name: "강은빈", field: "웹", image: Asset.front1.image),
-            Developer(name: "이진우", field: "웹", image: Asset.front2.image),
-            Developer(name: "정지우", field: "서버", image: Asset.back1.image),
-            Developer(name: "김정빈", field: "서버", image: Asset.back2.image),
-            Developer(name: "이은별", field: "안드로이드", image: Asset.android1.image),
-            Developer(name: "김재원", field: "안드로이드", image: Asset.android2.image)]
+            Developer(name: "정고은", field: "iOS", image: Asset.ios1.name),
+            Developer(name: "강은빈", field: "웹", image: Asset.front1.name),
+            Developer(name: "이진우", field: "웹", image: Asset.front2.name),
+            Developer(name: "정지우", field: "서버", image: Asset.back1.name),
+            Developer(name: "김정빈", field: "서버", image: Asset.back2.name),
+            Developer(name: "이은별", field: "안드로이드", image: Asset.android1.name),
+            Developer(name: "김재원", field: "안드로이드", image: Asset.android2.name)]
         return Single.just(developers)
     }
 }

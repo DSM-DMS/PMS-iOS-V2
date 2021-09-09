@@ -159,15 +159,17 @@ final public class LoginViewController: UIViewController {
     private func bindInput() {
         emailTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .share()
             .bind(to: viewModel.input.emailText)
             .disposed(by: disposeBag)
         
         passwordTextField.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .share()
             .bind(to: viewModel.input.passwordText)
             .disposed(by: disposeBag)
         
@@ -184,22 +186,22 @@ final public class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         facebookButton.rx.tap
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 AnalyticsManager.click_naver.log()
                 let configuration = LoginConfiguration(
                     permissions: ["email"],
                     tracking: .enabled,
                     nonce: "123"
                 )
-                self.facebookManager.logIn(configuration: configuration!, completion: { result in
+                self?.facebookManager.logIn(configuration: configuration!, completion: { result in
                     switch result {
                     case .cancelled: break
                     case .failed(let error):
-                        self.viewModel.input.oAuthError.accept(error)
+                        self?.viewModel.input.oAuthError.accept(error)
                     case .success:
                         Log.info("Facebook : \(String(describing: AuthenticationToken.current?.tokenString))")
                         if let token = AuthenticationToken.current?.tokenString {
-                            self.viewModel.input.facebookLoginSuccess.accept(token)
+                            self?.viewModel.input.facebookLoginSuccess.accept(token)
                         }
                     }
                 })
@@ -207,14 +209,14 @@ final public class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         naverButton.rx.tap
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 AnalyticsManager.click_naver.log()
-                self.loginInstance?.requestThirdPartyLogin()
+                self?.loginInstance?.requestThirdPartyLogin()
             })
             .disposed(by: disposeBag)
         
         kakaotalkButton.rx.tap
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 AnalyticsManager.click_kakaotalk.log()
                 guard let session = KOSession.shared() else { return }
                 
@@ -222,8 +224,7 @@ final public class LoginViewController: UIViewController {
                     session.close()
                 }
                 
-                session.open(completionHandler: { (error) -> Void in
-                    
+                session.open(completionHandler: { error -> Void in
                     if !session.isOpen() {
                         if let error = error as NSError? {
                             switch error.code {
@@ -236,7 +237,7 @@ final public class LoginViewController: UIViewController {
                     } else {
                         if let token = session.token {
                             Log.info("Kakao : \(token)")
-                            self.viewModel.input.kakaotalkLoginSuccess.accept(token.accessToken)
+                            self?.viewModel.input.kakaotalkLoginSuccess.accept(token.accessToken)
                         }
                     }
                 })
@@ -245,7 +246,7 @@ final public class LoginViewController: UIViewController {
         
         if #available(iOS 13.0, *) {
             appleButton.rx.tap
-                .subscribe(onNext: {
+                .subscribe(onNext: { [weak self] _ in
                     AnalyticsManager.click_apple.log()
                     let appleIDProvider = ASAuthorizationAppleIDProvider()
                     let request = appleIDProvider.createRequest()
@@ -266,25 +267,25 @@ final public class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isEmailTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.emailLine.backgroundColor = Colors.blue.color
-                    self.personImage.tintColor = Colors.blue.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.emailLine.backgroundColor = Colors.blue.color
+                    self?.personImage.tintColor = Colors.blue.color
                 } else {
-                    self.emailLine.backgroundColor = .gray
-                    self.personImage.tintColor = Colors.black.color
+                    self?.emailLine.backgroundColor = .gray
+                    self?.personImage.tintColor = Colors.black.color
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isPasswordTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.passwordLine.backgroundColor = Colors.blue.color
-                    self.lockImage.tintColor = Colors.blue.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.passwordLine.backgroundColor = Colors.blue.color
+                    self?.lockImage.tintColor = Colors.blue.color
                 } else {
-                    self.passwordLine.backgroundColor = .gray
-                    self.lockImage.tintColor = Colors.black.color
+                    self?.passwordLine.backgroundColor = .gray
+                    self?.lockImage.tintColor = Colors.black.color
                 }
             })
             .disposed(by: disposeBag)
@@ -295,13 +296,13 @@ final public class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.loginButtonIsEnable
-            .subscribe(onNext: {
-                if $0 {
-                    self.loginButton.isEnabled = $0
-                    self.loginButton.alpha = 1.0
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.loginButton.isEnabled = bool
+                    self?.loginButton.alpha = 1.0
                 } else {
-                    self.loginButton.isEnabled = $0
-                    self.loginButton.alpha = 0.5
+                    self?.loginButton.isEnabled = bool
+                    self?.loginButton.alpha = 0.5
                 }
             })
             .disposed(by: disposeBag)
@@ -314,11 +315,15 @@ final public class LoginViewController: UIViewController {
     
     private func setupDelegate() {
         emailTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.emailTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.emailTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
         
         passwordTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.passwordTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.passwordTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
     }
 }

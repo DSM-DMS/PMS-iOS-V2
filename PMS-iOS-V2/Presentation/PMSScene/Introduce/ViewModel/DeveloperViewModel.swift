@@ -43,9 +43,8 @@ final public class DeveloperViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.noInternet
-            .subscribe(onNext: { _ in
-                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
-                
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
     }

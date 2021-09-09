@@ -65,7 +65,7 @@ public enum Asset {
 
 // MARK: - Implementation Details
 
-internal struct ImageAsset {
+public struct ImageAsset {
   internal fileprivate(set) var name: String
 
   #if os(macOS)

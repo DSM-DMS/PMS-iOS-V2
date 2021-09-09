@@ -211,47 +211,47 @@ class MypageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         backgroundTapped.rx.event
-            .subscribe(onNext: { _ in
-                self.changeNicknameView.view.isHidden = true
-                if self.addStudentView.view.isHidden {
-                    self.studentListView.view.isHidden = true
-                    self.blackBackground.isHidden = true
-                    self.viewModel.input.backgroundTapped.accept(())
+            .subscribe(onNext: { [weak self] _ in
+                self?.changeNicknameView.view.isHidden = true
+                if self != nil && self!.addStudentView.view.isHidden {
+                    self?.studentListView.view.isHidden = true
+                    self?.blackBackground.isHidden = true
+                    self?.viewModel.input.backgroundTapped.accept(())
                 } else {
-                    self.addStudentView.view.isHidden = true
+                    self?.addStudentView.view.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
         
         pencilImage.rx.tap
-            .subscribe(onNext: { _ in
-                self.blackBackground.isHidden = false
-                self.changeNicknameView.view.isHidden = false
-                self.viewModel.input.changeNicknameButtonTapped.accept(())
+            .subscribe(onNext: { [weak self] _ in
+                self?.blackBackground.isHidden = false
+                self?.changeNicknameView.view.isHidden = false
+                self?.viewModel.input.changeNicknameButtonTapped.accept(())
             })
             .disposed(by: disposeBag)
         
         nicknameTapped.rx.event
-            .subscribe(onNext: { _ in
-                self.blackBackground.isHidden = false
-                self.changeNicknameView.view.isHidden = false
-                self.viewModel.input.changeNicknameButtonTapped.accept(())
+            .subscribe(onNext: { [weak self] _ in
+                self?.blackBackground.isHidden = false
+                self?.changeNicknameView.view.isHidden = false
+                self?.viewModel.input.changeNicknameButtonTapped.accept(())
             })
             .disposed(by: disposeBag)
         
         downArrowImage.rx.tap
-            .subscribe(onNext: { _ in
-                self.blackBackground.isHidden = false
-                self.studentListView.view.isHidden = false
-                self.viewModel.input.studentListButtonTapped.accept(())
+            .subscribe(onNext: { [weak self] _ in
+                self?.blackBackground.isHidden = false
+                self?.studentListView.view.isHidden = false
+                self?.viewModel.input.studentListButtonTapped.accept(())
             })
             .disposed(by: disposeBag)
         
         studentTapped.rx.event
-            .subscribe(onNext: { _ in
-                self.blackBackground.isHidden = false
-                self.studentListView.view.isHidden = false
-                self.viewModel.input.studentListButtonTapped.accept(())
+            .subscribe(onNext: { [weak self] _ in
+                self?.blackBackground.isHidden = false
+                self?.studentListView.view.isHidden = false
+                self?.viewModel.input.studentListButtonTapped.accept(())
             })
             .disposed(by: disposeBag)
         
@@ -279,43 +279,43 @@ class MypageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.nickName
-            .subscribe(onNext: {
-                self.nickNameLabel.text = $0
+            .subscribe(onNext: { [weak self] name in
+                self?.nickNameLabel.text = name
             }).disposed(by: disposeBag)
         
         viewModel.output.studentName
-            .subscribe {
-                self.studentLabel.text = $0
-            }.disposed(by: disposeBag)
+            .subscribe (onNext: { [weak self] name in
+                self?.studentLabel.text = name
+            }).disposed(by: disposeBag)
         
         viewModel.output.isNoLogin
-            .subscribe(onNext: {
-                self.ifNoLoginChangeVisible($0)
+            .subscribe(onNext: { [weak self] bool in
+                self?.ifNoLoginChangeVisible(bool)
             }).disposed(by: disposeBag)
         
         viewModel.output.isStudent
-            .subscribe(onNext: {
-                if self.viewModel.output.isNoLogin.value {
-                    self.noStudentView.isHidden = true
-                } else if $0 {
-                    self.statusView.isHidden = false
-                    self.noStudentView.isHidden = true
-                    self.outingListButton.isHidden = false
+            .subscribe(onNext: { [weak self] bool in
+                if self != nil && self!.viewModel.output.isNoLogin.value {
+                    self?.noStudentView.isHidden = true
+                } else if bool {
+                    self?.statusView.isHidden = false
+                    self?.noStudentView.isHidden = true
+                    self?.outingListButton.isHidden = false
                 } else {
-                    self.plusPointRow.setupView(plus: 0)
-                    self.minusPointRow.setupView(minus: 0)
-                    self.studentLabel.text = "학생 추가"
-                    self.statusView.isHidden = true
-                    self.noStudentView.isHidden = false
-                    self.outingListButton.isHidden = true
+                    self?.plusPointRow.setupView(plus: 0)
+                    self?.minusPointRow.setupView(minus: 0)
+                    self?.studentLabel.text = "학생 추가"
+                    self?.statusView.isHidden = true
+                    self?.noStudentView.isHidden = false
+                    self?.outingListButton.isHidden = true
                 }
             }).disposed(by: disposeBag)
         
         viewModel.output.studentStatus
-            .subscribe(onNext: {
-                self.statusView.setupView(model: $0)
-                self.plusPointRow.setupView(plus: $0.plus)
-                self.minusPointRow.setupView(minus: $0.minus)
+            .subscribe(onNext: { [weak self] student in
+                self?.statusView.setupView(model: student)
+                self?.plusPointRow.setupView(plus: student.plus)
+                self?.minusPointRow.setupView(minus: student.minus)
             }).disposed(by: disposeBag)
     }
     

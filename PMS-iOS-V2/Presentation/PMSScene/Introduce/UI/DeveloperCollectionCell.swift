@@ -53,9 +53,11 @@ final public class DeveloperCollectionCell: UICollectionViewCell {
     // MARK: - Public Methods
     
     public func setupView(model: Developer) {
-        self.nameLabel.text = model.name
-        self.fieldLabel.text = model.field
-        self.personImage.image = model.image
+        DispatchQueue.main.async {
+            self.nameLabel.text = model.name
+            self.fieldLabel.text = model.field
+            self.personImage.image = UIImage(named: model.image)
+        }
     }
     
     // MARK: Private Methods

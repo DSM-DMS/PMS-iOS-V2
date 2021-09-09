@@ -118,8 +118,8 @@ final public class MealViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.viewDate
-            .subscribe(onNext: {
-                self.dateLabel.text = $0
+            .subscribe(onNext: { [weak self] date in
+                self?.dateLabel.text = date
             }).disposed(by: disposeBag)
         
         viewModel.output.mealCellList

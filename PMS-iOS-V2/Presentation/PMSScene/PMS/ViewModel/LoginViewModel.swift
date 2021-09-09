@@ -46,39 +46,37 @@ final public class LoginViewModel: Stepper {
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+                    self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
                 }
             })
             .disposed(by: disposeBag)
         
         input.emailText
             .distinctUntilChanged()
-            .map {
-                if $0.contains("@") && $0.contains(".") { return true } else { return false }
-            }
+            .map { $0.isEmail() }
             .bind(to: output.isEmailValid)
             .disposed(by: disposeBag)
         
         input.passwordText
             .distinctUntilChanged()
-            .map { if $0.count > 0 { return true } else { return false }}
+            .map { $0.isNotEmpty() }
             .bind(to: output.isPasswordValid)
             .disposed(by: disposeBag)
         
         input.emailText
-            .map { if $0.count > 0 { return true} else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.isEmailTyping)
             .disposed(by: disposeBag)
         
         input.passwordText
-            .map { if $0.count > 0 { return true} else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.isPasswordTyping)
             .disposed(by: disposeBag)
         
         input.passwordText
-            .map { if $0.count > 0 { return true} else { return false } }
+            .map { $0.isNotEmpty() }
             .bind(to: output.passwordEyeVisiable)
             .disposed(by: disposeBag)
         
@@ -95,8 +93,12 @@ final public class LoginViewModel: Stepper {
         input.loginButtonTapped
             .asObservable()
             .map {  AnalyticsManager.click_signIn.log() }
-            .flatMap {
-                repository.login(email: self.input.emailText.value,
+            .flatMap { [weak self] _ -> Observable<Bool> in
+                guard let self = self else {
+                    return Observable.just(false)
+                }
+                
+                return repository.login(email: self.input.emailText.value,
                                  password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -105,18 +107,22 @@ final public class LoginViewModel: Stepper {
                     })
                     .catchErrorJustReturn(false)
             }
-            .subscribe(onNext: {
-                if $0 {
-                    self.steps.accept(PMSStep.success(.loginSuccessMsg))
-                    self.steps.accept(PMSStep.tabBarIsRequired)
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.steps.accept(PMSStep.success(.loginSuccessMsg))
+                    self?.steps.accept(PMSStep.tabBarIsRequired)
                 }
             })
             .disposed(by: disposeBag)
         
         input.facebookLoginSuccess
             .asObservable()
-            .flatMap {
-                repository.sendFacebookToken(token: $0)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else {
+                    return Observable.just(false)
+                }
+                
+                return repository.sendFacebookToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -129,8 +135,12 @@ final public class LoginViewModel: Stepper {
         
         input.naverLoginSuccess
             .asObservable()
-            .flatMap {
-                repository.sendNaverToken(token: $0)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else {
+                    return Observable.just(false)
+                }
+                
+                return repository.sendNaverToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -143,8 +153,12 @@ final public class LoginViewModel: Stepper {
         
         input.kakaotalkLoginSuccess
             .asObservable()
-            .flatMap {
-                repository.sendKakaotalkToken(token: $0)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else {
+                    return Observable.just(false)
+                }
+                
+                return repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -157,8 +171,12 @@ final public class LoginViewModel: Stepper {
         
         input.appleLoginSuccess
             .asObservable()
-            .flatMap {
-                repository.sendKakaotalkToken(token: $0)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else {
+                    return Observable.just(false)
+                }
+                
+                return repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -170,8 +188,8 @@ final public class LoginViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.oAuthError
-            .subscribe(onNext: {
-                self.steps.accept(PMSStep.alert($0.localizedDescription, .unknownErrorMsg))
+            .subscribe(onNext: { [weak self] error in
+                self?.steps.accept(PMSStep.alert(error.localizedDescription, .unknownErrorMsg))
             }).disposed(by: disposeBag)
         
         activityIndicator

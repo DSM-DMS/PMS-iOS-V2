@@ -38,8 +38,12 @@ final public class AlbumDetailViewModel: Stepper {
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { _ in
-                repository.getDetailAlbum(id: self.id)
+            .flatMapLatest { [weak self] _ -> Observable<DetailAlbum> in
+                guard let self = self else {
+                    return Observable.just(DetailAlbum(id: 0, date: "", title: "", body: "", attach: [String](), thumbnail: ""))
+                }
+                
+                return repository.getDetailAlbum(id: self.id)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -51,8 +55,8 @@ final public class AlbumDetailViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.noInternet
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
         

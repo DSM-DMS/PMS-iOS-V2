@@ -37,12 +37,13 @@ final public class CompanyViewModel: Stepper {
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { _ in
+            .flatMapLatest { [weak self] _ in
                 repository.getClubList()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
@@ -51,27 +52,26 @@ final public class CompanyViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.noInternet
-            .subscribe(onNext: { _ in
-                    self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
-                
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
             })
             .disposed(by: disposeBag)
         
         input.goDetailClub
-            .subscribe(onNext: {
-                self.steps.accept(PMSStep.detailClubIsRequired(name: $0))
-                
+            .subscribe(onNext: { [weak self] club in
+                self?.steps.accept(PMSStep.detailClubIsRequired(name: club))
             })
             .disposed(by: disposeBag)
         
         input.getDetailClub
             .asObservable()
-            .flatMapLatest {
-                repository.getDetailClub(name: $0)
+            .flatMapLatest { [weak self] club in
+                repository.getDetailClub(name: club)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
+                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }

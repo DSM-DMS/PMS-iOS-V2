@@ -89,7 +89,7 @@ final public class ChangePasswordViewController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         $0.textColor = Colors.red.color
     }
-
+    
     internal init(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -222,31 +222,31 @@ final public class ChangePasswordViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isNowPasswordTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.nowPasswordLine.backgroundColor = Colors.blue.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.nowPasswordLine.backgroundColor = Colors.blue.color
                 } else {
-                    self.nowPasswordLine.backgroundColor = .gray
+                    self?.nowPasswordLine.backgroundColor = .gray
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isNewPasswordTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.newPasswordLine.backgroundColor = Colors.blue.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.newPasswordLine.backgroundColor = Colors.blue.color
                 } else {
-                    self.newPasswordLine.backgroundColor = .gray
+                    self?.newPasswordLine.backgroundColor = .gray
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.output.isReNewPasswordTyping
-            .subscribe(onNext: {
-                if $0 {
-                    self.reNewPasswordLine.backgroundColor = Colors.blue.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.reNewPasswordLine.backgroundColor = Colors.blue.color
                 } else {
-                    self.reNewPasswordLine.backgroundColor = .gray
+                    self?.reNewPasswordLine.backgroundColor = .gray
                 }
             })
             .disposed(by: disposeBag)
@@ -262,13 +262,13 @@ final public class ChangePasswordViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.changePasswordButtonIsEnable
-            .subscribe(onNext: {
-                if $0 {
-                    self.changePasswordButton.isEnabled = $0
-                    self.changePasswordButton.alpha = 1.0
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.changePasswordButton.isEnabled = bool
+                    self?.changePasswordButton.alpha = 1.0
                 } else {
-                    self.changePasswordButton.isEnabled = $0
-                    self.changePasswordButton.alpha = 0.5
+                    self?.changePasswordButton.isEnabled = bool
+                    self?.changePasswordButton.alpha = 0.5
                 }
             })
             .disposed(by: disposeBag)
@@ -284,11 +284,11 @@ final public class ChangePasswordViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isReNewPasswordValid
-            .subscribe(onNext: {
-                if $0 {
-                    self.checkImage.tintColor = Colors.green.color
+            .subscribe(onNext: { [weak self] bool in
+                if bool {
+                    self?.checkImage.tintColor = Colors.green.color
                 } else {
-                    self.checkImage.tintColor = Colors.red.color
+                    self?.checkImage.tintColor = Colors.red.color
                 }
             })
             .disposed(by: disposeBag)
@@ -301,15 +301,20 @@ final public class ChangePasswordViewController: UIViewController {
     
     private func setDelegate() {
         nowPasswordTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.nowPasswordTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.nowPasswordTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
         
         newPasswordTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.newPasswordTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in
+                self?.newPasswordTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
         
         reNewPasswordTextField.rx.shouldReturn
-            .subscribe(onNext: { _ in self.reNewPasswordTextField.resignFirstResponder() })
+            .subscribe(onNext: { [weak self] _ in self?.reNewPasswordTextField.resignFirstResponder()
+            })
             .disposed(by: disposeBag)
     }
 }
