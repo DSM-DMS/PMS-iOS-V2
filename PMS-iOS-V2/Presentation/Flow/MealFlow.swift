@@ -23,8 +23,6 @@ final public class MealFlow: Flow {
         switch step {
         case .mealIsRequired:
             return navigateToMealScreen()
-        case .mealPictureIsRequired(let date):
-            return navigateToMealPictureScreen(date: date)
         case .alert(let string, let access):
             return alert(string: string, access: access)
         default:
@@ -34,12 +32,6 @@ final public class MealFlow: Flow {
 
     private func navigateToMealScreen() -> FlowContributors {
         let vc = AppDelegate.container.resolve(MealViewController.self)!
-        self.rootViewController.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
-    }
-    
-    private func navigateToMealPictureScreen(date: String) -> FlowContributors {
-        let vc = MealViewController(viewModel: AppDelegate.container.resolve(MealViewModel.self)!)
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }

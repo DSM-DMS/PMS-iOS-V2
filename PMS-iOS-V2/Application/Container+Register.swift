@@ -76,10 +76,14 @@ extension Container {
     
     private func registerMypageViewModels() {
         autoregister(ChangePasswordViewModel.self, initializer: ChangePasswordViewModel.init)
+        autoregister(StudentListViewModel.self, initializer: StudentListViewModel.init)
+        autoregister(ChangeNicknameViewModel.self, initializer: ChangeNicknameViewModel.init)
+        autoregister(AddStudentViewModel.self, initializer: AddStudentViewModel.init)
     }
     
     private func registerMypageViewControllers() {
         autoregister(ChangePasswordViewController.self, initializer: ChangePasswordViewController.init)
+        autoregister(StudentListViewController.self, initializer: StudentListViewController.init)
     }
     
     // MARK: - PMS

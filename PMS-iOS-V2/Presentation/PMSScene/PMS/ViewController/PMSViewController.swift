@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final public class PMSViewController: UIViewController {
-    internal let viewModel: PMSViewModel
+    @Inject internal var viewModel: PMSViewModel
     private let disposeBag = DisposeBag()
     
     private let pmsImage = PMSImage()
@@ -28,8 +28,7 @@ final public class PMSViewController: UIViewController {
         $0.spacing = 30.0
     }
     
-    internal init(viewModel: PMSViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindViewModel()
     }

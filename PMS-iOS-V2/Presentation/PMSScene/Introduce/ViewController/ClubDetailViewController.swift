@@ -11,15 +11,14 @@ import RxSwift
 import RxCocoa
 
 public final class ClubDetailViewController: UIViewController {
-    internal let viewModel: ClubViewModel
+    @Inject internal var viewModel: ClubViewModel
     private let name: String
     private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
     private let detailView = ClubDetailView()
     
-    public init(viewModel: ClubViewModel, name: String) {
-        self.viewModel = viewModel
+    public init(name: String) {
         self.name = name
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

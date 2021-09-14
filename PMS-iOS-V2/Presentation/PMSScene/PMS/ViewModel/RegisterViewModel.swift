@@ -11,7 +11,7 @@ import RxFlow
 
 final public class RegisterViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: RegisterRepository
+    @Inject private var repository: RegisterRepository
     private var disposeBag = DisposeBag()
     
     public struct Input {
@@ -48,8 +48,7 @@ final public class RegisterViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: RegisterRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
@@ -132,7 +131,7 @@ final public class RegisterViewModel: Stepper {
                     return Observable.just(false)
                 }
                 
-                return repository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
+                return self.repository.register(name: self.input.nicknameText.value, email: self.input.emailText.value, password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -150,12 +149,13 @@ final public class RegisterViewModel: Stepper {
         
         input.facebookRegisterSuccess
             .asObservable()
-            .flatMap { [weak self] token in
-                repository.sendFacebookToken(token: token)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.sendFacebookToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
@@ -165,12 +165,13 @@ final public class RegisterViewModel: Stepper {
         
         input.naverRegisterSuccess
             .asObservable()
-            .flatMap { [weak self] token in
-                repository.sendNaverToken(token: token)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.sendNaverToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
@@ -180,12 +181,13 @@ final public class RegisterViewModel: Stepper {
         
         input.kakaotalkRegisterSuccess
             .asObservable()
-            .flatMap { [weak self] token in
-                repository.sendKakaotalkToken(token: token)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)
@@ -195,12 +197,13 @@ final public class RegisterViewModel: Stepper {
         
         input.appleRegisterSuccess
             .asObservable()
-            .flatMap { [weak self] token in
-                repository.sendKakaotalkToken(token: token)
+            .flatMap { [weak self] token -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)

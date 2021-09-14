@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final public class AddStudentViewController: UIViewController {
-    internal let viewModel: AddStudentViewModel
+    @Inject internal var viewModel: AddStudentViewModel
     private let dismiss: () -> Void
     private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
@@ -47,8 +47,7 @@ final public class AddStudentViewController: UIViewController {
         $0.text = LocalizedString.enterStudentCodeMsg.localized
     }
     
-    internal init(viewModel: AddStudentViewModel, dismiss: @escaping () -> Void) {
-        self.viewModel = viewModel
+    internal init(dismiss: @escaping () -> Void) {
         self.dismiss = dismiss
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

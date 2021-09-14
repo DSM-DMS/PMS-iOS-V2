@@ -70,7 +70,7 @@ final public class AttachTableViewCell: UITableViewCell {
         
         titleLabel.snp.makeConstraints {
             $0.leading.equalTo(clipImage.snp_trailingMargin).offset(20)
-            $0.trailing.equalTo(downloadImage.snp_leadingMargin).offset(-10)
+            $0.trailing.equalToSuperview().offset(-30)
             $0.centerY.equalToSuperview()
         }
         

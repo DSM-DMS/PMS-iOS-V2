@@ -134,23 +134,28 @@
 "RegisterView" = "Sign up Screen";
 
 // Login
-"facebookLogin" = "Sign in with facebook";
-"naverLogin" = "Sign in with naver";
-"kakaotalkLogin" = "Sign in with kakaotalk";
-"appleLogin" = "Sign in with apple";
+"facebookLogin" = "Sign in with facebook Button";
+"naverLogin" = "Sign in with naver Button";
+"kakaotalkLogin" = "Sign in with kakaotalk Button";
+"appleLogin" = "Sign in with apple Button";
 
 // Register
-"facebookRegister" = "Sign up with facebook";
-"naverRegister" = "Sign up with naver";
-"kakaotalkRegister" = "Signup with kakaotalk";
-"appleRegister" = "Sign up with apple";
+"facebookRegister" = "Sign up with facebook Button";
+"naverRegister" = "Sign up with naver Button";
+"kakaotalkRegister" = "Signup with kakaotalk Button";
+"appleRegister" = "Sign up with apple Button";
 
 // Button
-"showPasswordButton" = "Show password";
-"leftArrowButton" = "Go to the previous month";
-"rightArrowButton" = "Go to the next month";
-"previousPageButton" = "Go to previous page";
-"nextPageButton" = "Go to next page";
-"toOutingListButton" = "Go to Outing list button";
+"showPasswordButton" = "Show password Button";
+"leftArrowButton" = "Go to the previous month Button";
+"rightArrowButton" = "Go to the next month Button";
+"flipMeal" = "Flip button";
+"clipButton" = "View attachments Button";
+"modifyNickname" = "Nickname change Button";
+"viewStudents" = "View student list Button";
+"addStudent" = "Add Student Button";
+"previousPageButton" = "Go to previous page Button";
+"nextPageButton" = "Go to next page Buttton";
+"toOutingListButton" = "Go to Outing list button Button";
 "toChangePasswordButton" = "Go to Change Password Button";
-"toLogoutButton" = "Go to Logout";
+"toLogoutButton" = "Go to Logout Button";

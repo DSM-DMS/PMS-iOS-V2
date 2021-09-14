@@ -16,6 +16,7 @@ final public class PreviousPageButton: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.blueLeftArrow.image, for: .normal)
+        self.setAccessibility(.previousPageButton)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -40,6 +41,7 @@ final public class NextPageButton: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.blueRightArrow.image, for: .normal)
+        self.setAccessibility(.nextPageButton)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit

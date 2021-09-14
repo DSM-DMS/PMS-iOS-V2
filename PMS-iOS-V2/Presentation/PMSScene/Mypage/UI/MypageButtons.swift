@@ -16,6 +16,7 @@ final public class WhitePencilButton: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.whitePencil.image, for: .normal)
+        self.setAccessibility(.modifyNickname)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -40,6 +41,7 @@ final public class BottomArrowButton: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.bottomArrow.image, for: .normal)
+        self.setAccessibility(.viewStudents)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -54,30 +56,6 @@ final public class BottomArrowButton: UIButton {
     }
 }
 
-final public class DeleteButton: UIButton {
-    public convenience init(label: AccessibilityString) {
-        self.init()
-        self.setAccessibility(label)
-    }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setImage(Asset.minus.image, for: .normal)
-        self.contentHorizontalAlignment = .fill
-        self.contentVerticalAlignment = .fill
-        self.contentMode = .scaleAspectFit
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override var intrinsicContentSize: CGSize {
-        return CGSize(width: 20, height: 3)
-    }
-
-}
-
 final public class CirclePlusButton: UIButton {
     public convenience init(label: AccessibilityString) {
         self.init()
@@ -87,6 +65,7 @@ final public class CirclePlusButton: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.circlePlus.image, for: .normal)
+        self.setAccessibility(.addStudent)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit

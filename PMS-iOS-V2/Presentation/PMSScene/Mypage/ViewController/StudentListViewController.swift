@@ -14,7 +14,7 @@ import Then
 import Reachability
 
 final public class StudentListViewController: UIViewController {
-    internal let viewModel: StudentListViewModel
+    @Inject internal var viewModel: StudentListViewModel
     private let delegate: StudentListDelegate
     private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
@@ -51,9 +51,7 @@ final public class StudentListViewController: UIViewController {
         return cell
     }, canEditRowAtIndexPath: { _, _ in return true })
     
-    internal init(viewModel: StudentListViewModel,
-         delegate: StudentListDelegate) {
-        self.viewModel = viewModel
+    public init(delegate: StudentListDelegate) {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

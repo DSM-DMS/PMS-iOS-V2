@@ -11,7 +11,7 @@ import RxFlow
 
 final public class LoginViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: LoginRepository
+    @Inject private var repository: LoginRepository
     private var disposeBag = DisposeBag()
     
     public struct Input {
@@ -41,8 +41,7 @@ final public class LoginViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: LoginRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
@@ -98,7 +97,7 @@ final public class LoginViewModel: Stepper {
                     return Observable.just(false)
                 }
                 
-                return repository.login(email: self.input.emailText.value,
+                return self.repository.login(email: self.input.emailText.value,
                                  password: self.input.passwordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -122,7 +121,7 @@ final public class LoginViewModel: Stepper {
                     return Observable.just(false)
                 }
                 
-                return repository.sendFacebookToken(token: token)
+                return self.repository.sendFacebookToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -140,7 +139,7 @@ final public class LoginViewModel: Stepper {
                     return Observable.just(false)
                 }
                 
-                return repository.sendNaverToken(token: token)
+                return self.repository.sendNaverToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -158,7 +157,7 @@ final public class LoginViewModel: Stepper {
                     return Observable.just(false)
                 }
                 
-                return repository.sendKakaotalkToken(token: token)
+                return self.repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
@@ -176,7 +175,7 @@ final public class LoginViewModel: Stepper {
                     return Observable.just(false)
                 }
                 
-                return repository.sendKakaotalkToken(token: token)
+                return self.repository.sendKakaotalkToken(token: token)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError

@@ -9,38 +9,32 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MypageViewController: UIViewController {
-    let viewModel: MypageViewModel!
-    let activityIndicator = UIActivityIndicatorView()
+public class MypageViewController: UIViewController {
+    @Inject internal var viewModel: MypageViewModel!
+    private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
-    let pointTapped = UITapGestureRecognizer()
-    let nicknameTapped = UITapGestureRecognizer()
-    let studentTapped = UITapGestureRecognizer()
-    let backgroundTapped = UITapGestureRecognizer()
-    lazy var changeNicknameView = ChangeNicknameViewController(
-        viewModel: ChangeNicknameViewModel(
-            repository: AppDelegate.container.resolve(MypageRepository.self)!),
+    public let pointTapped = UITapGestureRecognizer()
+    public let nicknameTapped = UITapGestureRecognizer()
+    public let studentTapped = UITapGestureRecognizer()
+    public let backgroundTapped = UITapGestureRecognizer()
+    public lazy var changeNicknameView = ChangeNicknameViewController(
         delegate: self).then {
             $0.view.isHidden = true
         }
     
-    lazy var studentListView = StudentListViewController(
-        viewModel: StudentListViewModel(
-            repository: AppDelegate.container.resolve(MypageRepository.self)!),
+    public lazy var studentListView = StudentListViewController(
         delegate: self).then {
             $0.view.isHidden = true
         }
     
-    lazy var addStudentView = AddStudentViewController(
-        viewModel: AddStudentViewModel(
-            repository: AppDelegate.container.resolve(MypageRepository.self)!),
+    public lazy var addStudentView = AddStudentViewController(
         dismiss: {
             self.dismissAddStudent()
         }).then {
             $0.view.isHidden = true
         }
     
-    lazy var blackBackground = UIView().then {
+    public lazy var blackBackground = UIView().then {
         $0.backgroundColor = .black
         $0.alpha = 0.2
         $0.isHidden = true
@@ -89,8 +83,7 @@ class MypageViewController: UIViewController {
     private let changePasswordButton = MypageRow(title: .toChangePassword, label: .toChangePasswordButton)
     private let logoutButton = MypageRow(title: .toLogout, label: .toLogoutButton)
     
-    init(viewModel: MypageViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }
@@ -99,7 +92,7 @@ class MypageViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         self.setupSubview()
         self.bindOutput()
         pointStackView.addGestureRecognizer(pointTapped)
@@ -108,13 +101,13 @@ class MypageViewController: UIViewController {
         blackBackground.addGestureRecognizer(backgroundTapped)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         AnalyticsManager.view_mypage.log()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
@@ -351,13 +344,13 @@ class MypageViewController: UIViewController {
 }
 
 extension MypageViewController: ChangeNicknameDelegate {
-    func dismissChangeNickname() {
+    public func dismissChangeNickname() {
         self.blackBackground.isHidden = true
         self.changeNicknameView.view.isHidden = true
         self.viewModel.steps.accept(PMSStep.presentTabbar)
     }
     
-    func success() {
+    public func success() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.viewModel.input.viewDidLoad.accept(())
         }
@@ -365,7 +358,7 @@ extension MypageViewController: ChangeNicknameDelegate {
 }
 
 extension MypageViewController: StudentListDelegate {
-    func changeStudent(student: UsersStudent) {
+    public func changeStudent(student: UsersStudent) {
         let lastUser = UDManager.shared.student
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             if lastUser != UDManager.shared.student {
@@ -376,13 +369,13 @@ extension MypageViewController: StudentListDelegate {
         }
     }
     
-    func addStudentTapped() {
+    public func addStudentTapped() {
         AnalyticsManager.click_addStudent.log()
         self.blackBackground.isHidden = false
         self.addStudentView.view.isHidden = false
     }
     
-    func delete(student: UsersStudent) {
+    public func delete(student: UsersStudent) {
         let lastUser = UDManager.shared.student
         self.viewModel.steps.accept(PMSStep.deleteStudent(name: String(student.number) + " " + student.name, handler: { _ in
             if student.number == UDManager.shared.studentNumber {
@@ -403,7 +396,7 @@ extension MypageViewController: StudentListDelegate {
 }
 
 extension MypageViewController: AddStudentDelegate {
-    func dismissAddStudent() {
+    public func dismissAddStudent() {
         self.addStudentView.view.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.studentListView.viewModel.input.viewDidLoad.accept(())

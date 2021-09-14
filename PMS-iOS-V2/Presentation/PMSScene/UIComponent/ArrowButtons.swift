@@ -16,6 +16,7 @@ final public class LeftArrowButton: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.leftArrow.image, for: .normal)
+        self.setAccessibility(.leftArrowButton)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit
@@ -41,6 +42,7 @@ final public class RightArrowButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.rightArrow.image, for: .normal)
+        self.setAccessibility(.rightArrowButton)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit

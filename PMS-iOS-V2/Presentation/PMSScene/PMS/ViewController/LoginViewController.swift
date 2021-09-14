@@ -14,7 +14,7 @@ import KakaoOpenSDK
 import AuthenticationServices
 
 final public class LoginViewController: UIViewController {
-    internal let viewModel: LoginViewModel
+    @Inject internal var viewModel: LoginViewModel
     private let disposeBag = DisposeBag()
     private let reachability = try! Reachability()
     public let activityIndicator = UIActivityIndicatorView()
@@ -78,8 +78,7 @@ final public class LoginViewController: UIViewController {
     }
     let passwordEyeButton = EyeButton()
     
-    internal init(viewModel: LoginViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.setupDelegate()
     }

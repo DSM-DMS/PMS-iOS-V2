@@ -134,23 +134,28 @@
 "RegisterView" = "회원가입 화면";
 
 // Login
-"facebookLogin" = "페이스북으로 로그인";
-"naverLogin" = "네이버로 로그인";
-"kakaotalkLogin" = "카카오톡으로 로그인";
-"appleLogin" = "애플로 로그인";
+"facebookLogin" = "페이스북으로 로그인 버튼";
+"naverLogin" = "네이버로 로그인 버튼";
+"kakaotalkLogin" = "카카오톡으로 로그인 버튼";
+"appleLogin" = "애플로 로그인 버튼";
 
 // Register
-"facebookRegister" = "페이스북으로 회원가입";
-"naverRegister" = "네이버로 회원가입";
-"kakaotalkRegister" = "카카오톡으로 회원가입";
-"appleRegister" = "애플로 회원가입";
+"facebookRegister" = "페이스북으로 회원가입 버튼";
+"naverRegister" = "네이버로 회원가입 버튼";
+"kakaotalkRegister" = "카카오톡으로 회원가입 버튼";
+"appleRegister" = "애플로 회원가입 버튼";
 
 // Button
-"showPasswordButton" = "비밀번호 보여죽기";
-"leftArrowButton" = "이전 달로 이동";
-"rightArrowButton" = "다음 달로 이동";
-"previousPageButton" = "이전 페이지로 이동";
-"nextPageButton" = "다음 페이지로 이동";
-"toOutingListButton" = "외출 내역으로 이동";
-"toChangePasswordButton" = "비밀번호 변경으로 이동";
-"toLogoutButton" = "로그아웃으로 이동";
+"showPasswordButton" = "비밀번호 보여주기 버튼";
+"leftArrowButton" = "이전 달로 이동 버튼";
+"rightArrowButton" = "다음 달로 이동 버튼";
+"flipMeal" = "전환 버튼";
+"clipButton" = "첨부파일 보기 버튼";
+"modifyNickname" = "닉네임 변경 버튼";
+"viewStudents" = "학생 목록 보기 버튼";
+"addStudent" = "학생 추가 버튼";
+"previousPageButton" = "이전 페이지로 이동 버튼";
+"nextPageButton" = "다음 페이지로 이동 버튼";
+"toOutingListButton" = "외출 내역으로 이동 버튼";
+"toChangePasswordButton" = "비밀번호 변경으로 이동 버튼";
+"toLogoutButton" = "로그아웃으로 이동 버튼";

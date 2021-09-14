@@ -29,8 +29,6 @@ public enum PMSStep: Step, Equatable {
                 return true
             case (.mealIsRequired, .mealIsRequired):
                 return true
-            case let (.mealPictureIsRequired(lhsStr), .mealPictureIsRequired(rhsStr)):
-                return lhsStr == rhsStr
             case (.noticeIsRequired, .noticeIsRequired):
                 return true
             case let (.detailNoticeIsRequired(lhsId, lhsStr, lhsSeg), .detailNoticeIsRequired(rhsId, rhsStr, rhsSeg)):
@@ -86,7 +84,6 @@ public enum PMSStep: Step, Equatable {
 
     // Meal
     case mealIsRequired
-    case mealPictureIsRequired(date: String)
 
     // Notice
     case noticeIsRequired

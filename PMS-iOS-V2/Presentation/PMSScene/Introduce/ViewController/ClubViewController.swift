@@ -12,7 +12,7 @@ import Reachability
 import RxDataSources
 
 final public class ClubViewController: UIViewController {
-    internal let viewModel: ClubViewModel
+    @Inject internal var viewModel: ClubViewModel
     private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
@@ -36,8 +36,7 @@ final public class ClubViewController: UIViewController {
             return cell
     })
     
-    public init(viewModel: ClubViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         collectionView.delegate = self
         self.bindInput()

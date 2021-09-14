@@ -11,7 +11,7 @@ import RxFlow
 
 final public class AddStudentViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: MypageRepository
+    @Inject private var repository: MypageRepository
     private var disposeBag = DisposeBag()
     
     public struct Input {
@@ -29,12 +29,10 @@ final public class AddStudentViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: MypageRepository) {
-        self.repository = repository
-        
+    public init() {
         input.noInternet
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
                 
             })
             .disposed(by: disposeBag)
@@ -46,8 +44,10 @@ final public class AddStudentViewModel: Stepper {
         
         input.addButtonTapped
             .asObservable()
-            .flatMap {
-                repository.addStudent(number: Int(self.input.otpString.value)!)
+            .flatMap { [weak self] _ -> Single<Bool> in
+                guard let self = self else { return Single.just(false) }
+                
+                return self.repository.addStudent(number: Int(self.input.otpString.value)!)
                     .do(onError: { error in
                         let error = error as! NetworkError
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))

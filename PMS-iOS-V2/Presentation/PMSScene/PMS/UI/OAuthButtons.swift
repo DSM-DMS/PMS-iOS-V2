@@ -102,6 +102,7 @@ final public class AppleButton: UIButton {
 final public class EmptyView: UIButton {
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        self.isEnabled = false
     }
     
     required init?(coder: NSCoder) {

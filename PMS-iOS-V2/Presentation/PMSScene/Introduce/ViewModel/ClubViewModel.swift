@@ -11,7 +11,7 @@ import RxFlow
 
 final public class ClubViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: IntroduceRepository
+    @Inject private var repository: IntroduceRepository
     private let disposeBag = DisposeBag()
     
     public struct Input {
@@ -30,19 +30,19 @@ final public class ClubViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: IntroduceRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { [weak self] _ in
-                repository.getClubList()
+            .flatMapLatest { [weak self] _ -> Observable<ClubList> in
+                guard let self = self else { return Observable.just(ClubList(clubs: [Club]())) }
+                
+                return self.repository.getClubList()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
@@ -65,13 +65,14 @@ final public class ClubViewModel: Stepper {
         
         input.getDetailClub
             .asObservable()
-            .flatMapLatest { [weak self] club in
-                repository.getDetailClub(name: club)
+            .flatMapLatest { [weak self] club -> Observable<DetailClub> in
+                guard let self = self else { return Observable.just(DetailClub(title: "", description: "", imageUrl: "", member: [String]())) }
+                
+                return self.repository.getDetailClub(name: club)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }

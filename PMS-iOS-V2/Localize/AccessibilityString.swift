@@ -36,8 +36,12 @@ public enum AccessibilityString: String, Equatable, Hashable {
     case showPasswordButton
     case leftArrowButton
     case rightArrowButton
+    case flipMeal
     case previousPageButton
     case nextPageButton
+    case modifyNickname
+    case viewStudents
+    case addStudent
     case toOutingListButton
     case toChangePasswordButton
     case toLogoutButton

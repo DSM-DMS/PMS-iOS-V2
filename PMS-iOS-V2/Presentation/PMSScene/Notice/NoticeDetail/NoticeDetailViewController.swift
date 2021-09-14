@@ -55,7 +55,7 @@ final public class NoticeDetailViewController: UIViewController {
         $0.setPlaceholder(.commentPlaceholder)
     }
     private let commentBackground = UIView().then {
-        $0.backgroundColor = Colors.lightGray.color
+        $0.backgroundColor = Colors.darkGray.color
         $0.layer.cornerRadius = 15
     }
     
@@ -85,7 +85,7 @@ final public class NoticeDetailViewController: UIViewController {
         return cell
     })
     
-    internal init(viewModel: NoticeDetailViewModel) {
+    public init(viewModel: NoticeDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
@@ -175,14 +175,14 @@ final public class NoticeDetailViewController: UIViewController {
             $0.height.equalTo(50)
             $0.leading.equalToSuperview().offset(20)
             //            $0.leading.equalTo(mentionButton.snp_trailingMargin).offset(20)
-            $0.trailing.equalTo(enterButton.snp_leadingMargin).offset(-20)
+            $0.trailing.equalToSuperview().offset(-50)
         }
         
         commentTextField.snp.makeConstraints {
             $0.centerY.equalTo(commentBackground)
             $0.height.equalTo(30)
             $0.leading.equalTo(commentBackground.snp_leadingMargin).offset(10)
-            $0.trailing.equalTo(enterButton.snp_leadingMargin).offset(-20)
+            $0.trailing.equalTo(commentBackground.snp_trailingMargin).offset(-10)
         }
         
         enterButton.snp.makeConstraints {

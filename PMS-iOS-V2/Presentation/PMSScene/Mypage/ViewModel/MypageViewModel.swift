@@ -11,7 +11,7 @@ import RxFlow
 
 final public class MypageViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: MypageRepository
+    @Inject private var repository: MypageRepository
     private let disposeBag = DisposeBag()
     
     public struct Input {
@@ -40,14 +40,15 @@ final public class MypageViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: MypageRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { _ in
-                repository.getUser()
+            .flatMapLatest { [weak self] _ -> Observable<User> in
+                guard let self = self else { return Observable.just(User(name: "", students: [UsersStudent]())) }
+                
+                return self.repository.getUser()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -93,13 +94,14 @@ final public class MypageViewModel: Stepper {
         
         output.isStudent
             .filter { $0 == true }
-            .flatMapLatest { [weak self] _ in
-                repository.getStudent(number: UDManager.shared.studentNumber!)
+            .flatMapLatest { [weak self] _ -> Observable<Student> in
+                guard let self = self else { return Observable.just(Student(plus: 0, minus: 0, status: 0, isMeal: false)) }
+                
+                return self.repository.getStudent(number: UDManager.shared.studentNumber!)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }
@@ -144,13 +146,14 @@ final public class MypageViewModel: Stepper {
             }.disposed(by: disposeBag)
         
         input.deleteStudent
-            .flatMapLatest { [weak self] student in
-                repository.deleteStudent(number: student)
+            .flatMapLatest { [weak self] student -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.deleteStudent(number: student)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }.subscribe { _ in }

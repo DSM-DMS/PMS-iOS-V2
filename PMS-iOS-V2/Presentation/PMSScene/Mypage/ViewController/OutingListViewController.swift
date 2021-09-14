@@ -37,7 +37,7 @@ final public class OutingListViewController: UIViewController {
         return cell
     })
     
-    internal init(viewModel: OutingListViewModel) {
+    public init(viewModel: OutingListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

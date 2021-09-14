@@ -14,7 +14,7 @@ import KakaoOpenSDK
 import AuthenticationServices
 
 final public class RegisterViewController: UIViewController {
-    internal let viewModel: RegisterViewModel
+    @Inject internal var viewModel: RegisterViewModel
     public let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
@@ -148,8 +148,7 @@ final public class RegisterViewController: UIViewController {
     
     private let passwordEyeButton = EyeButton()
     
-    internal init(viewModel: RegisterViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.setupDelegate()
     }

@@ -11,7 +11,7 @@ import RxFlow
 
 final public class NoticeViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: NoticeRepository
+    @Inject private var repository: NoticeRepository
     private let disposeBag = DisposeBag()
     private var page = 0
     private var totalPage = 0
@@ -39,8 +39,7 @@ final public class NoticeViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: NoticeRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
@@ -75,7 +74,7 @@ final public class NoticeViewModel: Stepper {
                     return Observable.just(NoticeList(totalPage: 1, notices: [Notice]()))
                 }
                 
-                return repository.getNoticeList(page: self.page)
+                return self.repository.getNoticeList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -96,7 +95,7 @@ final public class NoticeViewModel: Stepper {
                     return Observable.just(NoticeList(totalPage: 1, notices: [Notice]()))
                 }
                 
-                return repository.getLetterList(page: self.page)
+                return self.repository.getLetterList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -117,7 +116,7 @@ final public class NoticeViewModel: Stepper {
                     return Observable.just(AlbumList(totalPage: 1, totalLength: 1, albums: [Album]()))
                 }
                 
-                return repository.getAlbumList(page: self.page)
+                return self.repository.getAlbumList(page: self.page)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -143,13 +142,14 @@ final public class NoticeViewModel: Stepper {
         
         input.searchNotice
             .asObservable()
-            .flatMapLatest { [weak self] text in
-                repository.searchNotice(search: text)
+            .flatMapLatest { [weak self] text -> Observable<NoticeList> in
+                guard let self = self else { return Observable.just(NoticeList(totalPage: 1, notices: [Notice]())) }
+                
+                return self.repository.searchNotice(search: text)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(NoticeList(totalPage: 1, notices: [Notice]()))
@@ -160,13 +160,14 @@ final public class NoticeViewModel: Stepper {
         
         input.searchLetter
             .asObservable()
-            .flatMapLatest { [weak self] text in
-                repository.searchLetter(search: text)
+            .flatMapLatest { [weak self] text -> Observable<NoticeList> in
+                guard let self = self else { return Observable.just(NoticeList(totalPage: 1, notices: [Notice]())) }
+                
+                return self.repository.searchLetter(search: text)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(NoticeList(totalPage: 1, notices: [Notice]()))
@@ -176,7 +177,9 @@ final public class NoticeViewModel: Stepper {
             .disposed(by: disposeBag)
         
         input.previousPageTapped
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
                 if self.page > 0 {
                     self.page -= 1
                     self.output.page.accept(self.page + 1)
@@ -192,7 +195,9 @@ final public class NoticeViewModel: Stepper {
             }).disposed(by: disposeBag)
         
         input.nextPageTapped
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
                 if self.page + 1 < self.totalPage {
                     self.page += 1
                     self.output.page.accept(self.page + 1)

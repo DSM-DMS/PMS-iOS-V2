@@ -37,7 +37,7 @@ final public class PointListViewController: UIViewController {
         return cell
     })
     
-    internal init(viewModel: PointListViewModel) {
+    public init(viewModel: PointListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

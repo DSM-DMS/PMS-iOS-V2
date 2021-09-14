@@ -25,7 +25,7 @@ final public class MealCollectionViewCell: UICollectionViewCell {
         $0.textColor = UIColor.black
         $0.font = UIFont.preferredFont(forTextStyle: .body)
         $0.textAlignment = .center
-        $0.sizeToFit()
+        $0.adjustsFontForContentSizeCategory = true
         $0.numberOfLines = 0
     }
     
@@ -183,6 +183,7 @@ final internal class FlipButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(Asset.mealFlip.image, for: .normal)
+        self.setAccessibility(.flipMeal)
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
         self.contentMode = .scaleAspectFit

@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final public class ChangeNicknameViewController: UIViewController {
-    internal let viewModel: ChangeNicknameViewModel
+    @Inject internal var viewModel: ChangeNicknameViewModel
     private let delegate: ChangeNicknameDelegate
     private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
@@ -52,9 +52,7 @@ final public class ChangeNicknameViewController: UIViewController {
     
     let nicknameTextField = PMSTextField(title: .newNicknamePlaceholder)
     
-    init(viewModel: ChangeNicknameViewModel,
-         delegate: ChangeNicknameDelegate) {
-        self.viewModel = viewModel
+    init(delegate: ChangeNicknameDelegate) {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

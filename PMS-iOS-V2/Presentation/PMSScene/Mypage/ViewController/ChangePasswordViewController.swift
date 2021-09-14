@@ -11,7 +11,7 @@ import RxCocoa
 import Reachability
 
 final public class ChangePasswordViewController: UIViewController {
-    internal let viewModel: ChangePasswordViewModel
+    @Inject internal var viewModel: ChangePasswordViewModel
     private let reachability = try! Reachability()
     let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
@@ -90,8 +90,7 @@ final public class ChangePasswordViewController: UIViewController {
         $0.textColor = Colors.red.color
     }
     
-    internal init(viewModel: ChangePasswordViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }

@@ -14,7 +14,7 @@ import SnapKit
 import Reachability
 
 final public class CalendarViewController: UIViewController {
-    internal let viewModel: CalendarViewModel
+    @Inject internal var viewModel: CalendarViewModel
     private let tableView = UITableView().then {
         $0.contentMode = .scaleAspectFit
         $0.separatorColor = .clear
@@ -63,8 +63,7 @@ final public class CalendarViewController: UIViewController {
         $0.dateFormat = "yyyy-MM-dd"
     }
     
-    internal init(viewModel: CalendarViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
         self.calendar.delegate = self

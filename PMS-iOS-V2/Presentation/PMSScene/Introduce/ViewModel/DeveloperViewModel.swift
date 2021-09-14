@@ -11,7 +11,7 @@ import RxFlow
 
 final public class DeveloperViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: IntroduceRepository
+    @Inject private var repository: IntroduceRepository
     private let disposeBag = DisposeBag()
     
     public struct Input {
@@ -28,14 +28,15 @@ final public class DeveloperViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: IntroduceRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { _ in
-                repository.getDeveloper()
+            .flatMapLatest { [weak self] _ -> Observable<[Developer]> in
+                guard let self = self else { return Observable.just([Developer]()) }
+                
+                return self.repository.getDeveloper()
                     .asObservable()
                     .trackActivity(activityIndicator)
             }

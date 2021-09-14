@@ -84,8 +84,6 @@ extension AttachViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = self.tableView.cellForRow(at: indexPath) as! AttachTableViewCell
         cell.changeDownload()
-//        cell.downloadImage.isHidden = true
-//        cell.checkImage.isHidden = false
         FileDownloader.loadFileAsync(url: URL(string: self.attach[indexPath.row].download)!) { (path, _) in
             print("PDF File downloaded to : \(path!)")
         }

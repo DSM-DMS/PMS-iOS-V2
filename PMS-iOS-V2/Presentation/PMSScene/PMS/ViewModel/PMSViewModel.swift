@@ -11,7 +11,7 @@ import RxFlow
 
 final public class PMSViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: LoginRepository
+    @Inject private var repository: LoginRepository
     private var disposeBag = DisposeBag()
     
     public struct Input {
@@ -27,8 +27,7 @@ final public class PMSViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: LoginRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.loginButtonTapped
@@ -47,13 +46,14 @@ final public class PMSViewModel: Stepper {
         
         input.noLoginButtonTapped
             .asObservable()
-            .flatMap { [weak self] _ in
-                repository.login(email: Bundle.main.infoDictionary!["Auth Email"] as! String,
+            .flatMap { [weak self] _ -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.login(email: Bundle.main.infoDictionary!["Auth Email"] as! String,
                                  password: Bundle.main.infoDictionary!["Auth Password"] as! String)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
                     .catchErrorJustReturn(false)

@@ -11,7 +11,7 @@ import RxFlow
 
 final public class MealViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: MealRepository
+    @Inject private var repository: MealRepository
     private let disposeBag = DisposeBag()
     private var changeDate = 0
     
@@ -45,8 +45,7 @@ final public class MealViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: MealRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
@@ -63,7 +62,7 @@ final public class MealViewModel: Stepper {
                     return Observable.just(Meal(breakfast: [String](), lunch: [String](), dinner: [String]()))
                 }
                 
-                return repository.getMeal(date: Int(self.output.modelDate.value)!)
+                return self.repository.getMeal(date: Int(self.output.modelDate.value)!)
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
@@ -80,7 +79,7 @@ final public class MealViewModel: Stepper {
                     return Observable.just(MealPicture(breakfast: "", lunch: "", dinner: ""))
                 }
                 
-                return repository.getMealPicutre(date: Int(self.output.modelDate.value)!)
+                return self.repository.getMealPicutre(date: Int(self.output.modelDate.value)!)
                     .asObservable()
             }
             .bind(to: output.mealPictureList)

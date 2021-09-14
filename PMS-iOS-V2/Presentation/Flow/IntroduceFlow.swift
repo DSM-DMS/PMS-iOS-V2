@@ -54,7 +54,7 @@ final public class IntroduceFlow: Flow {
     }
     
     private func navigateToDetailClubScreen(name: String) -> FlowContributors {
-        let vc = ClubDetailViewController(viewModel: AppDelegate.container.resolve(ClubViewModel.self)!, name: name)
+        let vc = ClubDetailViewController(name: name)
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }
@@ -67,7 +67,7 @@ final public class IntroduceFlow: Flow {
     }
     
     private func navigateToDetailCompanyScreen(name: String) -> FlowContributors {
-        let vc = CompanyDetailViewController(viewModel: AppDelegate.container.resolve(CompanyViewModel.self)!, name: name)
+        let vc = CompanyDetailViewController(name: name)
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
     }

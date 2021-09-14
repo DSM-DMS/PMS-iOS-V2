@@ -68,7 +68,7 @@ final public class AlbumDetailViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    internal init(viewModel: AlbumDetailViewModel) {
+    public init(viewModel: AlbumDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bindInput()

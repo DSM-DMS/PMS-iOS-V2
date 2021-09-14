@@ -11,7 +11,7 @@ import RxFlow
 
 final public class StudentListViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: MypageRepository
+    @Inject private var repository: MypageRepository
     private let disposeBag = DisposeBag()
     
     public struct Input {
@@ -28,19 +28,19 @@ final public class StudentListViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: MypageRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.viewDidLoad
             .asObservable()
-            .flatMapLatest { [weak self] _ in
-                repository.getUser()
+            .flatMapLatest { [weak self] _ -> Observable<User> in
+                guard let self = self else { return Observable.just(User(name: "", students: [UsersStudent]())) }
+                
+                return self.repository.getUser()
                     .asObservable()
                     .trackActivity(activityIndicator)
                     .do(onError: { error in
                         let error = error as! NetworkError
-                        guard let self = self else { return }
                         self.steps.accept(PMSStep.alert(self.mapError(error: error.rawValue), self.mapError(error: error.rawValue)))
                     })
             }

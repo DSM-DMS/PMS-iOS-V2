@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 
 final public class IntroduceViewController: UIViewController {
-    internal let viewModel: IntroduceViewModel
+    @Inject internal var viewModel: IntroduceViewModel
     private let disposeBag = DisposeBag()
     
     private let subTitle = UILabel().then {
@@ -26,8 +26,7 @@ final public class IntroduceViewController: UIViewController {
     private let companyTapped = UITapGestureRecognizer()
     private let developerTapped = UITapGestureRecognizer()
     
-    public init(viewModel: IntroduceViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }

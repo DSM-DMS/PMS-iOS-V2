@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 final public class NoticeViewController: UIViewController {
-    internal let viewModel: NoticeViewModel
+    @Inject internal var viewModel: NoticeViewModel
     private let searchController = UISearchController(searchResultsController: nil)
     private let segmentedControl = UISegmentedControl(items: [LocalizedString.noticeTitle.localized, LocalizedString.letter.localized, LocalizedString.album.localized]).then {
         $0.contentMode = .scaleAspectFit
@@ -53,8 +53,7 @@ final public class NoticeViewController: UIViewController {
         return cell
     })
     
-    internal init(viewModel: NoticeViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }

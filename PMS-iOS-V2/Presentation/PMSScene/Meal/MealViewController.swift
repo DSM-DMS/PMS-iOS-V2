@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 final public class MealViewController: UIViewController {
-    internal let viewModel: MealViewModel
+    @Inject internal var viewModel: MealViewModel
     
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout().then {
@@ -50,8 +50,7 @@ final public class MealViewController: UIViewController {
     }
     private let rightButton = RightArrowButton()
     
-    public init(viewModel: MealViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.bindInput()
     }

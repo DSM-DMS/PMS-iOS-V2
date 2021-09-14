@@ -11,7 +11,7 @@ import RxFlow
 
 final public class ChangePasswordViewModel: Stepper {
     public let steps = PublishRelay<Step>()
-    private let repository: ChangePasswordRepository
+    @Inject private var repository: ChangePasswordRepository
     private var disposeBag = DisposeBag()
     
     public struct Input {
@@ -43,13 +43,12 @@ final public class ChangePasswordViewModel: Stepper {
     public let input = Input()
     public let output = Output()
     
-    public init(repository: ChangePasswordRepository) {
-        self.repository = repository
+    public init() {
         let activityIndicator = ActivityIndicator()
         
         input.noInternet
-            .subscribe(onNext: { _ in
-                self.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(PMSStep.alert(LocalizedString.noInternetErrorMsg.localized, .noInternetErrorMsg))
                 
             })
             .disposed(by: disposeBag)
@@ -119,8 +118,10 @@ final public class ChangePasswordViewModel: Stepper {
         input.changePasswordButtonTapped
             .asObservable()
             .map { AnalyticsManager.click_changePassword.log() }
-            .flatMap {
-                repository.changePassword(nowPassword: self.input.nowPasswordText.value,
+            .flatMap { [weak self] _ -> Observable<Bool> in
+                guard let self = self else { return Observable.just(false) }
+                
+                return self.repository.changePassword(nowPassword: self.input.nowPasswordText.value,
                                           newPassword: self.input.newPasswordText.value)
                     .trackActivity(activityIndicator)
                     .do(onError: { error in

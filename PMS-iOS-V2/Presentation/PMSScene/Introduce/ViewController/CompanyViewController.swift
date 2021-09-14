@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 
 final public class CompanyViewController: UIViewController {
-    internal let viewModel: CompanyViewModel
+    @Inject internal var viewModel: CompanyViewModel
     private let activityIndicator = UIActivityIndicatorView()
     private let reachability = try! Reachability()
     private let disposeBag = DisposeBag()
@@ -36,8 +36,7 @@ final public class CompanyViewController: UIViewController {
         return cell
     })
     
-    public init(viewModel: CompanyViewModel) {
-        self.viewModel = viewModel
+    public init() {
         super.init(nibName: nil, bundle: nil)
         self.collectionView.delegate = self
         self.bindInput()
