@@ -66,7 +66,7 @@ final public class StatusView: UIView {
         DispatchQueue.main.async {
             self.pointStatus.setTitle( self.minusStatus(num: model.minus), for: .normal)
             self.statuslabel.text = self.convertStatus(num: model.status)
-            if model.isMeal {
+            if model.mealStatus == 2 {
                 self.mealImage.image = Asset.o.image
             } else {
                 self.mealImage.image = Asset.x.image

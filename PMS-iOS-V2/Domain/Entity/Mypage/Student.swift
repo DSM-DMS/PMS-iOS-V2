@@ -11,19 +11,19 @@ public struct Student: Codable, Equatable {
     public var plus: Int
     public var minus: Int
     public var status: Int
-    public var isMeal: Bool
+    public var mealStatus: Int
     
     enum CodingKeys: String, CodingKey {
         case plus = "bonus-point"
         case minus = "minus-point"
-        case status = "stay-status"
-        case isMeal = "meal-applied"
+        case status = "stay"
+        case mealStatus = "meal-apply"
     }
     
-    public init(plus: Int, minus: Int, status: Int, isMeal: Bool) {
+    public init(plus: Int, minus: Int, status: Int, mealStatus: Int) {
         self.plus = plus
         self.minus = minus
         self.status = status
-        self.isMeal = isMeal
+        self.mealStatus = mealStatus
     }
 }

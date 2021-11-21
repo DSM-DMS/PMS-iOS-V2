@@ -37,7 +37,7 @@ public enum PMSApi {
 
 extension PMSApi: TargetType {
     public var baseURL: URL {
-        return URL(string: "http://api.potatochips.live")!
+        return URL(string: "https://api.potatochips.live")!
     }
     
     public var path: String {

@@ -95,7 +95,7 @@ final public class MypageViewModel: Stepper {
         output.isStudent
             .filter { $0 == true }
             .flatMapLatest { [weak self] _ -> Observable<Student> in
-                guard let self = self else { return Observable.just(Student(plus: 0, minus: 0, status: 0, isMeal: false)) }
+                guard let self = self else { return Observable.just(Student(plus: 0, minus: 0, status: 0, mealStatus: 0)) }
                 
                 return self.repository.getStudent(number: UDManager.shared.studentNumber!)
                     .asObservable()
