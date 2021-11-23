@@ -39,6 +39,9 @@
 "introduce" = "소개";
 "mypage" = "내정보";
 
+// PMS
+"registerSucceed" = "이메일 인증 후 로그인해주세요.";
+
 // Placeholder
 "nicknamePlaceholder" = "닉네임을 입력해주세요.";
 "newNicknamePlaceholder" = "새로운 닉네임을 입력해주세요.";

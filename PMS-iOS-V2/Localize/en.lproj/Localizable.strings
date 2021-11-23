@@ -39,6 +39,9 @@
 "introduce" = "Introduce";
 "mypage" = "Mypage";
 
+// PMS
+"registerSucceed" = "Please log-in after verifying your email.";
+
 // Placeholder
 "nicknamePlaceholder" = "Enter Nickname.";
 "newNicknamePlaceholder" = "Enter New Nickname.";

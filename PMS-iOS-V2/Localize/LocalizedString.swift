@@ -37,6 +37,9 @@ public enum LocalizedString: String, Equatable, Hashable {
     case introduce
     case mypage
     
+    // PMS
+    case registerSucceed
+    
     // Placeholder
     case nicknamePlaceholder
     case newNicknamePlaceholder

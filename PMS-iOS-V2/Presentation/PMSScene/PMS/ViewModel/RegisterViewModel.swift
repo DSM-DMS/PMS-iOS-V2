@@ -141,8 +141,7 @@ final public class RegisterViewModel: Stepper {
             }
             .subscribe(onNext: { [weak self] bool in
                 if bool {
-                    self?.steps.accept(PMSStep.success(.registerSuccessMsg))
-                    self?.steps.accept(PMSStep.tabBarIsRequired)
+                    self?.steps.accept(PMSStep.registerSuccess)
                 }
             })
             .disposed(by: disposeBag)

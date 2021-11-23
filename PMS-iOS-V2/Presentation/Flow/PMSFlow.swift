@@ -27,6 +27,8 @@ final public class PMSFlow: Flow {
             return navigateToLoginScreen()
         case .registerIsRequired:
             return navigateToRegisterScreen()
+        case .registerSuccess:
+            return backToPMSScreen()
         case .alert(let string, let access):
             return alert(string: string, access: access)
         case .success(let string):
@@ -54,6 +56,12 @@ final public class PMSFlow: Flow {
         let vc = AppDelegate.container.resolve(RegisterViewController.self)!
         self.rootViewController.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.viewModel))
+    }
+    
+    private func backToPMSScreen() -> FlowContributors {
+        self.rootViewController.popViewController(animated: true)
+        self.rootViewController.showErrorAlert(with: LocalizedString.registerSucceed.localized, access: AccessibilityString.PMSView)
+        return .none
     }
     
     private func navigateToMainScreen() -> FlowContributors {

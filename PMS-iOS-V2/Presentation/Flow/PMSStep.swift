@@ -78,6 +78,7 @@ public enum PMSStep: Step, Equatable {
     // PMSView
     case loginIsRequired
     case registerIsRequired
+    case registerSuccess
 
     // Calendar
     case calendarIsRequired

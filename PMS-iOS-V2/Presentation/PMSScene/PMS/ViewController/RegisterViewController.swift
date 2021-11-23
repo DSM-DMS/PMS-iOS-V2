@@ -45,14 +45,6 @@ final public class RegisterViewController: UIViewController {
         $0.alignment = .leading
     }
     
-    private let emailButton = UIButton().then {
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = 10.0
-        $0.setTitle("이메일 인증", for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
-        $0.backgroundColor = Colors.red.color
-    }
-    
     private let emailButtonTapped = UITapGestureRecognizer()
     
     private let emailStackView = UIStackView().then {
@@ -83,17 +75,6 @@ final public class RegisterViewController: UIViewController {
         $0.alignment = .leading
     }
     
-    private let numberView = UIStackView().then {
-        $0.spacing = 15.0
-        $0.alignment = .leading
-    }
-    
-    private let numberStackView = UIStackView().then {
-        $0.spacing = 5.0
-        $0.axis = .vertical
-        $0.alignment = .leading
-    }
-    
     private let oAuthStackView = UIStackView().then {
         $0.alignment = .top
         $0.distribution = .equalSpacing
@@ -110,9 +91,6 @@ final public class RegisterViewController: UIViewController {
     private let lockImage = LockImage()
     private let circleCheckImage = CircleCheckImage()
     private let checkImage = CheckImage()
-    private let numberLabel = UILabel().then {
-        $0.text = "#"
-    }
     
     let nicknameLine = UIView().then {
         $0.backgroundColor = .gray
@@ -126,9 +104,6 @@ final public class RegisterViewController: UIViewController {
     let rePasswordLine = UIView().then {
         $0.backgroundColor = .gray
     }
-    let numberLine = UIView().then {
-        $0.backgroundColor = .gray
-    }
     
     private let nicknameTextField = PMSTextField(title: .nicknamePlaceholder)
     private let emailTextField = PMSTextField(title: .emailPlaceholder)
@@ -138,7 +113,6 @@ final public class RegisterViewController: UIViewController {
     private let rePasswordTextField = PMSTextField(title: .rePasswordPlaceholder).then {
         $0.isSecureTextEntry = true
     }
-    private let numberTextField = PMSTextField(title: .numberPlaceholder)
     
     private let rePasswordValidMsg = UILabel().then {
         $0.text = ""
@@ -158,7 +132,7 @@ final public class RegisterViewController: UIViewController {
     }
     
     public override func viewDidLoad() {
-        emailButton.addGestureRecognizer(emailButtonTapped)
+//        emailButton.addGestureRecognizer(emailButtonTapped)
         setupSubview()
         setNavigationTitle(title: .registerTitle, accessibilityLabel: .registerView, isLarge: true)
         bindInput()
@@ -194,14 +168,14 @@ final public class RegisterViewController: UIViewController {
         
         view.backgroundColor = Colors.white.color
         view.addSubview(registerViewStack)
-        view.addSubview(emailButton)
+//        view.addSubview(emailButton)
         view.addSubview(activityIndicator)
         
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
         
-        registerViewStack.addArrangeSubviews([nicknameStackView, emailStackView, passwordStackView, rePasswordStackView, numberStackView, registerButton])
+        registerViewStack.addArrangeSubviews([nicknameStackView, emailStackView, passwordStackView, rePasswordStackView, registerButton])
         nicknameView.addArrangeSubviews([nicknameSpacing, pencilImage, nicknameTextField])
         nicknameStackView.addArrangeSubviews([nicknameView, nicknameLine])
         nicknameLine.snp.makeConstraints {
@@ -214,11 +188,11 @@ final public class RegisterViewController: UIViewController {
             $0.height.equalTo(1)
             $0.width.equalTo(UIFrame.width - 70)
         }
-        emailButton.snp.makeConstraints {
-            $0.width.equalTo(90)
-            $0.trailing.equalTo(emailStackView.snp_trailingMargin).offset(-7)
-            $0.bottom.equalTo(emailLine.snp_topMargin).offset(-12)
-        }
+//        emailButton.snp.makeConstraints {
+//            $0.width.equalTo(90)
+//            $0.trailing.equalTo(emailStackView.snp_trailingMargin).offset(-7)
+//            $0.bottom.equalTo(emailLine.snp_topMargin).offset(-12)
+//        }
         passwordView.addArrangeSubviews([passwordSpacing, lockImage, passwordTextField])
         passwordStackView.addArrangeSubviews([passwordView, passwordLine])
         passwordStackView.addSubview(passwordEyeButton)
@@ -248,17 +222,6 @@ final public class RegisterViewController: UIViewController {
             $0.top.equalTo(rePasswordStackView.snp_bottomMargin)
             $0.trailing.equalToSuperview().offset(-10)
         }
-        
-        numberView.addArrangeSubviews([numberSpacing, numberLabel, numberTextField])
-        numberStackView.addArrangeSubviews([numberView, numberLine])
-        numberLine.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.width.equalTo(UIFrame.width - 70)
-        }
-        numberLabel.snp.makeConstraints {
-            $0.width.height.equalTo(20)
-        }
-        
         oAuthStackView.addArrangeSubviews([leftSpacing, facebookButton, naverButton, appleButton, rightSpacing])
         
         registerViewStack.snp.makeConstraints {
