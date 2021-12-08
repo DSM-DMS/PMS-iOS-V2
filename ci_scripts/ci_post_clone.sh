@@ -13,7 +13,7 @@ brew install carting
 brew install xcodegen
 brew tap summerlabs/homebrew-punic
 brew install punic
-brew install fastlane
+brew cask install fastlane
 cd ../
 chmod +x scripts/run scripts/upload-symbols
 xcodegen
