@@ -7,6 +7,7 @@
 #  
 
 bundle install
+export HOMEBREW_NO_INSTALL_CLEANUP=0
 brew install tmspzz/homebrew-tap/rome
 brew tap artemnovichkov/projects
 brew install carting
@@ -14,8 +15,6 @@ brew install xcodegen
 brew tap summerlabs/homebrew-punic
 brew install punic
 brew install fastlane
-echo "export PATH="$HOME/.fastlane/bin:$PATH"" >> ~/.bash_profile
-export PATH=”$HOME/.fastlane/bin:$PATH”
 cd ../
 chmod +x scripts/run scripts/upload-symbols
 xcodegen
