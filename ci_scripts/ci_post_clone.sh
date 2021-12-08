@@ -13,5 +13,6 @@ brew install carting
 brew install xcodegen
 brew tap summerlabs/homebrew-punic
 brew install punic
+cd ../
 chmod +x scripts/run scripts/upload-symbols
 xcodegen
