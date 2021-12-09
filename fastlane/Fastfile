@@ -16,9 +16,9 @@
 default_platform(:ios)
 
 platform :ios do
-  before_all do
-    ENV["SLACK_CHANNEL"] = "#ios"
-  end
+  # before_all do
+  #   ENV["SLACK_CHANNEL"] = "#ios"
+  # end
 
   lane :push do
     rome(
@@ -95,11 +95,11 @@ platform :ios do
 	clean: true)
   end
 
-  after_all do |lane|
-    slack(message: "Success")
-  end
+  # after_all do |lane|
+  #  slack(message: "Success")
+  # end
 
-  error do |lane, exception|
-    slack(message: exception.message, success: false)
-  end
+  # error do |lane, exception|
+  #  slack(message: exception.message, success: false)
+  # end
 end
